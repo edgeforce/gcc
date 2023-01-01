@@ -21,7 +21,7 @@
 #ifndef GCC_RS6000_PROTOS_H
 #define GCC_RS6000_PROTOS_H
 
-/* Declare functions in rs6000.cc */
+/* Declare functions in rs6000 */
 
 #ifdef RTX_CODE
 
@@ -315,7 +315,7 @@ extern void rs6000_asm_output_dwarf_datarel (FILE *file, int size,
 					     const char *label);
 extern long rs6000_const_f32_to_i32 (rtx operand);
 
-/* Declare functions in rs6000-c.cc */
+/* Declare functions in rs6000-c */
 
 extern void rs6000_pragma_longcall (struct cpp_reader *);
 extern void rs6000_cpu_cpp_builtins (struct cpp_reader *);

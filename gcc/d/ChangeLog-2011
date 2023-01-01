@@ -1005,7 +1005,7 @@
 	d/patches/patch-gcc-4.5.x: Remove old redundant code.
 	[7b72e8118c29]
 
-	* d/d-spec.c: Handle -pthread option in d-spec.c
+	* d/d-spec.c: Handle -pthread option in d-spec.cc
 	[b6062a158fdd]
 
 	* d/d-glue.cc, d/phobos2/std/stdio.d, d/target-ver-syms.sh: Issue #151

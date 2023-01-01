@@ -963,7 +963,7 @@
 
 2010-10-03  Francois-Xavier Coudert  <fxcoudert@gcc.gnu.org>
 
-	* cpp.c (cpp_define_builtins): Call functions from cppbuiltin.c
+	* cpp.c (cpp_define_builtins): Call functions from cppbuiltin.cc
 	instead of duplicating code.
 	* Make-lang.in: Add dependency on cppbuiltin.h. Don't define
 	BASEVER.
@@ -2968,7 +2968,7 @@
 	* trans-io.c (gfc_build_st_parameter): Update calls to
 	gfc_add_field_to_struct.
 	* trans-stmt.c (ADD_FIELD): Ditto.
-	* trans-types.c
+	* trans-types.cc
 	(gfc_get_derived_type): Ditto. Don't create backend_decl for C_PTR's
 	C_ADDRESS field.
 	(gfc_add_field_to_struct_1): Set TYPE_FIELDS(context) instead of

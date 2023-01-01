@@ -95,7 +95,7 @@
 	maintainership of GNAT.
 
 	PR ada/5904
-	* 1ssecsta.adb 1ssecsta.ads adadecode.c adadecode.h aux-io.c
+	* 1ssecsta.adb 1ssecsta.ads adadecode.c adadecode.h aux-io.cc
 	gnatname.adb gnatname.ads mkdir.c osint-b.adb osint-b.ads
 	osint-c.adb osint-c.ads osint-l.adb osint-l.ads osint-m.adb
 	osint-m.ads prj-makr.adb prj-makr.ads prj-pp.adb prj-pp.ads
@@ -182,9 +182,9 @@
 	ceinfo.adb checks.adb checks.ads cio.c comperr.adb comperr.ads
 	csets.adb csets.ads csinfo.adb cstand.adb cstand.ads
 	cstreams.c cuintp.c debug.adb debug.ads debug_a.adb
-	debug_a.ads dec-io.adb dec-io.ads dec.ads decl.c deftarg.c
+	debug_a.ads dec-io.adb dec-io.ads dec.ads decl.c deftarg.cc
 	einfo.adb einfo.ads einfo.h elists.adb elists.ads elists.h
-	errno.c errout.adb errout.ads eval_fat.adb eval_fat.ads exit.c
+	errno.c errout.adb errout.ads eval_fat.adb eval_fat.ads exit.cc
 	exp_aggr.adb exp_aggr.ads exp_attr.adb exp_attr.ads
 	exp_ch10.ads exp_ch11.adb exp_ch11.ads exp_ch12.adb
 	exp_ch12.ads exp_ch13.adb exp_ch13.ads exp_ch2.adb exp_ch2.ads
@@ -213,13 +213,13 @@
 	i-cpp.ads i-cstrea.adb i-cstrea.ads i-cstrin.adb i-cstrin.ads
 	i-fortra.adb i-os2err.ads i-os2lib.adb i-os2lib.ads
 	i-os2syn.ads i-os2thr.ads i-pacdec.adb i-pacdec.ads
-	impunit.adb impunit.ads init.c inline.adb inline.ads io-aux.c
+	impunit.adb impunit.ads init.c inline.adb inline.ads io-aux.cc
 	itypes.adb itypes.ads krunch.adb krunch.ads lang-options.h
 	lang-specs.h layout.adb layout.ads lib-list.adb lib-load.adb
 	lib-load.ads lib-sort.adb lib-util.adb lib-util.ads
 	lib-writ.adb lib-writ.ads lib-xref.adb lib-xref.ads lib.adb
 	lib.ads link.c live.adb live.ads make.adb make.ads makeusg.adb
-	makeusg.ads math_lib.adb mdll.adb mdll.ads memtrack.adb misc.c
+	makeusg.ads math_lib.adb mdll.adb mdll.ads memtrack.adb misc.cc
 	namet.adb namet.ads namet.h nlists.adb nlists.ads nlists.h
 	nmake.adb nmake.ads nmake.adt opt.adb opt.ads osint.adb
 	osint.ads output.adb output.ads par-ch10.adb par-ch11.adb
@@ -338,7 +338,7 @@
 	snames.h sprint.adb sprint.ads stand.adb stand.ads stringt.adb
 	stringt.ads stringt.h style.adb style.ads stylesw.adb
 	stylesw.ads switch.adb switch.ads sysdep.c system.ads
-	table.adb table.ads targparm.adb targparm.ads targtyps.c
+	table.adb table.ads targparm.adb targparm.ads targtyps.cc
 	tbuild.adb tbuild.ads trans.c tree_gen.adb tree_gen.ads
 	tree_in.adb tree_in.ads tree_io.adb tree_io.ads treepr.adb
 	treepr.ads treeprs.ads treeprs.adt ttypef.ads ttypes.ads

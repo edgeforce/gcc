@@ -15,7 +15,7 @@ You should have received a copy of the GNU General Public License
 along with GCC; see the file COPYING3.  If not see
 <http://www.gnu.org/licenses/>.  */
 
-/* Routines implemented in mips-d.cc  */
+/* Routines implemented in mips-d  */
 extern void mips_d_target_versions (void);
 extern void mips_d_register_target_info (void);
 

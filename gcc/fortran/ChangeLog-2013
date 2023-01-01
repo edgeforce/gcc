@@ -965,7 +965,7 @@
 
 	* trans-expr.c (gfc_conv_procedure_call): Deallocate
 	polymorphic arrays for allocatable intent(out) dummies.
-	(gfc_reset_vptr): New function, moved from trans-stmt.c
+	(gfc_reset_vptr): New function, moved from trans-stmt.cc
 	and extended.
 	* trans-stmt.c (reset_vptr): Remove.
 	(gfc_trans_deallocate): Update calls.

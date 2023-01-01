@@ -1598,7 +1598,7 @@
 	* tree-ssa-reassoc.c (is_phi_for_stmt): Likewise.
 	* tree-ssa-sccvn.c (start_over:): Likewise.
 
-	* tree-ssa-loop-im.c
+	* tree-ssa-loop-im.cc
 	(move_computations_dom_walker::before_dom_children): Split iterator
 	into gimple_stmt_iterator and a gimple_phi_iterator so that a local
 	can become a gimple_phi.
@@ -1629,7 +1629,7 @@
 	* gimple-pretty-print.c (gimple_dump_bb_for_graph): Split iterator
 	into gimple_stmt_iterator and gimple_phi_iterator, converting local
 	from gimple to gimple_phi.
-	* gimple-ssa-strength-reduction.c
+	* gimple-ssa-strength-reduction.cc
 	(find_candidates_dom_walker::before_dom_children): Likewise.
 	* ipa-inline-analysis.c (estimate_function_body_sizes): Likewise.
 	* ipa-split.c (verify_non_ssa_vars): Likewise.
@@ -1708,7 +1708,7 @@
 
 2014-10-24  David Malcolm  <dmalcolm@redhat.com>
 
-	Use gimple_call in some places within tree-ssa-dom.c
+	Use gimple_call in some places within tree-ssa-dom.cc
 
 	* tree-ssa-dom.c (struct hashable_expr): Strengthen field
 	call.fn_from from gimple to gimple_call.
@@ -3037,7 +3037,7 @@
 	* cgraphunit.c (thunk_adjust): Strengthen local "stmt" from gimple
 	to gimple_assign.
 
-	* gimple-ssa-isolate-paths.c
+	* gimple-ssa-isolate-paths.cc
 	(insert_trap_and_remove_trailing_statements): Strengthen local
 	"new_stmt" from gimple to gimple_call.
 
@@ -3716,7 +3716,7 @@
 	GIMPLE_ASM with a dyn_cast<gimple_asm>, introducing  a new local
 	"asm_stmt", using it in place of "t" for typesafety.
 
-	* tree-ssa-threadedge.c
+	* tree-ssa-threadedge.cc
 	(record_temporary_equivalences_from_stmts_at_dest): Add a checked
 	cast to gimple_asm.
 
@@ -4034,7 +4034,7 @@
 	gimple_call, replacing is_gimple_call with a
 	dyn_cast <gimple_call>.
 	(ipa_pta_execute): Likewise.
-	* tree-ssa-threadedge.c
+	* tree-ssa-threadedge.cc
 	(record_temporary_equivalences_from_stmts_at_dest): Add checked
 	cast to gimple_call.
 	* tree-tailcall.c (find_tail_calls): Strengthen local "call" from
@@ -4248,7 +4248,7 @@
 	* tree-ssa-ifcombine.c (same_phi_args_p): Likewise.
 	* tree-ssa-live.c (calculate_live_on_exit): Likewise.
 	(verify_live_on_entry): Likewise.
-	* tree-ssa-loop-im.c
+	* tree-ssa-loop-im.cc
 	(move_computations_dom_walker::before_dom_children): Likewise.
 	* tree-ssa-loop-ivopts.c (find_bivs): Likewise.
 	(mark_bivs): Likewise.

@@ -435,7 +435,7 @@ Statements
 
    Here's an example of creating a switch statement:
 
-     .. literalinclude:: ../../../testsuite/jit.dg/test-switch.c
+     .. literalinclude:: ../../../testsuite/jit.dg/test-switch.cc
        :start-after: /* Quote from here in docs/topics/functions.rst.  */
        :end-before: /* Quote up to here in docs/topics/functions.rst.  */
        :language: c

@@ -26,33 +26,17 @@ along with GCC; see the file COPYING3.  If not see
 
 #include <dejagnu.h>
 
-#include <libgccjit++.h>
+#include <libgccjit.h>
 
-/* Wrapper around a gcc_jit_result *.  */
-
-class compilation_result
-{
-public:
-  compilation_result (gcc_jit_result *result) :
-    m_result (result)
-  {
-  }
-  ~compilation_result ()
-  {
-    gcc_jit_result_release (m_result);
-  }
-
-  void *get_code (const char *funcname)
-  {
-    return gcc_jit_result_get_code (m_result, funcname);
-  }
-
-private:
-  gcc_jit_result *m_result;
-};
+/* Typedefs.  */
+typedef struct toyvm_op toyvm_op;
+typedef struct toyvm_function toyvm_function;
+typedef struct toyvm_frame toyvm_frame;
+typedef struct compilation_state compilation_state;
+typedef struct toyvm_compiled_function toyvm_compiled_function;
 
 /* Functions are compiled to this function ptr type.  */
-typedef int (*toyvm_compiled_func) (int);
+typedef int (*toyvm_compiled_code) (int);
 
 enum opcode {
   /* Ops taking no operand.  */
@@ -100,88 +84,45 @@ struct toyvm_op
 
 #define MAX_OPS  (64)
 
-class toyvm_function
+struct toyvm_function
 {
-public:
-  void
-  add_op (enum opcode opcode,
-          int operand, int linenum);
-
-  void
-  add_unary_op (enum opcode opcode,
-                const char *rest_of_line, int linenum);
-
-  static toyvm_function *
-  parse (const char *filename, const char *name);
-
-  void
-  disassemble_op (toyvm_op *op, int index, FILE *out);
-
-  void
-  disassemble (FILE *out);
-
-  int
-  interpret (int arg, FILE *trace);
-
-  compilation_result
-  compile ();
-
-  const char *
-  get_function_name () const { return m_funcname; }
-
-private:
-  void
-  make_function_name (const char *filename);
-
-private:
   const char *fn_filename;
-  char       *m_funcname;
   int         fn_num_ops;
   toyvm_op    fn_ops[MAX_OPS];
-  friend struct compilation_state;
 };
 
 #define MAX_STACK_DEPTH (8)
 
-class toyvm_frame
+struct toyvm_frame
 {
-public:
-  void push (int arg);
-  int pop ();
-  void dump_stack (FILE *out);
-
-private:
   toyvm_function *frm_function;
   int             frm_pc;
   int             frm_stack[MAX_STACK_DEPTH];
   int             frm_cur_depth;
-
-  friend int toyvm_function::interpret (int arg, FILE *trace);
-
 };
 
-void
-toyvm_function::add_op (enum opcode opcode,
-                        int operand, int linenum)
+static void
+add_op (toyvm_function *fn, enum opcode opcode,
+	int operand, int linenum)
 {
   toyvm_op *op;
-  assert (fn_num_ops < MAX_OPS);
-  op = &fn_ops[fn_num_ops++];
+  assert (fn->fn_num_ops < MAX_OPS);
+  op = &fn->fn_ops[fn->fn_num_ops++];
   op->op_opcode = opcode;
   op->op_operand = operand;
   op->op_linenum = linenum;
 }
 
-void
-toyvm_function::add_unary_op (enum opcode opcode,
-                              const char *rest_of_line, int linenum)
+static void
+add_unary_op (toyvm_function *fn, enum opcode opcode,
+	      const char *rest_of_line, int linenum)
 {
   int operand = atoi (rest_of_line);
-  add_op (opcode, operand, linenum);
+  add_op (fn, opcode, operand, linenum);
 }
 
-void
-toyvm_function::make_function_name (const char *filename)
+static char *
+get_function_name (const char *filename)
 {
   /* Skip any path separators.  */
   const char *pathsep = strrchr (filename, '/');
@@ -189,16 +130,18 @@ toyvm_function::make_function_name (const char *filename)
     filename = pathsep + 1;
 
   /* Copy filename to funcname.  */
-  m_funcname = (char *)malloc (strlen (filename) + 1);
+  char *funcname = (char *)malloc (strlen (filename) + 1);
 
-  strcpy (m_funcname, filename);
+  strcpy (funcname, filename);
 
   /* Convert "." to NIL terminator.  */
-  *(strchr (m_funcname, '.')) = '\0';
+  *(strchr (funcname, '.')) = '\0';
+
+  return funcname;
 }
 
-toyvm_function *
-toyvm_function::parse (const char *filename, const char *name)
+static toyvm_function *
+toyvm_function_parse (const char *filename, const char *name)
 {
   FILE *f = NULL;
   toyvm_function *fn = NULL;
@@ -226,7 +169,6 @@ toyvm_function::parse (const char *filename, const char *name)
       goto error;
     }
   fn->fn_filename = filename;
-  fn->make_function_name (filename);
 
   /* Read the lines of the file.  */
   while ((linelen = getline (&line, &bufsize, f)) != -1)
@@ -248,27 +190,27 @@ toyvm_function::parse (const char *filename, const char *name)
 
 #define LINE_MATCHES(OPCODE) (0 == strncmp ((OPCODE), line, strlen (OPCODE)))
       if (LINE_MATCHES ("DUP\n"))
-	fn->add_op (DUP, 0, linenum);
+	add_op (fn, DUP, 0, linenum);
       else if (LINE_MATCHES ("ROT\n"))
-	fn->add_op (ROT, 0, linenum);
+	add_op (fn, ROT, 0, linenum);
       else if (LINE_MATCHES ("BINARY_ADD\n"))
-	fn->add_op (BINARY_ADD, 0, linenum);
+	add_op (fn, BINARY_ADD, 0, linenum);
       else if (LINE_MATCHES ("BINARY_SUBTRACT\n"))
-	fn->add_op (BINARY_SUBTRACT, 0, linenum);
+	add_op (fn, BINARY_SUBTRACT, 0, linenum);
       else if (LINE_MATCHES ("BINARY_MULT\n"))
-	fn->add_op (BINARY_MULT, 0, linenum);
+	add_op (fn, BINARY_MULT, 0, linenum);
       else if (LINE_MATCHES ("BINARY_COMPARE_LT\n"))
-	fn->add_op (BINARY_COMPARE_LT, 0, linenum);
+	add_op (fn, BINARY_COMPARE_LT, 0, linenum);
       else if (LINE_MATCHES ("RECURSE\n"))
-	fn->add_op (RECURSE, 0, linenum);
+	add_op (fn, RECURSE, 0, linenum);
       else if (LINE_MATCHES ("RETURN\n"))
-	fn->add_op (RETURN, 0, linenum);
+	add_op (fn, RETURN, 0, linenum);
       else if (LINE_MATCHES ("PUSH_CONST "))
-	fn->add_unary_op (PUSH_CONST,
-                          line + strlen ("PUSH_CONST "), linenum);
+	add_unary_op (fn, PUSH_CONST,
+		      line + strlen ("PUSH_CONST "), linenum);
       else if (LINE_MATCHES ("JUMP_ABS_IF_TRUE "))
-	fn->add_unary_op (JUMP_ABS_IF_TRUE,
-                          line + strlen("JUMP_ABS_IF_TRUE "), linenum);
+	add_unary_op (fn, JUMP_ABS_IF_TRUE,
+		      line + strlen("JUMP_ABS_IF_TRUE "), linenum);
       else
 	{
 	  fprintf (stderr, "%s:%d: parse error\n", filename, linenum);
@@ -291,64 +233,64 @@ toyvm_function::parse (const char *filename, const char *name)
   return NULL;
 }
 
-void
-toyvm_function::disassemble_op (toyvm_op *op, int index, FILE *out)
+static void
+toyvm_function_disassemble_op (toyvm_function *fn, toyvm_op *op, int index, FILE *out)
 {
   fprintf (out, "%s:%d: index %d: %s",
-	   fn_filename, op->op_linenum, index,
+	   fn->fn_filename, op->op_linenum, index,
 	   opcode_names[op->op_opcode]);
   if (op->op_opcode >= FIRST_UNARY_OPCODE)
     fprintf (out, " %d", op->op_operand);
   fprintf (out, "\n");
 }
 
-void
-toyvm_function::disassemble (FILE *out)
+static void
+toyvm_function_disassemble (toyvm_function *fn, FILE *out)
 {
   int i;
-  for (i = 0; i < fn_num_ops; i++)
+  for (i = 0; i < fn->fn_num_ops; i++)
     {
-      toyvm_op *op = &fn_ops[i];
-      disassemble_op (op, i, out);
+      toyvm_op *op = &fn->fn_ops[i];
+      toyvm_function_disassemble_op (fn, op, i, out);
     }
 }
 
-void
-toyvm_frame::push (int arg)
+static void
+toyvm_frame_push (toyvm_frame *frame, int arg)
 {
-  assert (frm_cur_depth < MAX_STACK_DEPTH);
-  frm_stack[frm_cur_depth++] = arg;
+  assert (frame->frm_cur_depth < MAX_STACK_DEPTH);
+  frame->frm_stack[frame->frm_cur_depth++] = arg;
 }
 
-int
-toyvm_frame::pop ()
+static int
+toyvm_frame_pop (toyvm_frame *frame)
 {
-  assert (frm_cur_depth > 0);
-  return frm_stack[--frm_cur_depth];
+  assert (frame->frm_cur_depth > 0);
+  return frame->frm_stack[--frame->frm_cur_depth];
 }
 
-void
-toyvm_frame::dump_stack (FILE *out)
+static void
+toyvm_frame_dump_stack (toyvm_frame *frame, FILE *out)
 {
   int i;
   fprintf (out, "stack:");
-  for (i = 0; i < frm_cur_depth; i++)
+  for (i = 0; i < frame->frm_cur_depth; i++)
     {
-      fprintf (out, " %d", frm_stack[i]);
+      fprintf (out, " %d", frame->frm_stack[i]);
     }
   fprintf (out, "\n");
 }
 
 /* Execute the given function.  */
 
-int
-toyvm_function::interpret (int arg, FILE *trace)
+static int
+toyvm_function_interpret (toyvm_function *fn, int arg, FILE *trace)
 {
   toyvm_frame frame;
-#define PUSH(ARG) (frame.push (ARG))
-#define POP(ARG) (frame.pop ())
+#define PUSH(ARG) (toyvm_frame_push (&frame, (ARG)))
+#define POP(ARG) (toyvm_frame_pop (&frame))
 
-  frame.frm_function = this;
+  frame.frm_function = fn;
   frame.frm_pc = 0;
   frame.frm_cur_depth = 0;
 
@@ -358,13 +300,13 @@ toyvm_function::interpret (int arg, FILE *trace)
     {
       toyvm_op *op;
       int x, y;
-      assert (frame.frm_pc < fn_num_ops);
-      op = &fn_ops[frame.frm_pc++];
+      assert (frame.frm_pc < fn->fn_num_ops);
+      op = &fn->fn_ops[frame.frm_pc++];
 
       if (trace)
 	{
-	  frame.dump_stack (trace);
-	  disassemble_op (op, frame.frm_pc, trace);
+	  toyvm_frame_dump_stack (&frame, trace);
+	  toyvm_function_disassemble_op (fn, op, frame.frm_pc, trace);
 	}
 
       switch (op->op_opcode)
@@ -409,7 +351,7 @@ toyvm_function::interpret (int arg, FILE *trace)
 
 	case RECURSE:
 	  x = POP ();
-	  x = interpret (x, trace);
+	  x = toyvm_function_interpret (fn, x, trace);
 	  PUSH (x);
 	  break;
 
@@ -439,248 +381,238 @@ toyvm_function::interpret (int arg, FILE *trace)
 
 /* JIT compilation.  */
 
-class compilation_state
+struct compilation_state
 {
-public:
-  compilation_state (toyvm_function &toyvmfn) :
-    toyvmfn (toyvmfn)
-  {}
+  gcc_jit_context *ctxt;
 
-  void create_context ();
-  void create_types ();
-  void create_locations ();
-  void create_function (const char *funcname);
-  compilation_result compile ();
+  gcc_jit_type *int_type;
+  gcc_jit_type *bool_type;
+  gcc_jit_type *stack_type; /* int[MAX_STACK_DEPTH] */
 
-private:
-  void
-  add_push (gccjit::block block,
-            gccjit::rvalue rvalue,
-            gccjit::location loc);
+  gcc_jit_rvalue *const_one;
 
-  void
-  add_pop (gccjit::block block,
-           gccjit::lvalue lvalue,
-           gccjit::location loc);
+  gcc_jit_function *fn;
+  gcc_jit_param *param_arg;
+  gcc_jit_lvalue *stack;
+  gcc_jit_lvalue *stack_depth;
+  gcc_jit_lvalue *x;
+  gcc_jit_lvalue *y;
 
-private:
+  gcc_jit_location *op_locs[MAX_OPS];
+  gcc_jit_block *initial_block;
+  gcc_jit_block *op_blocks[MAX_OPS];
 
-  /* State.  */
+};
 
-  toyvm_function &toyvmfn;
+/* Stack manipulation.  */
 
-  gccjit::context ctxt;
+static void
+add_push (compilation_state *state,
+	  gcc_jit_block *block,
+	  gcc_jit_rvalue *rvalue,
+	  gcc_jit_location *loc)
+{
+  /* stack[stack_depth] = RVALUE */
+  gcc_jit_block_add_assignment (
+    block,
+    loc,
+    /* stack[stack_depth] */
+    gcc_jit_context_new_array_access (
+      state->ctxt,
+      loc,
+      gcc_jit_lvalue_as_rvalue (state->stack),
+      gcc_jit_lvalue_as_rvalue (state->stack_depth)),
+    rvalue);
 
-  gccjit::type int_type;
-  gccjit::type bool_type;
-  gccjit::type stack_type; /* int[MAX_STACK_DEPTH] */
+  /* "stack_depth++;".  */
+  gcc_jit_block_add_assignment_op (
+    block,
+    loc,
+    state->stack_depth,
+    GCC_JIT_BINARY_OP_PLUS,
+    state->const_one);
+}
 
-  gccjit::rvalue const_one;
+static void
+add_pop (compilation_state *state,
+	 gcc_jit_block *block,
+	 gcc_jit_lvalue *lvalue,
+	 gcc_jit_location *loc)
+{
+  /* "--stack_depth;".  */
+  gcc_jit_block_add_assignment_op (
+    block,
+    loc,
+    state->stack_depth,
+    GCC_JIT_BINARY_OP_MINUS,
+    state->const_one);
 
-  gccjit::function fn;
-  gccjit::param param_arg;
-  gccjit::lvalue stack;
-  gccjit::lvalue stack_depth;
-  gccjit::lvalue x;
-  gccjit::lvalue y;
+  /* "LVALUE = stack[stack_depth];".  */
+  gcc_jit_block_add_assignment (
+    block,
+    loc,
+    lvalue,
+    /* stack[stack_depth] */
+    gcc_jit_lvalue_as_rvalue (
+      gcc_jit_context_new_array_access (
+	state->ctxt,
+	loc,
+	gcc_jit_lvalue_as_rvalue (state->stack),
+	gcc_jit_lvalue_as_rvalue (state->stack_depth))));
+}
 
-  gccjit::location op_locs[MAX_OPS];
-  gccjit::block initial_block;
-  gccjit::block op_blocks[MAX_OPS];
+/* A struct to hold the compilation results.  */
 
+struct toyvm_compiled_function
+{
+  gcc_jit_result *cf_jit_result;
+  toyvm_compiled_code cf_code;
 };
 
 /* The main compilation hook.  */
 
-compilation_result
-toyvm_function::compile ()
+static toyvm_compiled_function *
+toyvm_function_compile (toyvm_function *fn)
 {
-  compilation_state state (*this);
+  compilation_state state;
+  int pc;
+  char *funcname;
 
-  state.create_context ();
-  state.create_types ();
-  state.create_locations ();
-  state.create_function (get_function_name ());
+  memset (&state, 0, sizeof (state));
 
-  /* We've now finished populating the context.  Compile it.  */
-  return state.compile ();
-}
+  funcname = get_function_name (fn->fn_filename);
 
-/* Stack manipulation.  */
+  state.ctxt = gcc_jit_context_acquire ();
 
-void
-compilation_state::add_push (gccjit::block block,
-                             gccjit::rvalue rvalue,
-                             gccjit::location loc)
-{
-  /* stack[stack_depth] = RVALUE */
-  block.add_assignment (
-    /* stack[stack_depth] */
-    ctxt.new_array_access (
-      stack,
-      stack_depth,
-      loc),
-    rvalue,
-    loc);
+  gcc_jit_context_set_bool_option (state.ctxt,
+				   GCC_JIT_BOOL_OPTION_DUMP_INITIAL_GIMPLE,
+				   0);
+  gcc_jit_context_set_bool_option (state.ctxt,
+				   GCC_JIT_BOOL_OPTION_DUMP_GENERATED_CODE,
+				   0);
+  gcc_jit_context_set_int_option (state.ctxt,
+				  GCC_JIT_INT_OPTION_OPTIMIZATION_LEVEL,
+				  3);
+  gcc_jit_context_set_bool_option (state.ctxt,
+				   GCC_JIT_BOOL_OPTION_KEEP_INTERMEDIATES,
+				   0);
+  gcc_jit_context_set_bool_option (state.ctxt,
+				   GCC_JIT_BOOL_OPTION_DUMP_EVERYTHING,
+				   0);
+  gcc_jit_context_set_bool_option (state.ctxt,
+				   GCC_JIT_BOOL_OPTION_DEBUGINFO,
+				   1);
 
-  /* "stack_depth++;".  */
-  block.add_assignment_op (
-    stack_depth,
-    GCC_JIT_BINARY_OP_PLUS,
-    const_one,
-    loc);
-}
-
-void
-compilation_state::add_pop (gccjit::block block,
-                            gccjit::lvalue lvalue,
-                            gccjit::location loc)
-{
-  /* "--stack_depth;".  */
-  block.add_assignment_op (
-    stack_depth,
-    GCC_JIT_BINARY_OP_MINUS,
-    const_one,
-    loc);
-
-  /* "LVALUE = stack[stack_depth];".  */
-  block.add_assignment (
-    lvalue,
-    /* stack[stack_depth] */
-    ctxt.new_array_access (stack,
-                           stack_depth,
-                           loc),
-    loc);
-}
-
-/* Create the context. */
-
-void
-compilation_state::create_context ()
-{
-  ctxt = gccjit::context::acquire ();
-
-  ctxt.set_bool_option (GCC_JIT_BOOL_OPTION_DUMP_INITIAL_GIMPLE,
-                              0);
-  ctxt.set_bool_option (GCC_JIT_BOOL_OPTION_DUMP_GENERATED_CODE,
-                              0);
-  ctxt.set_int_option (GCC_JIT_INT_OPTION_OPTIMIZATION_LEVEL,
-                             3);
-  ctxt.set_bool_option (GCC_JIT_BOOL_OPTION_KEEP_INTERMEDIATES,
-                              0);
-  ctxt.set_bool_option (GCC_JIT_BOOL_OPTION_DUMP_EVERYTHING,
-                              0);
-  ctxt.set_bool_option (GCC_JIT_BOOL_OPTION_DEBUGINFO,
-                              1);
-}
-
-/* Create types.  */
-
-void
-compilation_state::create_types ()
-{
   /* Create types.  */
-  int_type = ctxt.get_type (GCC_JIT_TYPE_INT);
-  bool_type = ctxt.get_type (GCC_JIT_TYPE_BOOL);
-  stack_type = ctxt.new_array_type (int_type, MAX_STACK_DEPTH);
+  state.int_type =
+    gcc_jit_context_get_type (state.ctxt, GCC_JIT_TYPE_INT);
+  state.bool_type =
+    gcc_jit_context_get_type (state.ctxt, GCC_JIT_TYPE_BOOL);
+  state.stack_type =
+    gcc_jit_context_new_array_type (state.ctxt, NULL,
+				    state.int_type, MAX_STACK_DEPTH);
 
   /* The constant value 1.  */
-  const_one = ctxt.one (int_type);
+  state.const_one = gcc_jit_context_one (state.ctxt, state.int_type);
 
-}
-
-/* Create locations.  */
-
-void
-compilation_state::create_locations ()
-{
-  for (int pc = 0; pc < toyvmfn.fn_num_ops; pc++)
+  /* Create locations.  */
+  for (pc = 0; pc < fn->fn_num_ops; pc++)
     {
-      toyvm_op *op = &toyvmfn.fn_ops[pc];
+      toyvm_op *op = &fn->fn_ops[pc];
 
-      op_locs[pc] = ctxt.new_location (toyvmfn.fn_filename,
-                                       op->op_linenum,
-                                       0); /* column */
+      state.op_locs[pc] = gcc_jit_context_new_location (state.ctxt,
+							fn->fn_filename,
+							op->op_linenum,
+							0); /* column */
     }
-}
 
-/* Creating the function.  */
-
-void
-compilation_state::create_function (const char *funcname)
-{
-  std::vector <gccjit::param> params;
-  param_arg = ctxt.new_param (int_type, "arg", op_locs[0]);
-  params.push_back (param_arg);
-  fn = ctxt.new_function (GCC_JIT_FUNCTION_EXPORTED,
-                          int_type,
-                          funcname,
-                          params, 0,
-                          op_locs[0]);
+  /* Creating the function.  */
+  state.param_arg =
+    gcc_jit_context_new_param (state.ctxt, state.op_locs[0],
+			       state.int_type, "arg");
+  state.fn =
+    gcc_jit_context_new_function (state.ctxt,
+				  state.op_locs[0],
+				  GCC_JIT_FUNCTION_EXPORTED,
+				  state.int_type,
+				  funcname,
+				  1, &state.param_arg, 0);
 
   /* Create stack lvalues.  */
-  stack = fn.new_local (stack_type, "stack");
-  stack_depth = fn.new_local (int_type, "stack_depth");
-  x = fn.new_local (int_type, "x");
-  y = fn.new_local (int_type, "y");
+  state.stack =
+    gcc_jit_function_new_local (state.fn, NULL,
+				state.stack_type, "stack");
+  state.stack_depth =
+    gcc_jit_function_new_local (state.fn, NULL,
+				state.int_type, "stack_depth");
+  state.x =
+    gcc_jit_function_new_local (state.fn, NULL,
+				state.int_type, "x");
+  state.y =
+    gcc_jit_function_new_local (state.fn, NULL,
+				state.int_type, "y");
 
   /* 1st pass: create blocks, one per opcode. */
 
   /* We need an entry block to do one-time initialization, so create that
      first.  */
-  initial_block = fn.new_block ("initial");
+  state.initial_block = gcc_jit_function_new_block (state.fn, "initial");
 
   /* Create a block per operation.  */
-  for (int pc = 0; pc < toyvmfn.fn_num_ops; pc++)
+  for (pc = 0; pc < fn->fn_num_ops; pc++)
     {
       char buf[16];
       sprintf (buf, "instr%i", pc);
-      op_blocks[pc] = fn.new_block (buf);
+      state.op_blocks[pc] = gcc_jit_function_new_block (state.fn, buf);
     }
 
   /* Populate the initial block.  */
 
   /* "stack_depth = 0;".  */
-  initial_block.add_assignment (stack_depth,
-                                ctxt.zero (int_type),
-                                op_locs[0]);
+  gcc_jit_block_add_assignment (
+    state.initial_block,
+    state.op_locs[0],
+    state.stack_depth,
+    gcc_jit_context_zero (state.ctxt, state.int_type));
 
   /* "PUSH (arg);".  */
-  add_push (initial_block,
-	    param_arg,
-            op_locs[0]);
+  add_push (&state,
+	    state.initial_block,
+	    gcc_jit_param_as_rvalue (state.param_arg),
+	    state.op_locs[0]);
 
   /* ...and jump to insn 0.  */
-  initial_block.end_with_jump (op_blocks[0],
-                               op_locs[0]);
+  gcc_jit_block_end_with_jump (state.initial_block,
+			       state.op_locs[0],
+			       state.op_blocks[0]);
 
   /* 2nd pass: fill in instructions.  */
-  for (int pc = 0; pc < toyvmfn.fn_num_ops; pc++)
+  for (pc = 0; pc < fn->fn_num_ops; pc++)
     {
-      gccjit::location loc = op_locs[pc];
+      gcc_jit_location *loc = state.op_locs[pc];
 
-      gccjit::block block = op_blocks[pc];
-      gccjit::block next_block = (pc < toyvmfn.fn_num_ops
-                                  ? op_blocks[pc + 1]
-                                  : NULL);
+      gcc_jit_block *block = state.op_blocks[pc];
+      gcc_jit_block *next_block = (pc < fn->fn_num_ops
+				   ? state.op_blocks[pc + 1]
+				   : NULL);
 
       toyvm_op *op;
-      op = &toyvmfn.fn_ops[pc];
+      op = &fn->fn_ops[pc];
 
       /* Helper macros.  */
 
 #define X_EQUALS_POP()\
-      add_pop (block, x, loc)
+      add_pop (&state, block, state.x, loc)
 #define Y_EQUALS_POP()\
-      add_pop (block, y, loc)
+      add_pop (&state, block, state.y, loc)
 #define PUSH_RVALUE(RVALUE)\
-      add_push (block, (RVALUE), loc)
+      add_push (&state, block, (RVALUE), loc)
 #define PUSH_X()\
-      PUSH_RVALUE (x)
+      PUSH_RVALUE (gcc_jit_lvalue_as_rvalue (state.x))
 #define PUSH_Y() \
-      PUSH_RVALUE (y)
+      PUSH_RVALUE (gcc_jit_lvalue_as_rvalue (state.y))
 
-      block.add_comment (opcode_names[op->op_opcode], loc);
+      gcc_jit_block_add_comment (block, loc, opcode_names[op->op_opcode]);
 
       /* Handle the individual opcodes.  */
 
@@ -703,33 +635,39 @@ compilation_state::create_function (const char *funcname)
 	  Y_EQUALS_POP ();
 	  X_EQUALS_POP ();
 	  PUSH_RVALUE (
-	   ctxt.new_binary_op (
+	   gcc_jit_context_new_binary_op (
+	     state.ctxt,
+	     loc,
 	     GCC_JIT_BINARY_OP_PLUS,
-	     int_type,
-             x, y,
-             loc));
+	     state.int_type,
+	     gcc_jit_lvalue_as_rvalue (state.x),
+	     gcc_jit_lvalue_as_rvalue (state.y)));
 	  break;
 
 	case BINARY_SUBTRACT:
 	  Y_EQUALS_POP ();
 	  X_EQUALS_POP ();
 	  PUSH_RVALUE (
-           ctxt.new_binary_op (
+	   gcc_jit_context_new_binary_op (
+	     state.ctxt,
+	     loc,
 	     GCC_JIT_BINARY_OP_MINUS,
-	     int_type,
-             x, y,
-             loc));
+	     state.int_type,
+	     gcc_jit_lvalue_as_rvalue (state.x),
+	     gcc_jit_lvalue_as_rvalue (state.y)));
 	  break;
 
 	case BINARY_MULT:
 	  Y_EQUALS_POP ();
 	  X_EQUALS_POP ();
 	  PUSH_RVALUE (
-           ctxt.new_binary_op (
+	   gcc_jit_context_new_binary_op (
+	     state.ctxt,
+	     loc,
 	     GCC_JIT_BINARY_OP_MULT,
-	     int_type,
-             x, y,
-             loc));
+	     state.int_type,
+	     gcc_jit_lvalue_as_rvalue (state.x),
+	     gcc_jit_lvalue_as_rvalue (state.y)));
 	  break;
 
 	case BINARY_COMPARE_LT:
@@ -737,46 +675,62 @@ compilation_state::create_function (const char *funcname)
 	  X_EQUALS_POP ();
 	  PUSH_RVALUE (
 	     /* cast of bool to int */
-	     ctxt.new_cast (
+	     gcc_jit_context_new_cast (
+	       state.ctxt,
+	       loc,
 	       /* (x < y) as a bool */
-	       ctxt.new_comparison (
+	       gcc_jit_context_new_comparison (
+		 state.ctxt,
+		 loc,
 		 GCC_JIT_COMPARISON_LT,
-                 x, y,
-                 loc),
-	       int_type,
-               loc));
+		 gcc_jit_lvalue_as_rvalue (state.x),
+		 gcc_jit_lvalue_as_rvalue (state.y)),
+	       state.int_type));
 	  break;
 
 	case RECURSE:
 	  {
 	    X_EQUALS_POP ();
+	    gcc_jit_rvalue *arg = gcc_jit_lvalue_as_rvalue (state.x);
 	    PUSH_RVALUE (
-	      ctxt.new_call (
-		fn,
-		x,
-                loc));
+	      gcc_jit_context_new_call (
+		state.ctxt,
+		loc,
+		state.fn,
+		1, &arg));
 	    break;
 	  }
 
 	case RETURN:
 	  X_EQUALS_POP ();
-	  block.end_with_return (x, loc);
+	  gcc_jit_block_end_with_return (
+	    block,
+	    loc,
+	    gcc_jit_lvalue_as_rvalue (state.x));
 	  break;
 
 	  /* Ops taking an operand.  */
 	case PUSH_CONST:
 	  PUSH_RVALUE (
-	    ctxt.new_rvalue (int_type, op->op_operand));
+	    gcc_jit_context_new_rvalue_from_int (
+	      state.ctxt,
+	      state.int_type,
+	      op->op_operand));
 	  break;
 
 	case JUMP_ABS_IF_TRUE:
 	  X_EQUALS_POP ();
-	  block.end_with_conditional (
+	  gcc_jit_block_end_with_conditional (
+	    block,
+	    loc,
 	    /* "(bool)x".  */
-            ctxt.new_cast (x, bool_type, loc),
-	    op_blocks[op->op_operand], /* on_true */
-	    next_block, /* on_false */
-            loc); 
+	    gcc_jit_context_new_cast (
+	      state.ctxt,
+	      loc,
+	      gcc_jit_lvalue_as_rvalue (state.x),
+	      state.bool_type),
+	    state.op_blocks[op->op_operand], /* on_true */
+	    next_block); /* on_false */
 	  break;
 
 	default:
@@ -786,15 +740,34 @@ compilation_state::create_function (const char *funcname)
       /* Go to the next block.  */
       if (op->op_opcode != JUMP_ABS_IF_TRUE
 	  && op->op_opcode != RETURN)
-	block.end_with_jump (next_block, loc);
+	gcc_jit_block_end_with_jump (
+	  block,
+	  loc,
+	  next_block);
 
     } /* end of loop on PC locations.  */
-}
 
-compilation_result
-compilation_state::compile ()
-{
-  return ctxt.compile ();
+  /* We've now finished populating the context.  Compile it.  */
+  gcc_jit_result *jit_result = gcc_jit_context_compile (state.ctxt);
+  gcc_jit_context_release (state.ctxt);
+
+  toyvm_compiled_function *toyvm_result =
+    (toyvm_compiled_function *)calloc (1, sizeof (toyvm_compiled_function));
+  if (!toyvm_result)
+    {
+      fprintf (stderr, "out of memory allocating toyvm_compiled_function\n");
+      gcc_jit_result_release (jit_result);
+      return NULL;
+    }
+
+  toyvm_result->cf_jit_result = jit_result;
+  toyvm_result->cf_code =
+    (toyvm_compiled_code)gcc_jit_result_get_code (jit_result,
+						  funcname);
+
+  free (funcname);
+
+  return toyvm_result;
 }
 
 char test[1024];
@@ -833,31 +806,35 @@ test_script (const char *scripts_dir, const char *script_name, int input,
   char *script_path;
   toyvm_function *fn;
   int interpreted_result;
-  toyvm_compiled_func code;
+  toyvm_compiled_function *compiled_fn;
+  toyvm_compiled_code code;
   int compiled_result;
 
-  snprintf (test, sizeof (test), "toyvm.cc: %s", script_name);
+  snprintf (test, sizeof (test), "toyvm.c: %s", script_name);
 
   script_path = (char *)malloc (strlen (scripts_dir)
 				+ strlen (script_name) + 1);
   CHECK_NON_NULL (script_path);
   sprintf (script_path, "%s%s", scripts_dir, script_name);
 
-  fn = toyvm_function::parse (script_path, script_name);
+  fn = toyvm_function_parse (script_path, script_name);
   CHECK_NON_NULL (fn);
 
-  interpreted_result = fn->interpret (input, NULL);
+  interpreted_result = toyvm_function_interpret (fn, input, NULL);
   CHECK_VALUE (interpreted_result, expected_result);
 
-  compilation_result compiler_result = fn->compile ();
+  compiled_fn = toyvm_function_compile (fn);
+  CHECK_NON_NULL (compiled_fn);
 
-  const char *funcname = fn->get_function_name ();
-  code = (toyvm_compiled_func)compiler_result.get_code (funcname);
+  code = (toyvm_compiled_code)compiled_fn->cf_code;
   CHECK_NON_NULL (code);
 
   compiled_result = code (input);
   CHECK_VALUE (compiled_result, expected_result);
 
+  gcc_jit_result_release (compiled_fn->cf_jit_result);
+  free (compiled_fn);
+  free (fn);
   free (script_path);
 }
 
@@ -869,7 +846,7 @@ test_suite (void)
   const char *srcdir;
   char *scripts_dir;
 
-  snprintf (test, sizeof (test), "toyvm.cc");
+  snprintf (test, sizeof (test), "toyvm.c");
 
   /* We need to locate the test scripts.
      Rely on "srcdir" being set in the environment.  */
@@ -910,25 +887,26 @@ main (int argc, char **argv)
     }
 
   filename = argv[1];
-  fn = toyvm_function::parse (filename, filename);
+  fn = toyvm_function_parse (filename, filename);
   if (!fn)
     exit (1);
 
   if (0)
-    fn->disassemble (stdout);
+    toyvm_function_disassemble (fn, stdout);
 
   printf ("interpreter result: %d\n",
-	  fn->interpret (atoi (argv[2]), NULL));
+	  toyvm_function_interpret (fn, atoi (argv[2]), NULL));
 
   /* JIT-compilation.  */
-  compilation_result compiler_result = fn->compile ();
+  toyvm_compiled_function *compiled_fn
+    = toyvm_function_compile (fn);
 
-  const char *funcname = fn->get_function_name ();
-  toyvm_compiled_func code
-    = (toyvm_compiled_func)compiler_result.get_code (funcname);
-
+  toyvm_compiled_code code = compiled_fn->cf_code;
   printf ("compiler result: %d\n",
 	  code (atoi (argv[2])));
+
+  gcc_jit_result_release (compiled_fn->cf_jit_result);
+  free (compiled_fn);
 
  return 0;
 }

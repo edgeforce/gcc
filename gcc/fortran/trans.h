@@ -432,7 +432,7 @@ tree gfc_build_compare_string (tree, tree, tree, tree, int, enum tree_code);
    when a POST chain may be created, and what the returned expression may be
    used for.  Note that character strings have special handling.  This
    should not be a problem as most statements/operations only deal with
-   numeric/logical types.  See the implementations in trans-expr.c
+   numeric/logical types.  See the implementations in trans-expr.cc
    for details of the individual functions.  */
 
 void gfc_conv_expr (gfc_se * se, gfc_expr * expr);

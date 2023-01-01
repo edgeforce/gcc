@@ -641,7 +641,7 @@
   (and (match_code "reg")
        (match_test "mode == DImode && REGNO (op) == AR_LC_REGNUM")))
 
-;; True if this is the ar.ccv register.
+;; True if this is the arv register.
 (define_predicate "ar_ccv_reg_operand"
   (and (match_code "reg")
        (match_test "mode == DImode && REGNO (op) == AR_CCV_REGNUM")))
@@ -653,7 +653,7 @@
 
 ;; True if OP is valid as a base register in a reg + offset address.
 ;; ??? Should I copy the flag_omit_frame_pointer and cse_not_expected
-;; checks from pa.cc basereg_operand as well?  Seems to be OK without them
+;; checks from pa basereg_operand as well?  Seems to be OK without them
 ;; in test runs.
 (define_predicate "basereg_operand"
   (match_operand 0 "register_operand")

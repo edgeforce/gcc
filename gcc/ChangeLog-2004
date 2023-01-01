@@ -8125,7 +8125,7 @@
 
 2004-10-20  Ben Elliston  <bje@au.ibm.com>
 
-	* config/rs6000/rs6000.c
+	* config/rs6000/rs6000.cc
 	(rs6000_va_start): Use build_va_arg_indirect_ref.
 	(rs6000_gimplify_va_arg): Likewise.
 
@@ -10155,14 +10155,14 @@
 	* config/i386/i386.c (ix86_build_builtin_va_list): Initialize
 	va_list_{g,f}pr_counter_field.
 	(ix86_setup_incoming_varargs): Don't do anything if reg_save
-	area will not be used.  Only save registers that tree-stdarg.c
+	area will not be used.  Only save registers that tree-stdarg.cc
 	detected they need saving.
 	(ix86_va_start): Don't set up fields that won't be used.
 
 	* config/rs6000/rs6000.c (rs6000_build_builtin_va_list): Initialize
 	va_list_{g,f}pr_counter_field.
 	(setup_incoming_varargs): Don't do anything if reg_save
-	area will not be used.  Only save registers that tree-stdarg.c
+	area will not be used.  Only save registers that tree-stdarg.cc
 	detected they need saving.
 	(rs6000_va_start): Don't set up fields that won't be used.
 
@@ -10446,14 +10446,14 @@
 	* config/i386/i386.c (ix86_build_builtin_va_list): Initialize
 	va_list_{g,f}pr_counter_field.
 	(ix86_setup_incoming_varargs): Don't do anything if reg_save
-	area will not be used.  Only save registers that tree-stdarg.c
+	area will not be used.  Only save registers that tree-stdarg.cc
 	detected they need saving.
 	(ix86_va_start): Don't set up fields that won't be used.
 
 	* config/rs6000/rs6000.c (rs6000_build_builtin_va_list): Initialize
 	va_list_{g,f}pr_counter_field.
 	(setup_incoming_varargs): Don't do anything if reg_save
-	area will not be used.  Only save registers that tree-stdarg.c
+	area will not be used.  Only save registers that tree-stdarg.cc
 	detected they need saving.
 	(rs6000_va_start): Don't set up fields that won't be used.
 
@@ -12269,19 +12269,19 @@
 	* tree.def, c-common.def, objc/objc-tree.def: Use
 	tree_code_class enumeration constants instead of code letters.
 
-	* alias.c, builtins.c, c-common.c, c-format.c, c-lang.c, c-pragma.c
-	* c-typeck.c, cgraphunit.c, convert.c, dbxout.c, dwarf2out.c
-	* emit-rtl.c expr.c, fold-const.c, gimplify.c, lambda-code.c
-	* langhooks.c, langhooks.h, predict.c, print-tree.c, reload1.c, stmt.c
-	* tree-browser.c, tree-cfg.c, tree-chrec.c, tree-complex.c, tree-dfa.c
-	* tree-dump.c, tree-eh.c, tree-gimple.c, tree-inline.c, tree-nested.c
-	* tree-outof-ssa.c, tree-pretty-print.c, tree-sra.c, tree-ssa-ccp.c
-	* tree-ssa-dce.c, tree-ssa-dom.c, tree-ssa-forwprop.c, tree-ssa-live.c
-	* tree-ssa-loop-im.c, tree-ssa-loop-ivopts.c, tree-ssa-operands.c
-	* tree-ssa-phiopt.c, tree-ssa-pre.c, tree-ssa-propagate.c
-	* tree-ssa.c, tree-ssanames.c, tree-tailcall.c, tree.c, varasm.c
-	* config/sol2-c.c, config/arm/arm.c, config/i386/winnt.c
-	* config/pa/pa.c, config/pa/pa.h, config/sh/sh.c, objc/objc-lang.c
+	* alias.c, builtins.c, c-common.c, c-format.c, c-lang.c, c-pragma.cc
+	* c-typeck.c, cgraphunit.c, convert.c, dbxout.c, dwarf2out.cc
+	* emit-rtl.c expr.c, fold-const.c, gimplify.c, lambda-code.cc
+	* langhooks.c, langhooks.h, predict.c, print-tree.c, reload1.c, stmt.cc
+	* tree-browser.c, tree-cfg.c, tree-chrec.c, tree-complex.c, tree-dfa.cc
+	* tree-dump.c, tree-eh.c, tree-gimple.c, tree-inline.c, tree-nested.cc
+	* tree-outof-ssa.c, tree-pretty-print.c, tree-sra.c, tree-ssa-ccp.cc
+	* tree-ssa-dce.c, tree-ssa-dom.c, tree-ssa-forwprop.c, tree-ssa-live.cc
+	* tree-ssa-loop-im.c, tree-ssa-loop-ivopts.c, tree-ssa-operands.cc
+	* tree-ssa-phiopt.c, tree-ssa-pre.c, tree-ssa-propagate.cc
+	* tree-ssa.c, tree-ssanames.c, tree-tailcall.c, tree.c, varasm.cc
+	* config/sol2-c.c, config/arm/arm.c, config/i386/winnt.cc
+	* config/pa/pa.c, config/pa/pa.h, config/sh/sh.c, objc/objc-lang.cc
 	Update to match.
 
 	* LANGUAGES: Add note about change.
@@ -15186,9 +15186,9 @@
 2004-09-04  Jan Hubicka  <jh@suse.cz>
 
 	* tree.c (iterate_hash_expr): Optimize, avoid use of iterative_hash_object.
-	(mix): New macro copied from hashtab.c
+	(mix): New macro copied from hashtab.cc
 	(iterative_hash_hashval_t, iterative_hash_pointer,
-	iterative_hash_host_wide_int): New functions based on hashtab.c
+	iterative_hash_host_wide_int): New functions based on hashtab.cc
 	implementation.
 
 2004-09-04  Richard Sandiford  <rsandifo@redhat.com>
@@ -17045,7 +17045,7 @@
 	* defaults.h (PREFERRED_DEBUGGING_TYPE): Remove check for
 	DWARF_DEBUGGING_INFO from choice-of-definition chain;
 	restructure using C89 features (#elif, #error).
-	* c-lex.c, final.c, opts.c, config/cris/cris.c, config/frv/frv.c
+	* c-lex.c, final.c, opts.c, config/cris/cris.c, config/frv/frv.cc
 	* config/sh/sh.h: Remove references to DWARF_DEBUG.
 	* doc/invoke.texi: Remove references to DWARF version 1;
 	clarify why -gdwarf-2<n> doesn't work.
@@ -17265,7 +17265,7 @@
 	(BB_DISABLE_SCHEDULE, BB_HOT_PARTITION, BB_COLD_PARTITION)
 	(BB_UNPARTITIONED, BB_PARTITION, BB_SET_PARTITION)
 	(BB_COPY_PARTITION): New macros.
-	* bb-reorder.c, cfgcleanup.c, cfglayout.c, cfgrtl.c, ifcvt.c
+	* bb-reorder.c, cfgcleanup.c, cfglayout.c, cfgrtl.c, ifcvt.cc
 	Replace all references to the 'partition' field of a basic
 	block with new macros.
 
@@ -18389,11 +18389,11 @@
 	* read-rtl.c (read_rtx): Handle (nil) like (define_constants).
 	Tighten the syntax a little.
 
-	* cfgloop.h, combine.c, cse.c, loop-iv.c, postreload.c, reload.c
+	* cfgloop.h, combine.c, cse.c, loop-iv.c, postreload.c, reload.cc
 	* config/alpha/alpha.c, config/alpha/alpha.h, config/arc/arc.h
-	* config/arm/arm.h, config/frv/frv.h, config/i386/i386.c
+	* config/arm/arm.h, config/frv/frv.h, config/i386/i386.cc
 	* config/i386/predicates.md, config/m32r/m32r.h
-	* config/m68hc11/m68hc11.c, config/mcore/mcore.h, config/mips/mips.c
+	* config/m68hc11/m68hc11.c, config/mcore/mcore.h, config/mips/mips.cc
 	* config/mmix/mmix.c, config/pa/pa.h, config/sh/sh.h
 	* config/sparc/sparc.h, doc/tm.texi:
 	Replace all occurrences of NIL with UNKNOWN.
@@ -18711,7 +18711,7 @@
 	xstormy16_onebit_set_operand, xstormy16_onebit_clr_operand): New.
 	(PREDICATE_CODES): Add new predicates.
 
-	* config/stormy16/stormy16.c
+	* config/stormy16/stormy16.cc
 	(xstormy16_asm_output_aligned_common, xstormy16_below100_symbol,
 	xstormy16_below100_operand, xstormy16_below100_or_register,
 	xstormy16_onebit_set_operand, xstormy16_onebit_clr_operand): New.
@@ -19553,7 +19553,7 @@
 	(parse_option): New functions.
 	(output_predicate_decls): Delete.
 	(main): Read the machine description, process DEFINE_PREDICATE or
-	DEFINE_SPECIAL_PREDICATE patterns, write tm-preds.h or insn-preds.c
+	DEFINE_SPECIAL_PREDICATE patterns, write tm-preds.h or insn-preds.cc
 	as appropriate.
 
 	* genrecog.c (struct decision_test): Replace index with
@@ -20068,7 +20068,7 @@
 
 2004-08-09  Jeff Law  <law@redhat.com>
 
-	* Makefile.in (OBJC-common): Add tree-ssa-threadupdate.c
+	* Makefile.in (OBJC-common): Add tree-ssa-threadupdate.cc
 	(tree-ssa-threadupdate.o): Add dependencies.
 	* tree-ssa-threadupdate.c: New file.
 	* tree-flow.h (incoming_edge_threaded): New flag in block annotation.
@@ -20124,7 +20124,7 @@
 
 2004-08-09  Paolo Bonzini  <bonzini@gnu.org>
 
-	* Makefile.in (GTFILES): Remove stmt.c
+	* Makefile.in (GTFILES): Remove stmt.cc
 	(stmt.o): Do not depend on gt-stmt.h.
 	* emit-rtl.c (emit_line_note): Do not call
 	set_file_and_line_for_stmt.
@@ -20592,8 +20592,8 @@
 	init_md_reader_args_cb.
 	* gensupport.h: Update prototypes.
 
-	* genattr.c, genattrtab.c, gencodes.c, genconfig.c, genemit.c
-	* genextract.c, genflags.c, genopinit.c, genoutput.c, genpeep.c
+	* genattr.c, genattrtab.c, gencodes.c, genconfig.c, genemit.cc
+	* genextract.c, genflags.c, genopinit.c, genoutput.c, genpeep.cc
 	* genrecog.c: No need to diagnose lack of an input file;
 	init_md_reader_args will handle it.
 	* genconditions.c: Likewise, and use init_md_reader_args.
@@ -23543,7 +23543,7 @@
 	(m32r_pass_by_reference): Adjust prototype.  Make static.
 	Handle mode sizes correctly.
 	* config/m32r/m32r.h (FUNCTION_ARG_PASS_BY_REFERENCE): Remove.
-	* config/m68hc11/m68hc11-protos.h, config/m68hc11/m68hc11.c
+	* config/m68hc11/m68hc11-protos.h, config/m68hc11/m68hc11.cc
 	(m68hc11_function_arg_pass_by_reference): Remove.
 	* config/m68hc11/m68hc11.h (FUNCTION_ARG_PASS_BY_REFERENCE): Remove.
 	(FUNCTION_ARG_CALLEE_COPIES): Don't reference pass-by-ref.
@@ -24957,7 +24957,7 @@
 	* langhooks.h (reduce_bit_field_operations): New hook.
 	* langhooks-def.h (LANG_HOOKS_REDUCE_BIT_FIELD_OPERATIONS):
 	Define.
-	* c-lang.c, objc/objc-lang.c
+	* c-lang.c, objc/objc-lang.cc
 	(LANG_HOOKS_REDUCE_BIT_FIELD_OPERATIONS): Define.
 	* objc/objc-act.c (check_ivars): Convert types to bit-field types
 	before checking.
@@ -27472,7 +27472,7 @@
 	(vn_compute, vn_lookup_or_add, vn_add, vn_lookup): Add
 	vuse_optype parameter.
 	* tree-pass.h (pass_fre): Declare.
-	* tree-ssa-copy.c (cprop_operand): Move to tree-ssa-dom.c
+	* tree-ssa-copy.c (cprop_operand): Move to tree-ssa-dom.cc
 	(cprop_into_stmt): Likewise.
 	(cprop_into_successor_phis): Likewise.
 	* tree-ssa-dom.c (eliminate_redundant_computations): Fix
@@ -29048,7 +29048,7 @@
 
 2004-06-18  Steven Bosscher  <stevenb@suse.de>
 
-	* config/xtensa/xtensa.c
+	* config/xtensa/xtensa.cc
 	(TARGET_SCHED_USE_DFA_PIPELINE_INTERFACE): Define.
 	* xtensa.md: Replace the old pipeline description with a DFA model.
 
@@ -32928,7 +32928,7 @@
 
 	* tree-gimple.c: Rename from tree-simple.c.
 	* tree-gimple.h: Rename from tree-simple.h.
-	* c-gimplify.c: Rename from c-simplify.c
+	* c-gimplify.c: Rename from c-simplify.cc
 	* Makefile.in, c-decl.c, gimple-low.c, gimplify.c,
 	langhooks.c, tree-alias-ander.c, tree-alias-common.c,
 	tree-complex.c, tree-dfa.c, tree-flow.h, tree-inline.c,
@@ -33454,7 +33454,7 @@
 	* cse.c (fold_rtx): Do not handle CONSTANT_P_RTX.
 	(struct cse_basic_block_data): Rename enum values to not
 	conflict with profile.h; update all uses.
-	* dbxout.c (dbxout_symbol_location): Don't mention integrate.c
+	* dbxout.c (dbxout_symbol_location): Don't mention integrate.cc
 	in comments.
 	* defaults.h (TRAMPOLINE_ALIGNMENT): Move from function.c.
 	* diagnostic.h (debug_output_buffer, dump_generic_node,
@@ -37061,7 +37061,7 @@
 
 	* c-tree.h (C_DECL_REGISTER): New.
 	* c-aux-info.c (gen_decl), c-decl.c (objc_mark_locals_volatile,
-	finish_decl, grokdeclarator, get_parm_info), c-typeck.c
+	finish_decl, grokdeclarator, get_parm_info), c-typeck.cc
 	(build_array_ref, c_mark_addressable): Set and use it.
 	* c-decl.c (grokdeclarator), c-typeck.c (c_mark_addressable):
 	Allow structures with volatile fields to be declared register.
@@ -41840,7 +41840,7 @@
 	* expr.c (force_operand): Handle subregs of expressions created by
 	loop unroller.
 	* loop-init.c (loop_optimizer_init, loop_optimizer_finalize): Move
-	parts of the initialization to toplev.c
+	parts of the initialization to toplev.cc
 	* loop-unroll.c (loop_exit_at_end_p): New.
 	(unroll_and_peel_loops): Call iv_analysis_done.
 	(decide_peel_once_rolling, decide_peel_completely,
@@ -44675,7 +44675,7 @@
 
 2004-01-28  Kazu Hirata  <kazu@cs.umass.edu>
 
-	* config/stormy16/stormy16.c
+	* config/stormy16/stormy16.cc
 	(TARGET_BUILD_BUILTIN_VA_LIST_TYPE): Rename to
 	TARGET_BUILD_BUILTIN_VA_LIST.
 
@@ -45267,7 +45267,7 @@
 
 	* config/stormy16/stormy16-protos.h: Remove the prototype for
 	xstormy16_setup_incoming_varargs.
-	* config/stormy16/stormy16.c
+	* config/stormy16/stormy16.cc
 	(xstormy16_setup_incoming_varargs): Remove.
 	(xstormy16_return_in_memory): New.
 	(TARGET_PROMOTE_FUNCTION_ARGS): Likewise.

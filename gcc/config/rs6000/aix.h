@@ -65,10 +65,10 @@
 
    The default value for this macro is `STACK_POINTER_OFFSET' plus the
    length of the outgoing arguments.  The default is correct for most
-   machines.  See `function.cc' for details.
+   machines.  See `function' for details.
 
    This value must be a multiple of STACK_BOUNDARY (hard coded in
-   `emit-rtl.cc').  */
+   `emit-rtl').  */
 #undef STACK_DYNAMIC_OFFSET
 #define STACK_DYNAMIC_OFFSET(FUNDECL)					\
    RS6000_ALIGN (crtl->outgoing_args_size.to_constant ()		\

@@ -682,7 +682,7 @@ package body Warnsw is
       Warn_On_Suspicious_Modulus_Value    := True; -- -gnatw.m
       Warn_On_Unchecked_Conversion        := True; -- -gnatwz
       Warn_On_Unrecognized_Pragma         := True; -- -gnatwg
-      Warn_On_Unrepped_Components         := True; -- -gnatw.c
+      Warn_On_Unrepped_Components         := True; -- -gnatw.cc
    end WA_Warnings;
 
 end Warnsw;

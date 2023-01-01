@@ -1411,7 +1411,7 @@
 
 2014-12-10  Richard Biener  <rguenther@suse.de>
 
-	* tree-ssa-loop-im.c
+	* tree-ssa-loop-im.cc
 	(move_computations_dom_walker::before_dom_children): Clear
 	SSA_NAME_RANGE_INFO on moved stmts.
 
@@ -1500,7 +1500,7 @@
 2014-12-10  Kito Cheng  <kito@0xlab.org>
 
 	* doc/libgcc.texi: Update text to match implementation in
-	libgcc/libgcc2.c
+	libgcc/libgcc2.cc
 
 2014-12-09  Trevor Saunders  <tsaunders@mozilla.com>
 
@@ -1808,7 +1808,7 @@
 2014-12-08  Bernd Edlinger  <bernd.edlinger@hotmail.de>
 
 	PR ipa/64049
-	* ipa-polymorphic-call.c
+	* ipa-polymorphic-call.cc
 	(pa_polymorphic_call_context::ipa_polymorphic_call): Allow RESULT_DECL.
 
 2014-12-08  Alex Velenko  <Alex.Velenko@arm.com>
@@ -2700,7 +2700,7 @@
 	ix86_atomic_assign_expand_fenv): Likewise.
 	* config/mep/mep.c (mep_gimplify_va_arg_expr): Likewise.
 	* config/xtensa/xtensa.c (xtensa_gimplify_va_arg_expr): Likewise.
-	* config/aarch64/aarch64-builtins.c
+	* config/aarch64/aarch64-builtins.cc
 	(aarch64_atomic_assign_expand_fenv): Likewise.
 	* config/stormy16/stormy16.c (xstormy16_gimplify_va_arg_expr):
 	Likewise.
@@ -3787,7 +3787,7 @@
 	(VSI2QI): Likewise.
 	* config/aarch64/aarch64-simd-builtins.def: New entry for ctz.
 	* config/aarch64/aarch64-simd.md (ctz<mode>2): New pattern for ctz.
-	* config/aarch64/aarch64-builtins.c
+	* config/aarch64/aarch64-builtins.cc
 	(aarch64_builtin_vectorized_function): Support BUILT_IN_CTZ.
 
 2014-11-21  H.J. Lu  <hongjiu.lu@intel.com>
@@ -4368,7 +4368,7 @@
 2014-11-19  David Malcolm  <dmalcolm@redhat.com>
 
 	PR jit/63854
-	* bb-reorder.c
+	* bb-reorder.cc
 	(find_rarely_executed_basic_blocks_and_crossing_edges): Convert
 	local bbs_in_hot_partition from vec<> to auto_vec<>.
 
@@ -5122,8 +5122,8 @@
 	* tree-ssa-sccvn.c: Likewise.
 	* tree-ssa-sccvn.h: Likewise.
 	* tree-ssa-sink.c: Likewise.
-	* tree-ssa-strlen.c
-	* tree-ssa-structalias.c
+	* tree-ssa-strlen.cc
+	* tree-ssa-structalias.cc
 	* tree-ssa-tail-merge.c: Likewise.
 	* tree-ssa-ter.c: Likewise.
 	* tree-ssa-threadedge.c: Likewise.
@@ -5179,7 +5179,7 @@
 	(gimple_assign_set_rhs_with_ops): ... this.
 	* ipa-split.c (split_function): Remove last NULL argument
 	from gimple_build_assign_with_ops call.
-	* tree-ssa-loop-im.c
+	* tree-ssa-loop-im.cc
 	(move_computations_dom_walker::before_dom_children): Likewise.
 	* tsan.c (instrument_builtin_call): Likewise.
 	* tree-vect-stmts.c (vect_init_vector, vectorizable_mask_load_store,
@@ -5366,7 +5366,7 @@
 	* config/mips/mips.c (mips_use_by_pieces_infrastructure_p)): Likewise.
 	* config/s390/s390.c (s390_use_by_pieces_infrastructure_p)): Likewise.
 	* config/sh/sh.c (sh_use_by_pieces_infrastructure_p)): Likewise.
-	* config/aarch64/aarch64.c
+	* config/aarch64/aarch64.cc
 	(aarch64_use_by_pieces_infrastructure_p)): Likewise.
 	* doc/tm.texi: Regenerate.
 
@@ -7368,7 +7368,7 @@
 
 2014-11-16  Jan Hubicka  <hubicka@ucw.cz>
 
-	* ipa-polymorphic-call.c
+	* ipa-polymorphic-call.cc
 	(ipa_polymorphic_call_context::speculation_consistent_p): Constify.
 	(ipa_polymorphic_call_context::meet_speculation_with): New function.
 	(ipa_polymorphic_call_context::combine_with): Handle types in
@@ -9322,7 +9322,7 @@
 2014-11-07  Richard Biener  <rguenther@suse.de>
 
 	* match.pd: Add patterns for POINTER_PLUS_EXPR association
-	and special patterns from tree-ssa-forwprop.c
+	and special patterns from tree-ssa-forwprop.cc
 	* fold-const.c (fold_binary_loc): Remove them here.
 	* tree-ssa-forwprop.c (to_purge): New global bitmap.
 	(fwprop_set_lattice_val): New function.
@@ -10109,7 +10109,7 @@
 
 2014-11-05  Tejas Belagod  <tejas.belagod@arm.com>
 
-	* config/aarch64/aarch64-builtins.c
+	* config/aarch64/aarch64-builtins.cc
 	(aarch64_build_scalar_type): Remove.
 	(aarch64_scalar_builtin_types, aarch64_simd_type,
 	aarch64_simd_type, aarch64_mangle_builtin_scalar_type,
@@ -10487,7 +10487,7 @@
 
 2014-11-01  James Greenhalgh  <james.greenhalgh@arm.com>
 
-	* config/aarch64/aarch64.c
+	* config/aarch64/aarch64.cc
 	(aarch64_use_by_pieces_infrastructre_p): New.
 	(TARGET_USE_BY_PIECES_INFRASTRUCTURE): Likewise.
 	* config/aarch64/aarch64.h (STORE_BY_PIECES_P): Delete.
@@ -11072,7 +11072,7 @@
 	* gimple-fold.h (follow_single_use_edges): Declare.
 	* gimple-fold.c (follow_single_use_edges): New function.
 	(gimple_fold_stmt_to_constant_1): Dispatch to gimple_simplify.
-	* tree-ssa-propagate.c
+	* tree-ssa-propagate.cc
 	(substitute_and_fold_dom_walker::before_dom_children): Allow
 	following single-use edges when folding stmts we propagated into.
 
@@ -11102,7 +11102,7 @@
 	    Kirill Yukhin  <kirill.yukhin@intel.com>
 	    Michael Zolotukhin  <michael.v.zolotukhin@intel.com>
 
-	* config/i386/i386.c
+	* config/i386/i386.cc
 	(ix86_expand_args_builtin): Handle avx_vpermilv4df_mask,
 	avx_shufpd256_mask, avx_vpermilv2df_mask.
 
@@ -11115,7 +11115,7 @@
 	    Kirill Yukhin  <kirill.yukhin@intel.com>
 	    Michael Zolotukhin  <michael.v.zolotukhin@intel.com>
 
-	* config/i386/i386.c
+	* config/i386/i386.cc
 	(ix86_init_mmx_sse_builtins):
 	Define __builtin_ia32_gather3siv2df, __builtin_ia32_gather3siv4df,
 	__builtin_ia32_gather3div2df, __builtin_ia32_gather3div4df,
@@ -11145,7 +11145,7 @@
 	    Kirill Yukhin  <kirill.yukhin@intel.com>
 	    Michael Zolotukhin  <michael.v.zolotukhin@intel.com>
 
-	* config/i386/i386.c
+	* config/i386/i386.cc
 	(ix86_builtins): Add IX86_BUILTIN_GATHER3ALTSIV4DF,
 	IX86_BUILTIN_GATHER3ALTDIV8SF, IX86_BUILTIN_GATHER3ALTSIV4DI,
 	IX86_BUILTIN_GATHER3ALTDIV8SI.
@@ -13520,7 +13520,7 @@
 
 2014-10-24  Charles Baylis  <charles.baylis@linaro.org>
 
-	* config/aarch64/aarch64-builtins.c
+	* config/aarch64/aarch64-builtins.cc
 	(aarch64_types_loadstruct_lane_qualifiers): Define.
 	* config/aarch64/aarch64-simd-builtins.def (ld2_lane, ld3_lane,
 	ld4_lane): New builtins.
@@ -13941,7 +13941,7 @@
 	(MOSTLYCLEANFILES): Add gimple-match.c and generic-match.c.
 	(gimple-match.c): Generate by triggering s-match.
 	(generic-match.c): Likewise.
-	(s-match): Rule to build gimple-match.c and generic-match.c
+	(s-match): Rule to build gimple-match.c and generic-match.cc
 	by running the genmatch generator program.
 	(build/hash-table.o): Dependencies to build hash-table.c for the host.
 	(build/genmatch.o): Dependencies to build genmatch.
@@ -15292,7 +15292,7 @@
 	    Kirill Yukhin  <kirill.yukhin@intel.com>
 	    Michael Zolotukhin  <michael.v.zolotukhin@intel.com>
 
-	* config/i386/i386.c
+	* config/i386/i386.cc
 	(ix86_expand_sse_movcc): Handle V64QI and V32HI mode.
 	(ix86_expand_int_vcond): Ditto.
 
@@ -15305,7 +15305,7 @@
 	    Kirill Yukhin  <kirill.yukhin@intel.com>
 	    Michael Zolotukhin  <michael.v.zolotukhin@intel.com>
 
-	* config/i386/i386.c
+	* config/i386/i386.cc
 	(emit_reduc_half): Handle V64QI and V32HI mode.
 	* config/i386/sse.md
 	(define_mode_iterator VI_AVX512BW): New.
@@ -15332,7 +15332,7 @@
 	    Kirill Yukhin  <kirill.yukhin@intel.com>
 	    Michael Zolotukhin  <michael.v.zolotukhin@intel.com>
 
-	* config/i386/i386.c
+	* config/i386/i386.cc
 	(ix86_expand_vector_logical_operator): Handle V16SF and V8DF modes.
 	* config/i386/sse.md
 	(define_mode_iterator VI): Add V64QI and V32HI modes.
@@ -15515,7 +15515,7 @@
 	    Kirill Yukhin  <kirill.yukhin@intel.com>
 	    Michael Zolotukhin  <michael.v.zolotukhin@intel.com>
 
-	* config/i386/i386.c
+	* config/i386/i386.cc
 	(ix86_expand_args_builtin): Handle CODE_FOR_avx512vl_cmpv4di3_mask,
 	CODE_FOR_avx512vl_cmpv8si3_mask, CODE_FOR_avx512vl_ucmpv4di3_mask,
 	CODE_FOR_avx512vl_ucmpv8si3_mask, CODE_FOR_avx512vl_cmpv2di3_mask,
@@ -16227,7 +16227,7 @@
 
 	* ipa-prop.c (ipa_compute_jump_functions_for_edge): Call
 	get_dynamic_type; drop TODO.
-	* ipa-polymorphic-call.c
+	* ipa-polymorphic-call.cc
 	(ipa_polymorphic_call_context::get_dynamic_type): Be ready
 	for otr_type to be unknown.
 
@@ -16255,7 +16255,7 @@
 
 2014-10-03  Jan Hubicka  <hubicka@ucw.cz>
 
-	* ipa-polymorphic-call.c
+	* ipa-polymorphic-call.cc
 	(ipa_polymorphic_call_context::ipa_polymorphic_call_context): Fix
 	code determining speculative type.
 	(ipa_polymorphic_call_context::combine_with): Fix speculation merge.
@@ -16418,7 +16418,7 @@
 	* cgraph.h (ipa_polymorphic_call_context):
 	Turn bools into bitfields; add DYNAMIC; make MAKE_SPECULATIVE
 	private, add POSSIBLE_DYNAMIC_TYPE_CHANGE.
-	* ipa-polymorphic-call.c
+	* ipa-polymorphic-call.cc
 	(ipa_polymorphic_call_context::restrict_to_inner_class): Allow accesses
 	past end of dynamic types.
 	(ipa_polymorphic_call_context::stream_out,
@@ -16504,7 +16504,7 @@
 
 2014-10-01  Jan Hubicka  <hubicka@ucw.cz>
 
-	* ipa-polymorphic-call.c
+	* ipa-polymorphic-call.cc
 	(ipa_polymorphic_call_context::restrict_to_inner_class):
 	Rename EXPECTED_TYPE to OTR_TYPE; Validate speculation late;
 	use speculation_consistent_p to do so; Add CONSDER_BASES
@@ -16697,7 +16697,7 @@
 2014-09-26  Jan Hubicka  <hubicka@ucw.cz>
 
 	PR ipa/62121
-	* ipa-polymorphic-call.c
+	* ipa-polymorphic-call.cc
 	(ipa_polymorphic_call_context::restrict_to_inner_class): Fix pasto
 	in checking array size.
 
@@ -16769,7 +16769,7 @@
 	* ipa-utils.h (subbinfo_with_vtable_at_offset,
 	type_all_derivations_known_p, type_known_to_have_no_deriavations_p,
 	types_must_be_same_for_odr, types_odr_comparable): Declare.
-	(polymorphic_type_binfo_p): Move here from ipa-devirt.c
+	(polymorphic_type_binfo_p): Move here from ipa-devirt.cc
 	* ipa-polymorphic-call.c: New file.
 	(contains_polymorphic_type_p, possible_placement_new,
 	ipa_polymorphic_call_context::restrict_to_inner_class,
@@ -16785,7 +16785,7 @@
 	extr_type_from_vtbl_ptr_store, record_known_type
 	check_stmt_for_type_change,
 	ipa_polymorphic_call_context::get_dynamic_type): Move here from
-	ipa-devirt.c
+	ipa-devirt.cc
 	* ipa-devirt.c: No longer include data-streamer.h, lto-streamer.h
 	and streamer-hooks.h
 	(contains_polymorphic_type_p, possible_placement_new,
@@ -16802,11 +16802,11 @@
 	extr_type_from_vtbl_ptr_store, record_known_type
 	check_stmt_for_type_change,
 	ipa_polymorphic_call_context::get_dynamic_type): Move to
-	ipa-polymorphic-call.c
+	ipa-polymorphic-call.cc
 	(type_all_derivations_known_p, types_odr_comparable,
 	types_must_be_same_for_odr): Export.
 	(type_known_to_have_no_deriavations_p): New function.
-	* Makefile.in: Add ipa-polymorphic-call.c
+	* Makefile.in: Add ipa-polymorphic-call.cc
 
 2014-09-25  Jan Hubicka  <hubicka@ucw.cz>
 
@@ -16960,7 +16960,7 @@
 	    Kirill Yukhin  <kirill.yukhin@intel.com>
 	    Michael Zolotukhin  <michael.v.zolotukhin@intel.com>
 
-	* config/i386/i386.c
+	* config/i386/i386.cc
 	(avx512f_ufix_notruncv8dfv8si_mask_round): Rename to ...
 	(ufix_notruncv8dfv8si2_mask_round): ... this.
 	* config/i386/sse.md
@@ -17179,7 +17179,7 @@
 	    Kirill Yukhin  <kirill.yukhin@intel.com>
 	    Michael Zolotukhin  <michael.v.zolotukhin@intel.com>
 
-	* config/i386/i386.c
+	* config/i386/i386.cc
 	(ix86_expand_args_builtin): Handle CODE_FOR_sse2_shufpd,
 	CODE_FOR_sse2_sse2_shufpd_mask, CODE_FOR_sse2_avx512dq_shuf_f64x2_mask,
 	CODE_FOR_sse2_avx512dq_shuf_i64x2_mask,
@@ -17206,7 +17206,7 @@
 	    Kirill Yukhin  <kirill.yukhin@intel.com>
 	    Michael Zolotukhin  <michael.v.zolotukhin@intel.com>
 
-	* config/i386/i386.c
+	* config/i386/i386.cc
 	(CODE_FOR_avx2_extracti128): Rename to ...
 	(CODE_FOR_avx_vextractf128v4di): this.
 	(CODE_FOR_avx2_inserti128): Rename to ...
@@ -18004,7 +18004,7 @@
 	    Kirill Yukhin  <kirill.yukhin@intel.com>
 	    Michael Zolotukhin  <michael.v.zolotukhin@intel.com>
 
-	* config/i386/i386.c
+	* config/i386/i386.cc
 	(ix86_expand_vector_extract): Handle V32HI and V64QI modes.
 	* config/i386/sse.md
 	(define_mode_iterator VI48F_256): New.
@@ -18976,7 +18976,7 @@
 	    Kirill Yukhin  <kirill.yukhin@intel.com>
 	    Michael Zolotukhin  <michael.v.zolotukhin@intel.com>
 
-	* config/i386/i386.c
+	* config/i386/i386.cc
 	(ix86_expand_args_builtin): Handle avx512dq_rangepv8df_mask_round,
 	avx512dq_rangepv16sf_mask_round, avx512dq_rangepv4df_mask,
 	avx512dq_rangepv8sf_mask, avx512dq_rangepv2df_mask,
@@ -19001,7 +19001,7 @@
 	    Kirill Yukhin  <kirill.yukhin@intel.com>
 	    Michael Zolotukhin  <michael.v.zolotukhin@intel.com>
 
-	* config/i386/i386.c
+	* config/i386/i386.cc
 	(avx512f_vgetmantv2df_round): Rename from "avx512f_getmantv2df_round".
 	(avx512f_vgetmantv4sf_round): Rename from "avx512f_vgetmantv4sf_round".
 	(ix86_expand_args_builtin): Handle avx512vl_getmantv8sf_mask,
@@ -19818,7 +19818,7 @@
 
 2014-09-08  Alan Lawrence  <alan.lawrence@arm.com>
 
-	* config/aarch64/aarch64-builtins.c
+	* config/aarch64/aarch64-builtins.cc
 	(aarch64_types_cmtst_qualifiers, TYPES_TST): Remove as unused.
 
 2014-09-08  Joseph Myers  <joseph@codesourcery.com>
@@ -20576,7 +20576,7 @@
 
 2014-09-03  Chung-Ju Wu  <jasonwucj@gmail.com>
 
-	* config/nds32/nds32-predicates.c
+	* config/nds32/nds32-predicates.cc
 	(nds32_valid_stack_push_pop): Rename to ...
 	(nds32_valid_stack_push_pop_p): ... this.
 	* config/nds32/nds32-protos.h: Likewise.
@@ -21229,7 +21229,7 @@
 	of dfa_clear_single_insn_cache from rtx to rtx_insn *.
 	* genautomata.c (output_dfa_clean_insn_cache_func): Likewise when
 	writing out the definition of dfa_clear_single_insn_cache to the
-	generated insn-automata.c
+	generated insn-automata.cc
 
 2014-08-28  David Malcolm  <dmalcolm@redhat.com>
 
@@ -25070,7 +25070,7 @@
 	(frame_move_insn): Strengthen return type from rtx to rtx_insn *.
 	(epiphany_expand_prologue): Likewise for local "insn".
 	* config/epiphany/mode-switch-use.c (insert_uses): Likewise.
-	* config/epiphany/resolve-sw-modes.c
+	* config/epiphany/resolve-sw-modes.cc
 	(pass_resolve_sw_modes::execute): Likewise for locals "insn" and
 	"seq".
 
@@ -27417,7 +27417,7 @@
 	* genattrtab.c (write_attr_get): Within the generated get_attr_
 	functions, rename param "insn" to "uncast_insn" and reintroduce
 	"insn" as an local rtx_insn * using a checked cast, so that "insn"
-	is an rtx_insn * within insn-attrtab.c
+	is an rtx_insn * within insn-attrtab.cc
 
 2014-08-21  David Malcolm  <dmalcolm@redhat.com>
 
@@ -28790,7 +28790,7 @@
 	    Kirill Yukhin  <kirill.yukhin@intel.com>
 	    Michael Zolotukhin  <michael.v.zolotukhin@intel.com>
 
-	* config/i386/i386.c
+	* config/i386/i386.cc
 	(ix86_expand_special_args_builtin): Handle avx512vl_storev8sf_mask,
 	avx512vl_storev8si_mask, avx512vl_storev4df_mask, avx512vl_storev4di_mask,
 	avx512vl_storev4sf_mask, avx512vl_storev4si_mask, avx512vl_storev2df_mask,
@@ -29559,7 +29559,7 @@
 	    Kirill Yukhin  <kirill.yukhin@intel.com>
 	    Michael Zolotukhin  <michael.v.zolotukhin@intel.com>
 
-	* common/config/i386/i386-common.c
+	* common/config/i386/i386-common.cc
 	(OPTION_MASK_ISA_AVX512VL_SET): Define.
 	(OPTION_MASK_ISA_AVX512F_UNSET): Update.
 	(ix86_handle_option): Handle OPT_mavx512vl.
@@ -29591,7 +29591,7 @@
 	    Kirill Yukhin  <kirill.yukhin@intel.com>
 	    Michael Zolotukhin  <michael.v.zolotukhin@intel.com>
 
-	* common/config/i386/i386-common.c
+	* common/config/i386/i386-common.cc
 	(OPTION_MASK_ISA_AVX512BW_SET) : Define.
 	(OPTION_MASK_ISA_AVX512BW_UNSET): Ditto.
 	(OPTION_MASK_ISA_AVX512VL_UNSET) : Ditto.
@@ -29729,7 +29729,7 @@
 	    Kirill Yukhin  <kirill.yukhin@intel.com>
 	    Michael Zolotukhin  <michael.v.zolotukhin@intel.com>
 
-	* common/config/i386/i386-common.c
+	* common/config/i386/i386-common.cc
 	(OPTION_MASK_ISA_AVX512DQ_SET): Define.
 	(OPTION_MASK_ISA_AVX512DQ_UNSET): Ditto.
 	(ix86_handle_option): Handle OPT_mavx512dq.
@@ -29780,7 +29780,7 @@
 	(replace_call_with_value): New function.
 	(replace_call_with_call_and_fold): Likewise.
 	(var_decl_component_p): Moved from builtins.c.
-	(gimple_fold_builtin_memory_op): Moved from builtins.c
+	(gimple_fold_builtin_memory_op): Moved from builtins.cc
 	fold_builtin_memory_op and rewritten to GIMPLE.
 	(gimple_fold_builtin_memset): Likewise.
 	(gimple_fold_builtin_strcpy): Likewise.
@@ -30106,7 +30106,7 @@
 
 2014-08-05  James Greenhalgh  <james.greenhalgh@arm.com>
 
-	* config/aarch64/aarch64-builtins.c
+	* config/aarch64/aarch64-builtins.cc
 	(aarch64_simd_builtin_type_mode): Delete.
 	(v8qi_UP): Remap to V8QImode.
 	(v4hi_UP): Remap to V4HImode.
@@ -30460,7 +30460,7 @@
 	(hash_loc_operands): Dito.
 	(hash_locs): Dito.
 	(hash_loc_list): Dito.
-	* rtl.c (iterative_hash_rtx): Moved to rtlhash.c
+	* rtl.c (iterative_hash_rtx): Moved to rtlhash.cc
 	* rtl.h (iterative_hash_rtx): Moved to rtlhash.h
 	* rtlhash.c: New file.
 	* rtlhash.h: New file.
@@ -30509,7 +30509,7 @@
 
 2014-07-31  James Greenhalgh  <james.greenhalgh@arm.com>
 
-	* config/aarch64/aarch64-builtins.c
+	* config/aarch64/aarch64-builtins.cc
 	(aarch64_gimple_fold_builtin): Don't fold reduction operations for
 	BYTES_BIG_ENDIAN.
 
@@ -31374,32 +31374,32 @@
 
 2014-07-23  Jiong Wang  <jiong.wang@arm.com>
 
-	* config/aarch64/aarch64.c
+	* config/aarch64/aarch64.cc
 	(aarch64_save_or_restore_callee_save_registers)
 	(aarch64_save_or_restore_fprs): Hoist calculation of register rtx.
 
 2014-07-23  Jiong Wang  <jiong.wang@arm.com>
 
-	* config/aarch64/aarch64.c
+	* config/aarch64/aarch64.cc
 	(aarch64_save_or_restore_callee_save_registers)
 	(aarch64_save_or_restore_fprs): Remove 'increment'.
 
 2014-07-23  Jiong Wang  <jiong.wang@arm.com>
 
-	* config/aarch64/aarch64.c
+	* config/aarch64/aarch64.cc
 	(aarch64_save_or_restore_callee_save_registers)
 	(aarch64_save_or_restore_fprs): Use register offset in
 	cfun->machine->frame.reg_offset.
 
 2014-07-23  Jiong Wang  <jiong.wang@arm.com>
 
-	* config/aarch64/aarch64.c
+	* config/aarch64/aarch64.cc
 	(aarch64_save_or_restore_callee_save_registers)
 	(aarch64_save_or_restore_fprs): Remove base_rtx.
 
 2014-07-23  Jiong Wang  <jiong.wang@arm.com>
 
-	* config/aarch64/aarch64.c
+	* config/aarch64/aarch64.cc
 	(aarch64_save_or_restore_callee_save_registers): Rename 'offset'
 	to 'start_offset'.  Remove local variable 'start_offset'.
 
@@ -32523,7 +32523,7 @@
 	    Kito Cheng  <kito@0xlab.org>
 	    Monk Chiang  <sh.chiang04@gmail.com>
 
-	* config/nds32/nds32.c
+	* config/nds32/nds32.cc
 	(nds32_consecutive_registers_load_store_p): Move to ...
 	(nds32_valid_multiple_load_store): Move to ...
 	(nds32_valid_stack_push_pop): Move to ...
@@ -32537,7 +32537,7 @@
 	    Kito Cheng  <kito@0xlab.org>
 	    Monk Chiang  <sh.chiang04@gmail.com>
 
-	* config/nds32/nds32.c
+	* config/nds32/nds32.cc
 	(nds32_expand_builtin_null_ftype_reg): Move to ...
 	(nds32_expand_builtin_reg_ftype_imm): Move to ...
 	(nds32_expand_builtin_null_ftype_reg_imm): Move to ...
@@ -33550,7 +33550,7 @@
 	(pass_tree_loop::gate): Call it.
 	(pass_data_tree_no_loop, pass_tree_no_loop,
 	make_pass_tree_no_loop): New.
-	* tree-vectorizer.c: Include tree-scalar-evolution.c
+	* tree-vectorizer.c: Include tree-scalar-evolution.cc
 	(pass_slp_vectorize::execute): Initialize loops and SCEV if
 	required.
 	(pass_slp_vectorize::clone): New method.
@@ -34052,7 +34052,7 @@
 2014-06-18  Tom de Vries  <tom@codesourcery.com>
 
 	* config/aarch64/aarch64-protos.h (aarch64_emit_call_insn): Declare.
-	* config/aarch64/aarch64.c
+	* config/aarch64/aarch64.cc
 	(TARGET_CALL_FUSAGE_CONTAINS_NON_CALLEE_CLOBBERS): Redefine as true.
 	(aarch64_emit_call_insn): New function.
 	(aarch64_load_symref_appropriately): Use aarch64_emit_call_insn instead
@@ -35982,7 +35982,7 @@
 
 2014-06-03  Alan Lawrence  <alan.lawrence@arm.com>
 
-	* gcc/config/aarch64/aarch64-builtins.c
+	* gcc/config/aarch64/aarch64-builtins.cc
 	(aarch64_types_binop_ssu_qualifiers): New static data.
 	(TYPES_BINOP_SSU): Define.
 	* gcc/config/aarch64/aarch64-simd-builtins.def (suqadd, ushl, urshl,
@@ -36001,7 +36001,7 @@
 
 2014-06-03  Alan Lawrence  <alan.lawrence@arm.com>
 
-	* gcc/config/aarch64/aarch64-builtins.c
+	* gcc/config/aarch64/aarch64-builtins.cc
 	(aarch64_types_binop_uus_qualifiers,
 	aarch64_types_shift_to_unsigned_qualifiers,
 	aarch64_types_unsigned_shiftacc_qualifiers): Define.
@@ -36165,7 +36165,7 @@
 	Remove prototypes of functions defined in builtins.c.
 	* builtins.h: Update prototype list to include all exported functions.
 	* builtins.c: (default_libc_has_function, gnu_libc_has_function,
-	no_c99_libc_has_function): Move to targhooks.c
+	no_c99_libc_has_function): Move to targhooks.cc
 	(build_string_literal, build_call_expr_loc_array,
 	build_call_expr_loc_vec, build_call_expr_loc, build_call_expr): Move
 	to tree.c.
@@ -36297,7 +36297,7 @@
 
 2014-06-02  Andreas Schwab  <schwab@suse.de>
 
-	* config/ia64/ia64.c
+	* config/ia64/ia64.cc
 	(ia64_first_cycle_multipass_dfa_lookahead_guard): Check
 	pending_data_specs first.
 
@@ -37032,7 +37032,7 @@
 	make_pass_ipa_function_and_variable_visibility,
 	whole_program_function_and_variable_visibility,
 	pass_data_ipa_whole_program_visibility,
-	make_pass_ipa_whole_program_visibility): Move to ipa-visibility.c
+	make_pass_ipa_whole_program_visibility): Move to ipa-visibility.cc
 	* cgraph.h (cgraph_local_node_p): Declare.
 	* ipa-visibility.c: New file.
 	* Makefile.in (OBJS): Add ipa-visiblity.o
@@ -37659,7 +37659,7 @@
 	(core2i7_first_cycle_multipass_begin,)
 	(core2i7_first_cycle_multipass_issue,)
 	(core2i7_first_cycle_multipass_backtrack): Update signature.
-	* config/ia64/ia64.c
+	* config/ia64/ia64.cc
 	(ia64_first_cycle_multipass_dfa_lookahead_guard_spec): Remove.
 	(ia64_first_cycle_multipass_dfa_lookahead_guard): Update signature.
 	(TARGET_SCHED_FIRST_CYCLE_MULTIPASS_DFA_LOOKAHEAD_GUARD_SPEC): Remove
@@ -38752,7 +38752,7 @@
 
 2014-05-14  Ilya Tocar  <ilya.tocar@intel.com>
 
-	* common/config/i386/i386-common.c
+	* common/config/i386/i386-common.cc
 	(OPTION_MASK_ISA_CLFLUSHOPT_SET): Define.
 	(OPTION_MASK_ISA_XSAVES_SET): Ditto.
 	(OPTION_MASK_ISA_XSAVEC_SET): Ditto.
@@ -39058,9 +39058,9 @@
 	* function.c: Likewise.
 	(requires_stack_frame_p, next_block_for_reg,
 	move_insn_for_shrink_wrap, prepare_shrink_wrap,
-	dup_block_and_redirect): Move to shrink-wrap.c
+	dup_block_and_redirect): Move to shrink-wrap.cc
 	(thread_prologue_and_epilogue_insns): Extract three code segments
-	as functions in shrink-wrap.c
+	as functions in shrink-wrap.cc
 	* function.h: Move #ifdef HAVE_simple_return ... #endif block to
 	shrink-wrap.h
 	* shrink-wrap.c: New file.
@@ -39592,7 +39592,7 @@
 2014-05-07  Thomas Schwinge  <thomas@codesourcery.com>
 
 	* cfgloop.h (unswitch_loops): Remove.
-	* doc/passes.texi: Remove references to loop-unswitch.c
+	* doc/passes.texi: Remove references to loop-unswitch.cc
 	* timevar.def (TV_LOOP_UNSWITCH): Remove.
 
 2014-05-07  Evgeny Stupachenko  <evstupac@gmail.com>
@@ -40913,7 +40913,7 @@
 
 2014-04-28  James Greenhalgh  <james.greenhalgh@arm.com>
 
-	* config/aarch64/aarch64-builtins.c
+	* config/aarch64/aarch64-builtins.cc
 	(aarch64_types_storestruct_lane_qualifiers): New.
 	(TYPES_STORESTRUCT_LANE): Likewise.
 	* config/aarch64/aarch64-simd-builtins.def (st2_lane): New.
@@ -40945,7 +40945,7 @@
 2014-04-28  James Greenhalgh  <james.greenhalgh@arm.com>
 
 	* config/aarch64/aarch64-protos.h (aarch64_modes_tieable_p): New.
-	* config/aarch64/aarch64.c
+	* config/aarch64/aarch64.cc
 	(aarch64_cannot_change_mode_class): Weaken conditions.
 	(aarch64_modes_tieable_p): New.
 	* config/aarch64/aarch64.h (MODES_TIEABLE_P): Use it.
@@ -41017,7 +41017,7 @@
 2014-04-28  Jeff Law  <law@redhat.com>
 
 	PR tree-optimization/60902
-	* tree-ssa-threadedge.c
+	* tree-ssa-threadedge.cc
 	(record_temporary_equivalences_from_stmts_at_dest): Only iterate
 	over real defs when invalidating outputs from statements that do not
 	produce useful outputs for threading.
@@ -41421,7 +41421,7 @@
 
 2014-04-24  Kyrylo Tkachov  <kyrylo.tkachov@arm.com>
 
-	* config/aarch64/aarch64-builtins.c
+	* config/aarch64/aarch64-builtins.cc
 	(aarch64_builtin_vectorized_function): Handle BUILT_IN_BSWAP16,
 	BUILT_IN_BSWAP32, BUILT_IN_BSWAP64.
 	* config/aarch64/aarch64-simd.md (bswap<mode>): New pattern.
@@ -41823,7 +41823,7 @@
 2014-04-23  Jeff Law  <law@redhat.com>
 
 	PR tree-optimization/60902
-	* tree-ssa-threadedge.c
+	* tree-ssa-threadedge.cc
 	(record_temporary_equivalences_from_stmts_at_dest): Make sure to
 	invalidate outputs from statements that do not produce useful
 	outputs for threading.
@@ -41905,7 +41905,7 @@
 	(make_pass_rtl_unswitch): Likewise.
 	* rtl.h (reversed_condition): Likewise.
 	(compare_and_jump_seq): Likewise.
-	* loop-iv.c (reversed_condition): Move here from loop-unswitch.c
+	* loop-iv.c (reversed_condition): Move here from loop-unswitch.cc
 	and make static.
 	* loop-unroll.c (compare_and_jump_seq): Likewise.
 
@@ -41920,7 +41920,7 @@
 2014-04-23  Nick Clifton  <nickc@redhat.com>
 
 	* config/msp430/msp430.c (msp430_handle_option): Move function
-	to msp430-common.c
+	to msp430-common.cc
 	(msp430_option_override): Simplify mcu and mcpu option handling.
 	(msp430_is_f5_mcu): Rename to msp430_use_f5_series_hwmult.  Add
 	support for -mhwmult command line option.
@@ -43205,7 +43205,7 @@
 
 2014-04-11  Joern Rennecke  <joern.rennecke@embecosm.com>
 
-	* common/config/epiphany/epiphany-common.c
+	* common/config/epiphany/epiphany-common.cc
 	(epiphany_option_optimization_table): Enable section anchors by
 	default at -O1 or higher.
 	* config/epiphany/epiphany.c (TARGET_MAX_ANCHOR_OFFSET): Define.
@@ -44754,7 +44754,7 @@
 
 2014-03-12  Yufeng Zhang  <yufeng.zhang@arm.com>
 
-	* config/aarch64/aarch64-builtins.c
+	* config/aarch64/aarch64-builtins.cc
 	(aarch64_builtin_vectorized_function): Add BUILT_IN_LFLOORF,
 	BUILT_IN_LLFLOOR, BUILT_IN_LCEILF and BUILT_IN_LLCEIL.
 	* config/aarch64/arm_neon.h (vcvtaq_u64_f64): Call __builtin_llfloor
@@ -45397,7 +45397,7 @@
 	* config.gcc (tilepro-*-*): Change to tilepro*-*-*.
 	(tilegx-*-linux*): Change to tilegx*-*-linux*; Support tilegxbe
 	triplet.
-	* common/config/tilegx/tilegx-common.c
+	* common/config/tilegx/tilegx-common.cc
 	(TARGET_DEFAULT_TARGET_FLAGS): Define.
 	* config/tilegx/linux.h (ASM_SPEC): Add endian_spec.
 	(LINK_SPEC): Ditto.
@@ -46461,7 +46461,7 @@
 	symtab_get_symbol_partitioning_class.
 	(lto_output_varpool_node): likewise.
 	(symtab_get_symbol_partitioning_class): Move here from
-	lto/lto-partition.c
+	lto/lto-partition.cc
 	* cgraph.h (symbol_partitioning_class): Likewise.
 	(symtab_get_symbol_partitioning_class): Declare.
 
@@ -47650,7 +47650,7 @@
 
 2014-01-27  James Greenhalgh  <james.greenhalgh@arm.com>
 
-	* common/config/arm/arm-common.c
+	* common/config/arm/arm-common.cc
 	(arm_rewrite_mcpu): Handle multiple names.
 	* config/arm/arm.h
 	(BIG_LITTLE_SPEC): Do not discard mcpu switches.
@@ -47777,7 +47777,7 @@
 
 2014-01-24  James Greenhalgh  <james.greenhalgh@arm.com>
 
-	* common/config/aarch64/aarch64-common.c
+	* common/config/aarch64/aarch64-common.cc
 	(aarch64_rewrite_mcpu): Handle multiple names.
 	* config/aarch64/aarch64.h
 	(BIG_LITTLE_SPEC): Do not discard mcpu switches.
@@ -48174,7 +48174,7 @@
 
 2014-01-20  James Greenhalgh  <james.greenhalgh@arm.com>
 
-	* common/config/aarch64/aarch64-common.c
+	* common/config/aarch64/aarch64-common.cc
 	(aarch64_handle_option): Don't handle any option order logic here.
 	* config/aarch64/aarch64.c (aarch64_parse_arch): Do not override
 	selected_cpu, warn on architecture version mismatch.

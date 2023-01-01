@@ -1,5 +1,5 @@
 ! { dg-do compile }
-! PR35475  gfortran fails to compile valid code with ICE error in fold-const.c
+! PR35475  gfortran fails to compile valid code with ICE error in fold-const.cc
 ! Test case from PR report added to avoid future regression
 module modone
   type mytype

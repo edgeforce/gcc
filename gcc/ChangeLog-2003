@@ -3755,7 +3755,7 @@
 	Constify arguments, local variables, return values, and casts
 	of type fde *, fde **, struct dwarf_fde *, and struct dwarf_cie *.
 	Use const pointer types in sizeof expressions, for clarity.
-	* unwind-dw2-fde-glibc.c
+	* unwind-dw2-fde-glibc.cc
 	(_Unwind_find_registered_FDE, _Unwind_find_FDE): Constify return value.
 	(struct unw_eh_callback_data): Constify 'ret' field.
 
@@ -6492,8 +6492,8 @@ Sat Oct 11 12:24:23 CEST 2003  Jan Hubicka  <jh@suse.cz>
 	interconversion above all integer conversion.  Do not recurse
 	on a value forced into a register in the original mode.
 
-	* config/gofast.h, config/frv/frv.c, config/ia64/ia64.c
-	* config/mips/mips.c, config/pa/pa.c, config/rs6000/rs6000.c
+	* config/gofast.h, config/frv/frv.c, config/ia64/ia64.cc
+	* config/mips/mips.c, config/pa/pa.c, config/rs6000/rs6000.cc
 	* config/sparc/sparc.c: Use set_conv_libfunc to adjust entries
 	in new conversion optabs; do not reference the old libfunc
 	array entries.  No need to include libfuncs.h.
@@ -6525,10 +6525,10 @@ Sat Oct 11 12:24:23 CEST 2003  Jan Hubicka  <jh@suse.cz>
 2003-10-06  Zack Weinberg  <zack@codesourcery.com>
 
 	* real.h (REAL_MODE_FORMAT): New macro.
-	* c-cppbuiltin.c, optabs.c, real.c, config/alpha/alpha.c
+	* c-cppbuiltin.c, optabs.c, real.c, config/alpha/alpha.cc
 	* config/c4x/c4x.c, config/i370/i370.c, config/i386/freebsd.h
-	* config/i386/i386.c, config/i960/i960.c, config/ia64/ia64.c
-	* config/m68k/m68k.c, config/mips/mips.c, config/rs6000/rs6000.c
+	* config/i386/i386.c, config/i960/i960.c, config/ia64/ia64.cc
+	* config/m68k/m68k.c, config/mips/mips.c, config/rs6000/rs6000.cc
 	* config/vax/vax.c: Use REAL_MODE_FORMAT instead of referring
 	directly to real_format_for_mode array, wherever possible.
 
@@ -6761,7 +6761,7 @@ Sat Oct 11 12:24:23 CEST 2003  Jan Hubicka  <jh@suse.cz>
 	exactly once on each operand.
 	(init_optabs): Initialize the new optabs, not the deleted libfuncs.
 
-	* config/gofast.h, config/ia64/ia64.c, config/mips/mips.c
+	* config/gofast.h, config/ia64/ia64.c, config/mips/mips.cc
 	* config/pa/pa.c, config/rs6000/rs6000.c, config/sparc/sparc.c:
 	Set floating point comparison libfuncs using set_optab_libfunc
 	on the appropriate optab.
@@ -7020,10 +7020,10 @@ Sat Oct 11 12:24:23 CEST 2003  Jan Hubicka  <jh@suse.cz>
 	(mips-*-*): When --enable-gofast, just add US_SOFTWARE_GOFAST
 	to tm_defines; don't set INIT_SUBTARGET_OPTABS or change tm_file.
 
-	* config/alpha/alpha.c, config/c4x/c4x.c, config/cris/cris.c
-	* config/frv/frv.c, config/h8300/h8300.c, config/i860/i860.c
-	* config/ia64/ia64.c, config/ip2k/ip2k.c, config/m68hc11/m68hc11.c
-	* config/mips/mips.c, config/pa/pa.c, config/rs6000/rs6000.c
+	* config/alpha/alpha.c, config/c4x/c4x.c, config/cris/cris.cc
+	* config/frv/frv.c, config/h8300/h8300.c, config/i860/i860.cc
+	* config/ia64/ia64.c, config/ip2k/ip2k.c, config/m68hc11/m68hc11.cc
+	* config/mips/mips.c, config/pa/pa.c, config/rs6000/rs6000.cc
 	* config/sparc/sparc.c, config/vax/vax.c:
 	Provide a definition for TARGET_INIT_LIBFUNCS.  Where
 	necessary, include optabs.h, libfuncs.h, and/or config/gofast.h.
@@ -9078,7 +9078,7 @@ Sat Oct 11 12:24:23 CEST 2003  Jan Hubicka  <jh@suse.cz>
 
 2003-09-07  Gabriel Dos Reis  <gdr@integrable-solutions.net>
 
-	* diagnostic.c (warn_deprecated_use): Move to toplev.c
+	* diagnostic.c (warn_deprecated_use): Move to toplev.cc
 
 2003-09-07  Gabriel Dos Reis  <gdr@integrable-solutions.net>
 
@@ -9384,7 +9384,7 @@ Sat Oct 11 12:24:23 CEST 2003  Jan Hubicka  <jh@suse.cz>
 
 	* config/sh/sh-protos.h (sh_builtin_saveregs): Remove.
 	(sh_attr_renesas_p, sh_cfun_attr_renesas_p, sh_function_arg,
-	sh_function_arg_advance, sh_pass_in_reg_p): New.  * config/sh/sh.c
+	sh_function_arg_advance, sh_pass_in_reg_p): New.  * config/sh/sh.cc
 	(sh_handle_renesas_attribute, sh_promote_prototypes,
 	sh_struct_value_rtx, sh_return_in_memory, sh_builtin_saveregs,
 	sh_setup_incoming_varargs, sh_strict_argument_naming,
@@ -13187,7 +13187,7 @@ Sat Oct 11 12:24:23 CEST 2003  Jan Hubicka  <jh@suse.cz>
 
 2003-07-19  Kaveh R. Ghazi  <ghazi@caip.rutgers.edu>
 
-	* fixinc/fixfixes.c fixinc/fixincl.c fixinc/fixlib.c
+	* fixinc/fixfixes.c fixinc/fixincl.c fixinc/fixlib.cc
 	fixinc/server.c objc/objc-act.c: Remove unnecessary casts.
 
 2003-07-19  Ulrich Weigand  <uweigand@de.ibm.com>
@@ -13248,25 +13248,25 @@ Sat Oct 11 12:24:23 CEST 2003  Jan Hubicka  <jh@suse.cz>
 
 2003-07-19  Kaveh R. Ghazi  <ghazi@caip.rutgers.edu>
 
-	* alias.c alloc-pool.c bitmap.c bitmap.h bt-load.c builtins.c
+	* alias.c alloc-pool.c bitmap.c bitmap.h bt-load.c builtins.cc
 	c-common.c c-decl.c c-incpath.c c-lex.c c-opts.c c-parse.in
-	c-pragma.c c-typeck.c calls.c cfg.c cfganal.c cfgloop.c cfgrtl.c
-	collect2.c combine.c conflict.c coverage.c cppexp.c cppfiles.c
-	cpphash.c cppinit.c cpplex.c cpplib.c cppmacro.c cppspec.c
-	cpptrad.c cse.c cselib.c dbxout.c defaults.h df.c dominance.c
-	dwarf2out.c dwarfout.c emit-rtl.c except.c expmed.c expr.c final.c
-	fix-header.c flow.c fold-const.c function.c gcc.c gccspec.c gcov.c
-	gcse.c genattr.c genattrtab.c genautomata.c genconditions.c
-	genemit.c genextract.c genoutput.c genrecog.c gensupport.c
-	ggc-page.c ggc-simple.c global.c graph.c haifa-sched.c hashtable.c
-	integrate.c jump.c langhooks.c lcm.c line-map.c local-alloc.c
-	loop.c mips-tdump.c mips-tfile.c mkdeps.c optabs.c params.c
-	postreload.c prefix.c print-tree.c protoize.c ra-build.c
-	ra-colorize.c ra-rewrite.c ra.c recog.c reg-stack.c regclass.c
-	regmove.c regrename.c reload.c reload1.c reorg.c resource.c
-	sbitmap.c sched-deps.c sched-rgn.c sched-vis.c sdbout.c
-	simplify-rtx.c ssa-ccp.c ssa.c stmt.c stor-layout.c timevar.c
-	tlink.c toplev.c tree-dump.c tree.c unroll.c unwind-dw2-fde.c
+	c-pragma.c c-typeck.c calls.c cfg.c cfganal.c cfgloop.c cfgrtl.cc
+	collect2.c combine.c conflict.c coverage.c cppexp.c cppfiles.cc
+	cpphash.c cppinit.c cpplex.c cpplib.c cppmacro.c cppspec.cc
+	cpptrad.c cse.c cselib.c dbxout.c defaults.h df.c dominance.cc
+	dwarf2out.c dwarfout.c emit-rtl.c except.c expmed.c expr.c final.cc
+	fix-header.c flow.c fold-const.c function.c gcc.c gccspec.c gcov.cc
+	gcse.c genattr.c genattrtab.c genautomata.c genconditions.cc
+	genemit.c genextract.c genoutput.c genrecog.c gensupport.cc
+	ggc-page.c ggc-simple.c global.c graph.c haifa-sched.c hashtable.cc
+	integrate.c jump.c langhooks.c lcm.c line-map.c local-alloc.cc
+	loop.c mips-tdump.c mips-tfile.c mkdeps.c optabs.c params.cc
+	postreload.c prefix.c print-tree.c protoize.c ra-build.cc
+	ra-colorize.c ra-rewrite.c ra.c recog.c reg-stack.c regclass.cc
+	regmove.c regrename.c reload.c reload1.c reorg.c resource.cc
+	sbitmap.c sched-deps.c sched-rgn.c sched-vis.c sdbout.cc
+	simplify-rtx.c ssa-ccp.c ssa.c stmt.c stor-layout.c timevar.cc
+	tlink.c toplev.c tree-dump.c tree.c unroll.c unwind-dw2-fde.cc
 	varasm.c varray.c vmsdbgout.c xcoffout.c: Remove unnecessary
 	casts.
 
@@ -14055,8 +14055,8 @@ objc:
 	* cpplib.h: Don't refer to MAX_WCHAR_TYPE_SIZE when determining
 	definition of CPPCHAR_SIGNED_T.
 
-	* cppcharset.c, cpperror.c, cppexp.c, cppfiles.c, cpphash.c, cppinit.c
-	* cpplex.c, cpplib.c, cppmacro.c, cpppch.c, cpptrad.c, hashtable.c
+	* cppcharset.c, cpperror.c, cppexp.c, cppfiles.c, cpphash.c, cppinit.cc
+	* cpplex.c, cpplib.c, cppmacro.c, cpppch.c, cpptrad.c, hashtable.cc
 	* line-map.c, mkdeps.c: Don't include coretypes.h or tm.h.
 
 	* cpphash.c (_cpp_init_hashtable): Don't use gcc_obstack_init.
@@ -14618,7 +14618,7 @@ objc:
 	* config/mn10300/mn10300.c (expand_prologue): Mark
 	FP-register-saving insns as frame-related.
 	2001-02-13  Alexandre Oliva  <aoliva@redhat.com>
-	* config/mn10300/mn10300.c
+	* config/mn10300/mn10300.cc
 	(mn10300_get_live_callee_saved_regs): Don't search past
 	LAST_EXTENDED_REGNUM.
 	(mn10300_gen_multiple_store, store_multiple_operation): Likewise.
@@ -14935,7 +14935,7 @@ objc:
 
 	* Makefile.in (fixinc.sh): Remove gnu-regex.[ch] from dependencies.
 	* fixinc/Makefile.in: Remove all references to gnu-regex.[och].
-	* fixinc/fixfixes.c, fixinc/fixincl.c, fixinc/fixlib.c
+	* fixinc/fixfixes.c, fixinc/fixincl.c, fixinc/fixlib.cc
 	* fixinc/fixtests.c: Use xregexec not regexec, xregcomp not regcomp.
 	* fixinc/fixlib.h: Include xregex.h not gnu-regex.h.
 	* fixinc/inclhack.def (hpux10_cpp_pow_inline, hpux11_cpp_pow_inline):
@@ -17293,7 +17293,7 @@ Fri Jun 27 17:41:16 CEST 2003  Jan Hubicka  <jh@suse.cz>
 	* reload.h: Change the comment for the prototype of
 	reload_cse_regs.
 	* reload1.c: Don't include cselib.h.
-	(reload_cse_regs): Move to postreload.c
+	(reload_cse_regs): Move to postreload.cc
 	(reload_cse_regs_1): Likewise.
 	(reload_cse_noop_set_p): Likewise.
 	(reload_cse_simplify_set): Likewise.
@@ -18741,8 +18741,8 @@ Sat Jun 21 13:41:00 CEST 2003  Jan Hubicka  <jh@suse.cz>
 
 2003-06-16  Zack Weinberg  <zack@codesourcery.com>
 
-	* cpplib.h, cpphash.h, cppcharset.c, cpperror.c, cppexp.c
-	* cppfiles.c, cpphash.c, cppinit.c, cpplex.c, cpplib.c
+	* cpplib.h, cpphash.h, cppcharset.c, cpperror.c, cppexp.cc
+	* cppfiles.c, cpphash.c, cppinit.c, cpplex.c, cpplib.cc
 	* cppmacro.c, cpppch.c, cpptrad.c, cppspec.c: Convert to
 	ISO C: new-style function declarations, no need for PARAMS,
 	no special punctuation on indirect function calls, use string
@@ -20128,11 +20128,11 @@ Sun Jun  8 15:52:17 CEST 2003  Jan Hubicka  <jh@suse.cz>
 	* i386.c (k8_avoid_jump_misspredicts): Fix debug output.
 
 	* cfg.c (verify_flow_info): Move IL independent checks from cfgrtl here.
-	(dump_bb): New based on old dump_bb in cfgrtl.c
+	(dump_bb): New based on old dump_bb in cfgrtl.cc
 	(debug_bb, debug_bb_n): Move the functions from cfgrtl.c here.
 	* cfghooks.h (cfgh_verify_flow_info): Return status.
 	* cfglayout.c (cfg_layout_finalize): Verify CFG correctness.
-	* cfgrtl.c (debug_bb, debug_bb_n): Move to cfg.c
+	* cfgrtl.c (debug_bb, debug_bb_n): Move to cfg.cc
 	(dump_bb): Remove generic parts.
 	(rtl_verify_flow_info_1): Break out from rtl_verify_flow_info.
 	(rtl_verify_flow_info): Only check things dependeing on linearized RTL.
@@ -20209,7 +20209,7 @@ Sun Jun  8 15:52:17 CEST 2003  Jan Hubicka  <jh@suse.cz>
 
 	* config.gcc (with_cpu handling): Translate sparc64 in
 	$machine to --with-cpu=v9.
-	* config/alpha/alpha.c
+	* config/alpha/alpha.cc
 	(TARGET_ASM_GLOBALIZE_LABEL [TARGET_ABI_UNICOSMK]): Correct definition.
 	(alpha_setup_incoming_varargs): #ifdef out when TARGET_ABI_UNICOSMK.
 
@@ -20488,7 +20488,7 @@ Fri Jun  6 11:03:14 CEST 2003  Jan Hubicka  <jh@suse.cz>
 	(unlink_insn_chain): Make global.
 	(fixup_reorder_chain, record_effective_endpoints): Update.
 	(cleanup_unconditional_jumps): Use delete_block.
-	(cfg_layout_redirect_edge, cfg_layout_split_block): Move to cfgrtl.c
+	(cfg_layout_redirect_edge, cfg_layout_split_block): Move to cfgrtl.cc
 	(cfg_layout_duplicate_bb): Use redirect_edge_and_branch_force.
 	(cfg_layout_initialize, cfg_layout_finalize): Update hooks.
 	* cfglayout.h (cfg_layout_redirect_edge, cfg_layout_split_block):  Delete.
@@ -22637,7 +22637,7 @@ Fri May 23 21:19:31 CEST 2003  Jan Hubicka  <jh@suse.cz>
 	* config/m68k/tower-as.h, config/m68k/tower.h
 	* config/m88k/aout-dbx.h, config/m88k/m88k-aout.h
 	* config/m88k/m88k-modes.def, config/m88k/m88k-move.sh
-	* config/m88k/m88k-protos.h, config/m88k/m88k.c
+	* config/m88k/m88k-protos.h, config/m88k/m88k.cc
 	* config/m88k/m88k.h, config/m88k/m88k.md, config/m88k/openbsd.h
 	* config/m88k/sysv4.h, config/m88k/t-luna, config/m88k/t-luna-gas
 	* config/m88k/t-m88k, config/m88k/t-sysv4, config/mcore/gfloat.h
@@ -22648,7 +22648,7 @@ Fri May 23 21:19:31 CEST 2003  Jan Hubicka  <jh@suse.cz>
 	* config/mn10200/mn10200.md, config/mn10200/t-mn10200
 	* config/pa/pa-hiux.h, config/pa/pa-hpux7.h, config/pa/pa-hpux9.h
 	* config/pa/pa-oldas.h, config/pa/t-mpeix, config/psos.h
-	* config/romp/romp-protos.h, config/romp/romp.c
+	* config/romp/romp-protos.h, config/romp/romp.cc
 	* config/romp/romp.h, config/romp/romp.md, config/rs6000/aix31.h
 	* config/rs6000/aix3newas.h, config/rs6000/mach.h
 	* config/sparc/bsd.h, config/sparc/hal.h
@@ -23015,8 +23015,8 @@ Fri May 23 21:19:31 CEST 2003  Jan Hubicka  <jh@suse.cz>
 	* diagnostic.h (text_info): Add err_no field.
 	* toplev.h (fatal_io_error): Delete prototype.
 
-	* c-opts.c, c-pch.c, dwarfout.c, ggc-common.c, ggc-page.c, graph.c
-	* toplev.c, config/mips/mips.c, config/rs6000/host-darwin.c
+	* c-opts.c, c-pch.c, dwarfout.c, ggc-common.c, ggc-page.c, graph.cc
+	* toplev.c, config/mips/mips.c, config/rs6000/host-darwin.cc
 	* objc/objc-act.c: Replace all calls to fatal_io_error with
 	calls to fatal_error; add ": %m" to the end of all the affected
 	error messages.
@@ -25720,7 +25720,7 @@ Thu Apr 24 16:55:26 CEST 2003  Jan Hubicka  <jh@suse.cz>
 	* profile.c: Move coverage routines to coverage.c.
 	(instrument_edges, get_exec_counts, branch_prob, init_branch_prob,
 	end_branch_prob): Adjust.
-	* coverage.c: New. Coverage routines from profile.c
+	* coverage.c: New. Coverage routines from profile.cc
 	(coverage_counter_ref, coverage_init, coverage_finish,
 	coverage_end_function, coverage_begin_output,
 	coverage_counter_ref, get_coverage_counts): Define.
@@ -25823,11 +25823,11 @@ Thu Apr 24 16:55:26 CEST 2003  Jan Hubicka  <jh@suse.cz>
 	(ASM_DECLARE_FUNCTION_NAME, ASM_OUTPUT_ALIGNED_DECL_LOCAL):
 	Update calls to encode_section_info.
 
-	* config/darwin.c, config/arm/arm.c, config/arm/pe.c
-	* config/h8300/h8300.c, config/i386/winnt.c, config/m32r/m32r.c
-	* config/m68hc11/m68hc11.c, config/m88k/m88k.c, config/mcore/mcore.c
-	* config/mips/mips.c, config/mmix/mmix.c, config/pa/pa.c
-	* config/romp/romp.c, config/rs6000/rs6000.c, config/s390/s390.c
+	* config/darwin.c, config/arm/arm.c, config/arm/pe.cc
+	* config/h8300/h8300.c, config/i386/winnt.c, config/m32r/m32r.cc
+	* config/m68hc11/m68hc11.c, config/m88k/m88k.c, config/mcore/mcore.cc
+	* config/mips/mips.c, config/mmix/mmix.c, config/pa/pa.cc
+	* config/romp/romp.c, config/rs6000/rs6000.c, config/s390/s390.cc
 	* config/v850/v850.c (TARGET_ENCODE_SECTION_INFO definitions):
 	Take and use RTL argument, don't use TREE_CST_RTL or DECL_RTL,
 	except for PE dllimport/dllexport.  Update calls to
@@ -26552,7 +26552,7 @@ Fri Apr 18 01:28:51 CEST 2003  Jan Hubicka  <jh@suse.cz>
 	CONSTANT_AFTER_FUNCTION_P.  Remove all code predicated on it.
 	(after_function_constants, output_after_function_constants): Delete.
 	* doc/tm.texi: Delete documentation of CONSTANT_AFTER_FUNCTION_P.
-	* config/mips/mips-protos.h, config/mips/mips.c
+	* config/mips/mips-protos.h, config/mips/mips.cc
 	(mips16_constant_after_function_p): Delete.
 	* config/mips/mips.h: Delete #if-0-ed definition of
 	CONSTANT_AFTER_FUNCTION_P.
@@ -27600,7 +27600,7 @@ Mon Apr  7 14:36:24 CEST 2003  Jan Hubicka  <jh@suse.cz>
 	* cfglayout.c (cfg_layout_redirect_edge):
 	Redirect any branch edges unified with the fallthru one.
 	* cfgrtl.c (force_nonfallthru_and_redirect):  Do not special
-	case fallthru edges when called via cfglayout.c
+	case fallthru edges when called via cfglayout.cc
 
 2003-04-07  J"orn Rennecke <joern.rennecke@superh.com>
 
@@ -28019,7 +28019,7 @@ Thu Apr  3 00:18:49 CEST 2003  Jan Hubicka  <jh@suse.cz>
 
 2003-04-02  Vladimir Makarov  <vmakarov@redhat.com>
 
-	* config/rs6000/rs6000.c
+	* config/rs6000/rs6000.cc
 	(TARGET_SCHED_FIRST_CYCLE_MULTIPASS_DFA_LOOKAHEAD): Redefine the
 	macros.
 	(rs6000_issue_rate): Add case for 8540.
@@ -30539,7 +30539,7 @@ Mon Mar 24 20:03:03 CET 2003  Jan Hubicka  <jh@suse.cz>
 	(cgraph_finalize_compilation_unit):  Actually remove the reclaimed nodes.
 	(cgraph_mark_functions_to_output):  Use new inlining heuristics flags.
 	(cgraph_expand_function): Likewise.
-	* cgraph.c
+	* cgraph.cc
 	(cgraph_node): Put nodes into doubly linked chain.
 	(cgraph_remove_node): New function.
 	* flags.h (flag_inline_functions_called_once): Declare.
@@ -31968,7 +31968,7 @@ Mon Mar 24 20:03:03 CET 2003  Jan Hubicka  <jh@suse.cz>
 	(cgraph_nodes, cgraph_n_nodes): Globalize.
 	(cgraph_finalize_function, cgraph_finalize_compilation_unit
 	cgraph_create_edges, cgraph_optimize, cgraph_mark_needed_node):
-	Move into cgraphunit.c
+	Move into cgraphunit.cc
 	* tree-inline.c: Include cgraph.h
 	* tree-inline.c: Include cgraph.h
 

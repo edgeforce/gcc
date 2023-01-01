@@ -107,7 +107,7 @@
 
 2007-06-06  Andrew Pinski  <andrew_pinski@playstation.sony.com>
 
-	* tree-ssa-forwprop.c
+	* tree-ssa-forwprop.cc
 	(forward_propagate_addr_into_variable_array_index):
 	Don't expect a statement for the size 1 case.
 	Use the offset variable for the size 1 case.

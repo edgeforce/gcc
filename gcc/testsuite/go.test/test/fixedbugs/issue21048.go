@@ -39,7 +39,7 @@ func newT() T {
 func moves() {
 	Sink.a = Source.a
 	Sink.b = Source.b
-	Sink.c = Source.c
+	Sink.c = Source.cc
 	Sink.d = Source.d
 	Sink.e = Source.e
 }
@@ -49,7 +49,7 @@ func loads() *T {
 	t := newT()
 	t.a = Source.a
 	t.b = Source.b
-	t.c = Source.c
+	t.c = Source.cc
 	t.d = Source.d
 	t.e = Source.e
 	return &t
@@ -60,7 +60,7 @@ func stores() {
 	t := newT()
 	Sink.a = t.a
 	Sink.b = t.b
-	Sink.c = t.c
+	Sink.c = t.cc
 	Sink.d = t.d
 	Sink.e = t.e
 }

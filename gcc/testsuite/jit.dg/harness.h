@@ -305,7 +305,7 @@ concat_strings (const char *prefix, const char *suffix)
 /* Set up logging to a logfile of the form "test-FOO.exe.log.txt".
 
    For example,
-     SRCDIR/gcc/testsuite/jit.dg/test-hello-world.c
+     SRCDIR/gcc/testsuite/jit.dg/test-hello-world.cc
    is built as:
      BUILDDIR/gcc/testsuite/jit/test-hello-world.c.exe
    and is logged to

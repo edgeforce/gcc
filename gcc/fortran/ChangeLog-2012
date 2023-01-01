@@ -928,7 +928,7 @@
 	PR fortran/54350
 	* trans-array.c (free_ss_info): Free data.array.subscript.
 	(gfc_free_ss): No longer free data.array.subscript.
-	(walk_coarray): New function, moved from trans-intrinsic.c
+	(walk_coarray): New function, moved from trans-intrinsic.cc
 	(gfc_conv_expr_descriptor): Walk array descriptor instead
 	of taking passed "ss".
 	(get_array_ctor_all_strlen, gfc_add_loop_ss_code,
@@ -941,7 +941,7 @@
 	gfc_trans_pointer_assignment, gfc_trans_arrayfunc_assign): Update
 	call to gfc_conv_expr_descriptor and gfc_conv_array_parameter, and
 	clean up.
-	* trans-intrinsic.c (walk_coarray): Moved to trans-array.c
+	* trans-intrinsic.c (walk_coarray): Moved to trans-array.cc
 	(trans_this_image, trans_image_index, gfc_conv_intrinsic_rank
 	gfc_conv_intrinsic_bound, gfc_conv_intrinsic_cobound,
 	gfc_conv_intrinsic_len, gfc_conv_intrinsic_size,

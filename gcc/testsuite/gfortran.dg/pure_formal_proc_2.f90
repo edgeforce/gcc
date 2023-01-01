@@ -1,6 +1,6 @@
 ! { dg-do compile }
 ! Tests the fix for PR36526, in which the call to getStrLen would
-! generate an error due to the use of a wrong symbol in interface.c
+! generate an error due to the use of a wrong symbol in interface.cc
 !
 ! Contributed by Bálint Aradi <aradi@bccms.uni-bremen.de>
 !

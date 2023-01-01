@@ -2797,7 +2797,7 @@
 	(cp/repo.o): Add dependency on gt-<filename>.h.
 	(cp/parse.o): Add dependency on gt-<filename>.h.
 	* call.c: Use gengtype for roots.
-	* config-lang.in (gtfiles): Add cp-tree.h decl.h lex.h call.c
+	* config-lang.in (gtfiles): Add cp-tree.h decl.h lex.h call.cc
 	decl2.c parse.y pt.c repo.c spew.c.
 	* cp-tree.h: Use gengtype for roots.
 	(struct saved_scope): Use GGC, gengtype.

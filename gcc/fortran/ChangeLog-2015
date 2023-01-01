@@ -855,7 +855,7 @@
 
 	PR fortran/62242
 	PR fortran/52332
-	* trans-array.c
+	* trans-array.cc
 	(store_backend_decl): Create new gfc_charlen instance if requested
 	(get_array_ctor_all_strlen): Call store_backend_decl requesting
 	new gfc_charlen

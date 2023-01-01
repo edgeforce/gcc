@@ -245,7 +245,7 @@ You can model C `struct` types by creating :c:type:`gcc_jit_struct *` and
 
      Example of use:
 
-     .. literalinclude:: ../../../testsuite/jit.dg/test-accessing-union.c
+     .. literalinclude:: ../../../testsuite/jit.dg/test-accessing-union.cc
        :start-after: /* Quote from here in docs/topics/types.rst.  */
        :end-before: /* Quote up to here in docs/topics/types.rst.  */
        :language: c

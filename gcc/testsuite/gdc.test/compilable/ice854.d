@@ -1,5 +1,5 @@
 // https://issues.dlang.org/show_bug.cgi?id=854
-// TypeTuple in anonymous delegate causes ice in glue.c
+// TypeTuple in anonymous delegate causes ice in glue.cc
 
 /* 854 VOTE PATCH (=2863, =2251?) Assertion failure: '0' on line 935 in file 'glue.c'
 I haven't checked this patch myself.

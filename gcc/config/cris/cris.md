@@ -2598,7 +2598,7 @@
 ;; to canonicalize to "and", and ignorant on the benefits of the right
 ;; mixture of "and" and "zero-extend".
 
-;; Testcase for the following peephole: gcc.target/cris/peep2-movulsr.c
+;; Testcase for the following peephole: gcc.target/cris/peep2-movulsr.cc
 
 ;; Where equivalent and where the "and" argument doesn't fit "andq" but
 ;; is 16 bits or smaller, replace the "and" with a zero-extend preceding
@@ -2632,7 +2632,7 @@
     = INTVAL (operands[2]) <= 0xff ? GEN_INT (0xff) :  GEN_INT (0xffff);
 })
 
-;; Testcase for the following four peepholes: gcc.target/cris/peep2-xsrand.c
+;; Testcase for the following four peepholes: gcc.target/cris/peep2-xsrand.cc
 
 (define_peephole2 ; asrandb
   [(parallel
@@ -2751,7 +2751,7 @@
 ;;   move.d reg_or_mem,reg_32
 ;;   and.d const_32__65535,reg_32
 ;; Fix it with these two peephole2's.
-;; Testcases: gcc.target/cris/peep2-andu1.c gcc.target/cris/peep2-andu2.c
+;; Testcases: gcc.target/cris/peep2-andu1.c gcc.target/cris/peep2-andu2.cc
 
 (define_peephole2 ; andu
   [(parallel

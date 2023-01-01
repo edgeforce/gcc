@@ -1,7 +1,7 @@
 2011-05-26  Alexey Kravets  <kayrick@ispras.ru>
 
 	PR middle-end/49147
-	* graphite-opencl-codegen.c
+	* graphite-opencl-codegen.cc
 	(opencl_get_perfect_nested_loop_depth): Use
 	enabled_dependency_in_clast_loop_p instead of
 	dependency_in_clast_loop_p.
@@ -205,30 +205,30 @@
 	* gfortran.dg/ltrans-7.f90: Removed.
 	* gcc.dg/tree-ssa/data-dep-1.c: Removed.
 
-	* gcc.dg/pr18792.c: -> gcc.dg/graphite/pr18792.c
-	* gcc.dg/pr19910.c: -> gcc.dg/graphite/pr19910.c
-	* gcc.dg/tree-ssa/20041110-1.c: -> gcc.dg/graphite/pr20041110-1.c
-	* gcc.dg/tree-ssa/pr20256.c: -> gcc.dg/graphite/pr20256.c
-	* gcc.dg/pr23625.c: -> gcc.dg/graphite/pr23625.c
-	* gcc.dg/tree-ssa/pr23820.c: -> gcc.dg/graphite/pr23820.c
-	* gcc.dg/tree-ssa/pr24309.c: -> gcc.dg/graphite/pr24309.c
-	* gcc.dg/tree-ssa/pr26435.c: -> gcc.dg/graphite/pr26435.c
-	* gcc.dg/pr29330.c: -> gcc.dg/graphite/pr29330.c
-	* gcc.dg/pr29581-1.c: -> gcc.dg/graphite/pr29581-1.c
-	* gcc.dg/pr29581-2.c: -> gcc.dg/graphite/pr29581-2.c
-	* gcc.dg/pr29581-3.c: -> gcc.dg/graphite/pr29581-3.c
-	* gcc.dg/pr29581-4.c: -> gcc.dg/graphite/pr29581-4.c
-	* gcc.dg/tree-ssa/loop-27.c: -> gcc.dg/graphite/pr30565.c
-	* gcc.dg/tree-ssa/pr31183.c: -> gcc.dg/graphite/pr31183.c
-	* gcc.dg/tree-ssa/pr33576.c: -> gcc.dg/graphite/pr33576.c
-	* gcc.dg/tree-ssa/pr33766.c: -> gcc.dg/graphite/pr33766.c
-	* gcc.dg/pr34016.c: -> gcc.dg/graphite/pr34016.c
-	* gcc.dg/tree-ssa/pr34017.c: -> gcc.dg/graphite/pr34017.c
-	* gcc.dg/tree-ssa/pr34123.c: -> gcc.dg/graphite/pr34123.c
-	* gcc.dg/tree-ssa/pr36287.c: -> gcc.dg/graphite/pr36287.c
-	* gcc.dg/tree-ssa/pr37686.c: -> gcc.dg/graphite/pr37686.c
-	* gcc.dg/pr42917.c: -> gcc.dg/graphite/pr42917.c
-	* gcc.dg/tree-ssa/data-dep-1.c
+	* gcc.dg/pr18792.c: -> gcc.dg/graphite/pr18792.cc
+	* gcc.dg/pr19910.c: -> gcc.dg/graphite/pr19910.cc
+	* gcc.dg/tree-ssa/20041110-1.c: -> gcc.dg/graphite/pr20041110-1.cc
+	* gcc.dg/tree-ssa/pr20256.c: -> gcc.dg/graphite/pr20256.cc
+	* gcc.dg/pr23625.c: -> gcc.dg/graphite/pr23625.cc
+	* gcc.dg/tree-ssa/pr23820.c: -> gcc.dg/graphite/pr23820.cc
+	* gcc.dg/tree-ssa/pr24309.c: -> gcc.dg/graphite/pr24309.cc
+	* gcc.dg/tree-ssa/pr26435.c: -> gcc.dg/graphite/pr26435.cc
+	* gcc.dg/pr29330.c: -> gcc.dg/graphite/pr29330.cc
+	* gcc.dg/pr29581-1.c: -> gcc.dg/graphite/pr29581-1.cc
+	* gcc.dg/pr29581-2.c: -> gcc.dg/graphite/pr29581-2.cc
+	* gcc.dg/pr29581-3.c: -> gcc.dg/graphite/pr29581-3.cc
+	* gcc.dg/pr29581-4.c: -> gcc.dg/graphite/pr29581-4.cc
+	* gcc.dg/tree-ssa/loop-27.c: -> gcc.dg/graphite/pr30565.cc
+	* gcc.dg/tree-ssa/pr31183.c: -> gcc.dg/graphite/pr31183.cc
+	* gcc.dg/tree-ssa/pr33576.c: -> gcc.dg/graphite/pr33576.cc
+	* gcc.dg/tree-ssa/pr33766.c: -> gcc.dg/graphite/pr33766.cc
+	* gcc.dg/pr34016.c: -> gcc.dg/graphite/pr34016.cc
+	* gcc.dg/tree-ssa/pr34017.c: -> gcc.dg/graphite/pr34017.cc
+	* gcc.dg/tree-ssa/pr34123.c: -> gcc.dg/graphite/pr34123.cc
+	* gcc.dg/tree-ssa/pr36287.c: -> gcc.dg/graphite/pr36287.cc
+	* gcc.dg/tree-ssa/pr37686.c: -> gcc.dg/graphite/pr37686.cc
+	* gcc.dg/pr42917.c: -> gcc.dg/graphite/pr42917.cc
+	* gcc.dg/tree-ssa/data-dep-1.cc
 	* gfortran.dg/loop_nest_1.f90: -> gfortran.dg/graphite/pr29290.f90
 	* gfortran.dg/pr29581.f90: -> gfortran.dg/graphite/pr29581.f90
 	* gfortran.dg/pr36286.f90: -> gfortran.dg/graphite/pr36286.f90
@@ -275,7 +275,7 @@
 
 2011-01-15  Sebastian Pop  <sebastian.pop@amd.com>
 
-	* graphite-sese-to-poly.c
+	* graphite-sese-to-poly.cc
 	(translate_scalar_reduction_to_array_for_stmt): Call unshare_expr.
 	(close_phi_written_to_memory): New.
 	(translate_scalar_reduction_to_array): Call close_phi_written_to_memory
@@ -1103,7 +1103,7 @@
 
 2010-07-26  Sebastian Pop  <sebastian.pop@amd.com>
 
-	* graphite-sese-to-poly.c
+	* graphite-sese-to-poly.cc
 	(rewrite_commutative_reductions_out_of_ssa_loop): Call
 	scev_analyzable_p only on is_gimple_reg
 
@@ -1365,16 +1365,16 @@
 
 2010-07-04  Andreas Simbuerger  <simbuerg@fim.uni-passau.de>
 
-	* graphite-clast-to-gimple.c
+	* graphite-clast-to-gimple.cc
 	(precision_for_value): Resolve value_* calls to matching mpz_* calls.
 	(precision_for_interval): Same.
 	(gcc_type_for_interval): Same.
 	(compute_type_for_level): Same.
-	* graphite-interchange.c
+	* graphite-interchange.cc
 	(lst_interchange_profitable_p): Same.
-	* graphite-poly.c
+	* graphite-poly.cc
 	(psct_scattering_dim_for_loop_depth): Same.
-	* graphite-ppl.c
+	* graphite-ppl.cc
 	(ppl_max_for_le_pointset): Same.
 	(ppl_min_for_le_pointset): Same.
 
@@ -1644,9 +1644,9 @@
 
 2010-04-12  Andreas Simbuerger  <simbuerg@fim.uni-passau.de>
 
-	* graphite-blocking.c
+	* graphite-blocking.cc
 	(pbb_strip_mine_profitable_p): Replace Value with mpz_t.
-	* graphite-clast-to-gimple.c
+	* graphite-clast-to-gimple.cc
 	(clast_to_gcc_expression): Same.
 	(precision_for_value): Same.
 	(precision_for_interval): Same.
@@ -1654,7 +1654,7 @@
 	(graphite_create_new_guard): Same.
 	(compute_bounds_for_level): Same.
 	(graphite_create_new_loop_guard): Same.
-	* graphite-interchange.c
+	* graphite-interchange.cc
 	(build_linearized_memory_access): Same.
 	(pdr_stride_in_loop): Same.
 	(memory_strides_in_loop_1): Same.
@@ -1664,7 +1664,7 @@
 	(pbb_number_of_iterations): Same.
 	* graphite-poly.h
 	(debug_iteration_domains): Same.
-	* graphite-ppl.c
+	* graphite-ppl.cc
 	(new_Cloog_Domain_from_ppl_Pointset_Powerset): Same.
 	(ppl_set_inhomogeneous_gmp): Same.
 	(ppl_strip_loop): Same.
@@ -1679,7 +1679,7 @@
 	(ppl_set_inhomogeneous_tree): Same.
 	(ppl_set_coef): Same.
 	(ppl_set_coef_tree): Same.
-	* graphite-sese-to-poly.c
+	* graphite-sese-to-poly.cc
 	(build_pbb_scattering_polyhedrons): Same.
 	(build_scop_scattering): Same.
 	(scan_tree_for_params_right_scev): Same.
@@ -1954,7 +1954,7 @@
 2010-03-13  Sebastian Pop  <sebastian.pop@amd.com>
 
 	PR middle-end/43351
-	* gcc.dg/graphite/id-pr43351.c
+	* gcc.dg/graphite/id-pr43351.cc
 
 2010-03-13  Sebastian Pop  <sebastian.pop@amd.com>
 
@@ -8350,7 +8350,7 @@
 
 	* graphite.h (struct graphite_bb): Extended with dynamic_schedule.
 	(loop_domain_dim, ref_nb_loops, loop_iteration_vector_dim): Moved
-	from graphite.c
+	from graphite.cc
 
 2008-04-07  Sebastian Pop  <sebastian.pop@amd.com>
 

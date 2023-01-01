@@ -3330,7 +3330,7 @@
 2022-12-09  David Malcolm  <dmalcolm@redhat.com>
 
 	* gcc.dg/analyzer/memcpy-1.c (test_8a, test_8b): New tests.
-	* gcc.dg/analyzer/memmove-1.c: New test, based on memcpy-1.c
+	* gcc.dg/analyzer/memmove-1.c: New test, based on memcpy-1.cc
 	* gcc.dg/analyzer/out-of-bounds-1.c (test7): Update expected
 	result for uninit srcBuf.
 	* gcc.dg/analyzer/out-of-bounds-5.c (test8, test9): Add
@@ -4578,10 +4578,10 @@
 	PR analyzer/107928
 	* gcc.dg/analyzer/fd-bind-pr107928.c: New test.
 	* gcc.dg/analyzer/fd-connect-pr107928.c: New test.
-	* gcc.dg/analyzer/fd-stream-socket-active-open.c
+	* gcc.dg/analyzer/fd-stream-socket-active-open.cc
 	(test_active_open_from_connect_constant): New, adapted from
 	test_active_open_from_connect.
-	* gcc.dg/analyzer/fd-stream-socket-passive-open.c
+	* gcc.dg/analyzer/fd-stream-socket-passive-open.cc
 	(test_passive_open_from_bind_constant): New, adapted from
 	test_passive_open_from_bind.
 	(test_passive_open_from_listen_constant): New, adapted from
@@ -6439,9 +6439,9 @@
 
 2022-11-16  David Malcolm  <dmalcolm@redhat.com>
 
-	* gcc.dg/plugin/analyzer_kernel_plugin.c
+	* gcc.dg/plugin/analyzer_kernel_plugin.cc
 	(copy_across_boundary_fn::matches_call_types_p): New.
-	* gcc.dg/plugin/analyzer_known_fns_plugin.c
+	* gcc.dg/plugin/analyzer_known_fns_plugin.cc
 	(known_function_returns_42::matches_call_types_p): New.
 	(known_function_attempt_to_copy::matches_call_types_p): New.
 
@@ -6658,7 +6658,7 @@
 	* gcc.dg/analyzer/taint-assert.c: New test.
 	* gcc.dg/analyzer/taint-assert-system-header.c: New test.
 	* gcc.dg/analyzer/test-assert.h: New header.
-	* gcc.dg/plugin/analyzer_gil_plugin.c
+	* gcc.dg/plugin/analyzer_gil_plugin.cc
 	(gil_diagnostic::fixup_location): Add bool param.
 
 2022-11-13  José Rui Faustino de Sousa  <jrfsousa@gmail.com>
@@ -8654,7 +8654,7 @@
 	PR analyzer/107060
 	* gcc.dg/analyzer/analyzer-decls.h (__analyzer_get_unknown_ptr):
 	New decl.
-	* gcc.dg/analyzer/call-summaries-2.c
+	* gcc.dg/analyzer/call-summaries-2.cc
 	(test_summarized_writes_param_to_ptr_unknown): New test.
 
 2022-10-05  Tobias Burnus  <tobias@codesourcery.com>
@@ -10941,7 +10941,7 @@
 2022-08-15  Andrew MacLeod  <amacleod@redhat.com>
 
 	PR tree-optimization/106621
-	* gcc.dg/pr106621.c
+	* gcc.dg/pr106621.cc
 
 2022-08-15  Immad Mir  <mirimmad@outlook.com>
 
@@ -12609,7 +12609,7 @@
 
 	* gcc.dg/plugin/diagnostic-test-metadata.c: Expect " [STR34-C]" to
 	be emitted at the "gets" call.
-	* gcc.dg/plugin/diagnostic_plugin_test_metadata.c
+	* gcc.dg/plugin/diagnostic_plugin_test_metadata.cc
 	(pass_test_metadata::execute): Associate the "gets" diagnostic
 	with a rule named "STR34-C".
 
@@ -12827,13 +12827,13 @@
 
 2022-06-16  David Malcolm  <dmalcolm@redhat.com>
 
-	* gcc.dg/analyzer/stdarg-1.c
+	* gcc.dg/analyzer/stdarg-1.cc
 	(__analyzer_called_by_test_type_mismatch_1): Verify that
 	-Wanalyzer-va-arg-type-mismatch is associated with CWE-686.
 
 2022-06-16  David Malcolm  <dmalcolm@redhat.com>
 
-	* gcc.dg/analyzer/stdarg-1.c
+	* gcc.dg/analyzer/stdarg-1.cc
 	(__analyzer_called_by_test_not_enough_args): Verify that
 	-Wanalyzer-va-list-exhausted is associated with CWE-685.
 
@@ -13267,7 +13267,7 @@
 	* gcc.dg/analyzer/file-meaning-1.c: New test.
 	* gcc.dg/analyzer/malloc-meaning-1.c: New test.
 	* gcc.dg/analyzer/malloc-sarif-1.c: New test.
-	* gcc.dg/plugin/analyzer_gil_plugin.c
+	* gcc.dg/plugin/analyzer_gil_plugin.cc
 	(gil_diagnostic::get_meaning_for_state_change): New vfunc impl.
 	* gcc.dg/plugin/diagnostic-test-paths-5.c: New test.
 	* gcc.dg/plugin/plugin.exp (plugin_test_list): Add
@@ -14055,7 +14055,7 @@
 	    Manolis Tsamis  <manolis.tsamis@vrull.eu>
 
 	* gcc.dg/pr90838.c: Add additional flags (dg-additional-options)
-	when compiling for riscv64 and subsume gcc.target/aarch64/pr90838.c
+	when compiling for riscv64 and subsume gcc.target/aarch64/pr90838.cc
 	and gcc.target/i386/pr95863-2.c.
 	* gcc.target/aarch64/pr90838.c: Removed.
 	* gcc.target/i386/pr95863-2.c: Removed.
@@ -16632,7 +16632,7 @@
 2022-03-16  David Malcolm  <dmalcolm@redhat.com>
 
 	* gcc.dg/analyzer/many-disabled-diagnostics.c: New test.
-	* gcc.dg/plugin/analyzer_gil_plugin.c
+	* gcc.dg/plugin/analyzer_gil_plugin.cc
 	(gil_diagnostic::get_controlling_option): New.
 	(double_save_thread::emit): Use it.
 	(fncall_without_gil::emit): Likewise.

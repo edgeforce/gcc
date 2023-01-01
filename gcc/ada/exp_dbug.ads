@@ -198,7 +198,7 @@ package Exp_Dbug is
       --       interpretation 1: entity b in body of package a
       --       interpretation 2: child procedure b of package a
 
-      --     a.b.c
+      --     a.b.cc
 
       --       interpretation 1: entity c in child package a.b
       --       interpretation 2: entity c in nested package b in body of a

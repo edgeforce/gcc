@@ -706,7 +706,7 @@ set of actions to be executed. Here is the invocation of
     $ gprbuild -Pbuild
     gcc -c proc.adb
     gcc -c pack.adb
-    gcc -c utils.c
+    gcc -c utils.cc
     gprbind proc
     ...
     gcc proc.o -o proc
@@ -818,10 +818,10 @@ Here is the output of the GPRbuild command using this project:
 .. code-block:: sh
 
     $ gprbuild -Pc_main
-    gcc -c -pedantic -g main.c
+    gcc -c -pedantic -g main.cc
     gcc -c -gnaty proc.adb
     gcc -c -gnaty pack.adb
-    gcc -c -pedantic utils.c
+    gcc -c -pedantic utils.cc
     gprbind main.bexch
     ...
     gcc main.o -o main

@@ -4861,7 +4861,7 @@
 	comments. Remove useless code statement.
 	(fixup_template_parm): For a template template parameter, fixup
 	its attributes before fixing up its type.
-	* parser.c
+	* parser.cc
 	(cp_parser_template_declaration_after_export): After parsing
 	template parameters fixup their types.
 

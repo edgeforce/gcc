@@ -6306,7 +6306,7 @@
 
 2010-09-02  Joseph Myers  <joseph@codesourcery.com>
 
-	* gcc.dg/cpp/warn-comments-3.c: New.  Based on warn-comments-2.c
+	* gcc.dg/cpp/warn-comments-3.c: New.  Based on warn-comments-2.cc
 	but using -Werror=comment.
 	* gcc.dg/cpp/warn-comments.c, gcc.dg/cpp/warn-comments-2.c: Adjust
 	expected error messages.
@@ -6892,7 +6892,7 @@
 	* gcc.dg/vect/bb-slp-9.c: Now vectorizable on targets that support
 	misaligned loads.
 	* gcc.dg/vect/bb-slp-10.c: Now vectorizable on targets that support
-	misaligned stores.c
+	misaligned stores.cc
 	* gcc.dg/vect/bb-slp-2.c: Avoid loop vectorization.
 
 2010-08-14  Mingjie Xing  <mingjie.xing@gmail.com>
@@ -9135,7 +9135,7 @@
 2010-06-28  Jan Hubicka  <jh@suse.cz>
 
 	PR tree-optimization/44687
-	* gcc.c-torture/compile/pr44687.c
+	* gcc.c-torture/compile/pr44687.cc
 
 2010-06-28  Martin Jambor  <mjambor@suse.cz>
 
@@ -9248,7 +9248,7 @@
 
 2010-06-25  Jan Hubicka  <jh@suse.cz>
 
-	* gcc.dg/tree-ssa/ipa-split-1.c
+	* gcc.dg/tree-ssa/ipa-split-1.cc
 
 2010-06-25  Martin Jambor  <mjambor@suse.cz>
 
@@ -12954,7 +12954,7 @@
 2010-03-31  Sebastian Pop  <sebastian.pop@amd.com>
 
 	PR middle-end/43351
-	* gcc.dg/graphite/id-pr43351.c
+	* gcc.dg/graphite/id-pr43351.cc
 
 2010-03-31  Iain Sandoe  <iain.sandoe@sandoe-acoustics.co.uk>
 

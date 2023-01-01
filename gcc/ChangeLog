@@ -34664,7 +34664,7 @@
 
 2022-01-06  Kito Cheng  <kito.cheng@sifive.com>
 
-	* common/config/riscv/riscv-common.c
+	* common/config/riscv/riscv-common.cc
 	(riscv_subset_list::parse_multiletter_ext): Allow ext. name has
 	digit.
 

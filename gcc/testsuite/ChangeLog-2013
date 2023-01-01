@@ -5389,7 +5389,7 @@
 
 2013-09-06  James Greenhalgh  <james.greenhalgh@arm.com>
 
-	* gcc.target/aarch64/table-intrinsics.c
+	* gcc.target/aarch64/table-intrinsics.cc
 	(qtbl_tests8_< ,2,3,4>): Fix control vector parameter type.
 	(qtb_tests8_< ,2,3,4>): Likewise.
 	(qtblq_tests8_< ,2,3,4>): Likewise.
@@ -5420,9 +5420,9 @@
 	* gcc.target/arc: New directory.
 	* gcc.dg/torture/pr37868.c: Also skip for arc*-*-*.
 	* gcc.dg/stack-usage-1.c [__arc__] (SIZE): Define.
-	* gcc.dg/torture/stackalign/builtin-apply-2.c
+	* gcc.dg/torture/stackalign/builtin-apply-2.cc
 	[__arc__] (STACK_ARGUMENTS_SIZE): Set to 0.
-	* gcc.dg/builtin-apply2.c
+	* gcc.dg/builtin-apply2.cc
 	[__arc__] (STACK_ARGUMENTS_SIZE): Set to 0.
 
 2013-09-04  Jan Hubicka  <jh@suse.cz>
@@ -5524,7 +5524,7 @@
 
 2013-09-02  James Greenhalgh  <james.greenhalgh@arm.com>
 
-	* gcc.target/aarch64/scalar_intrinsics.c
+	* gcc.target/aarch64/scalar_intrinsics.cc
 	(vdup<bhsd>_lane<su><8,16,32,64>): Force values to SIMD registers.
 
 2013-09-02  Richard Biener  <rguenther@suse.de>
@@ -8348,7 +8348,7 @@
 
 2013-05-24  Ian Bolton  <ian.bolton@arm.com>
 
-	* gcc.target/aarch64/scalar_intrinsics.c
+	* gcc.target/aarch64/scalar_intrinsics.cc
 	(force_simd): Use a valid instruction.
 	(test_vdupd_lane_s64): Pass a valid lane argument.
 	(test_vdupd_lane_u64): Likewise.

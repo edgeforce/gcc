@@ -11,7 +11,7 @@ PROGRAM random_seed_1
   IMPLICIT NONE
 
   ! Should match sizeof(master_state) in
-  ! libgfortran/intrinsics/random.c
+  ! libgfortran/intrinsics/random.cc
   INTEGER, PARAMETER :: nbytes = 32
 
   ! '+1' to avoid out-of-bounds warnings

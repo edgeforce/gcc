@@ -106,7 +106,7 @@ c.all.cross:
 c.start.encap:
 c.rest.encap:
 c.srcinfo:
-c.srcextra: gengtype-lex.c
+c.srcextra: gengtype-lex.cc
 	-cp -p $^ $(srcdir)
 c.tags: force
 	cd $(srcdir)/c; $(ETAGS) -o TAGS.sub *.c *.h; \

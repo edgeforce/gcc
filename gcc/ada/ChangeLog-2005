@@ -1020,7 +1020,7 @@
 	(EXTRA_GNATRTL_NONTASKING_OBJS for ppc-vxworks): Remove the use of
 	i-vxworks and i-vxwoio from the run time that supports VxWorks 6 RTPs.
 
-	* raise.c: Move all GCC EH-related routines to raise-gcc.c
+	* raise.c: Move all GCC EH-related routines to raise-gcc.cc
 
 2005-11-14  Jose Ruiz  <ruiz@adacore.com>
 
@@ -3322,7 +3322,7 @@
 2005-08-29  Arnaud Charlet  <charlet@adacore.com>
 
 	PR ada/23187
-	* adaint.c
+	* adaint.cc
 	(GNAT_MAXPATH_LEN): Use default value if MAXPATHLEN is undefined.
 
 2005-08-29  Arnaud Charlet  <charlet@adacore.com>
@@ -5002,7 +5002,7 @@
 	* init.c [VMS] Declare ADA$ externs weak to fix build problem in IVMS.
 	[VMS] cond_signal_table: Fix problem in declaration.
 	[VMS] __gnat_error_handler: rewrite.
-	Move all __gnat_initialize() routines to initialize.c
+	Move all __gnat_initialize() routines to initialize.cc
 	Specialize the former "hpux" section to "hppa hpux", as this is what the
 	section really is here for and we now have other hpux ports that need
 	different contents.

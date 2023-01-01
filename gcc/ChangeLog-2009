@@ -9425,7 +9425,7 @@
 	new builtin function.
 	* target-def.h (TARGET_SUPPORT_VECTOR_MISALIGNMENT):
 	Define.
-	* config/rs6000/rs6000.c
+	* config/rs6000/rs6000.cc
 	(rs6000_builtin_support_vector_misalignment): New function.
 	(TARGET_SUPPORT_VECTOR_MISALIGNMENT): Define.
 
@@ -11997,7 +11997,7 @@
 	(mark_reg_dependencies): Skip debug insns.
 	* params.def (PARAM_MIN_NONDEBUG_INSN_UID): New.
 	* tree-ssanames.c (release_ssa_name): Propagate def into debug stmts.
-	* tree-ssa-threadedge.c
+	* tree-ssa-threadedge.cc
 	(record_temporary_equivalences_from_stmts): Skip debug stmts.
 	* regcprop.c (replace_oldest_value_addr): Skip debug insns.
 	(replace_oldest_value_mem): Use ALL_REGS for debug insns.
@@ -13692,7 +13692,7 @@
 
 2009-08-13  Ghassan Shobaki  <ghassan.shobaki@amd.com>
 
-	* tree-ssa-loop-prefetch.c
+	* tree-ssa-loop-prefetch.cc
 	(prune_ref_by_group_reuse): Enhance probabilistic analysis
 	for long-stride pruning.
 	(compute_miss_rate): New function to compute the probability
@@ -14090,7 +14090,7 @@
 	an indirection wrapper to the current dynamically established
 	handler.
 	* config/alpha/vms-unwind.h: Complete rewrite.
-	* config/alpha/t-vms (LIB2FUNCS_EXTRA): Add vms-gcc_shell_handler.c
+	* config/alpha/t-vms (LIB2FUNCS_EXTRA): Add vms-gcc_shell_handler.cc
 	* config/alpha/vms.h (MD_UNWIND_SUPPORT):
 
 2009-08-09  Eric Botcazou  <botcazou@adacore.com>
@@ -20075,7 +20075,7 @@
 
 2009-06-09  Ghassan Shobaki  <ghassan.shobaki@amd.com>
 
-	* tree-ssa-loop-prefetch.c
+	* tree-ssa-loop-prefetch.cc
 	(loop_prefetch_arrays): Fixed a portability problem in printf format
 	string.
 
@@ -20139,7 +20139,7 @@
 2009-06-08  Ghassan Shobaki  <ghassan.shobaki@amd.com>
 	    Dwarakanath Rajagopal  <dwarak.rajagopal@amd.com>
 
-	* tree-ssa-loop-prefetch.c
+	* tree-ssa-loop-prefetch.cc
 	(gather_memory_references): Introduced a counter for the number of
 	memory references.
 	(anything_to_prefetch_p): Introduced a counter for the number of
@@ -22307,7 +22307,7 @@
 	(sra_insert_after): Likewise.
 	(sra_init_cache): Likewise.
 	(sra_type_can_be_decomposed_p): Likewise.
-	* tree-mudflap.c (insert_edge_copies_seq): Copied here from tree-sra.c
+	* tree-mudflap.c (insert_edge_copies_seq): Copied here from tree-sra.cc
 	* tree-sra.c (sra_type_can_be_decomposed_p): Made static.
 	(sra_insert_before): Likewise.
 	(sra_insert_after): Likewise.
@@ -24160,7 +24160,7 @@
 	* config/sh/symbian.c (sh_symbian_mark_dllimport): Likewise.
 	* config/spu/spu.c (spu_handle_fndecl_attribute,
 	spu_handle_vector_attribute): Likewise.
-	* config/stormy16/stormy16.c
+	* config/stormy16/stormy16.cc
 	(xstormy16_handle_interrupt_attribute): Likewise.
 	* config/v850/v850-c.c (ghs_pragma_section): Likewise.
 	* config/v850/v850.c (v850_handle_interrupt_attribute): Likewise.
@@ -24289,7 +24289,7 @@
 	blocks and fold conditionals.
 	* tree-inline.h: Do not include varray.h.
 	(tree_function_versioning): Remove.
-	* Makefile.in (GTFILES): Remove tree-inline.c
+	* Makefile.in (GTFILES): Remove tree-inline.cc
 	* passes.c (do_per_function): Do only functions having body.
 	* ipa-struct-reorg.c (do_reorg_1, collect_data_accesses): Handle clone
 	tree.
@@ -25082,7 +25082,7 @@
 	remove_reachable_equiv_notes, replace_store_insn, delete_store,
 	free_store_memory, one_store_motion_pass, gate_rtl_store_motion,
 	execute_rtl_store_motion, pass_rtl_store_motion): Move to...
-	* store-motion.c: ...new file.  Also copy data structures from gcse.c
+	* store-motion.c: ...new file.  Also copy data structures from gcse.cc
 	and clean up to remove parts not used by store motion.
 	* rtl.h (can_assign_to_reg_without_clobbers_p): Add prototype.
 	* Makefile.in (store-motion.o): New rule. Add to OBJS-common.
@@ -27430,7 +27430,7 @@
 	(add_type_for_runtime): Declare extern.
 	(lookup_type_for_runtime): Likewise.
 	(debug_eh_tree): Declare.
-	* Makefile.in (GTFILES): List except.h before except.c
+	* Makefile.in (GTFILES): List except.h before except.cc
 
 2009-04-17  Diego Novillo  <dnovillo@google.com>
 
@@ -29170,7 +29170,7 @@
 2009-04-04  Richard Guenther  <rguenther@suse.de>
 
 	PR tree-optimization/39636
-	* tree-ssa-forwprop.c
+	* tree-ssa-forwprop.cc
 	(forward_propagate_addr_into_variable_array_index): Check for
 	GIMPLE_ASSIGN before accessing the rhs code.
 
@@ -30318,7 +30318,7 @@
 
 	* tree.h (div_if_zero_remainder): Declare.
 	* fold-const.c (div_if_zero_remainder): Export.
-	* tree-ssa-forwprop.c
+	* tree-ssa-forwprop.cc
 	(forward_propagate_addr_into_variable_array_index): Handle
 	constant array index addition outside of the variable index.
 
@@ -30555,7 +30555,7 @@
 	* tree-vect-loop-manip.c: New file.
 	* tree-vectorizer.c: Update documentation and included files.
 	(vect_loop_location): Make extern.
-	(rename_use_op): Move to tree-vect-loop-manip.c
+	(rename_use_op): Move to tree-vect-loop-manip.cc
 	(rename_variables_in_bb, rename_variables_in_loop,
 	slpeel_update_phis_for_duplicate_loop,
 	slpeel_update_phi_nodes_for_guard1,
@@ -30830,7 +30830,7 @@
 	(in_late_binary_op): Declare.
 	* c-typeck.c (note_integer_operands): New function.
 	(in_late_binary_op): New variable.
-	(decl_constant_value_for_broken_optimization): Move to c-common.c
+	(decl_constant_value_for_broken_optimization): Move to c-common.cc
 	and rename to decl_constant_value_for_optimization.
 	(default_function_array_conversion): Do not strip nops.
 	(default_conversion): Do not call
@@ -32510,7 +32510,7 @@
 	PR tree-optimization/37709
 	* tree.c (block_ultimate_origin): Move here from dwarf2out.
 	* tree.h (block_ultimate_origin): Declare.
-	* dwarf2out.c (block_ultimate_origin): Move to tree.c
+	* dwarf2out.c (block_ultimate_origin): Move to tree.cc
 	* tree-ssa-live.c (remove_unused_scope_block_p):
 	Eliminate blocks containig no instructions nor live variables nor
 	nested blocks.
@@ -34037,7 +34037,7 @@
 2009-01-16  Jakub Jelinek  <jakub@redhat.com>
 
 	PR tree-optimization/38789
-	* tree-ssa-threadedge.c
+	* tree-ssa-threadedge.cc
 	(record_temporary_equivalences_from_stmts_at_dest): Ignore calls to
 	__builtin_constant_p.
 

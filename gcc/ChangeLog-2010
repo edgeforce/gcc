@@ -1436,7 +1436,7 @@
 
 2010-12-10  Iain Sandoe <iains@gcc.gnu.org>
 
-	* config/rs6000/rs6000.c
+	* config/rs6000/rs6000.cc
 	(rs6000_darwin64_record_arg_advance_recurse): Name register increment
 	explicitly.  (rs6000_darwin64_record_arg_recurse): Make sure we split
 	long doubles when we run out of regs.   Also flag that this requires
@@ -3658,14 +3658,14 @@
 	discriminated option.
 
 	* gengtype.h (typedefs, structures, param_structs, variables
-	enum typekind): Move from gengtype.c
+	enum typekind): Move from gengtype.cc
 	(enum option_kind): New discriminating enumeration.
 	(struct options): Becomes discriminated.
-	(struct nested_ptr_data): Nove from gengtype.c
+	(struct nested_ptr_data): Nove from gengtype.cc
 	(create_string_option, create_type_option, create_nested_option)
 	(create_nested_ptr_option): New functions
 	(struct pair, enum_gc_used_enum, NUM_PARAM, struct type, UNION_P)
-	(UNION_OR_STRUCT_P): Move from gengtype.c
+	(UNION_OR_STRUCT_P): Move from gengtype.cc
 
 	* gengtype-parse.c (str_optvalue_opt, type_optvalue, option): Make
 	discriminated options.
@@ -8751,7 +8751,7 @@
 	(TARGET_OPTION_OPTIMIZATION): Change to
 	TARGET_OPTION_OPTIMIZATION_TABLE.
 	* config/mep/mep.h (CAN_DEBUG_WITHOUT_FP): Remove.
-	* config/microblaze/microblaze.c
+	* config/microblaze/microblaze.cc
 	(microblaze_option_optimization_table,
 	TARGET_OPTION_OPTIMIZATION_TABLE): New.
 	* config/microblaze/microblaze.h (CAN_DEBUG_WITHOUT_FP): Remove.
@@ -17018,7 +17018,7 @@
 	be zero or nonzero.
 	* doc/tm.texi: Regenerate.
 	* defaults.h (PIC_OFFSET_TABLE_REG_CALL_CLOBBERED): Define.
-	* df-scan.c (df_get_exit_block_use_set), reginfo.c
+	* df-scan.c (df_get_exit_block_use_set), reginfo.cc
 	(init_reg_sets_1), rtlanal.c (rtx_unstable_p, rtx_varies_p):
 	Handle new PIC_OFFSET_TABLE_REG_CALL_CLOBBERED semantics.
 	* config/ia64/ia64.h (PIC_OFFSET_TABLE_REG_CALL_CLOBBERED): Define
@@ -17757,7 +17757,7 @@
 
 2010-08-11  Sebastian Pop  <sebastian.pop@amd.com>
 
-	* graphite-sese-to-poly.c
+	* graphite-sese-to-poly.cc
 	(rewrite_commutative_reductions_out_of_ssa_loop): Call
 	scev_analyzable_p only on is_gimple_reg
 
@@ -17915,9 +17915,9 @@
 
 2010-08-11  Andreas Simbuerger  <simbuerg@fim.uni-passau.de>
 
-	* graphite-cloog-util.c
+	* graphite-cloog-util.cc
 	(cloog_matrix_to_ppl_constraint): Fix flipped condition.
-	* graphite-poly.c
+	* graphite-poly.cc
 	(psct_scattering_dim_for_loop_depth): Same.
 
 2010-08-11  Andreas Simbuerger  <simbuerg@fim.uni-passau.de>
@@ -17983,16 +17983,16 @@
 
 2010-08-11  Andreas Simbuerger  <simbuerg@fim.uni-passau.de>
 
-	* graphite-clast-to-gimple.c
+	* graphite-clast-to-gimple.cc
 	(precision_for_value): Resolve value_* calls to matching mpz_* calls.
 	(precision_for_interval): Same.
 	(gcc_type_for_interval): Same.
 	(compute_type_for_level): Same.
-	* graphite-interchange.c
+	* graphite-interchange.cc
 	(lst_interchange_profitable_p): Same.
-	* graphite-poly.c
+	* graphite-poly.cc
 	(psct_scattering_dim_for_loop_depth): Same.
-	* graphite-ppl.c
+	* graphite-ppl.cc
 	(ppl_max_for_le_pointset): Same.
 	(ppl_min_for_le_pointset): Same.
 
@@ -23721,7 +23721,7 @@
 	MEM_REF.  Propagate &foo + CST as &MEM[&foo, CST].  Do not
 	bother about volatile qualifiers on pointers.
 	(fold_const_aggregate_ref): Handle MEM_REF, do not handle INDIRECT_REF.
-	* tree-ssa-loop-ivopts.c
+	* tree-ssa-loop-ivopts.cc
 	* tree-ssa-loop-ivopts.c (determine_base_object): Adjust for MEM_REF.
 	(strip_offset_1): Likewise.
 	(find_interesting_uses_address): Replace INDIRECT_REF handling with
@@ -26007,7 +26007,7 @@
 	(df_set_bb_info): Likewise.
 	(df_compact_blocks): Update for new block_info.
 	(grow_bb_info): New function.
-	* df-problems.c (df_grow_bb_info): Move to df-core.c
+	* df-problems.c (df_grow_bb_info): Move to df-core.cc
 	(df_rd_set_bb_info): Remove.
 	(df_rd_free_bb_info): Do not free block pool.
 	(df_rd_alloc): Do not create pool, use check for
@@ -26469,7 +26469,7 @@
 	(init_rtx_reader_args): ...this and return a bool.
 	(include_callback): Move to read-md.h.
 	* gensupport.c (in_fname, include_callback, base_dir, max_include_len)
-	(file_name_list, first_dir_md_include): Move to read-md.c
+	(file_name_list, first_dir_md_include): Move to read-md.cc
 	(first_bracket_include): Delete unused variable.
 	(last_dir_md_include): Move to read-md.c.
 	(process_include): Delete, moving code to read-md.c:handle_include.
@@ -27649,7 +27649,7 @@
 	* config/v850/t-v850: Fix dependencies for moved files.
 	* config/v850/t-v850e: Fix dependencies for moved files.
 
-	* config/m32c/m32c-pragma.c
+	* config/m32c/m32c-pragma.cc
 
 	* po/exgettext: Look in c-family/ also.
 
@@ -28459,7 +28459,7 @@
 
 	* fwprop.c: Make emit-rtl.h include last.
 	* rtlanal.c: Include emit-rtl.h.
-	* genautomata.c: Output emit-rtl include into insn-automata.c
+	* genautomata.c: Output emit-rtl include into insn-automata.cc
 	* df-scan.c: Include emit-rtl.h.
 	* haifa-sched.c: Indlude emit-rtl.h.
 	* mode-switching.c: Indlude emit-rtl.h.
@@ -29473,7 +29473,7 @@
 
 	* input.c: New file.
 	* input.h (main_input_filename): Move declaration to toplev.h.
-	* toplev.c (input_location, line_table): Move to input.c
+	* toplev.c (input_location, line_table): Move to input.cc
 	* toplev.h (main_input_filename): Move declaration from input.h.
 	* tree.c (expand_location): Move to input.c.
 	* Makefile.in (OBJS-common): Add input.o.
@@ -29967,7 +29967,7 @@
 	* diagnostic.h (struct diagnostic_context): Add show_column,
 	pedantic_errors, permissive and fatal_errors fields.
 	(diagnostic_build_prefix): Update prototype.
-	* langhooks.c
+	* langhooks.cc
 	* toplev.c (process_options): Set flags in global_dc from
 	flag_show_column, flag_pedantic_errors, flag_permissive,
 	flag_fatal_errors.
@@ -32111,9 +32111,9 @@
 
 2010-05-05  Andreas Simbuerger  <simbuerg@fim.uni-passau.de>
 
-	* graphite-blocking.c
+	* graphite-blocking.cc
 	(pbb_strip_mine_profitable_p): Replace Value with mpz_t.
-	* graphite-clast-to-gimple.c
+	* graphite-clast-to-gimple.cc
 	(clast_to_gcc_expression): Same.
 	(precision_for_value): Same.
 	(precision_for_interval): Same.
@@ -32121,7 +32121,7 @@
 	(graphite_create_new_guard): Same.
 	(compute_bounds_for_level): Same.
 	(graphite_create_new_loop_guard): Same.
-	* graphite-interchange.c
+	* graphite-interchange.cc
 	(build_linearized_memory_access): Same.
 	(pdr_stride_in_loop): Same.
 	(memory_strides_in_loop_1): Same.
@@ -32131,7 +32131,7 @@
 	(pbb_number_of_iterations): Same.
 	* graphite-poly.h
 	(debug_iteration_domains): Same.
-	* graphite-ppl.c
+	* graphite-ppl.cc
 	(new_Cloog_Domain_from_ppl_Pointset_Powerset): Same.
 	(ppl_set_inhomogeneous_gmp): Same.
 	(ppl_strip_loop): Same.
@@ -32146,7 +32146,7 @@
 	(ppl_set_inhomogeneous_tree): Same.
 	(ppl_set_coef): Same.
 	(ppl_set_coef_tree): Same.
-	* graphite-sese-to-poly.c
+	* graphite-sese-to-poly.cc
 	(build_pbb_scattering_polyhedrons): Same.
 	(build_scop_scattering): Same.
 	(scan_tree_for_params_right_scev): Same.
@@ -33820,7 +33820,7 @@
 
 2010-04-22  Nick Clifton  <nickc@redhat.com>
 
-	* config/stormy16/stormy16.c
+	* config/stormy16/stormy16.cc
 	(xstormy16_asm_output_aligned_common): Handle a NULL decl parameter.
 	* config/stormy16/stormy16.h: Tidy up formatting.
 	(DONT_USE_BUILTIN_SETJMP): Remove definition.

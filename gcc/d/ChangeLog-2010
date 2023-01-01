@@ -483,8 +483,8 @@
 	d/phobos2/*: Update D2 frontend to 2.028.
 	[141118223a79]
 
-	* d/dmd/cast.c d/dmd/constfold.c d/dmd/identifier.c d/dmd/lexer.c
-	d/dmd/mars.h d/dmd/mtype.c d/dmd/opover.c d/dmd/optimize.c
+	* d/dmd/cast.c d/dmd/constfold.c d/dmd/identifier.c d/dmd/lexer.cc
+	d/dmd/mars.h d/dmd/mtype.c d/dmd/opover.c d/dmd/optimize.cc
 	d/dmd/template.h d/dmd/todt.c d/dmd/toobj.c: Cleaned up D1 folder
 	after D2 updates.
 	[5c293d142e2d]
@@ -518,7 +518,7 @@
 	initialising structs from emitLocalVar to AssignExp.
 	[32165d66c011]
 
-	* d/Make-lang.in, d/d-lang.cc, d/dmd2/array.c, d/dmd2/async.c
+	* d/Make-lang.in, d/d-lang.cc, d/dmd2/array.c, d/dmd2/async.cc
 	d/dmd2/async.h, d/dmd2/root.c: D2 - Added AsyncRead sources.
 	[3407bc0a9896]
 
@@ -1328,7 +1328,7 @@
 
 	Merge with DMD 2.019
 
-	* d-decls.cc: Merge changes from dmd2/tocsym.c
+	* d-decls.cc: Merge changes from dmd2/tocsym.cc
 
 	* phobos/Makefile.am, phobos/Makefile.in, phobos2/Makefile.am,
 	phobos2/Makefile.in: Fix build for check-target-libphobos tests.

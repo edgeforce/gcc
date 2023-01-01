@@ -1,5 +1,5 @@
 ! { dg-do run }
-! Tests the fix for PR26393, in which an ICE would occur in trans-decl.c
+! Tests the fix for PR26393, in which an ICE would occur in trans-decl.cc
 ! (gfc_get_symbol_decl) because anzKomponenten is not referenced in the
 ! interface for solveCConvert. The solution was to assert that the symbol
 ! is either referenced or in an interface body.

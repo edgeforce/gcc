@@ -3264,7 +3264,7 @@ Mon Jul 13 23:25:28 1998  Martin von Löwis  <loewis@informatik.hu-berlin.de>
 Mon Jul 13 17:21:01 1998  Nick Clifton  <nickc@cygnus.com>
 
 	* lang-options.h: Format changed to work with new --help support
-	in gcc/toplev.c
+	in gcc/toplev.cc
 
 1998-07-12  Martin von Löwis  <loewis@informatik.hu-berlin.de>
 

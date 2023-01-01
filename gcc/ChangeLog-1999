@@ -42,10 +42,10 @@ Fri Dec 31 19:10:31 1999  Richard Kenner  <kenner@vlsi1.ultra.nyu.edu>
 	* fixinc/fixincl.c(wait_for_pid): sometimes a WSTOPSIG of zero is OK
 	* fixinc/fixincl.tpl(<hack>TEST_CT): Just do the existence test once
 	(<hack>_RE_CT): not needed
-	* fixinc/fixlib.c(is_cxx_header): moved from fixtests.c
+	* fixinc/fixlib.c(is_cxx_header): moved from fixtests.cc
 	rewritten to scan the file text once only
 	"template<..." test added
-	* fixinc/fixlib.h(apply_fix_p_t): moved from fixtests.c
+	* fixinc/fixlib.h(apply_fix_p_t): moved from fixtests.cc
 	(is_cxx_header): declaration added
 	* fixinc/fixtests.c(is_cxx_header): removed
 	(apply_fix_p_t): removed
@@ -462,7 +462,7 @@ Sat Dec 18 05:29:29 1999  Scott Bambrough  <scottb@netwinder.org>
 	_fatal_insn, _fatal_insn_not_found, warning_with_file_and_line,
 	warning_with_decl, warning_for_asm, warning, pedwarn,
 	pedwarn_with_decl, pedwarn_with_file_and_line, sorry): Move to
-	diagnostic.c
+	diagnostic.cc
 	(compile_file): Use fnotice instead of notice.  Adjust call.
 
 	* diagnostic.c: New file.
@@ -2877,7 +2877,7 @@ Tue Nov  9 16:43:00 1999  Nick Clifton  <nickc@cygnus.com>
 Tue Nov  9 14:55:44 1999  Nick Clifton  <nickc@cygnus.com>
 
 	* config/m32r/m32r-protos.h: New file: Prototypes for functions
-	defined in m32r.c
+	defined in m32r.cc
 
 	* config/m32r/m32r.h: Move prototypes to m32r-protos.h
 	Add support for subtargets.
@@ -2916,13 +2916,13 @@ Mon Nov  8 13:16:46 1999  Jason Eckhardt  <jle@cygnus.com>
 Mon Nov  8 15:38:41 1999  Nick Clifton  <nickc@cygnus.com>
 
 	* config/v850/v850-protos.h: New file: Prototypes for functions
-	defined in v850.c
+	defined in v850.cc
 	* config/v850/v850.h: Move prototypes to v850-protos.h
 	* config/v850/v850.c: Move prototypes to v850-protos.h
 	* config/v850/v850.md: Fix compile time warnings.
 
 	* config/fr30/fr30-protos.h: New file: Prototypes for functions
-	defined in fr30.c
+	defined in fr30.cc
 	* config/fr30/fr30.h: Move prototypes to fr30-protos.h
 	* config/fr30/fr30.c: Fix compile time warnings.
 	* config/fr30/fr30.md: Fix compile time warnings.
@@ -3327,7 +3327,7 @@ Tue Nov  2 09:43:00 1999  Catherine Moore  <clm@cygnus.com>
 	* Makefile.in (genattrtab): Don't use (HOST_RTLANAL).
 	* rtl.h (rtx_equal_p): Move prototype.
 	* rtl.c (rtx_equal_function_value_matters): Move from
-	rtlanal.c
+	rtlanal.cc
 	(rtx_equal_p): Likewise.
 	* rtlanal.c (rtx_equal_function_value_matters): Delete.
 	(rtx_equal_p): Likewise.
@@ -10110,8 +10110,8 @@ Wed Aug 25 13:41:47 EDT 1999  Andrew MacLeod  <amacleod@cygnus.com>
 	(free_INSN_LIST_list): Free an entire list of INSN_LIST nodes.
 	(free_EXPR_LIST_node): Free an individual EXPR_LIST node.
 	(free_INSN_LIST_node): Free an individual INSN_LIST node.
-	* haifa-sched.c (unused_insn_list, unused_expr_list): Moved to flow.c
-	(free_list, alloc_INSN_LIST, alloc_EXPR_LIST): Moved to flow.c
+	* haifa-sched.c (unused_insn_list, unused_expr_list): Moved to flow.cc
+	(free_list, alloc_INSN_LIST, alloc_EXPR_LIST): Moved to flow.cc
 	(remove_dependence, free_pending_lists): Use new global routines.
 	(flush_pending_lists, sched_analyze_insn): Use new global routines.
 	(sched_analyze, compute_block_backward_dependences): Use new routines.
@@ -10293,7 +10293,7 @@ Tue Aug 24 15:37:03 1999  Richard Henderson  <rth@cygnus.com>
 Tue Aug 24 11:46:10 1999  Bob Manson <manson@cygnus.com>
 			  Richard Henderson  <rth@cygnus.com>
 
-	* haifa-sched.c (split_hard_reg_notes): Move to flow.c
+	* haifa-sched.c (split_hard_reg_notes): Move to flow.cc
 	(new_insn_dead_notes): Likewise.
 	(update_n_sets): Likewise.
 	(update_flow_info): Move to flow.c, renamed to update_life_info;
@@ -11639,7 +11639,7 @@ Wed Aug  4 12:53:44 1999  Michael Tiemann  <tiemann@holodeck.cygnus.com>
 Wed Aug  4 13:12:17 1999  Jeffrey A Law  (law@cygnus.com)
 
 	* a29k/t-a29kbare: Fix some comments.
-	(LIB2FUNCS_EXTRA): Remove fp-bit.c and dp-bit.c
+	(LIB2FUNCS_EXTRA): Remove fp-bit.c and dp-bit.cc
 	(FPBIT, DPBIT): Define.
 	* a29k/t-vx29k: Likewise.
 	* arc/t-arc: Likewise.
@@ -12872,7 +12872,7 @@ Sat Jul 17 14:25:46 1999  Nick Clifton  <nickc@cygnus.com>
 	* config/arm/arm.c: Rename TARGET_THUMB_INTERWORK to
 	TARGET_INTERWORK.
 	Replace uses of fprintf with asm_fprintf where appropriate.
-	(output_ascii_pseudo_op): Replace with version from thumb.c
+	(output_ascii_pseudo_op): Replace with version from thumb.cc
 
 	* config/arm/coff.h (ASM_FILE_START): Emit ASM_APP_OFF.
 

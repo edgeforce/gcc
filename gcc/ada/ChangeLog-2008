@@ -386,7 +386,7 @@
 	* bindgen.adb [VMS] (Gen_Adainit_Ada, Gen_Adainit_C): Import and call
 	__gnat_set_features.
 
-	* init.c
+	* init.cc
 	(__gnat_set_features): New function.
 	(__gnat_features_set): New tracking variable.
 	(__gl_no_malloc_64): New feature global variable
@@ -1178,7 +1178,7 @@
 	* gcc-interface/utils2.c (build_call_alloc_dealloc): Force 32bit malloc
 	if TARGET_MALLOC64 clear.
 
-	* gcc-interface/gigi.h (TARGET_ABI_OPEN_VMS): Move here from utils2.c
+	* gcc-interface/gigi.h (TARGET_ABI_OPEN_VMS): Move here from utils2.cc
 	(TARGET_MALLC64): New macro. Default to clear.
 
 2008-08-06  Doug Rupp  <rupp@adacore.com>
@@ -1425,7 +1425,7 @@
 
 	* a-rttiev.adb: Minor reformatting (comments)
 
-	* gen-soccon.c: Rename to gen-oscons.c
+	* gen-soccon.c: Rename to gen-oscons.cc
 
 	* gen-oscons.c: New file. Now generate System.OS_Constants instead of
 	GNAT.Sockets.Constants.
@@ -2351,7 +2351,7 @@
 	build_{unary,binary}_op
 
 	* gcc-interface/Makefile.in
-	(LIBGNAT_SRCS): Add arit64.c
+	(LIBGNAT_SRCS): Add arit64.cc
 	(LIBGNAT_OBJS): Add arit64.o
 
 2008-07-31  Vincent Celier  <celier@adacore.com>
@@ -2584,12 +2584,12 @@
 
 2008-07-30  Jose Ruiz  <ruiz@adacore.com>
 
-	* adaint.c
+	* adaint.cc
 	(__gnat_file_exists): Do not use __gnat_stat for RTX.
 	(__main for RTX in RTSS mode): Create this dummy procedure symbol to
 	avoid the use of this symbol from libgcc.a in RTX kernel mode.
 
-	* cio.c
+	* cio.cc
 	(put_int, put_int_stderr, put_char, put_char_stderr): For RTX we call
 	the function RtPrintf for console output.
 

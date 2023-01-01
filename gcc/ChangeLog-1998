@@ -829,7 +829,7 @@ Mon Dec  7 17:55:06 1998  Mike Stump  <mrs@wrs.com>
 	hardcoded MASK, which is safe since this is the source
 	character set).
 
-	* cppexp.c: Bring over changes to cpp_parse_escape from cccp.c
+	* cppexp.c: Bring over changes to cpp_parse_escape from cccp.cc
 	to handle wide character constants in #if directives.  The
 	function now returns a HOST_WIDE_INT, and takes a third
 	argument which is a binary mask for all legal values (0x00ff
@@ -11660,7 +11660,7 @@ Thu May 21 11:51:15 1998  Dave Brolley  <brolley@cygnus.com>
 	(GET_DIRECTIVE_LINE): Move to c-common.c and rename to get_directive_line.
 
 	* c-common.c (parse_in,parse_options,cpp_token): Declare for cpplib.
-	(yy_cur,yy_lim,yy_get_token,get_directive,line): Moved here from c-lex.c
+	(yy_cur,yy_lim,yy_get_token,get_directive,line): Moved here from c-lex.cc
 
 Thu May 21 09:04:42 1998  Kaveh R. Ghazi  <ghazi@caip.rutgers.edu>
 
@@ -16390,7 +16390,7 @@ Sat Feb  7 23:54:29 1998  Robert Lipe  <robertl@dgii.com>
 	* explow.c (plus_constant_for_output_wide): Removed unused
 	variable all_constant.
 
-	* c-decl.c, genattr.c, genattrtab.c, getconfig.c, genemit.c
+	* c-decl.c, genattr.c, genattrtab.c, getconfig.c, genemit.cc
 	genextract.c, genflags.c, genopinit.c genoutput.c, genpeep.c,
 	genrecog.c, global.c, integrate.c , stupid.c : Include
 	<stdlib.h>.

@@ -31,7 +31,7 @@ proc param_run_test { param_name param_value } {
     dg-runtest $srcdir/$subdir/blocksort-part.c "-O3 --param $param_name=$param_value" ""
 }
 
-set srcfname params-[pid].c
+set srcfname params-[pid].cc
 set fd [open $srcfname w]
 puts $fd ""
 close $fd

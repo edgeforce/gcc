@@ -2860,7 +2860,7 @@
 
 2014-11-21  Kyrylo Tkachov  <kyrylo.tkachov@arm.com>
 
-	* gcc.target/aarch64/simd/vsqrt_f64_1.c
+	* gcc.target/aarch64/simd/vsqrt_f64_1.cc
 
 2014-11-21  Ilya Tocar  <ilya.tocar@intel.com>
 
@@ -3408,7 +3408,7 @@
 
 2014-11-15  Adhemerval Zanella  <azanella@linux.vnet.ibm.com>
 
-	* gcc.dg/atomic/c11-atomic-exec-5.c
+	* gcc.dg/atomic/c11-atomic-exec-5.cc
 	(test_main_long_double_add_overflow): Only actually define if
 	LDBL_MANT_DIG != 106.
 	(test_main_complex_long_double_add_overflow): Likewise.
@@ -6657,7 +6657,7 @@
 
 2014-10-19  Adhemerval Zanella  <azanella@linux.vnet.ibm.com>
 
-	* gcc.dg/atomic/c11-atomic-exec-5.c
+	* gcc.dg/atomic/c11-atomic-exec-5.cc
 	(test_main_long_double_add_overflow): Define and run only for
 	LDBL_MANT_DIG != 106.
 	(test_main_complex_long_double_add_overflow): Likewise.
@@ -11323,8 +11323,8 @@
 
 	PR tree-optimization/61742
 	* gcc.dg/torture/pr61742.c: New test.
-	* gcc.gg/vect/cond-reduc-1.c: Rename it to vect-cond-reduc-1.c
-	* gcc.gg/vect/cond-reduc-2.c: Rename it to vect-cond-reduc-2.c
+	* gcc.gg/vect/cond-reduc-1.c: Rename it to vect-cond-reduc-1.cc
+	* gcc.gg/vect/cond-reduc-2.c: Rename it to vect-cond-reduc-2.cc
 
 2014-07-09  Paolo Carlini  <paolo.carlini@oracle.com>
 
@@ -16151,7 +16151,7 @@
 2014-03-12  Christian Bruel  <christian.bruel@st.com>
 
 	PR target/60264
-	* gcc.target/arm/pr60264.c
+	* gcc.target/arm/pr60264.cc
 
 2014-03-12  Thomas Preud'homme  <thomas.preudhomme@arm.com>
 

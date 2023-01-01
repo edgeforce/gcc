@@ -5466,7 +5466,7 @@
 2005-10-19  Ulrich Weigand  <Ulrich.Weigand@de.ibm.com>
 
 	* cfgexpand.c (discover_nonconstant_array_refs_r,
-	discover_nonconstant_array_refs): Move here from tree-outof-ssa.c
+	discover_nonconstant_array_refs): Move here from tree-outof-ssa.cc
 	(tree_expand_cfg): Call discover_nonconstant_array_refs.
 	* tree-outof-ssa.c (rewrite_out_of_ssa): Remove call to
 	discover_nonconstant_array_refs.
@@ -6846,7 +6846,7 @@
 	estimate_only  is true.
 	* tree-flow.h (ref_contains_indirect_ref): New prototype.
 	* tree-flow-inline.h (ref_contains_indirect_ref): Moved from
-	tree-ssa-structalias.c
+	tree-ssa-structalias.cc
 	* tree-ssa-loop-niter.c (infer_loop_bounds_from_undefined): Use
 	ref_contains_indirect_ref.
 	* tree-ssa-structalias.c (ref_contains_indirect_ref): Moved.
@@ -9766,7 +9766,7 @@
 
 2005-07-31  Jan Hubicka  <jh@suse.cz>
 
-	* output.h (enum section_category): Export from varasm.c
+	* output.h (enum section_category): Export from varasm.cc
 	(categorize_decl_for_section): Likewise.
 	* varasm.c (enum section_category): Kill.
 	(categorize_decl_for_section): Make global.
@@ -11210,7 +11210,7 @@
 2005-07-19  Danny Berlin <dberlin@dberlin.org>
 	    Kenneth Zadeck <zadeck@naturalbridge.com>
 
-	* Makefile.in: Removed tree-promote-statics.c
+	* Makefile.in: Removed tree-promote-statics.cc
 	* tree-promote-statics.c: Removed.
 	* common.opt: Removed flag-promote-statics.
 	* opts.c: Ditto.
@@ -11378,7 +11378,7 @@
 
 	* Makefile.in: Added rules for ipa-pure-const.c, ipa-reference.c,
 	ipa-reference.h, ipa-utils.c, ipa-utils.h, ipa-type-escape.c,
-	ipa-type-escape.h, tree-promote-statics.c
+	ipa-type-escape.h, tree-promote-statics.cc
 	* ipa-pure-const.c, ipa-reference.c, ipa-reference.h, ipa-utils.c,
 	ipa-utils.h, ipa-type-escape.c, ipa-type-escape.h,
 	tree-promote-statics.c: new files.
@@ -13014,7 +13014,7 @@
 	version for format checking to 4.1.
 	(warning0, warning, error, pedwarn, sorry): Use
 	ATTRIBUTE_GCC_DIAG.
-	* config/rs6000/rs6000.c (altivec_expand_builtin), varasm.c
+	* config/rs6000/rs6000.c (altivec_expand_builtin), varasm.cc
 	(finish_aliases_1): Do not use %qE.
 	* config/arm/arm.c, config/i386/i386.c, config/mmix/mmix.c,
 	config/pdp11/pdp11.c, stor-layout.c, tree-eh.c, tree-ssa.c:
@@ -22710,8 +22710,8 @@ Older entries for 2005 can be found in ChangeLog-2005.
 	cgraph_decide_recursive_inlining, cgraph_set_inline_failed,
 	cgraph_decide_inlining_of_small_functions, cgraph_decide_inlining,
 	cgraph_decide_inlining_incrementally, cgraph_gate_inlining,
-	pass_ipa_inline): Move to ipa-inline.c
-	(cgraph_postorder, cgraph_remove_unreachable_nodes): Move to ipa.c
+	pass_ipa_inline): Move to ipa-inline.cc
+	(cgraph_postorder, cgraph_remove_unreachable_nodes): Move to ipa.cc
 	* ipa.c: New file.
 	* ipa-inline.c: New file.
 
@@ -24658,14 +24658,14 @@ Older entries for 2005 can be found in ChangeLog-2005.
 	* config/i386/i386.c (ix86_build_builtin_va_list): Initialize
 	va_list_{g,f}pr_counter_field.
 	(ix86_setup_incoming_varargs): Don't do anything if reg_save
-	area will not be used.  Only save registers that tree-stdarg.c
+	area will not be used.  Only save registers that tree-stdarg.cc
 	detected they need saving.
 	(ix86_va_start): Don't set up fields that won't be used.
 
 	* config/rs6000/rs6000.c (rs6000_build_builtin_va_list): Initialize
 	va_list_{g,f}pr_counter_field.
 	(setup_incoming_varargs): Don't do anything if reg_save
-	area will not be used.  Only save registers that tree-stdarg.c
+	area will not be used.  Only save registers that tree-stdarg.cc
 	detected they need saving.
 	(rs6000_va_start): Don't set up fields that won't be used.
 
@@ -26870,7 +26870,7 @@ Older entries for 2005 can be found in ChangeLog-2005.
 	end of queue; update first pointers.
 	(cgraph_varpool_mark_needed_node): ... here.
 	(cgraph_varpool_finalize_decl): Use enqueue_needed_varpool_node.
-	(cgraph_varpool_assemble_pending_decls): Move to cgraphunit.c
+	(cgraph_varpool_assemble_pending_decls): Move to cgraphunit.cc
 	* cgraph.h (cgraph_varpool_node): Add analyzed field.
 	(cgraph_varpool_first_unanalyzed_node): Declare.
 	* cgraphunit.c: Include output.h.
@@ -30019,7 +30019,7 @@ Older entries for 2005 can be found in ChangeLog-2005.
 	* tree-flow.h: Adjust the prototype for remove_phi_node.
 	* lambda-code.c (perfect_nestify): Adjust a call to
 	remove_phi_node.
-	* tree-cfg.c
+	* tree-cfg.cc
 	(remove_phi_nodes_and_edges_for_unreachable_block): Likewise.
 	* tree-outof-ssa.c (eliminate_virtual_phis, remove_ssa_form):
 	Likewise.

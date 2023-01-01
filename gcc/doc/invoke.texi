@@ -1491,7 +1491,7 @@ For any given input file, the file name suffix determines what kind of
 compilation is done:
 
 @table @gcctabopt
-@item @var{file}.c
+@item @var{file}.cc
 C source code that must be preprocessed.
 
 @item @var{file}.i
@@ -1759,14 +1759,14 @@ outputs, when preserved, are not regarded as primary outputs, but as
 auxiliary outputs:
 
 @smallexample
-gcc -save-temps -S foo.c
+gcc -save-temps -S foo.cc
 @end smallexample
 
 saves the (no longer) temporary preprocessed file in @file{foo.i}, and
 then compiles to the (implied) output file @file{foo.s}, whereas:
 
 @smallexample
-gcc -save-temps -dumpbase save-foo -c foo.c
+gcc -save-temps -dumpbase save-foo -c foo.cc
 @end smallexample
 
 preprocesses to in @file{save-foo.i}, compiles to @file{save-foo.s} (now
@@ -5335,8 +5335,8 @@ Print fix-it hints to stderr in unified diff format, after any diagnostics
 are printed.  For example:
 
 @smallexample
---- test.c
-+++ test.c
+--- test.cc
++++ test.cc
 @@ -42,5 +42,5 @@
 
  void show_cb(GtkDialog *dlg)
@@ -13743,8 +13743,8 @@ link time.
 For example:
 
 @smallexample
-gcc -c -O2 -flto foo.c
-gcc -c -O2 -flto bar.c
+gcc -c -O2 -flto foo.cc
+gcc -c -O2 -flto bar.cc
 gcc -o myprog -flto -O2 foo.o bar.o
 @end smallexample
 
@@ -13762,7 +13762,7 @@ for example, that the inliner is able to inline functions in
 Another (simpler) way to enable link-time optimization is:
 
 @smallexample
-gcc -o myprog -flto -O2 foo.c bar.c
+gcc -o myprog -flto -O2 foo.c bar.cc
 @end smallexample
 
 The above generates bytecode for @file{foo.c} and @file{bar.c},
@@ -13882,7 +13882,7 @@ Another feature of LTO is that it is possible to apply interprocedural
 optimizations on files written in different languages:
 
 @smallexample
-gcc -c -flto foo.c
+gcc -c -flto foo.cc
 g++ -c -flto bar.cc
 gfortran -c -flto baz.f90
 g++ -o myprog -flto -O3 foo.o bar.o baz.o -lgfortran

@@ -86,7 +86,7 @@ The parser ignores lines beginning with a `#`.
 The interpreter is a simple infinite loop with a big ``switch`` statement
 based on what the next opcode is:
 
-   .. literalinclude:: ../examples/tut04-toyvm/toyvm.c
+   .. literalinclude:: ../examples/tut04-toyvm/toyvm.cc
     :start-after: /* Execute the given function.  */
     :end-before: /* JIT compilation.  */
     :language: c
@@ -96,7 +96,7 @@ Compiling to machine code
 We want to generate machine code that can be cast to this type and
 then directly executed in-process:
 
-   .. literalinclude:: ../examples/tut04-toyvm/toyvm.c
+   .. literalinclude:: ../examples/tut04-toyvm/toyvm.cc
     :start-after: /* Functions are compiled to this function ptr type.  */
     :end-before: enum opcode
     :language: c
@@ -105,7 +105,7 @@ The lifetime of the code is tied to that of a :c:type:`gcc_jit_result *`.
 We'll handle this by bundling them up in a structure, so that we can
 clean them up together by calling :c:func:`gcc_jit_result_release`:
 
-   .. literalinclude:: ../examples/tut04-toyvm/toyvm.c
+   .. literalinclude:: ../examples/tut04-toyvm/toyvm.cc
     :start-after: /* A struct to hold the compilation results.  */
     :end-before: /* The main compilation hook.  */
     :language: c
@@ -136,7 +136,7 @@ the opcodes, equivalent to this:
 
 This means our compiler has the following state:
 
-   .. literalinclude:: ../examples/tut04-toyvm/toyvm.c
+   .. literalinclude:: ../examples/tut04-toyvm/toyvm.cc
     :start-after: /* JIT compilation.  */
     :end-before: /* Stack manipulation.  */
     :language: c
@@ -146,14 +146,14 @@ Setting things up
 
 First we create our types:
 
-   .. literalinclude:: ../examples/tut04-toyvm/toyvm.c
+   .. literalinclude:: ../examples/tut04-toyvm/toyvm.cc
     :start-after: /* Create types.  */
     :end-before: /* The constant value 1.  */
     :language: c
 
 along with extracting a useful `int` constant:
 
-   .. literalinclude:: ../examples/tut04-toyvm/toyvm.c
+   .. literalinclude:: ../examples/tut04-toyvm/toyvm.cc
     :start-after: /* The constant value 1.  */
     :end-before: /* Create locations.  */
     :language: c
@@ -162,7 +162,7 @@ We'll implement push and pop in terms of the ``stack`` array and
 ``stack_depth``.  Here are helper functions for adding statements to
 a block, implementing pushing and popping values:
 
-   .. literalinclude:: ../examples/tut04-toyvm/toyvm.c
+   .. literalinclude:: ../examples/tut04-toyvm/toyvm.cc
     :start-after: /* Stack manipulation.  */
     :end-before: /* A struct to hold the compilation results.  */
     :language: c
@@ -172,7 +172,7 @@ debugger, so we need to create :c:type:`gcc_jit_location` instances, one
 per operation in the source code.  These will reference the lines of
 e.g. ``factorial.toy``.
 
-   .. literalinclude:: ../examples/tut04-toyvm/toyvm.c
+   .. literalinclude:: ../examples/tut04-toyvm/toyvm.cc
     :start-after: /* Create locations.  */
     :end-before: /* Creating the function.  */
     :language: c
@@ -180,14 +180,14 @@ e.g. ``factorial.toy``.
 Let's create the function itself.  As usual, we create its parameter
 first, then use the parameter to create the function:
 
-   .. literalinclude:: ../examples/tut04-toyvm/toyvm.c
+   .. literalinclude:: ../examples/tut04-toyvm/toyvm.cc
     :start-after: /* Creating the function.  */
     :end-before: /* Create stack lvalues.  */
     :language: c
 
 We create the locals within the function.
 
-   .. literalinclude:: ../examples/tut04-toyvm/toyvm.c
+   .. literalinclude:: ../examples/tut04-toyvm/toyvm.cc
     :start-after: /* Create stack lvalues.  */
     :end-before: /* 1st pass: create blocks, one per opcode.
     :language: c
@@ -199,7 +199,7 @@ There's some one-time initialization, and the API treats the first block
 you create as the entrypoint of the function, so we need to create that
 block first:
 
-   .. literalinclude:: ../examples/tut04-toyvm/toyvm.c
+   .. literalinclude:: ../examples/tut04-toyvm/toyvm.cc
     :start-after: first.  */
     :end-before: /* Create a block per operation.  */
     :language: c
@@ -207,7 +207,7 @@ block first:
 We can now create blocks for each of the operations.  Most of these will
 be consolidated into larger blocks when the optimizer runs.
 
-   .. literalinclude:: ../examples/tut04-toyvm/toyvm.c
+   .. literalinclude:: ../examples/tut04-toyvm/toyvm.cc
     :start-after: /* Create a block per operation.  */
     :end-before: /* Populate the initial block.  */
     :language: c
@@ -215,7 +215,7 @@ be consolidated into larger blocks when the optimizer runs.
 Now that we have a block it can jump to when it's done, we can populate
 the initial block:
 
-   .. literalinclude:: ../examples/tut04-toyvm/toyvm.c
+   .. literalinclude:: ../examples/tut04-toyvm/toyvm.cc
     :start-after: /* Populate the initial block.  */
     :end-before: /* 2nd pass: fill in instructions.  */
     :language: c
@@ -223,7 +223,7 @@ the initial block:
 We can now populate the blocks for the individual operations.  We loop
 through them, adding instructions to their blocks:
 
-   .. literalinclude:: ../examples/tut04-toyvm/toyvm.c
+   .. literalinclude:: ../examples/tut04-toyvm/toyvm.cc
     :start-after: /* 2nd pass: fill in instructions.  */
     :end-before: /* Helper macros.  */
     :language: c
@@ -234,7 +234,7 @@ them.  It's helpful to have macros for implementing push and pop, so that
 we can make the ``switch`` statement that's coming up look as much as
 possible like the one above within the interpreter:
 
-.. literalinclude:: ../examples/tut04-toyvm/toyvm.c
+.. literalinclude:: ../examples/tut04-toyvm/toyvm.cc
     :start-after: /* Helper macros.  */
     :end-before: gcc_jit_block_add_comment
     :language: c
@@ -256,7 +256,7 @@ To track this kind of thing down, we can use
 to the internal representation.  This is invaluable when looking through
 the generated IR for, say ``factorial``:
 
-   .. literalinclude:: ../examples/tut04-toyvm/toyvm.c
+   .. literalinclude:: ../examples/tut04-toyvm/toyvm.cc
     :start-after: PUSH_RVALUE (gcc_jit_lvalue_as_rvalue (state.y))
     :end-before: /* Handle the individual opcodes.  */
     :language: c
@@ -264,7 +264,7 @@ the generated IR for, say ``factorial``:
 We can now write the big ``switch`` statement that implements the
 individual opcodes, populating the relevant block with statements:
 
-   .. literalinclude:: ../examples/tut04-toyvm/toyvm.c
+   .. literalinclude:: ../examples/tut04-toyvm/toyvm.cc
     :start-after: /* Handle the individual opcodes.  */
     :end-before: /* Go to the next block.  */
     :language: c
@@ -274,7 +274,7 @@ Every block must be terminated, via a call to one of the
 of the opcodes, but we need to do it for the other ones, by jumping
 to the next block.
 
-   .. literalinclude:: ../examples/tut04-toyvm/toyvm.c
+   .. literalinclude:: ../examples/tut04-toyvm/toyvm.cc
     :start-after: /* Go to the next block.  */
     :end-before: /* end of loop on PC locations.  */
     :language: c
@@ -306,14 +306,14 @@ statements, the context is complete.
 
 We can now compile it, and extract machine code from the result:
 
-   .. literalinclude:: ../examples/tut04-toyvm/toyvm.c
+   .. literalinclude:: ../examples/tut04-toyvm/toyvm.cc
     :start-after: /* We've now finished populating the context.  Compile it.  */
     :end-before: /* (this leaks "result" and "funcname") */
     :language: c
 
 We can now run the result:
 
-   .. literalinclude:: ../examples/tut04-toyvm/toyvm.c
+   .. literalinclude:: ../examples/tut04-toyvm/toyvm.cc
     :start-after: /* JIT-compilation.  */
     :end-before: return 0;
     :language: c
@@ -593,7 +593,7 @@ along with a Makefile and a couple of sample .toy scripts:
   -rw-rw-r--. 1 david david    615 Sep 19 12:43 factorial.toy
   -rw-rw-r--. 1 david david    834 Sep 19 13:08 fibonacci.toy
   -rw-rw-r--. 1 david david    238 Sep 19 14:22 Makefile
-  -rw-rw-r--. 1 david david  16457 Sep 19 17:07 toyvm.c
+  -rw-rw-r--. 1 david david  16457 Sep 19 17:07 toyvm.cc
 
   $ make toyvm
   g++ -Wall -g -o toyvm toyvm.c -lgccjit

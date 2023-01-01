@@ -173,7 +173,7 @@ argument to @option{-MT}, or use multiple @option{-MT} options.
 For example, @option{@w{-MT '$(objpfx)foo.o'}} might give
 
 @smallexample
-$(objpfx)foo.o: foo.c
+$(objpfx)foo.o: foo.cc
 @end smallexample
 
 @item -MQ @var{target}
@@ -183,7 +183,7 @@ Same as @option{-MT}, but it quotes any characters which are special to
 Make.  @option{@w{-MQ '$(objpfx)foo.o'}} gives
 
 @smallexample
-$$(objpfx)foo.o: foo.c
+$$(objpfx)foo.o: foo.cc
 @end smallexample
 
 The default target is automatically quoted, as if it were given with

@@ -2,7 +2,7 @@
 // ICE(constfold.c) on using "is" with strings in CTFE
 
 /* 1524 PATCH Assertion failure: '0' on line 863 in file 'constfold.c'
-constfold.c
+constfold.cc
 @@ -845,9 +845,9 @@
      Loc loc = e1->loc;
      int cmp;

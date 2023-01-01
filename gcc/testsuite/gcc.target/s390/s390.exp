@@ -224,7 +224,7 @@ if ![info exists DEFAULT_FFLAGS] then {
 # Initialize `dg'.
 dg-init
 
-set md_tests $srcdir/$subdir/md/*.c
+set md_tests $srcdir/$subdir/md/*.cc
 
 # C++ tests belong into g++.dg with a target check.  Do NOT add C to
 # these regexps!

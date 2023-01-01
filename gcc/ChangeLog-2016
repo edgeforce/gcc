@@ -262,7 +262,7 @@
 2016-12-21  Pat Haugen  <pthaugen@us.ibm.com>
 
 	PR rtl-optimization/11488
-	* common/config/rs6000/rs6000-common.c
+	* common/config/rs6000/rs6000-common.cc
 	(rs6000_option_optimization_table): Enable -fsched-pressure.
 	* config/rs6000/rs6000.c (TARGET_COMPUTE_PRESSURE_CLASSES): Define
 	target hook.
@@ -2055,7 +2055,7 @@
 
 2016-12-07  Naveen H.S  <Naveen.Hurugalawadi@cavium.com>
 
-	* config/aarch64/aarch64.c
+	* config/aarch64/aarch64.cc
 	(aarch64_builtin_support_vector_misalignment): New.
 	(TARGET_VECTORIZE_SUPPORT_VECTOR_MISALIGNMENT): Define.
 
@@ -2585,7 +2585,7 @@
 	(armv8-m): Add FL2_CMSE.
 	(armv8-m.main): Likewise.
 	(armv8-m.main+dsp): Likewise.
-	* config/arm/arm-c.c
+	* config/arm/arm-c.cc
 	(arm_cpu_builtins): Added __ARM_FEATURE_CMSE macro.
 	* config/arm/arm-flags.h: Define FL2_CMSE.
 	* config/arm.c (arm_arch_cmse): New.
@@ -2775,7 +2775,7 @@
 
 2016-12-01  Jeff Law  <law@redhat.com>
 
-	* tree-ssa-threadedge.c
+	* tree-ssa-threadedge.cc
 	(record_temporary_equivalences_from_stmts_at_dest): Avoid temporary
 	propagation of operands if there are no operands.
 
@@ -6840,7 +6840,7 @@
 2016-11-07  Richard Biener  <rguenther@suse.de>
 
 	PR tree-optimization/78218
-	* gimple-ssa-store-merging.c
+	* gimple-ssa-store-merging.cc
 	(pass_store_merging::terminate_all_aliasing_chains):
 	Drop unused argument, fix alias check to also consider uses.
 	(pass_store_merging::execute): Adjust.
@@ -6876,7 +6876,7 @@
 	(asan_store_shadow_bytes): New function.
 	(asan_expand_mark_ifn): Likewise.
 	(asan_sanitize_stack_p): Moved from asan_sanitize_stack_p.
-	* asan.h (enum asan_mark_flags): Moved here from asan.c
+	* asan.h (enum asan_mark_flags): Moved here from asan.cc
 	(asan_protect_stack_decl): Protect all declaration that need
 	to live in memory.
 	(asan_sanitize_use_after_scope): New function.
@@ -7849,7 +7849,7 @@
 2016-10-29  Jakub Jelinek  <jakub@redhat.com>
 
 	PR target/78148
-	* gimple-ssa-store-merging.c
+	* gimple-ssa-store-merging.cc
 	(imm_store_chain_info::output_merged_store): Use build_aligned_type
 	instead of SET_TYPE_ALIGN on shared integral type.
 
@@ -9577,7 +9577,7 @@
 	* config/aarch64/aarch64-protos.h (make_pass_fma_steering): Declare.
 	* config/aarch64/cortex-a57-fma-steering.h: Delete.
 	* config/aarch64/aarch64-passes.def: New file.
-	* config/aarch64/cortex-a57-fma-steering.c
+	* config/aarch64/cortex-a57-fma-steering.cc
 	(aarch64_register_fma_steering): Delete definition.
 	(make_pass_fma_steering): Remove static qualifier.
 	* config/aarch64/t-aarch64 (PASSES_EXTRA): New directive.
@@ -10126,7 +10126,7 @@
 	(find_guard_arg, slpeel_update_phi_nodes_for_guard2): Reimplement.
 	(slpeel_update_phi_nodes_for_lcssa, vect_do_peeling): New.
 	* tree-vect-loop.c (vect_build_loop_niters): Move to file
-	tree-vect-loop-manip.c
+	tree-vect-loop-manip.cc
 	(vect_generate_tmps_on_preheader): Delete.
 	(vect_transform_loop): Rename vectorization_factor to vf.  Call
 	vect_do_peeling instead of vect_do_peeling-* functions.
@@ -10372,7 +10372,7 @@
 
 2016-10-12  Richard Biener  <rguenther@suse.de>
 
-	* tree-ssa-propagate.c
+	* tree-ssa-propagate.cc
 	(substitute_and_fold_dom_walker::before_dom_children): Do not
 	ignore ASSERT_EXPRs but only preserve them.
 	* tree-vrp.c (remove_range_assertions): Deal with ASSERT_EXPRs
@@ -12051,7 +12051,7 @@
 	* genattrtab.c (make_canonical): Likewise.
 	(write_test_expr): Likewise.
 	* genpreds.c (validate_exp): Likewise.
-	* gimple-ssa-strength-reduction.c
+	* gimple-ssa-strength-reduction.cc
 	(find_candidates_dom_walker::before_dom_children): Likewise.
 	* godump.c (go_format_type): Likewise.
 	* reload1.c (elimination_effects): Likewise.
@@ -13546,7 +13546,7 @@
 
 2016-09-15  David Malcolm  <dmalcolm@redhat.com>
 
-	* diagnostic-show-locus.c
+	* diagnostic-show-locus.cc
 	(selftest::test_fixit_insert_containing_newline): New function.
 	(selftest::test_fixit_replace_containing_newline): New function.
 	(selftest::diagnostic_show_locus_c_tests): Call the above.
@@ -13752,7 +13752,7 @@
 
 2016-09-13  Tamar Christina  <tamar.christina@arm.com>
 
-	* config/aarch64/aarch64-builtins.c
+	* config/aarch64/aarch64-builtins.cc
 	(aarch64_init_simd_builtins): Fix builtin type signature printing.
 
 2016-09-13  Uros Bizjak  <ubizjak@gmail.com>
@@ -14409,7 +14409,7 @@
 	(test_one_liner_fixit_remove): Likewise.
 	(test_one_liner_fixit_replace): Likewise.
 	(test_one_liner_fixit_replace_equal_secondary_range): Likewise.
-	* gcc-rich-location.c
+	* gcc-rich-location.cc
 	(gcc_rich_location::add_fixit_misspelled_id): Eliminate call to
 	get_range_from_loc.  Drop overload taking a const char *.
 	* gcc-rich-location.h
@@ -14453,13 +14453,13 @@
 
 2016-08-29  David Malcolm  <dmalcolm@redhat.com>
 
-	* input.c
+	* input.cc
 	(selftest::test_make_location_nonpure_range_endpoints): Fix
 	header comment.
 
 2016-08-29  David Malcolm  <dmalcolm@redhat.com>
 
-	* diagnostic-show-locus.c
+	* diagnostic-show-locus.cc
 	(selftest::test_one_liner_fixit_validation_adhoc_locations): New
 	function.
 	(selftest::test_diagnostic_show_locus_one_liner): Call it.
@@ -14562,7 +14562,7 @@
 
 2016-08-26  David Malcolm  <dmalcolm@redhat.com>
 
-	* diagnostic-show-locus.c
+	* diagnostic-show-locus.cc
 	(selftest::test_fixit_consolidation): New function.
 	(selftest::diagnostic_show_locus_c_tests): Call it.
 	* gcc-rich-location.h (gcc_rich_location): Eliminate unused
@@ -14984,7 +14984,7 @@
 
 2016-08-19  David Malcolm  <dmalcolm@redhat.com>
 
-	* diagnostic-show-locus.c
+	* diagnostic-show-locus.cc
 	(layout::annotation_line_showed_range_p): New method.
 	(layout::print_any_fixits): Remove case fixit_hint::REMOVE.
 	Reimplement case fixit_hint::REPLACE to cover removals, and
@@ -15460,7 +15460,7 @@
 	here from input.c.
 	(selftest::temp_source_file::~temp_source_file): Likewise.
 	* selftest.h (class selftest::temp_source_file): Move here from
-	input.c
+	input.cc
 
 2016-08-16  Jakub Jelinek  <jakub@redhat.com>
 
@@ -16464,7 +16464,7 @@
 	PR Target/72819
 	* config/aarch64/aarch64.h (aarch64_fp16_type_node): Declare.
 	(aarch64_fp16_ptr_type_node): Likewise.
-	* config/aarch64/aarch64-simd-builtins.c
+	* config/aarch64/aarch64-simd-builtins.cc
 	(aarch64_fp16_ptr_type_node): Define.
 	(aarch64_init_fp16_types): New, refactored out of...
 	(aarch64_init_builtins): ...here, update to call
@@ -17929,7 +17929,7 @@
 
 2016-07-20  David Malcolm  <dmalcolm@redhat.com>
 
-	* gcc-rich-location.c
+	* gcc-rich-location.cc
 	(gcc_rich_location::add_fixit_misspelled_id): New overload, taking
 	a const char *.
 	* gcc-rich-location.h
@@ -17967,7 +17967,7 @@
 
 2016-07-20  Martin Liska  <mliska@suse.cz>
 
-	* Makefile.in: Include fibonacci_heap.c
+	* Makefile.in: Include fibonacci_heap.cc
 	* fibonacci_heap.c: New file.
 	* fibonacci_heap.h (fibonacci_heap::insert): Use insert_node.
 	(fibonacci_heap::union_with): Fix deletion of the second heap.
@@ -18198,7 +18198,7 @@
 	* config/aarch64/aarch64-cores.def: Update vulcan COSTS.
 	* config/aarch64/aarch64-cost-tables.h
 	(vulcan_extra_costs): New variable.
-	* config/aarch64/aarch64.c
+	* config/aarch64/aarch64.cc
 	(vulcan_addrcost_table): Likewise.
 	(vulcan_regmove_cost): Likewise.
 	(vulcan_vector_cost): Likewise.
@@ -20192,7 +20192,7 @@
 
 	* config/aarch64/aarch64.opt
 	(mpc-relative-literal-loads): Rename internal option name.
-	* config/aarch64/aarch64.c
+	* config/aarch64/aarch64.cc
 	(aarch64_nopcrelative_literal_loads): Rename to
 	aarch64_pcrelative_literal_loads.
 	(aarch64_expand_mov_immediate): Likewise.
@@ -20225,7 +20225,7 @@
 	iterators.
 	(<FCVT_FIXED2F:fcvt_fixed_insn><GPI:mode>3): Likewise.  Correct
 	attributes.
-	* config/aarch64/aarch64-builtins.c
+	* config/aarch64/aarch64-builtins.cc
 	(aarch64_types_binop_uss_qualifiers): Delete.
 	(TYPES_BINOP_USS): Likewise.
 	(aarch64_types_binop_sus_qualifiers): Likewise.
@@ -20618,7 +20618,7 @@
 
 2016-06-14  David Malcolm  <dmalcolm@redhat.com>
 
-	* gcc-rich-location.c
+	* gcc-rich-location.cc
 	(gcc_rich_location::add_fixit_misspelled_id): New method.
 	* gcc-rich-location.h
 	(gcc_rich_location::add_fixit_misspelled_id): Add decl.
@@ -20745,7 +20745,7 @@
 2016-06-13  Jeff Law  <law@redhat.com>
 
 	PR tree-optimization/71403
-	* tree-ssa-threadbackward.c
+	* tree-ssa-threadbackward.cc
 	(convert_and_register_jump_thread_path): No longer accept reference
 	to path.  Do not pop items off the path anymore.
 	(fsm_find_control_statement_thread_paths): Do not allow threading
@@ -20760,7 +20760,7 @@
 	* config/aarch64/aarch64-protos.h
 	(cpu_approx_modes): Add new member "division".
 	(aarch64_emit_approx_div): Declare new function.
-	* config/aarch64/aarch64.c
+	* config/aarch64/aarch64.cc
 	(generic_approx_modes): New member "division".
 	(exynosm1_approx_modes): Likewise.
 	(xgene1_approx_modes): Likewise.
@@ -20779,7 +20779,7 @@
 	(aarch64_emit_approx_rsqrt): Replace with new function
 	"aarch64_emit_approx_sqrt".
 	(cpu_approx_modes): New member "sqrt".
-	* config/aarch64/aarch64.c
+	* config/aarch64/aarch64.cc
 	(generic_approx_modes): New member "sqrt".
 	(exynosm1_approx_modes): Likewise.
 	(xgene1_approx_modes): Likewise.
@@ -20807,7 +20807,7 @@
 	(tune_params): New member "approx_modes".
 	* config/aarch64/aarch64-tuning-flags.def
 	(AARCH64_EXTRA_TUNE_APPROX_RSQRT): Remove macro.
-	* config/aarch64/aarch64.c
+	* config/aarch64/aarch64.cc
 	(generic_approx_modes): New core "cpu_approx_modes" structure.
 	(exynosm1_approx_modes): Likewise.
 	(xgene1_approx_modes): Likewise.
@@ -22672,7 +22672,7 @@
 
 	PR67609
 	* config/aarch64/aarch64.h (CANNOT_CHANGE_MODE_CLASS): Remove.
-	* config/aarch64/aarch64.c
+	* config/aarch64/aarch64.cc
 	(aarch64_cannot_change_mode_class): Remove function.
 	* config/aarch64/aarch64-protos.h
 	(aarch64_cannot_change_mode_class): Remove.
@@ -22951,7 +22951,7 @@
 	    H.J. Lu  <hongjiu.lu@intel.com>
 
 	PR target/70738
-	* common/config/i386/i386-common.c
+	* common/config/i386/i386-common.cc
 	(OPTION_MASK_ISA_GENERAL_REGS_ONLY_UNSET): New.
 	(ix86_handle_option) <case OPT_mgeneral_regs_only>: Disable
 	MPX, MMX, SSE and x87 instructions for -mgeneral-regs-only.
@@ -24261,7 +24261,7 @@
 
 2016-05-17  James Greenhalgh  <james.greenhalgh@arm.com>
 
-	* config/aarch64/aarch64.c
+	* config/aarch64/aarch64.cc
 	(aarch64_output_simd_mov_immediate): Make "buf_size" a variable
 	rather than a macro.
 
@@ -28948,7 +28948,7 @@
 2016-04-11  James Greenhalgh  <james.greenhalgh@arm.com>
 
 	PR target/70133
-	* config/aarch64/driver-aarch64.c
+	* config/aarch64/driver-aarch64.cc
 	(aarch64_get_extension_string_for_isa_flags): New.
 	(arch_extension): Rename to...
 	(aarch64_arch_extension): ...This.
@@ -29714,7 +29714,7 @@
 2016-03-22  Jeff Law  <law@redhat.com>
 
 	PR target/70232
-	tree-ssa-threadbackward.c
+	tree-ssa-threadbackward.cc
 	(fsm_find_control_statement_thread_paths): Correctly distinguish
 	between old style jump threads vs FSM jump threads.
 
@@ -30353,7 +30353,7 @@
 2016-03-10  Nick Clifton  <nickc@redhat.com>
 
 	PR target/7044
-	* config/aarch64/aarch64.c
+	* config/aarch64/aarch64.cc
 	(aarch64_override_options_after_change_1): When forcing
 	flag_omit_frame_pointer to be true, use a special value that can
 	be detected if this function is called again, thus preventing
@@ -30402,7 +30402,7 @@
 	* config/aarch64/aarch64-elf-raw.h
 	(TARGET_FIX_ERR_A53_843419_DEFAULT): Update for above changes.
 	* config/aarch64/aarch64-linux.h: Likewise.
-	* config/aarch64/aarch64.c
+	* config/aarch64/aarch64.cc
 	(aarch64_override_options_after_change_1): Do not default
 	aarch64_nopcrelative_literal_loads to true if Cortex-A53 erratum
 	843419 is on.
@@ -32582,7 +32582,7 @@
 	(record_equality): Remove loop depth check.
 	* tree-ssa-scopedtables.h (const_and_copies): Refine comments.
 	(const_and_copies::record_const_or_copy_raw): New member function.
-	* tree-ssa-scopedtables.c
+	* tree-ssa-scopedtables.cc
 	(const_and_copies::record_const_or_copy_raw): New, factored out of
 	(const_and_copies::record_const_or_copy): Call new member function.
 
@@ -32726,7 +32726,7 @@
 
 2016-02-04  David Malcolm  <dmalcolm@redhat.com>
 
-	* config/aarch64/cortex-a57-fma-steering.c
+	* config/aarch64/cortex-a57-fma-steering.cc
 	(aarch64_register_fma_steering): Remove "static" from arguments
 	to register_pass.
 
@@ -32975,7 +32975,7 @@
 
 2016-02-02  Wilco Dijkstra  <wdijkstr@arm.com>
 
-	* config/aarch64/aarch64.c
+	* config/aarch64/aarch64.cc
 	(TARGET_IRA_CHANGE_PSEUDO_ALLOCNO_CLASS): New define.
 	(aarch64_ira_change_pseudo_allocno_class): New function.
 
@@ -33052,7 +33052,7 @@
 
 	PR tree-optimization/69580
 	* params.def (FSM_MAXIMUM_PHI_ARGUMENTS): New param.
-	* tree-ssa-threadbackward.c
+	* tree-ssa-threadbackward.cc
 	(fsm_find_control_statement_thread_paths): Do not try to walk
 	through large PHI nodes.
 
@@ -33699,7 +33699,7 @@
 2016-01-26  Roger Ferrer Ibáñez  <rofirrim@gmail.com>
 
 	PR target/67896
-	* config/aarch64/aarch64-builtins.c
+	* config/aarch64/aarch64-builtins.cc
 	(aarch64_init_simd_builtin_types): Do not set structural
 	equality to __Poly{8,16,64,128}_t types.
 
@@ -33929,7 +33929,7 @@
 	* tree.c (build_function_type_list_1): Likewise.
 	* cfgloopmanip.c (scale_loop_profile): Likewise.
 	* tree-ssa-loop-ivopts.c (get_shiftadd_cost): Likewise.
-	* gimple-ssa-split-paths.c
+	* gimple-ssa-split-paths.cc
 	(find_block_to_duplicate_for_splitting_paths): Likewise.
 	* tree-sra.c (init_subtree_with_zero, clobber_subtree): Likewise.
 	* expr.c (convert_move): Likewise.
@@ -34073,7 +34073,7 @@
 
 2016-01-21  Ajit Agarwal  <ajitkum@xilinx.com>
 
-	* config/microblaze/microblaze.c
+	* config/microblaze/microblaze.cc
 	(get_branch_target): New.
 	(insert_wic_for_ilb_runout): New.
 	(insert_wic): New.
@@ -34222,7 +34222,7 @@
 2016-01-21  Aditya Kumar  <aditya.k7@samsung.com>
 	    Sebastian Pop  <s.pop@samsung.com>
 
-	* graphite-scop-detection.c
+	* graphite-scop-detection.cc
 	(scop_detection::harmful_loop_in_region): Free dom and loops.
 	(scop_detection::loop_body_is_valid_scop): Free bbs.
 
@@ -34276,7 +34276,7 @@
 	(carries_deps): Same.
 	(compute_deps): Same.
 	(scop_get_dependences): Same.
-	* graphite-isl-ast-to-gimple.c
+	* graphite-isl-ast-to-gimple.cc
 	(translate_isl_ast_to_gimple::generate_isl_schedule): Same.
 	* graphite-optimize-isl.c (get_schedule_for_band): Same.
 	(get_schedule_for_band_list): Same.
@@ -34400,7 +34400,7 @@
 2016-01-19  Jeff Law  <law@redhat.com>
 
 	PR middle-end/69347
-	* tree-ssa-threadbackwards.c
+	* tree-ssa-threadbackwards.cc
 	(fsm_find_control_statement_thread_paths): Do not try to lookup
 	FSM paths for SSA_NAMEs appearing in abnormal PHIs.
 

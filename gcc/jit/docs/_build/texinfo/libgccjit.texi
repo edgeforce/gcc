@@ -3408,7 +3408,7 @@ drwxrwxr-x. 3 david david   4096 Sep 19 15:26 ..
 -rw-rw-r--. 1 david david    615 Sep 19 12:43 factorial.toy
 -rw-rw-r--. 1 david david    834 Sep 19 13:08 fibonacci.toy
 -rw-rw-r--. 1 david david    238 Sep 19 14:22 Makefile
--rw-rw-r--. 1 david david  16457 Sep 19 17:07 toyvm.c
+-rw-rw-r--. 1 david david  16457 Sep 19 17:07 toyvm.cc
 
 $ make toyvm
 g++ -Wall -g -o toyvm toyvm.c -lgccjit
@@ -14925,7 +14925,7 @@ Client Code   . Generated .            libgccjit.so
               .           .    ──> libgccjit.c       .
               .           .        │ (error-checking).
               .           .        │                 .
-              .           .        ──> jit-recording.c
+              .           .        ──> jit-recording.cc
               .           .              (record API calls)
               .           .    <───────              .
               .           .    │     .               .
@@ -14952,7 +14952,7 @@ Client Code   . Generated .            libgccjit.so
               .           .          .    │          .
 ..........................................│..................VVVVVVVVVVVVV...
               .           .          .    │          .       No GC in here
-              .           .          .    │ jit-playback.c
+              .           .          .    │ jit-playback.cc
               .           .          .    │   (playback of API calls)
               .           .          .    ───────────────> creation of functions,
               .           .          .               .     types, expression trees
@@ -15215,7 +15215,7 @@ JIT:     configure_time_options[1]: -march=x86-64
 JIT:    exiting: void gcc::jit::playback::context::make_fake_args(vec<char*>*, const char*, vec<gcc::jit::recording::requested_dump>*)
 JIT:    entering: toplev::main
 JIT:     argv[0]: ./test-hello-world.c.exe
-JIT:     argv[1]: /tmp/libgccjit-CKq1M9/fake.c
+JIT:     argv[1]: /tmp/libgccjit-CKq1M9/fake.cc
 JIT:     argv[2]: -fPIC
 JIT:     argv[3]: -O3
 JIT:     argv[4]: -g

@@ -6506,7 +6506,7 @@
 2011-08-02  Kai Tietz  <ktietz@redhat.com>
 
 	PR middle-end/49947
-	* gcc.dg/tree-ssa/forwprop-15.c
+	* gcc.dg/tree-ssa/forwprop-15.cc
 
 2011-08-02  Jason Merrill  <jason@redhat.com>
 
@@ -8592,7 +8592,7 @@
 2011-06-21  Ira Rosen  <ira.rosen@linaro.org>
 
 	PR tree-optimization/49478
-	* gcc.dg/vect/pr49478.c
+	* gcc.dg/vect/pr49478.cc
 
 2011-06-21  Richard Guenther  <rguenther@suse.de>
 
@@ -9563,7 +9563,7 @@
 	* objc.dg/fsf-package-0.m: Use TestsuiteObject instead of Object.
 	Do not include objc/objc-api.h.
 	* obj-c++.dg/fsf-package-0.mm: Likewise.
-	* objc.dg/gnu-encoding/struct-layout-encoding-1_generate.c
+	* objc.dg/gnu-encoding/struct-layout-encoding-1_generate.cc
 	(switchfiles): Include objc/runtime.h instead of objc/encoding.h.
 	* objc.dg/gnu-runtime-1.m: Updated to use TestsuiteObject instead
 	of Object.
@@ -14819,30 +14819,30 @@
 	* gfortran.dg/ltrans-7.f90: Removed.
 	* gcc.dg/tree-ssa/data-dep-1.c: Removed.
 
-	* gcc.dg/pr18792.c: -> gcc.dg/graphite/pr18792.c
-	* gcc.dg/pr19910.c: -> gcc.dg/graphite/pr19910.c
-	* gcc.dg/tree-ssa/20041110-1.c: -> gcc.dg/graphite/pr20041110-1.c
-	* gcc.dg/tree-ssa/pr20256.c: -> gcc.dg/graphite/pr20256.c
-	* gcc.dg/pr23625.c: -> gcc.dg/graphite/pr23625.c
-	* gcc.dg/tree-ssa/pr23820.c: -> gcc.dg/graphite/pr23820.c
-	* gcc.dg/tree-ssa/pr24309.c: -> gcc.dg/graphite/pr24309.c
-	* gcc.dg/tree-ssa/pr26435.c: -> gcc.dg/graphite/pr26435.c
-	* gcc.dg/pr29330.c: -> gcc.dg/graphite/pr29330.c
-	* gcc.dg/pr29581-1.c: -> gcc.dg/graphite/pr29581-1.c
-	* gcc.dg/pr29581-2.c: -> gcc.dg/graphite/pr29581-2.c
-	* gcc.dg/pr29581-3.c: -> gcc.dg/graphite/pr29581-3.c
-	* gcc.dg/pr29581-4.c: -> gcc.dg/graphite/pr29581-4.c
-	* gcc.dg/tree-ssa/loop-27.c: -> gcc.dg/graphite/pr30565.c
-	* gcc.dg/tree-ssa/pr31183.c: -> gcc.dg/graphite/pr31183.c
-	* gcc.dg/tree-ssa/pr33576.c: -> gcc.dg/graphite/pr33576.c
-	* gcc.dg/tree-ssa/pr33766.c: -> gcc.dg/graphite/pr33766.c
-	* gcc.dg/pr34016.c: -> gcc.dg/graphite/pr34016.c
-	* gcc.dg/tree-ssa/pr34017.c: -> gcc.dg/graphite/pr34017.c
-	* gcc.dg/tree-ssa/pr34123.c: -> gcc.dg/graphite/pr34123.c
-	* gcc.dg/tree-ssa/pr36287.c: -> gcc.dg/graphite/pr36287.c
-	* gcc.dg/tree-ssa/pr37686.c: -> gcc.dg/graphite/pr37686.c
-	* gcc.dg/pr42917.c: -> gcc.dg/graphite/pr42917.c
-	* gcc.dg/tree-ssa/data-dep-1.c
+	* gcc.dg/pr18792.c: -> gcc.dg/graphite/pr18792.cc
+	* gcc.dg/pr19910.c: -> gcc.dg/graphite/pr19910.cc
+	* gcc.dg/tree-ssa/20041110-1.c: -> gcc.dg/graphite/pr20041110-1.cc
+	* gcc.dg/tree-ssa/pr20256.c: -> gcc.dg/graphite/pr20256.cc
+	* gcc.dg/pr23625.c: -> gcc.dg/graphite/pr23625.cc
+	* gcc.dg/tree-ssa/pr23820.c: -> gcc.dg/graphite/pr23820.cc
+	* gcc.dg/tree-ssa/pr24309.c: -> gcc.dg/graphite/pr24309.cc
+	* gcc.dg/tree-ssa/pr26435.c: -> gcc.dg/graphite/pr26435.cc
+	* gcc.dg/pr29330.c: -> gcc.dg/graphite/pr29330.cc
+	* gcc.dg/pr29581-1.c: -> gcc.dg/graphite/pr29581-1.cc
+	* gcc.dg/pr29581-2.c: -> gcc.dg/graphite/pr29581-2.cc
+	* gcc.dg/pr29581-3.c: -> gcc.dg/graphite/pr29581-3.cc
+	* gcc.dg/pr29581-4.c: -> gcc.dg/graphite/pr29581-4.cc
+	* gcc.dg/tree-ssa/loop-27.c: -> gcc.dg/graphite/pr30565.cc
+	* gcc.dg/tree-ssa/pr31183.c: -> gcc.dg/graphite/pr31183.cc
+	* gcc.dg/tree-ssa/pr33576.c: -> gcc.dg/graphite/pr33576.cc
+	* gcc.dg/tree-ssa/pr33766.c: -> gcc.dg/graphite/pr33766.cc
+	* gcc.dg/pr34016.c: -> gcc.dg/graphite/pr34016.cc
+	* gcc.dg/tree-ssa/pr34017.c: -> gcc.dg/graphite/pr34017.cc
+	* gcc.dg/tree-ssa/pr34123.c: -> gcc.dg/graphite/pr34123.cc
+	* gcc.dg/tree-ssa/pr36287.c: -> gcc.dg/graphite/pr36287.cc
+	* gcc.dg/tree-ssa/pr37686.c: -> gcc.dg/graphite/pr37686.cc
+	* gcc.dg/pr42917.c: -> gcc.dg/graphite/pr42917.cc
+	* gcc.dg/tree-ssa/data-dep-1.cc
 	* gfortran.dg/loop_nest_1.f90: -> gfortran.dg/graphite/pr29290.f90
 	* gfortran.dg/pr29581.f90: -> gfortran.dg/graphite/pr29581.f90
 	* gfortran.dg/pr36286.f90: -> gfortran.dg/graphite/pr36286.f90
@@ -15264,7 +15264,7 @@
 	    Rainer Orth  <ro@CeBiTec.Uni-Bielefeld.DE>
 
 	PR objc/45989
-	* objc.dg/gnu-encoding/struct-layout-encoding-1_generate.c
+	* objc.dg/gnu-encoding/struct-layout-encoding-1_generate.cc
 	(switchfiles): XFAIL objc.dg-struct-layout-encoding-1/t02[57-9]_main.m
 	execution tests on i?86-*-*, x86_64-*-* and
 	powerpc*-apple-darwin* && ilp32.

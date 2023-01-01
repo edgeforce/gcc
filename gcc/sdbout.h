@@ -1,4 +1,4 @@
-/* sdbout.h - Various declarations for functions found in sdbout.c
+/* sdbout.h - Various declarations for functions found in sdbout.cc
    Copyright (C) 1998-2016 Free Software Foundation, Inc.
 
 This file is part of GCC.

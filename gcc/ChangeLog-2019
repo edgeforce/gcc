@@ -1058,7 +1058,7 @@
 	(-fstack-protector): Likewise.  Clarify it affects >= 8 byte arrays
 	rather than > 8 byte.
 
-	* ipa-param-manipulation.c
+	* ipa-param-manipulation.cc
 	(ipa_param_body_adjustments::register_replacement): Fix comment typo
 	- accross -> across.
 	* ipa-sra.c (propagate_used_across_scc_edge, ipa_sra_analysis):
@@ -1149,7 +1149,7 @@
 
 2019-12-09  David Malcolm  <dmalcolm@redhat.com>
 
-	* gcc-rich-location.c
+	* gcc-rich-location.cc
 	(maybe_range_label_for_tree_type_mismatch::get_text): Replace
 	label_text ctor call with label_text::borrow.
 	* gcc-rich-location.h (text_range_label::get_text): Replace
@@ -1341,7 +1341,7 @@
 
 2019-12-09  Hongtao Liu  <hongtao.liu@intel.com>
 
-	* common/config/i386/i386-common.c
+	* common/config/i386/i386-common.cc
 	(OPTION_MASK_ISA_AVX5124FMAPS_SET): Rename to
 	OPTION_MASK_ISA2_AVX5124FMAPS_SET.
 	(OPTION_MASK_ISA_AVX5124VNNIW_SET, OPTION_MASK_ISA_AVX512BF16_SET,
@@ -1382,7 +1382,7 @@
 	* config/i386/i386-builtins.c (OPTION_MASK_ISA_MWAITX,
 	OPTION_MASK_ISA_CLZERO, OPTION_MASK_ISA_WAITPKG,
 	OPTION_MASK_ISA_CLDEMOTE, OPTION_MASK_ISA_WBNOINVD): Ditto.
-	* config/i386/i386-c.c
+	* config/i386/i386-c.cc
 	(OPTION_MASK_ISA_AVX5124FMAPS, OPTION_MASK_ISA_AVX5124VNNIW,
 	OPTION_MASK_ISA_AVX512BF16, OPTION_MASK_ISA_AVX512VP2INTERSECT,
 	OPTION_MASK_ISA_PCONFIG, OPTION_MASK_ISA_WBNOINVD,
@@ -1783,7 +1783,7 @@
 
 2019-12-04  Wilco Dijkstra  <wdijkstr@arm.com>
 
-	* config/aarch64/aarch64.c
+	* config/aarch64/aarch64.cc
 	(thunderxt88_tunings): Use AARCH64_FUSE_ALU_BRANCH.
 	(thunderx_tunings): Likewise.
 	(tsv110_tunings): Use AARCH64_FUSE_ALU_BRANCH and AARCH64_FUSE_ALU_CBZ.
@@ -4177,7 +4177,7 @@
 
 2019-11-15  Matthew Malcomson  <matthew.malcomson@arm.com>
 
-	* read-rtl-function.c
+	* read-rtl-function.cc
 	(function_reader::add_fixup_source_location): Take additional
 	parameter of a column.
 	(function_reader::maybe_read_location): Optionally parse column
@@ -5962,7 +5962,7 @@
 
 	PR tree-optimization/88760
 	* config/rs6000/rs6000.opt (-munroll-only-small-loops): New option.
-	* common/config/rs6000/rs6000-common.c
+	* common/config/rs6000/rs6000-common.cc
 	(rs6000_option_optimization_table) [OPT_LEVELS_2_PLUS_SPEED_ONLY]:
 	Turn on -funroll-loops and -munroll-only-small-loops.
 	[OPT_LEVELS_ALL]: Turn off -fweb and -frename-registers.
@@ -6333,7 +6333,7 @@
 
 2019-11-08  Richard Sandiford  <richard.sandiford@arm.com>
 
-	* config/aarch64/aarch64-builtins.c
+	* config/aarch64/aarch64-builtins.cc
 	(aarch64_builtin_vectorized_function): Remove bswap handling.
 
 2019-11-08  Richard Sandiford  <richard.sandiford@arm.com>
@@ -7273,7 +7273,7 @@
 
 2019-11-04  Jozef Lawrynowicz  <jozef.l@mittosystems.com>
 
-	* config/msp430/driver-msp430.c
+	* config/msp430/driver-msp430.cc
 	(msp430_get_linker_devices_include_path): New spec function.
 	* config/msp430/msp430-devices.c (msp430_dirname): New function.
 	(extract_devices_dir_from_exec_prefix): New function.
@@ -9965,7 +9965,7 @@
 	PR target/65342
 	* config/rs6000/darwin.md (movdi_low, movsi_low_st): Delete.
 	(movdi_low_st): Delete.
-	* config/rs6000/rs6000.c
+	* config/rs6000/rs6000.cc
 	(darwin_rs6000_legitimate_lo_sum_const_p): New.
 	(mem_operand_gpr): Validate Mach-O LO_SUM cases separately.
 	* config/rs6000/rs6000.md (movsi_low): Delete.
@@ -11865,7 +11865,7 @@
 
 2019-10-01  Alexandre Oliva <oliva@adacore.com>
 
-	* config/i386/i386-options.c
+	* config/i386/i386-options.cc
 	(ix86_recompute_optlev_based_flags): New, moved out of...
 	(ix86_option_override_internal): ... this.  Call it.
 	(ix86_override_options_after_change): Call it here too.
@@ -12507,7 +12507,7 @@
 	* rtl.h (get_call_fndecl): Declare.
 	(cgraph_rtl_info): Fix formatting.  Tweak comment for
 	function_used_regs.  Remove function_used_regs_valid.
-	* rtlanal.c (get_call_fndecl): Moved from final.c
+	* rtlanal.c (get_call_fndecl): Moved from final.cc
 	* function-abi.h (insn_callee_abi): Declare.
 	(target_function_abi_info): Mention insn_callee_abi.
 	* function-abi.cc (fndecl_abi): Handle flag_ipa_ra in a similar
@@ -12519,7 +12519,7 @@
 	function_used_regs before the main loop rather than afterwards.
 	Use insn_callee_abi instead of get_call_reg_set_usage.  Exit early
 	if function_used_regs ends up not being useful.
-	(get_call_fndecl): Move to rtlanal.c
+	(get_call_fndecl): Move to rtlanal.cc
 	(get_call_cgraph_rtl_info, get_call_reg_set_usage): Delete.
 	* caller-save.c: Include function-abi.h.
 	(setup_save_areas, save_call_clobbered_regs): Use insn_callee_abi
@@ -15923,7 +15923,7 @@
 
 2019-08-29  Uroš Bizjak  <ubizjak@gmail.com>
 
-	* config/i386/i386-features.c
+	* config/i386/i386-features.cc
 	(general_scalar_chain::compute_convert_gain):
 	Correct cost for double-word shifts.
 	(general_scalar_to_vector_candidate_p): Reject count operands
@@ -16099,7 +16099,7 @@
 	(general_scalar_chain::n_sse_to_integer): New.
 	(general_scalar_chain::n_integer_to_sse): Likewise.
 	(general_scalar_chain::make_vector_copies): Adjust signature.
-	* config/i386/i386-features.c
+	* config/i386/i386-features.cc
 	(general_scalar_chain::general_scalar_chain): Outline,
 	initialize new members.
 	(general_scalar_chain::~general_scalar_chain): New.
@@ -16594,7 +16594,7 @@
 
 	PR target/91498
 	PR target/91503
-	* config/i386/i386-features.c
+	* config/i386/i386-features.cc
 	(general_scalar_chain::make_vector_copies): Copy stack temporary
 	rtx when using it multiple times.
 	(general_scalar_chain::convert_reg): Likewise.
@@ -17214,11 +17214,11 @@
 
 2019-08-20  Lili Cui  <lili.cui@intel.com>
 
-	* common/config/i386/i386-common.c
+	* common/config/i386/i386-common.cc
 	(processor_names): Add tigerlake and cooperlake.
 	(processor_alias_table): Add tigerlake and cooperlake.
 	* config.gcc: Add -march=tigerlake and cooperlake.
-	* config/i386/driver-i386.c
+	* config/i386/driver-i386.cc
 	(host_detect_local_cpu): Detect tigerlake and cooperlake.
 	Add "has_avx" to classify processor.
 	* config/i386/i386-builtins.c (processor_model) :
@@ -17226,9 +17226,9 @@
 	(arch_names_table): Add tigerlake and cooperlake.
 	(get_builtin_code_for_version): Handle PROCESSOR_TIGERLAKE
 	and PROCESSOR_COOPERLAKE.
-	* config/i386/i386-c.c
+	* config/i386/i386-c.cc
 	(ix86_target_macros_internal): Handle tigerlake and cooperlake.
-	* config/i386/i386-options.c
+	* config/i386/i386-options.cc
 	(m_TIGERLAKE): Define.
 	(m_COOPERLAKE): Ditto.
 	(m_CORE_AVX512): Ditto.
@@ -17340,7 +17340,7 @@
 2019-08-16  Richard Biener  <rguenther@suse.de>
 
 	PR target/91469
-	* config/i386/i386-features.c
+	* config/i386/i386-features.cc
 	(general_scalar_chain::replace_with_subreg): Stop at memory operands.
 
 2019-08-16  Kyrylo Tkachov  <kyrylo.tkachov@arm.com>
@@ -17588,7 +17588,7 @@
 	(class value_range): Remove set_and_canonicalize.
 	(vrp_val_min): Adjust prototype.
 	(vrp_val_max): Same.
-	* vr-values.c
+	* vr-values.cc
 	(vr_values::extract_range_for_var_from_comparison_expr):  Call set
 	instead of set_and_canonicalize.
 
@@ -18161,7 +18161,7 @@
 2019-08-14  Richard Biener  <rguenther@suse.de>
 
 	PR target/91154
-	* config/i386/i386-features.c
+	* config/i386/i386-features.cc
 	(dimode_scalar_chain::compute_convert_gain): Compute and dump
 	individual instruction gain.  Fix reg-reg copy GRP cost.  Use
 	ix86_cost->sse_op for vector instruction costs.
@@ -18427,7 +18427,7 @@
 	* tree-ssa-ccp.c (optimize_stack_restore): Use fndecl_built_in_p
 	to check for a BUILT_IN_STACK_RESTORE call.
 	(optimize_stdarg_builtin): Remove redundant check for GIMPLE_CALL.
-	* tree-ssa-threadedge.c
+	* tree-ssa-threadedge.cc
 	(record_temporary_equivalences_from_stmts_at_dest): Check for a
 	BUILT_IN_NORMAL decl before checking its DECL_FUNCTION_CODE.
 	* tree-vect-patterns.c (vect_recog_pow_pattern): Use a positive
@@ -18533,7 +18533,7 @@
 	(aarch64_stepped_int_parallel_p): Likewise.
 	(aarch64_expand_mov_immediate): Remove the optional gen_vec_duplicate
 	argument.
-	* config/aarch64/aarch64.c
+	* config/aarch64/aarch64.cc
 	(aarch64_expand_sve_widened_duplicate): Delete.
 	(aarch64_expand_sve_dupq, aarch64_expand_sve_ld1rq): New functions.
 	(aarch64_expand_sve_const_vector): Rewrite to handle more cases.
@@ -19427,7 +19427,7 @@
 	Do not return a range or take a var.
 	(evrp_range_analyzer::stack): Change back to recording a non-const
 	value_range *.
-	* gimple-ssa-evrp-analyze.c
+	* gimple-ssa-evrp-analyze.cc
 	(evrp_range_analyzer::record_ranges_from_stmt): Free unused
 	value-range.
 	(evrp_range_analyzer::pop_to_marker): Adjust.
@@ -20739,7 +20739,7 @@
 
 2019-07-18  Sylvia Taylor  <sylvia.taylor@arm.com>
 
-	* config/arm/arm-builtins.c
+	* config/arm/arm-builtins.cc
 	(arm_expand_ternop_builtin): Remove explicit sha1 builtin handling.
 	(arm_expand_unop_builtin): Likewise.
 	* config/arm/crypto.md
@@ -21838,7 +21838,7 @@
 	(loop_versioning::decide_whether_loop_is_versionable): Same.
 	(loop_versioning::make_versioning_decisions): Same.
 	(loop_versioning::implement_versioning_decisions): Same.
-	* gimple-ssa-evrp-analyze.c
+	* gimple-ssa-evrp-analyze.cc
 	(evrp_range_analyzer::record_ranges_from_phis): Same.
 	* gimple-ssa-store-merging.c (split_store::split_store): Same.
 	(count_multiple_uses): Same.
@@ -21974,7 +21974,7 @@
 	* ipa-inline-analysis.c (do_estimate_edge_time): Same.
 	* ipa-inline.c (edge_badness): Same.
 	(inline_small_functions): Same.
-	* ipa-polymorphic-call.c
+	* ipa-polymorphic-call.cc
 	(ipa_polymorphic_call_context::stream_out): Same.
 	* ipa-predicate.c (predicate::remap_after_duplication): Same.
 	(predicate::remap_after_inlining): Same.
@@ -23048,7 +23048,7 @@
 	(*aarch64_crypto_aes<aes_op>v16qi_xor_combine): Remove both.
 	(*aarch64_crypto_aese_fused,
 	*aarch64_crypto_aesd_fused): Update to new definition.
-	* config/aarch64/aarch64.c
+	* config/aarch64/aarch64.cc
 	(aarch_macro_fusion_pair_p): Remove aese/aesmc fusion check.
 
 2019-07-09  Richard Biener  <rguenther@suse.de>
@@ -23074,11 +23074,11 @@
 	(crypto_<crypto_pattern>): Remove attribute enabled for aesmc.
 	(crypto_<crypto_pattern>): Split CRYPTO_BINARY into 2 patterns.
 	(*aarch32_crypto_aese_fused, *aarch32_crypto_aesd_fused): New.
-	* config/arm/arm.c
+	* config/arm/arm.cc
 	(aarch_macro_fusion_pair_p): Remove aes/aesmc fusion check.
 	* config/arm/aarch-common-protos.h
 	(aarch_crypto_can_dual_issue): Remove.
-	* config/arm/aarch-common.c
+	* config/arm/aarch-common.cc
 	(aarch_crypto_can_dual_issue): Likewise.
 	* config/arm/exynos-m1.md: Remove aese/aesmc fusion.
 	* config/arm/cortex-a53.md: Likewise.
@@ -23154,7 +23154,7 @@
 
 	PR rtl-optimization/88233
 	* common.opt (fsplit-wide-types-early): New option.
-	* common/config/rs6000/rs6000-common.c
+	* common/config/rs6000/rs6000-common.cc
 	(rs6000_option_optimization_table): Add OPT_fsplit_wide_types_early for
 	OPT_LEVELS_ALL.
 	* doc/invoke.texi (Optimization Options): Add -fsplit-wide-types-early.
@@ -23444,7 +23444,7 @@
 
 2019-07-04  Martin Liska  <mliska@suse.cz>
 
-	* tree-ssa-loop-niter.c
+	* tree-ssa-loop-niter.cc
 	(get_upper_bound_based_on_builtin_expr_with_prob): New function.
 	(estimate_numbers_of_iterations):
 	Support __builtin_expect_with_probability for analysis
@@ -24324,7 +24324,7 @@
 	Change movmem to cpymem.
 	* config/mips/mips.h: Change movmem to cpymem.
 	* config/mips/mips.md (movmemsi): Change name to cpymemsi.
-	* config/nds32/nds32-memory-manipulation.c
+	* config/nds32/nds32-memory-manipulation.cc
 	(nds32_expand_movmemsi_loop_unknown_size,
 	nds32_expand_movmemsi_loop_known_size, nds32_expand_movmemsi_loop,
 	nds32_expand_movmemsi_unroll,
@@ -24602,7 +24602,7 @@
 	    H.J. Lu  <hongjiu.lu@intel.com>
 	    Olga Makhotina  <olga.makhotina@intel.com>
 
-	* common/config/i386/i386-common.c
+	* common/config/i386/i386-common.cc
 	(OPTION_MASK_ISA_AVX512VP2INTERSECT_SET,
 	OPTION_MASK_ISA_AVX512VP2INTERSECT_UNSET): New macros.
 	(OPTION_MASK_ISA2_AVX512F_UNSET): Add
@@ -25506,7 +25506,7 @@
 2019-06-14  H.J. Lu  <hongjiu.lu@intel.com>
 
 	PR target/90877
-	* config/i386/i386-features.c
+	* config/i386/i386-features.cc
 	(dimode_scalar_chain::compute_convert_gain): Replace
 	mmxsse_to_integer with sse_to_integer.
 	* config/i386/i386.c (ix86_register_move_cost): Verify that
@@ -25588,7 +25588,7 @@
 	    Lijia He  <helijia@linux.ibm.com>
 
 	PR tree-optimization/77820
-	* tree-ssa-threadedge.c
+	* tree-ssa-threadedge.cc
 	(edge_forwards_cmp_to_conditional_jump_through_empty_bb_p): New
 	function.
 	(thread_across_edge): Add call to
@@ -27511,7 +27511,7 @@
 2019-05-24  Matthew Malcomson  <matthew.malcomson@arm.com>
 
 	PR target/90588
-	* common/config/aarch64/aarch64-common.c
+	* common/config/aarch64/aarch64-common.cc
 	(aarch64_rewrite_selected_cpu): Change local temporary variable
 	type from unsigned long to uint64_t.
 	* config/aarch64/aarch64-protos.h (aarch64_parse_extension,
@@ -27716,7 +27716,7 @@
 
 2019-05-22  Matthew Malcomson  <matthew.malcomson@arm.com>
 
-	* common/config/aarch64/aarch64-common.c
+	* common/config/aarch64/aarch64-common.cc
 	(struct aarch64_option_extension, struct processor_name_to_arch,
 	struct arch_to_arch_name, aarch64_parse_extension, opt_ext_cmp,
 	aarch64_contains_opt,
@@ -27734,7 +27734,7 @@
 	AARCH64_FL_SVE2_SM4, AARCH64_FL_SVE2_SHA3,
 	AARCH64_FL_SVE2_BITPERM): New macro feature flags.
 	* config/aarch64/aarch64.opt (aarch64_isa_flags): Make uint64_t.
-	* config/aarch64/driver-aarch64.c
+	* config/aarch64/driver-aarch64.cc
 	(struct aarch64_arch_extension, struct aarch64_core_data,
 	struct aarch64_arch_driver_info, host_detect_local_cpu): Make
 	flag variables uint64_t.
@@ -28311,7 +28311,7 @@
 	* config/i386/i386-expand.c (get_element_number): Quote keywords
 	and other internal names in diagnostics.  Adjust other diagnostic
 	formatting issues noted by -Wformat-diag.
-	* config/i386/i386-features.c
+	* config/i386/i386-features.cc
 	(ix86_mangle_function_version_assembler_name): Same.
 	* config/i386/i386-options.c (ix86_handle_abi_attribute): Same.
 	* config/i386/i386.c (ix86_function_type_abi): Same.
@@ -30025,7 +30025,7 @@
 2019-04-24  Jeff Law  <law@redhat.com>
 
 	PR tree-optimization/90037
-	* Makefile.in (OBJS): Remove tree-ssa-phionlycprop.c
+	* Makefile.in (OBJS): Remove tree-ssa-phionlycprop.cc
 	* passes.def: Replace all instance of phi-only cprop with the
 	lattice propagator.  Move propagation pass from after erroneous
 	path isolation to before erroneous path isolation.
@@ -30483,7 +30483,7 @@
 	    Kito Cheng  <kito.cheng@gmail.com>
 	    Shiva Chen  <shiva0217@gmail.com>
 
-	* config/nds32/nds32-md-auxiliary.c
+	* config/nds32/nds32-md-auxiliary.cc
 	(nds32_legitimize_pic_address): Use new PIC pattern.
 	(nds32_legitimize_tls_address): Use new TLS pattern.
 	(nds32_output_symrel): New.
@@ -30853,7 +30853,7 @@
 	* collect2.c (main): Likewise.
 	(scan_prog_file): Likewise.
 	(scan_libraries): Likewise.
-	* common/config/riscv/riscv-common.c
+	* common/config/riscv/riscv-common.cc
 	(riscv_subset_list::parsing_subset_version): Likewise.
 	(riscv_subset_list::parse_std_ext): Likewise.
 	* config/aarch64/aarch64.c (aarch64_override_options_internal):
@@ -32216,7 +32216,7 @@
 	* builtins.c (expand_builtin_thread_pointer): Wrap an option name
 	in a string format message and fix GNU coding style.
 	(expand_builtin_set_thread_pointer): Likewise.
-	* common/config/aarch64/aarch64-common.c
+	* common/config/aarch64/aarch64-common.cc
 	(aarch64_rewrite_selected_cpu): Likewise.
 	* common/config/alpha/alpha-common.c (alpha_handle_option): Likewise.
 	* common/config/arc/arc-common.c (arc_handle_option): Likewise.
@@ -32229,7 +32229,7 @@
 	* common/config/nds32/nds32-common.c (nds32_handle_option): Likewise.
 	* common/config/powerpcspe/powerpcspe-common.c (rs6000_handle_option):
 	Likewise.
-	* common/config/riscv/riscv-common.c
+	* common/config/riscv/riscv-common.cc
 	(riscv_subset_list::parsing_subset_version): Likewise.
 	(riscv_subset_list::parse_std_ext): Likewise.
 	(riscv_subset_list::parse_sv_or_non_std_ext): Likewise.
@@ -33062,7 +33062,7 @@
 2019-02-25  Tamar Christina  <tamar.christina@arm.com>
 
 	PR target/88530
-	* common/config/aarch64/aarch64-common.c
+	* common/config/aarch64/aarch64-common.cc
 	(struct aarch64_option_extension): Add is_synthetic.
 	(all_extensions): Use it.
 	(TARGET_OPTION_INIT_STRUCT): Define hook.
@@ -34094,7 +34094,7 @@
 	* tree-vect-loop.c (optimize_mask_stores): Add an
 	auto_purge_vect_location sentinel to ensure that vect_location is
 	purged on exit.
-	* tree-vectorizer.c
+	* tree-vectorizer.cc
 	(auto_purge_vect_location::~auto_purge_vect_location): New dtor.
 	(try_vectorize_loop_1): Add an auto_purge_vect_location sentinel
 	to ensure that vect_location is purged on exit.
@@ -34809,7 +34809,7 @@
 
 2019-01-23  Xuepeng Guo  <xuepeng.guo@intel.com>
 
-	* common/config/i386/i386-common.c
+	* common/config/i386/i386-common.cc
 	(OPTION_MASK_ISA_ENQCMD_SET,
 	OPTION_MASK_ISA_ENQCMD_UNSET): New macros.
 	(ix86_handle_option): Handle -menqcmd.
@@ -34825,7 +34825,7 @@
 	* config/i386/i386-option.c (ix86_target_string): Add
 	-menqcmd.
 	(ix86_valid_target_attribute_inner_p): Likewise.
-	* config/i386/i386-expand.c
+	* config/i386/i386-expand.cc
 	(ix86_expand_builtin): Expand IX86_BUILTIN_ENQCMD and
 	IX86_BUILTIN_ENQCMDS.
 	* config/i386/i386.h (TARGET_ENQCMD): New.
@@ -34959,7 +34959,7 @@
 2019-01-22  Richard Biener  <rguenther@suse.de>
 
 	PR tree-optimization/88862
-	* graphite-scop-detection.c
+	* graphite-scop-detection.cc
 	(scop_detection::graphite_can_represent_scev): Reject ADDR_EXPR.
 
 2019-01-22  Andrew Stubbs  <ams@codesourcery.com>
@@ -35709,7 +35709,7 @@
 2019-01-11  Vladimir Makarov  <vmakarov@redhat.com>
 
 	PR rtl-optimization/87305
-	* lra-assigns.c
+	* lra-assigns.cc
 	(setup_live_pseudos_and_spill_after_risky_transforms): Add code
 	for little endian pseudos used as paradoxical subreg.
 
@@ -35832,14 +35832,14 @@
 
 2019-01-10  Tamar Christina  <tamar.christina@arm.com>
 
-	* config/aarch64/aarch64-builtins.c
+	* config/aarch64/aarch64-builtins.cc
 	(aarch64_init_builtins): Move aarch64_init_fcmla_laneq_builtins...
 	(aarch64_init_simd_builtins): ...Here
 
 2019-01-10  Vladimir Makarov  <vmakarov@redhat.com>
 
 	PR rtl-optimization/87305
-	* lra-assigns.c
+	* lra-assigns.cc
 	(setup_live_pseudos_and_spill_after_risky_transforms): Check
 	allocation for big endian pseudos used as paradoxical subregs and
 	spill them if it is wrong.
@@ -35873,7 +35873,7 @@
 
 2019-01-10  Tamar Christina  <tamar.christina@arm.com>
 
-	* config/arm/arm-builtins.c
+	* config/arm/arm-builtins.cc
 	(enum arm_type_qualifiers): Add qualifier_lane_pair_index.
 	(MAC_LANE_PAIR_QUALIFIERS): New.
 	(arm_expand_builtin_args): Use it.

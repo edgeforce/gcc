@@ -1050,7 +1050,7 @@
 
 	* a-locale.adb, a-locale.ads, locales.c: New files.
 	* Makefile.rtl: Add a-locale
-	* gcc-interface/Makefile.in: Add locales.c
+	* gcc-interface/Makefile.in: Add locales.cc
 
 2010-10-22  Robert Dewar  <dewar@adacore.com>
 

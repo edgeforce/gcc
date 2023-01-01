@@ -778,7 +778,7 @@
             (eq_attr "itanium_class" "frar_i"))
        (not (match_test "bundling_p")))
   "2_I+2_only_ui0")
-;; There is only two insns `mov = ar.unat' or `mov = ar.ccv' for frar_m:
+;; There is only two insns `mov = ar.unat' or `mov = arv' for frar_m:
 ;; Latency time ???
 (define_insn_reservation "2_frar_m"  6
   (and (and (eq_attr "cpu" "itanium2")
@@ -905,7 +905,7 @@
             (eq_attr "itanium_class" "toar_i"))
        (not (match_test "bundling_p")))
   "2_I+2_only_ui0")
-;; There are only ony 2 insns `mov ar.ccv =' and `mov ar.unat =' for toar_m:
+;; There are only ony 2 insns `mov arv =' and `mov ar.unat =' for toar_m:
 ;; Latency time ???
 (define_insn_reservation "2_toar_m"  5
   (and (and (eq_attr "cpu" "itanium2")

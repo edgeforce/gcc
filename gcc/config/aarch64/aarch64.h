@@ -552,7 +552,7 @@ enum class aarch64_feature : unsigned char {
 #define DEBUGGER_REGNO(REGNO)	aarch64_debugger_regno (REGNO)
 /* Provide a definition of DWARF_FRAME_REGNUM here so that fallback unwinders
    can use DWARF_ALT_FRAME_RETURN_COLUMN defined below.  This is just the same
-   as the default definition in dwarf2out.cc.  */
+   as the default definition in dwarf2out.  */
 #undef DWARF_FRAME_REGNUM
 #define DWARF_FRAME_REGNUM(REGNO)	DEBUGGER_REGNO (REGNO)
 
@@ -1233,12 +1233,12 @@ extern const char *aarch64_rewrite_mcpu (int argc, const char **argv);
 #define ASM_OUTPUT_POOL_EPILOGUE  aarch64_asm_output_pool_epilogue
 
 /* This type is the user-visible __fp16, and a pointer to that type.  We
-   need it in many places in the backend.  Defined in aarch64-builtins.cc.  */
+   need it in many places in the backend.  Defined in aarch64-builtins.  */
 extern GTY(()) tree aarch64_fp16_type_node;
 extern GTY(()) tree aarch64_fp16_ptr_type_node;
 
 /* This type is the user-visible __bf16, and a pointer to that type.  Defined
-   in aarch64-builtins.cc.  */
+   in aarch64-builtins.  */
 extern GTY(()) tree aarch64_bf16_type_node;
 extern GTY(()) tree aarch64_bf16_ptr_type_node;
 

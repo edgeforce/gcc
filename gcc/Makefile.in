@@ -2156,7 +2156,7 @@ s-mlib: $(srcdir)/genmultilib Makefile
 
 srcextra: gcc.srcextra lang.srcextra
 
-gcc.srcextra: gengtype-lex.c
+gcc.srcextra: gengtype-lex.cc
 	-cp -p $^ $(srcdir)
 
 AR_OBJS = file-find.o
@@ -2188,10 +2188,10 @@ CFLAGS-gcc-nm.o += $(DRIVER_DEFINES) \
 
 # ??? the implicit rules dont trigger if the source file has a different name
 # so copy instead
-gcc-ranlib.c: gcc-ar.c
+gcc-ranlib.c: gcc-ar.cc
 	cp $^ $@
 
-gcc-nm.c: gcc-ar.c
+gcc-nm.c: gcc-ar.cc
 	cp $^ $@
 
 COLLECT2_OBJS = collect2.o collect2-aix.o vec.o ggc-none.o \
@@ -2219,7 +2219,7 @@ CFLAGS-c-family/c-opts.o += @TARGET_SYSTEM_ROOT_DEFINE@
 CFLAGS-c-family/c-pch.o += -DHOST_MACHINE=\"$(host)\" \
 	-DTARGET_MACHINE=\"$(target)\"
 
-default-c.o: config/default-c.c
+default-c.o: config/default-c.cc
 	$(COMPILE) $<
 	$(POSTCOMPILE)
 
@@ -2230,7 +2230,7 @@ prefix.o: $(BASEVER)
 
 # Files used by the D language front end.
 
-default-d.o: config/default-d.c
+default-d.o: config/default-d.cc
 	$(COMPILE) $<
 	$(POSTCOMPILE)
 
@@ -2292,7 +2292,7 @@ s-options-h: optionlist $(srcdir)/opt-functions.awk $(srcdir)/opt-read.awk \
 	$(SHELL) $(srcdir)/../move-if-change tmp-options.h options.h
 	$(STAMP) $@
 
-dumpvers: dumpvers.c
+dumpvers: dumpvers.cc
 
 # lto-compress.o needs $(ZLIBINC) added to the include flags.
 CFLAGS-lto-compress.o += $(ZLIBINC) $(ZSTD_INC)
@@ -2357,11 +2357,11 @@ simple_rtl_generated_h	= insn-attr.h insn-attr-common.h insn-codes.h \
 
 simple_rtl_generated_c	= insn-automata.c insn-emit.c \
 			  insn-extract.c insn-output.c \
-			  insn-peep.c insn-recog.c
+			  insn-peep.c insn-recog.cc
 
 simple_generated_h	= $(simple_rtl_generated_h) insn-constants.h
 
-simple_generated_c	= $(simple_rtl_generated_c) insn-enums.c
+simple_generated_c	= $(simple_rtl_generated_c) insn-enums.cc
 
 $(simple_generated_h:insn-%.h=s-%) \
 $(simple_generated_c:insn-%.c=s-%): s-%: $(MD_DEPS)
@@ -2380,8 +2380,8 @@ $(simple_generated_h:insn-%.h=s-%): s-%: build/gen%$(build_exeext)
 $(simple_generated_c): insn-%.c: s-%; @true
 $(simple_generated_c:insn-%.c=s-%): s-%: build/gen%$(build_exeext)
 	$(RUN_GEN) build/gen$*$(build_exeext) $(md_file) \
-	  $(filter insn-conditions.md,$^) > tmp-$*.c
-	$(SHELL) $(srcdir)/../move-if-change tmp-$*.c insn-$*.c
+	  $(filter insn-conditions.md,$^) > tmp-$*.cc
+	$(SHELL) $(srcdir)/../move-if-change tmp-$*.c insn-$*.cc
 	$(STAMP) s-$*
 
 # gencheck doesn't read the machine description, and the file produced
@@ -2397,26 +2397,26 @@ insn-attrtab.c insn-dfatab.c insn-latencytab.c: s-attrtab ; @true
 s-attrtab : $(MD_DEPS) build/genattrtab$(build_exeext) \
   insn-conditions.md
 	$(RUN_GEN) build/genattrtab$(build_exeext) $(md_file) insn-conditions.md \
-		-Atmp-attrtab.c -Dtmp-dfatab.c -Ltmp-latencytab.c
-	$(SHELL) $(srcdir)/../move-if-change tmp-attrtab.c    insn-attrtab.c
-	$(SHELL) $(srcdir)/../move-if-change tmp-dfatab.c     insn-dfatab.c
-	$(SHELL) $(srcdir)/../move-if-change tmp-latencytab.c insn-latencytab.c
+		-Atmp-attrtab.c -Dtmp-dfatab.c -Ltmp-latencytab.cc
+	$(SHELL) $(srcdir)/../move-if-change tmp-attrtab.c    insn-attrtab.cc
+	$(SHELL) $(srcdir)/../move-if-change tmp-dfatab.c     insn-dfatab.cc
+	$(SHELL) $(srcdir)/../move-if-change tmp-latencytab.c insn-latencytab.cc
 	$(STAMP) s-attrtab
 
 # genopinit produces two files.
 insn-opinit.c insn-opinit.h: s-opinit ; @true
 s-opinit: $(MD_DEPS) build/genopinit$(build_exeext) insn-conditions.md
 	$(RUN_GEN) build/genopinit$(build_exeext) $(md_file) \
-	  insn-conditions.md -htmp-opinit.h -ctmp-opinit.c
+	  insn-conditions.md -htmp-opinit.h -ctmp-opinit.cc
 	$(SHELL) $(srcdir)/../move-if-change tmp-opinit.h insn-opinit.h
-	$(SHELL) $(srcdir)/../move-if-change tmp-opinit.c insn-opinit.c
+	$(SHELL) $(srcdir)/../move-if-change tmp-opinit.c insn-opinit.cc
 	$(STAMP) s-opinit
 
 # gencondmd doesn't use the standard naming convention.
 build/gencondmd.c: s-conditions; @true
 s-conditions: $(MD_DEPS) build/genconditions$(build_exeext)
-	$(RUN_GEN) build/genconditions$(build_exeext) $(md_file) > tmp-condmd.c
-	$(SHELL) $(srcdir)/../move-if-change tmp-condmd.c build/gencondmd.c
+	$(RUN_GEN) build/genconditions$(build_exeext) $(md_file) > tmp-condmd.cc
+	$(SHELL) $(srcdir)/../move-if-change tmp-condmd.c build/gencondmd.cc
 	$(STAMP) s-conditions
 
 insn-conditions.md: s-condmd; @true
@@ -2442,8 +2442,8 @@ insn-modes-inline.h: s-modes-inline-h; @true
 min-insn-modes.c: s-modes-m; @true
 
 s-modes: build/genmodes$(build_exeext)
-	$(RUN_GEN) build/genmodes$(build_exeext) > tmp-modes.c
-	$(SHELL) $(srcdir)/../move-if-change tmp-modes.c insn-modes.c
+	$(RUN_GEN) build/genmodes$(build_exeext) > tmp-modes.cc
+	$(SHELL) $(srcdir)/../move-if-change tmp-modes.c insn-modes.cc
 	$(STAMP) s-modes
 
 s-modes-h: build/genmodes$(build_exeext)
@@ -2458,8 +2458,8 @@ s-modes-inline-h: build/genmodes$(build_exeext)
 	$(STAMP) s-modes-inline-h
 
 s-modes-m: build/genmodes$(build_exeext)
-	$(RUN_GEN) build/genmodes$(build_exeext) -m > tmp-min-modes.c
-	$(SHELL) $(srcdir)/../move-if-change tmp-min-modes.c min-insn-modes.c
+	$(RUN_GEN) build/genmodes$(build_exeext) -m > tmp-min-modes.cc
+	$(SHELL) $(srcdir)/../move-if-change tmp-min-modes.c min-insn-modes.cc
 	$(STAMP) s-modes-m
 
 insn-preds.c: s-preds; @true
@@ -2471,8 +2471,8 @@ mddump: $(BUILD_RTL) $(MD_DEPS) build/genmddump$(build_exeext)
 	$(RUN_GEN) build/genmddump$(build_exeext) $(md_file) > tmp-mddump.md
 
 s-preds: $(MD_DEPS) build/genpreds$(build_exeext)
-	$(RUN_GEN) build/genpreds$(build_exeext) $(md_file) > tmp-preds.c
-	$(SHELL) $(srcdir)/../move-if-change tmp-preds.c insn-preds.c
+	$(RUN_GEN) build/genpreds$(build_exeext) $(md_file) > tmp-preds.cc
+	$(SHELL) $(srcdir)/../move-if-change tmp-preds.c insn-preds.cc
 	$(STAMP) s-preds
 
 s-preds-h: $(MD_DEPS) build/genpreds$(build_exeext)
@@ -2579,13 +2579,13 @@ generic-match.c: s-match generic-match-head.c ; @true
 
 s-match: build/genmatch$(build_exeext) $(srcdir)/match.pd cfn-operators.pd
 	$(RUN_GEN) build/genmatch$(build_exeext) --gimple $(srcdir)/match.pd \
-	    > tmp-gimple-match.c
+	    > tmp-gimple-match.cc
 	$(RUN_GEN) build/genmatch$(build_exeext) --generic $(srcdir)/match.pd \
-	    > tmp-generic-match.c
+	    > tmp-generic-match.cc
 	$(SHELL) $(srcdir)/../move-if-change tmp-gimple-match.c \
-	    					gimple-match.c
+	    					gimple-match.cc
 	$(SHELL) $(srcdir)/../move-if-change tmp-generic-match.c \
-	    					generic-match.c
+	    					generic-match.cc
 	$(STAMP) s-match
 
 GTFILES = $(CPP_ID_DATA_H) $(srcdir)/input.h $(srcdir)/coretypes.h \
@@ -3439,7 +3439,7 @@ mostlyclean: lang.mostlyclean
 	-rm -f build/*
 	-rm -f mddeps.mk
 # Delete other built files.
-	-rm -f specs.h options.c options.h options-save.c
+	-rm -f specs.h options.c options.h options-save.cc
 # Delete the stamp and temporary files.
 	-rm -f s-* tmp-* stamp-* stmp-*
 	-rm -f */stamp-* */tmp-*
@@ -3462,7 +3462,7 @@ mostlyclean: lang.mostlyclean
 	-rm -f gt-*
 	-rm -f gtype.state
 # Delete genchecksum outputs
-	-rm -f *-checksum.c
+	-rm -f *-checksum.cc
 # Delete lock-and-run bits
 	-rm -rf linkfe.lck lock-stamp.*
 
@@ -3500,7 +3500,7 @@ distclean: clean lang.distclean
 	-rm -f *.asm
 	-rm -f site.exp site.bak testsuite/site.exp testsuite/site.bak
 	-rm -f testsuite/*.log testsuite/*.sum
-	-cd testsuite && rm -f x *.x *.x? *.exe *.rpo *.o *.s *.S *.c
+	-cd testsuite && rm -f x *.x *.x? *.exe *.rpo *.o *.s *.S *.cc
 	-cd testsuite && rm -f *.out *.gcov *$(coverageexts)
 	-rm -rf ${QMTEST_DIR} stamp-qmtest
 	-rm -f .gdbinit configargs.h

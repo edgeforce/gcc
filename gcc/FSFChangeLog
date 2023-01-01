@@ -2005,7 +2005,7 @@ Mon Mar  2 08:06:58 1998  Richard Kenner  <kenner@vlsi1.ultra.nyu.edu>
 	* Version 2.8.1 released.
 
 	* Makefile.in (mostlyclean): Remove duplicate deletion of temp
- 	files.  Delete more stamp files and [df]p-bit.c
+ 	files.  Delete more stamp files and [df]p-bit.cc
 	(clean): Don't delete stamp files here.
 	(VERSION_DEP): New variable.
 	(distdir-finish): Pass a value of null for it.

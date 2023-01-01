@@ -410,7 +410,7 @@
 	(recording::context::m_inner_bool_options): New.
 	* libgccjit++.h
 	(gccjit::context::set_bool_allow_unreachable_blocks): New.
-	* libgccjit.c
+	* libgccjit.cc
 	(gcc_jit_context_set_bool_allow_unreachable_blocks): New.
 	* libgccjit.h: Add note about options present in the
 	initial release of libgccjit.
@@ -459,7 +459,7 @@
 
 2015-06-30  David Malcolm  <dmalcolm@redhat.com>
 
-	* jit-recording.c
+	* jit-recording.cc
 	(gcc::jit::recording::context::dump_reproducer_to_file):
 	Add pragma to generated reproducers to disable -Wunused-variable.
 	Fix handling of NULL string options.
@@ -549,7 +549,7 @@
 
 2015-06-05  David Malcolm  <dmalcolm@redhat.com>
 
-	* dummy-frontend.c
+	* dummy-frontend.cc
 	(jit_langhook_post_compilation_parsing_cleanups): Remove.
 	(LANG_HOOKS_POST_COMPILATION_PARSING_CLEANUPS): Remove
 	* jit-playback.c (gcc::jit::playback::context::new_global): Add
@@ -568,7 +568,7 @@
 	(LANG_HOOKS_POST_COMPILATION_PARSING_CLEANUPS): ...this and
 	redirect from jit_langhook_write_globals to
 	jit_langhook_post_compilation_parsing_cleanups.
-	* jit-playback.c
+	* jit-playback.cc
 	(gcc::jit::playback::context::write_global_decls_1): Rename to...
 	(gcc::jit::playback::context::finalize_global_decls): ...this.
 	(gcc::jit::playback::context::write_global_decls_1): Delete.
@@ -804,7 +804,7 @@
 
 2015-01-19  David Malcolm  <dmalcolm@redhat.com>
 
-	* jit-recording.c
+	* jit-recording.cc
 	(gcc::jit::recording::memento_of_new_string_literal::make_debug_string):
 	Add missing format string.
 
@@ -1585,7 +1585,7 @@
 	* jit-playback.c: Include jit-tempdir.h.
 	(gcc::jit::playback::context::context): Initialize m_tempdir.
 	(gcc::jit::playback::context::~context): Move tempdir
-	cleanup to new file jit-tempdir.c
+	cleanup to new file jit-tempdir.cc
 	(make_tempdir_path_template): Move to new file jit-tempdir.c.
 	(gcc::jit::playback::context::compile): Move tempdir creation
 	to new tempdir object in new file jit-tempdir.c.
@@ -1793,7 +1793,7 @@
 	* jit-playback.h:
 	(gcc::jit::playback::context::get_builtins_manager): New function.
 
-	* jit-recording.c
+	* jit-recording.cc
 	(gcc::jit::recording::context::get_builtins_manager): New function.
 	(gcc::jit::recording::get_builtin_function): Use
 	get_builtins_manager, in case we're a child context.
@@ -1813,7 +1813,7 @@
 
 2014-12-01  David Malcolm  <dmalcolm@redhat.com>
 
-	* jit-builtins.c
+	* jit-builtins.cc
 	(gcc::jit::recording::builtins_manager::get_builtin_function):
 	Check for NULL return from make_builtin_function.
 	(gcc::jit::recording::builtins_manager::make_builtin_function):
@@ -1860,7 +1860,7 @@
 2014-12-01  David Malcolm  <dmalcolm@redhat.com>
 
 	PR jit/63854
-	* docs/examples/tut04-toyvm/toyvm.c
+	* docs/examples/tut04-toyvm/toyvm.cc
 	(toyvm_compiled_function): New typedef.
 	(toyvm_compiled_func) Rename to...
 	(toyvm_compiled_code) ...this.
@@ -1877,11 +1877,11 @@
 2014-12-01  David Malcolm  <dmalcolm@redhat.com>
 
 	PR jit/63854
-	* jit-builtins.c
+	* jit-builtins.cc
 	(gcc::jit::recording::builtins_manager::make_fn_type): Call the
 	context's new_function_type method, rather than directly creating
 	a function_type instance.
-	* jit-recording.c
+	* jit-recording.cc
 	(gcc::jit::recording::context::new_function_type): New method,
 	adapted from part of...
 	(gcc::jit::recording::context::new_function_ptr_type): ...this.
@@ -1937,7 +1937,7 @@
 	(gcc::jit::playback::source_file::finalizer): New.
 	(gcc::jit::playback::source_line::finalizer): New.
 
-	* jit-recording.c
+	* jit-recording.cc
 	(gcc::jit::recording::function_type::replay_into): Convert local
 	from a vec into an auto_vec.
 	(gcc::jit::recording::fields::replay_into): Likewise.

@@ -9396,9 +9396,9 @@ else
     # We need to recreate these files for each test, as the compiler may
     # overwrite some of them when testing with obscure command lines.
     # This happens at least with the AIX C compiler.
-    : > sub/conftest.c
+    : > sub/conftest.cc
     for i in 1 2 3 4 5 6; do
-      echo '#include "conftst'$i'.h"' >> sub/conftest.c
+      echo '#include "conftst'$i'.h"' >> sub/conftest.cc
       # Using `: > sub/conftst$i.h' creates only sub/conftst1.h with
       # Solaris 8's {/usr,}/bin/sh.
       touch sub/conftst$i.h
@@ -14922,7 +14922,7 @@ else
 	# non-empty at configure time, or by adding -multi_module to the
 	# link flags.
 	rm -rf libconftest.dylib*
-	echo "int foo(void){return 1;}" > conftest.c
+	echo "int foo(void){return 1;}" > conftest.cc
 	echo "$LTCC $LTCFLAGS $LDFLAGS -o libconftest.dylib \
 -dynamiclib -Wl,-single_module conftest.c" >&5
 	$LTCC $LTCFLAGS $LDFLAGS -o libconftest.dylib \
@@ -14995,7 +14995,7 @@ _LT_EOF
       else
 	cat conftest.err >&5
       fi
-        rm -f conftest.err libconftest.a conftest conftest.c
+        rm -f conftest.err libconftest.a conftest conftest.cc
         rm -rf conftest.dSYM
 
 fi
@@ -29291,7 +29291,7 @@ fi
      { $as_echo "$as_me:${as_lineno-$LINENO}: checking for exported symbols" >&5
 $as_echo_n "checking for exported symbols... " >&6; }
      if test "x$export_sym_check" != x; then
-       echo "int main() {return 0;} int foobar() {return 0;}" > conftest.c
+       echo "int main() {return 0;} int foobar() {return 0;}" > conftest.cc
        ${CC} ${CFLAGS} ${LDFLAGS} conftest.c -o conftest$ac_exeext > /dev/null 2>&1
        if $export_sym_check conftest$ac_exeext | grep -q foobar > /dev/null; then
 	 : # No need to use a flag

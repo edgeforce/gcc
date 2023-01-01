@@ -53,7 +53,7 @@ package body System.Interrupt_Management is
 
    function State (Int : Interrupt_ID) return Character;
    pragma Import (C, State, "__gnat_get_interrupt_state");
-   --  Get interrupt state.  Defined in init.c
+   --  Get interrupt state.  Defined in init.cc
    --  The input argument is the interrupt number,
    --  and the result is one of the following:
 

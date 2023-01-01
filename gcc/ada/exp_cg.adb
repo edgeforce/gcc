@@ -109,7 +109,7 @@ package body Exp_CG is
 
    begin
       --  No output if the "ci" output file has not been previously opened
-      --  by toplev.c
+      --  by toplev.cc
 
       if Callgraph_Info_File = Null_Address then
          return;

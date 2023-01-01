@@ -4130,7 +4130,7 @@
 
 2012-07-12  Tristan Gingold  <gingold@adacore.com>
 
-	* raise.h: Revert previous patch: structure is used in init.c
+	* raise.h: Revert previous patch: structure is used in init.cc
 	by vms.
 
 2012-07-12  Vincent Celier  <celier@adacore.com>
@@ -4405,7 +4405,7 @@
 2012-07-09  Tristan Gingold  <gingold@adacore.com>
 
 	* a-exexpr-gcc.adb (CleanupUnwind_Handler): Now imported from
-	raise-gcc.c
+	raise-gcc.cc
 	* raise-gcc.c (__gnat_cleanupunwind_handler): Defined.
 	Strictly follow the ABI convention on ia64.
 

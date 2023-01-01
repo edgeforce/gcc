@@ -211,7 +211,7 @@
 	dse_record_singleton_alias_set, dse_confluence_0,
 	dse_confluence_n, step4, step5_nospill, step5_spill,
 	rest_of_handle_dse, pass_rtl_dse1, pass_rtl_dse2): Removed code
-	to allow dse to run on trunk in front of flow.c
+	to allow dse to run on trunk in front of flow.cc
 	(problem): Removed.
 	
 2007-05-26  Kaz Kojima  <kkojima@gcc.gnu.org>
@@ -2360,7 +2360,7 @@
 	(df_bb_verify, df_exit_block_bitmap_verify,
 	df_entry_block_bitmap_verify, df_verify_blocks): Made it possible
 	to abort closer to source of problem.
-	(df_verify_blocks): Removed dflow parameter.  * df-core.c
+	(df_verify_blocks): Removed dflow parameter.  * df-core.cc
 	(df_insn_uid_debug, df_ref_debug): Fixed debugging.  *
 	df-problems.c (df_ru_bb_info, df_rd_bb_info, df_lr_bb_info,
 	df_ur_bb_info, df_live_bb_info, df_urec_bb_info): Made tolerant of
@@ -2678,7 +2678,7 @@
 	* df.h (df_rescan_blocks): Renamed to df_scan_blocks.
 	* df-core.c (df_analyze): Use df_scan_blocks() instead.
 	* ifcvt.c (if_convert): Use df_scan_blocks() instead.
-	* df-scan.c
+	* df-scan.cc
 	(df_ref_record, df_def_record_1, df_defs_record, df_uses_record):
 	They are made side-effect free.
 	(df_ref_find_chains, df_ref_add_to_chains, df_refs_add_to_chains,
@@ -3005,7 +3005,7 @@
 	* sched-ebb.c (sched_ebbs): Now returns the df instance created.
 	* rtl.h (sched_ebbs): Ditto.
 	* recog.c (split_all_insns): Made public again so it can be called
-	from ia64.c
+	from ia64.cc
 	* rtl.h (split_all_insns): Ditto.
 	* df-problems.c (df_ri_compute): Removed call to non existent
 	function.
@@ -3219,7 +3219,7 @@
 	PRE_MODIFY.
 	* config/rs6000/rs6000.md ("*movdf_hardfloat32",
 	"*movdf_softfloat32"): Ditto.
-	* cfgrtl (first_insn_after_basic_block_note): Moved from flow.c
+	* cfgrtl (first_insn_after_basic_block_note): Moved from flow.cc
 	and made static.
 
 
@@ -3608,7 +3608,7 @@
 
 2006-04-17  Kenneth Zadeck <zadeck@naturalbridge.com>
 
-	* tree-pass.h (pass_recompute_reg_usage): Deleted.  flow.c
+	* tree-pass.h (pass_recompute_reg_usage): Deleted.  flow.cc
 	(pass_recompute_reg_usage, recompute_reg_usage): Deleted.  *
 	sched-ebb.c (begin_schedule_ready, schedule_ebb,
 	begin_schedule_ready, schedule_ebb, schedule_block): Threaded

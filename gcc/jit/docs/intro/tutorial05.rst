@@ -86,7 +86,7 @@ Converting a brainf script to libgccjit IR
 
 As before we write simple code to populate a :c:type:`gcc_jit_context *`.
 
-   .. literalinclude:: ../examples/tut05-bf.c
+   .. literalinclude:: ../examples/tut05-bf.cc
     :start-after: #define MAX_OPEN_PARENS 16
     :end-before: /* Entrypoint to the compiler.  */
     :language: c
@@ -106,7 +106,7 @@ directly to an executable, using :c:func:`gcc_jit_context_compile_to_file`:
 Here's the top-level of the compiler, which is what actually calls into
 :c:func:`gcc_jit_context_compile_to_file`:
 
- .. literalinclude:: ../examples/tut05-bf.c
+ .. literalinclude:: ../examples/tut05-bf.cc
     :start-after: /* Entrypoint to the compiler.  */
     :end-before: /* Use the built compiler to compile the example to an executable:
     :language: c
@@ -118,7 +118,7 @@ as in the previous tutorial.
 To create an executable, we need to export a ``main`` function.  Here's
 how to create one from the JIT API:
 
- .. literalinclude:: ../examples/tut05-bf.c
+ .. literalinclude:: ../examples/tut05-bf.cc
     :start-after: #include "libgccjit.h"
     :end-before: #define MAX_OPEN_PARENS 16
     :language: c

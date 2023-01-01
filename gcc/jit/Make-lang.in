@@ -34,7 +34,7 @@
 # - the compiler proper (eg: cc1plus)
 # - define the names for selecting the language in LANGUAGES.
 
-#
+#
 # Define the names for selecting jit in LANGUAGES.
 # Note that it would be nice to move the dependency on g++
 # into the jit rule, but that needs a little bit of work
@@ -94,7 +94,7 @@ $(LIBGCCJIT_SONAME_SYMLINK): $(LIBGCCJIT_FILENAME)
 $(LIBGCCJIT_LINKER_NAME_SYMLINK): $(LIBGCCJIT_SONAME_SYMLINK)
 	ln -sf $(LIBGCCJIT_SONAME_SYMLINK) $(LIBGCCJIT_LINKER_NAME_SYMLINK)
 
-#
+#
 # Build hooks:
 
 jit.all.cross:
@@ -257,7 +257,7 @@ lang_checks_parallelized += check-jit
 # we want them to be placed in different "buckets".
 check_jit_parallelize = 10
 
-#
+#
 # Install hooks:
 jit.install-common: installdirs
 	$(INSTALL_PROGRAM) $(LIBGCCJIT_FILENAME) \
@@ -279,7 +279,7 @@ jit.install-plugin:
 
 jit.uninstall:
 
-#
+#
 # Clean hooks:
 # A lot of the ancillary files are deleted by the main makefile.
 # We just have to delete files specific to us.
@@ -296,7 +296,7 @@ jit.distclean:
 
 jit.maintainer-clean:
 
-#
+#
 # Stage hooks:
 # The main makefile has already created stage?/jit.
 

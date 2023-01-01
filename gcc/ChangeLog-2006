@@ -1715,7 +1715,7 @@
 
 2006-12-11  Jan Hubicka  <jh@suse.cz>
 
-	Move all varpool routines out of cgraph/cgraphunit to varpool.c
+	Move all varpool routines out of cgraph/cgraphunit to varpool.cc
 	* cgraph.c: Update comments.
 	(cgraph_varpool_hash,
 	cgraph_varpool_nodes, cgraph_varpool_last_needed_node
@@ -1729,12 +1729,12 @@
 	(dump_cgraph_varpool_node): Move to varpool.c under name
 	dump_varpool_node.
 	(dump_varpool, hash_varpool_node, eq_varpool_node,
-	decide_is_variable_needed): Move to varpool.c
+	decide_is_variable_needed): Move to varpool.cc
 	(decl_assembler_name_equal): Move to tree.c.
 	(availability_names): Rename to ...
 	(cgraph_availability_names): ... this one.
 	(dump_cgraph_node): Update.
-	* cgraph.h: Reorder declarations now in varpool.c
+	* cgraph.h: Reorder declarations now in varpool.cc
 	(cgraph_vailablity_names): Declare.
 	(struct cgraph_varpool_node): Rename to ...
 	(struct varpool_node): ... this one.
@@ -1778,7 +1778,7 @@
 	* except.c (output_ttype): Likewise.
 	* varasm.c (mark_decl_referenced): Likewise.
 	(find_decl_and_mark_referenced, assemble_alias): update.
-	* Makefile.in: Add varpool.c, gt-varpool.c and remove gt-cgraphunit.c
+	* Makefile.in: Add varpool.c, gt-varpool.c and remove gt-cgraphunit.cc
 	* passes.c (rest_of_decl_compilation): Update.
 
 2006-12-11  Ira Rosen  <irar@il.ibm.com>
@@ -1993,7 +1993,7 @@
 	root_var_dump, root_var_delete, root_var_remove_partition,
 	root_var_find, root_var_compact, root_var_decompact): Remove.
 	(struct partition_pair, struct coalesce_list_d): Moved to
-	tree-ssa-coalesce.c
+	tree-ssa-coalesce.cc
 	* tree-ssa-ter.c: Remove header files which aren't needed.
 
 2006-12-10  Steven Bosscher  <steven@gcc.gnu.org>
@@ -3558,7 +3558,7 @@
 
 2006-11-30  Andrew Pinski  <andrew_pinski@playstation.sony.com>
 
-	* config/spu/spu.c (spu_builtin_range): Move from spu-c.c
+	* config/spu/spu.c (spu_builtin_range): Move from spu-c.cc
 	(TARGET_RESOLVE_OVERLOADED_BUILTIN): Delete.
 	(spu_cpu_cpp_builtins): Remove.
 	(spu_override_options): Don't set warn_main.
@@ -3574,7 +3574,7 @@
 	(expand_builtin_args): Remove.
 	(spu_expand_builtin_1): Remove.
 	(spu_expand_builtin): Remove.
-	(spu_cpu_cpp_builtins): Moved from spu.c
+	(spu_cpu_cpp_builtins): Moved from spu.cc
 	(spu_force_reg): Remove.
 
 2006-12-01  Joseph Myers  <joseph@codesourcery.com>
@@ -3873,7 +3873,7 @@
 	(add_virtual_phis): Update.
 	(tree_optimize_tail_calls_1): Update.
 	* tree-ssa-dse.c (memory_ssa_name_same): Update.
-	* tree-ssa-copyrename.c
+	* tree-ssa-copyrename.cc
 	(copy_rename_partition_coalesce): Update.
 	* tree-ssa-math-opts.c (execute_cse_reciprocals): Update.
 	* tree-ssa-propagate.c (set_rhs): Update.
@@ -7394,7 +7394,7 @@
 	PR middle-end/28796
 	* builtins.c (fold_builtin_classify): Use HONOR_INFINITIES
 	and HONOR_NANS instead of MODE_HAS_INFINITIES and MODE_HAS_NANS
-	for deciding optimizations in consistency with fold-const.c
+	for deciding optimizations in consistency with fold-const.cc
 	(fold_builtin_unordered_cmp): Likewise.
 
 2006-10-24  Richard Guenther  <rguenther@suse.de>
@@ -11722,7 +11722,7 @@
 
 2006-06-06  Peter Lemieszewski  <lemie@us.ibm.com>
 
-	* config/s390/t-tpf (LIB2ADDEH): Include unwind-dw2-fde-glibc.c
+	* config/s390/t-tpf (LIB2ADDEH): Include unwind-dw2-fde-glibc.cc
 	in lieu of unwind-dw2-fde.c.
 
 2006-06-06  Francois-Xavier Coudert  <coudert@clipper.ens.fr>
@@ -16383,7 +16383,7 @@
 	attach_life_info, debug_spec_status, check_reg_live): New functions.
 	(get_block_head_tail): Change signature to get_ebb_head_tail, adjust
 	all uses in ddg.c, modulo-sched.c, haifa-sched.c, sched-rgn.c,
-	sched-ebb.c
+	sched-ebb.cc
 	(get_dep_weak, ds_merge): Prototype functions from sched-deps.c .
 	* ddg.c (get_block_head_tail): Adjust all uses.
 	* modulo-sched.c (get_block_head_tail): Adjust all uses.
@@ -17649,7 +17649,7 @@
 	(do_store_copy_prop): Ditto.
 	* ipa-prop.h (ipcp_driver): Ditto.
 	* cfglayout.c (insn_locators_initialize): Ditto.
-	* tree-ssa-forwprop.c
+	* tree-ssa-forwprop.cc
 	(tree_ssa_forward_propagate_single_use_vars): Ditto.
 	* cfglayout.h (insn_locators_initialize): Ditto.
 	* tree-ssa-dce.c (tree_ssa_dce): Ditto.
@@ -21199,8 +21199,8 @@
 
 	* gensupport.c: Define get_insn_name and record_insn_name here.
 	(read_md_rtx): Call record_insn_name as appropriate.
-	* genattr.c, genattrtab.c, gencodes.c, genconfig.c, genemit.c
-	* genextract.c, genflags.c, genopinit.c, genoutput.c, genpeep.c
+	* genattr.c, genattrtab.c, gencodes.c, genconfig.c, genemit.cc
+	* genextract.c, genflags.c, genopinit.c, genoutput.c, genpeep.cc
 	* genpreds.c, genrecog.c: Don't define get_insn_name nor
 	record_insn_name.
 	* Makefile.in (BUILD_SUPPORT, BUILD_PRINT): Fold into BUILD_RTL.
@@ -21236,7 +21236,7 @@
 	* Makefile.in: Kill BUILD_EARLY_SUPPORT and all references to
 	dummy-conditions.o.  Eliminate references to insn-conditions.o,
 	or change them to build/gencondmd.o, as appropriate.  Remove
-	insn-constants.h from $(simple_generated_h) and insn-conditions.c
+	insn-constants.h from $(simple_generated_h) and insn-conditions.cc
 	from $(simple_generated_c).  For all files remaining in those
 	two lists, add insn-conditions.md to the generator command line.
 	Give insn-constants.h/s-constants their own rules.  Add rules
@@ -22147,7 +22147,7 @@
 	(struct walk_stmt_info): Add want_bind_expr, want_locations.
 	(find_omp_clause): Declare.
 	(insert_field_into_struct): Declare.
-	(struct walk_stmt_info): Move from tree-nested.c
+	(struct walk_stmt_info): Move from tree-nested.cc
 	(walk_stmts): Declare.
 	* c-cppbuiltin.c (c_cpp_builtins): If -fopenmp, #define _OPENMP
 	to 200505.
@@ -22595,7 +22595,7 @@
 
 	Merge from gomp branch:
 	* Makefile.in (TREE_INLINE_H): New.  Use it as needed.
-	* tree-inline.h (struct copy_body_data): Move from tree-inline.c
+	* tree-inline.h (struct copy_body_data): Move from tree-inline.cc
 	and rename from struct inline_data.  Rename callee* to dst*;
 	caller* to src*; add copy_decl hook, transform_call_graph_edges,
 	transform_new_cfg, transform_return_to_modify, and
@@ -23339,7 +23339,7 @@
 	(eliminate_redundant_computations): Remove now unused arguments,
 	callers updated.
 	(local_fold): Remove, no longer used.
-	(find_equivalent_equality_comparison): Removed from tree-ssa-dom.c
+	(find_equivalent_equality_comparison): Removed from tree-ssa-dom.cc
 	and moved to...
 	* tree-ssa-forwprop.c (find_equivalent_equality_comparison): Here.
 	(simplify_cond): New function.

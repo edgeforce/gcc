@@ -5841,7 +5841,7 @@ fi
 
 AC_MSG_CHECKING(support for thin archives)
 thin_archive_support=no
-echo 'int main (void) { return 0; }' > conftest.c
+echo 'int main (void) { return 0; }' > conftest.cc
 if ($AR --version | sed 1q | grep "GNU ar" \
     && $CC $CFLAGS -c conftest.c \
     && $AR rcT conftest.a conftest.o \

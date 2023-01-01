@@ -1,6 +1,6 @@
 ! { dg-do compile }
 !
-! PR 50070: Segmentation fault at size_binop_loc in fold-const.c
+! PR 50070: Segmentation fault at size_binop_loc in fold-const.cc
 !
 ! Contributed by Vittorio Zecca <zeccav@gmail.com>
 

@@ -950,7 +950,7 @@
 	(verify_types_in_gimple_assign): Likewise.
 	* passes.c (init_optimization_passes): Re-enable
 	pass_ipa_increase_alignment.
-	* tree-ssa-threadedge.c
+	* tree-ssa-threadedge.cc
 	(record_temporary_equivalences_from_stmts_at_dest):
 	Change SIMPLIFY to accept two arguments of type gimple.
 	Update all users.
@@ -1291,7 +1291,7 @@
 	* gimple.def: Add comments warning about code orderings.
 	* omp-low.c (expand_omp_taskreg): Call gimple_omp_set_subcode.
 	(expand_omp_atomic_fetch_op): Call gimple_assign_rhs_code.
-	* tree-gimple.c (get_gimple_rhs_class): Move to gimple.c
+	* tree-gimple.c (get_gimple_rhs_class): Move to gimple.cc
 	(get_gimple_rhs_num_ops): Likewise.
 	(gimple_assign_rhs_code): Move to gimple.h.
 	* tree-gimple.h (enum gimple_rhs_class): Move to gimple.h.
@@ -1743,7 +1743,7 @@
 	* gimple.c (gimple_ops_offset_): Declare.  Fill in from
 	third argument in gimple.def.
 	(gimple_set_stored_syms, gimple_set_loaded_syms): Move
-	from tree-ssa-operands.c
+	from tree-ssa-operands.cc
 	(gimple_alloc): Add argument NUM_OPS.  Update all users.
 	Compute size by adding enough space for NUM_OPS operands.
 	(gimple_alloc_ops): Remove.  Update all users.
@@ -4713,7 +4713,7 @@
 	(gimple_catch_handler_ptr): New.
 	(gimple_stmt_iterator): Remove field 'stmt'.
 	Add field 'ptr'.  Update all users.
-	(gsi_remove): Move to gimple-iterator.c
+	(gsi_remove): Move to gimple-iterator.cc
 	* tree-cfg.c (pass_build_cfg): Re-enable PROP_gimple_leh.
 	* Makefile.in (builtins.o-warn, expr.o-warn, dse.o-warn,
 	ebitmap.o-warn, lower-subreg.o-warn, tree-chrec.o-warn):
@@ -6152,10 +6152,10 @@
 	(dump_gimple_bind): Likewise.
 	(dump_gimple_try): Likewise.
 	(dump_gimple_asm): Likewise.
-	(dump_symbols): Move from tree-pretty-print.c
+	(dump_symbols): Move from tree-pretty-print.cc
 	(dump_gimple_phi): New.
 	(dump_gimple_stmt): Call it..
-	(dump_bb_header): Move from tree-pretty-print.c
+	(dump_bb_header): Move from tree-pretty-print.cc
 	(dump_bb_end): Likewise.
 	(dump_phi_nodes): Likewise.
 	(gimple_dump_bb_buff): New.
@@ -6529,7 +6529,7 @@
 	(GTFILES): Remove tree-scalar-evolution.c,
 	tree-ssa-propagate.c, tree-vect-generic.c,
 	tree-ssa-structalias.h, tree-ssa-structalias.c,
-	ipa-reference.h, omp-low.c, tree-phinodes.c, ipa-reference.c
+	ipa-reference.h, omp-low.c, tree-phinodes.c, ipa-reference.cc
 	* tree-ssa-structalias.c: Disable.
 	* tree-cfg.c: Disable most functions.
 	* passes.c (finish_optimization_passes): Disable call to
@@ -7510,7 +7510,7 @@
 
 2007-07-12  Diego Novillo  <dnovillo@google.com>
 
-	* tree.c (create_artificial_label): Move from gimplify.c
+	* tree.c (create_artificial_label): Move from gimplify.cc
 	(get_name): Likewise.
 	* tree.h (create_artificial_label, get_name): Move
 	declarations earlier in the file.
@@ -7537,7 +7537,7 @@
 	Add comment before data structure definitons.
 	(set_gimple_body): Declare.
 	(gimple_body): Declare.
-	* gimplify.c (create_artificial_label): Move to tree.c
+	* gimplify.c (create_artificial_label): Move to tree.cc
 	(get_name): Likewise.
 	(gimplify_function_tree): Change return type to void.
 	Call set_gimple_body after gimplification and nullify
@@ -7844,8 +7844,8 @@
 
 	* tree-pretty-print.c (pred_symbol_code, do_gs_niy,
 	debug_gimple_stmt, debug_gimple_seq, print_gimple_stmt,
-	dump_gimple_stmt): Move to gimple-pretty-print.c
-	* diagnostic.h: Add comment for functions in gimple-pretty-print.c
+	dump_gimple_stmt): Move to gimple-pretty-print.cc
+	* diagnostic.h: Add comment for functions in gimple-pretty-print.cc
 	* gimple-pretty-print.c: New file.
 	* gimple-ir.c (gs_build_return): Fix spacing.
 	(gs_build_assign): Likewise.

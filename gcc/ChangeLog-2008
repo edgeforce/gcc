@@ -5445,7 +5445,7 @@
 	* ipa-reference.h (ipa_reference_local_vars_info_d,
 	ipa_reference_global_vars_info_d,
 	ipa_reference_local_vars_info_t, ipa_reference_global_vars_info_t,
-	ipa_reference_vars_info_t): Move to ipa-reference.c
+	ipa_reference_vars_info_t): Move to ipa-reference.cc
 	(ipa_reference_get_read_local, ipa_reference_get_written_local):
 	Remove.
 	(ipa_reference_get_read_global, ipa_reference_get_written_global,
@@ -6301,7 +6301,7 @@
 
 2008-09-09  Rainer Orth  <ro@TechFak.Uni-Bielefeld.DE>
 
-	* Makefile.in (mips-tfile.o-warn): Don't error out on mips-tfile.c
+	* Makefile.in (mips-tfile.o-warn): Don't error out on mips-tfile.cc
 	warnings.
 	* mips-tfile.c (copy_object): Cast alloca result to int *.
 	* mips-tdump.c (print_symbol): Cast xmalloc return values to
@@ -6654,7 +6654,7 @@
 2008-09-04  Vladimir Makarov  <vmakarov@redhat.com>
 
 	* ira-conflicts.c (process_regs_for_copy): Check insn to check
-	that the cost is already taken into account in ira-costs.c
+	that the cost is already taken into account in ira-costs.cc
 
 	* ira-int.h (ira_debug_copy, ira_debug_copies): New.
 
@@ -7966,9 +7966,9 @@
 	* config/avr/avr.c (avr_rtx_costs, avr_address_cost): Update.
 	* config/crx/crx.c (crx_address_cost): Update.
 	* config/xtensa/xtensa.c (xtensa_rtx_costs): Update.
-	* config/stormy16/stormy16.c
+	* config/stormy16/stormy16.cc
 	(xstormy16_address_cost, xstormy16_rtx_costs): Update.
-	* config/m68hc11/m68hc11.c
+	* config/m68hc11/m68hc11.cc
 	(m68hc11_address_cost, m68hc11_rtx_costs): Update.
 	* config/cris/cris.c (cris_rtx_costs, cris_address_cost): Update.
 	* config/iq2000/iq2000.c (iq2000_rtx_costs, iq2000_address_cost):
@@ -8002,7 +8002,7 @@
 	* config/v850/v850.c (TARGET_ADDRESS_COST): Update.
 	(v850_rtx_costs): Update.
 	* config/mmix/mmix.c (mmix_rtx_costs, mmix_rtx_costs): Update.
-	* config/bfin/bfin.c
+	* config/bfin/bfin.cc
 	(bfin_address_cost): Update.
 	(bfin_rtx_costs): Update.
 	* stmt.c (lshift_cheap_p): Update.
@@ -10072,7 +10072,7 @@
 	* tree-pass.h (pass_ipa_cp): Make ipa_opt_pass.
 	* ipa-cp.c (ipcp_update_cloned_node): New function.
 	(build_const_val): Handle functions correctly; bring type logic
-	into sync with tree-inline.c
+	into sync with tree-inline.cc
 	(ipcp_init_stage):  Take care of computing stuff needed by
 	indirect inlining; update clones.
 	(ipcp_generate_summary): Break out of ipcp_driver.
@@ -10104,7 +10104,7 @@
 	2008-05-05  Kenneth Zadeck  <zadeck@naturalbridge.com>
 		    Jan Hubicka  <jh@suse.cz>
 
-	* ipa-pure-const.c
+	* ipa-pure-const.cc
 	(init_state, finish_state, set_function_state, generate_summary):
 	New functions.
 	(scan_stmt): Renamed from scan_function.  Changed to keep state in
@@ -11461,7 +11461,7 @@
 	PR 8715
 	* c-common.c (warn_for_sign_compare): New. Handle separately the
 	case that 'constant' is zero.
-	* c-typeck.c (build_binary_op): Move code to c-common.c
+	* c-typeck.c (build_binary_op): Move code to c-common.cc
 
 2008-08-06  Kaveh R. Ghazi  <ghazi@caip.rutgers.edu>
 
@@ -13098,7 +13098,7 @@
 
 	* optc-gen.awk: Add support for TargetSave to allow a back end to
 	declare new fields that need to be saved when using function
-	specific options.  Include flags.h and target.h in the options.c
+	specific options.  Include flags.h and target.h in the options.cc
 	source.  Add support for Save to indicate which options can be set
 	for individual functions.  Generate cl_optimize_save,
 	cl_optimize_restore, cl_optimize_print, cl_target_option_save,
@@ -14269,7 +14269,7 @@
 	* tree-ssa-dom.c (record_equality): Ditto.
 	(cprop_operand): Ditto.
 	(lookup_avail_expr): Ditto.
-	* tree-ssa-threadedge.c
+	* tree-ssa-threadedge.cc
 	(record_temporary_equivalences_from_stmts_at_dest): Ditto.
 	(simplify_control_stmt_condition): Ditto.
 	* tree.c (tree_code_size): Ditto.
@@ -14322,7 +14322,7 @@
 	(run_scc_vn): Use it.
 	(get_max_value_id): New function.
 	(get_next_value_id): Ditto.
-	(expressions_equal_p): Moved from tree-vn.c
+	(expressions_equal_p): Moved from tree-vn.cc
 	(sort_vuses): Ditto.
 	(sort_vuses_heap): Ditto.
 	* tree-ssa-sccvn.h: Structures moved from tree-ssa-sccvn.c (noted
@@ -20953,7 +20953,7 @@
 2008-04-30  Rafael Espíndola  <espindola@google.com>
 
 	* builtins.c (fold_call_expr): Return realret.
-	* tree-ssa-threadedge.c
+	* tree-ssa-threadedge.cc
 	(record_temporary_equivalences_from_stmts_at_dest): Ignore calls to
 	__builtin_object_size.
 
@@ -23200,7 +23200,7 @@
 	of langhook.
 	(optimize_inline_calls, unsave_expr_now, tree_function_versioning):
 	Set id.transform_lang_insert_block to NULL.
-	(clone_body): Move to cp/optimize.c
+	(clone_body): Move to cp/optimize.cc
 	* tree-inline.h (struct copy_body_data): Change
 	transform_lang_insert_block to function pointer.
 	(copy_generic_body, copy_decl_no_change): Export.
@@ -23694,7 +23694,7 @@
 	(pending_stack_adjust, inhibit_defer_pop, saveregs_value,
 	apply_args_value, forced_labels, stack_pointer_delta):
 	Update accestors.
-	(struct varasm_status): Move here from varasm.c
+	(struct varasm_status): Move here from varasm.cc
 	(struct rtl_data): New. Move here some fields from struct function.
 	(return_label, naked_return_label, stack_slot_list, parm_birth_insn,
 	frame_offset, stack_check_probe_note, arg_pointer_save_area,
@@ -24576,7 +24576,7 @@
 	* tree-ssa-ifcombine.c: Update tree_pass descriptors.
 	* tree-eh.c: Update tree_pass descriptors.
 	* regmove.c: Update tree_pass descriptors.
-	* local-alloc.c
+	* local-alloc.cc
 	* function.c: Update tree_pass descriptors.
 	* tree-vectorizer.c: Update tree_pass descriptors.
 	* gcse.c: Update tree_pass descriptors.
@@ -26488,7 +26488,7 @@
 	PR other/32948
 	* c-decl.c (grokdeclarator): Remove unused local variables
 	`typedef_type' and `type_as_written'.
-	* bb-reorder.c
+	* bb-reorder.cc
 	(find_rarely_executed_basic_blocks_and_crossing_edges): Remove
 	unused local variable `has_hot_blocks'.
 	(fix_crossing_conditional_branches): Remove unused local variable
@@ -28127,7 +28127,7 @@
 	* df.h (df_changeable_flags.DF_RD_NO_TRIM): Deleted
 	(df_rd_bb_info.expanded_lr_out): Deleted
 	* loop_invariant.c (find_defs): Deleted DF_RD_NO_TRIM flag.
-	* loop_iv.c (iv_analysis_loop_init): Ditto.  * df-problems.c
+	* loop_iv.c (iv_analysis_loop_init): Ditto.  * df-problems.cc
 	(df_rd_free_bb_info, df_rd_alloc, df_rd_confluence_n,
 	df_rd_bb_local_compute, df_rd_transfer_function, df_rd_free):
 	Removed code to allocate, initialize or free expanded_lr_out.

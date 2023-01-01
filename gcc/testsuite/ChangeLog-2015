@@ -135,7 +135,7 @@
 	* g++.dg/diagnostic/bad-binary-ops.C: New test case.
 	* gcc.dg/bad-binary-ops.c: New test case.
 	gcc.dg/plugin/diagnostic_plugin_show_trees.c (get_range_for_expr):
-	Remove material copied from gcc-rich-location.c
+	Remove material copied from gcc-rich-location.cc
 	(gcc_rich_location::add_expr): Likewise.
 
 2015-12-21  Claudiu Zissulescu  <claziss@synopsys.com>
@@ -888,7 +888,7 @@
 2015-12-08  David Malcolm  <dmalcolm@redhat.com>
 
 	PR c/68757
-	* gcc.dg/plugin/diagnostic-test-expressions-1.c
+	* gcc.dg/plugin/diagnostic-test-expressions-1.cc
 	(test_builtin_choose_expr): New test function.
 	(test_builtin_call_with_static_chain): Likewise.
 	(test_builtin_complex): Likewise.
@@ -1001,9 +1001,9 @@
 2015-12-07  David Malcolm  <dmalcolm@redhat.com>
 
 	* gcc.dg/diagnostic-ranges-1.c: New test file.
-	* gcc.dg/plugin/diagnostic-test-show-locus-bw.c
+	* gcc.dg/plugin/diagnostic-test-show-locus-bw.cc
 	(test_percent_q_plus_d): New test function.
-	* gcc.dg/plugin/diagnostic_plugin_test_show_locus.c
+	* gcc.dg/plugin/diagnostic_plugin_test_show_locus.cc
 	(test_show_locus): Rewrite test code using
 	rich_location::set_range.  Add code to unit-test the "%q+D"
 	format code.
@@ -2401,15 +2401,15 @@
 
 	PR 62314
 	* gcc.dg/fixits.c: New file.
-	* gcc.dg/plugin/diagnostic-test-show-locus-ascii-bw.c
+	* gcc.dg/plugin/diagnostic-test-show-locus-ascii-bw.cc
 	(test_fixit_insert): New.
 	(test_fixit_remove): New.
 	(test_fixit_replace): New.
-	* gcc.dg/plugin/diagnostic-test-show-locus-ascii-color.c
+	* gcc.dg/plugin/diagnostic-test-show-locus-ascii-color.cc
 	(test_fixit_insert): New.
 	(test_fixit_remove): New.
 	(test_fixit_replace): New.
-	* gcc.dg/plugin/diagnostic_plugin_test_show_locus.c
+	* gcc.dg/plugin/diagnostic_plugin_test_show_locus.cc
 	(test_show_locus): Add tests of rendering fixit hints.
 
 2015-11-20  Jakub Jelinek  <jakub@redhat.com>
@@ -2650,11 +2650,11 @@
 2015-11-16  Christian Bruel  <christian.bruel@st.com>
 
 	PR target/65837
-	* gcc.target/arm/lto/pr65837_0.c
-	* gcc.target/arm/attr-neon2.c
-	* gcc.target/arm/attr-neon.c
-	* gcc.target/arm/attr-neon-builtin-fail.c
-	* gcc.target/arm/attr-crypto.c
+	* gcc.target/arm/lto/pr65837_0.cc
+	* gcc.target/arm/attr-neon2.cc
+	* gcc.target/arm/attr-neon.cc
+	* gcc.target/arm/attr-neon-builtin-fail.cc
+	* gcc.target/arm/attr-crypto.cc
 
 2015-11-16  Richard Biener  <rguenther@suse.de>
 
@@ -7017,7 +7017,7 @@
 	* gcc.target/powerpc/extswsli-2.c: Likewise.
 	* gcc.target/powerpc/extswsli-3.c: Likewise.
 
-	* gcc.target/powerpc/fusion.c (fusion_vector): Move to fusion2.c
+	* gcc.target/powerpc/fusion.c (fusion_vector): Move to fusion2.cc
 	and allow the test on PowerPC LE.
 	* gcc.target/powerpc/fusion2.c (fusion_vector): Likewise.
 	* gcc.target/powerpc/fusion3.c: New file, test power9 fusion.
@@ -8268,7 +8268,7 @@
 
 2015-10-16  H.J. Lu  <hongjiu.lu@intel.com>
 
-	* gcc.target/i386/iamcu/test_basic_returning.c
+	* gcc.target/i386/iamcu/test_basic_returning.cc
 	(def_test_returning_type): Use union to check float return bits.
 
 2015-10-16  H.J. Lu  <hongjiu.lu@intel.com>
@@ -9343,7 +9343,7 @@
 	check_effective_target_stack_save_isr): New effective target checks.
 	* gcc.target/sh/pr51244-16.c: Merge into pr51244-15.c.
 	* gcc.target/sh/pr51244-20-sh2a.c: Merge into pr51244-20.c.
-	* gcc.target/sh/pr51244-3.c: Merge into pr51244-2.c
+	* gcc.target/sh/pr51244-3.c: Merge into pr51244-2.cc
 	* gcc.target/sh/pr54089-5.c: Merge into pr54089-4.c.
 	* gcc.target/sh/20080410-1.c: Use new effective target checks.
 	* gcc.target/sh/attr-isr-nosave_low_regs.c: Likewise.
@@ -10665,7 +10665,7 @@
 
 	PR target/67143
 	* gcc.c-torture/compile/pr67143.c: New
-	* gcc.target/aarch64/atomic-op-imm.c
+	* gcc.target/aarch64/atomic-op-imm.cc
 	(atomic_fetch_add_negative_RELAXED): New.
 	(atomic_fetch_sub_negative_ACQUIRE): New.
 
@@ -12232,11 +12232,11 @@
 2015-07-08  David Malcolm  <dmalcolm@redhat.com>
 
 	PR jit/66783
-	* jit.dg/test-error-gcc_jit_context_new_field-opaque-struct.c
+	* jit.dg/test-error-gcc_jit_context_new_field-opaque-struct.cc
 	(verify_code): Update expected error message.
-	* jit.dg/test-error-gcc_jit_context_new_global-opaque-struct.c
+	* jit.dg/test-error-gcc_jit_context_new_global-opaque-struct.cc
 	(verify_code): Likewise.
-	* jit.dg/test-error-gcc_jit_function_new_local-opaque-struct.c
+	* jit.dg/test-error-gcc_jit_function_new_local-opaque-struct.cc
 	(verify_code): Likewise.
 
 2015-07-08  Richard Biener  <rguenther@suse.de>
@@ -13201,7 +13201,7 @@
 2015-06-16  David Malcolm  <dmalcolm@redhat.com>
 
 	PR jit/66539
-	* jit.dg/all-non-failing-tests.h: Add test-debug-strings.c
+	* jit.dg/all-non-failing-tests.h: Add test-debug-strings.cc
 	to "testcases" array.
 
 2015-06-16  David Malcolm  <dmalcolm@redhat.com>
@@ -14746,7 +14746,7 @@
 
 2015-05-12  Jan Hubicka  <hubicka@ucw.cz>
 
-	PR target/pr66047.c
+	PR target/pr66047.cc
 	* gcc.target/i386/pr66047.c: New testcase.
 
 2015-05-12  Jan Hubicka  <hubicka@ucw.cz>
@@ -18445,7 +18445,7 @@
 2015-02-04  Thomas Preud'homme  <thomas.preudhomme@arm.com>
 
 	PR middle-end/62103
-	* gcc.c-torture/execute/bitfld-7.c: New test adapted from bitfld-6.c
+	* gcc.c-torture/execute/bitfld-7.c: New test adapted from bitfld-6.cc
 	to use 24 bits for bitfield b.
 
 2015-02-04  Thomas Preud'homme  <thomas.preudhomme@arm.com>

@@ -2327,7 +2327,7 @@
 	    Martin Jambor  <mjambor@suse.cz>
 
 	PR ipa/103449
-	* ipa-param-manipulation.c
+	* ipa-param-manipulation.cc
 	(ipa_param_body_adjustments::prepare_debug_expressions): Be
 	careful about hash_map reallocating itself.  Simpify a return
 	which always returns true.
@@ -2643,7 +2643,7 @@
 
 2021-11-30  Kewen Lin  <linkw@linux.ibm.com>
 
-	* config/rs6000/rs6000.c
+	* config/rs6000/rs6000.cc
 	(rs6000_cost_data::update_target_cost_per_stmt): Adjust the way to
 	compute extra penalized cost.  Remove useless parameter.
 	(rs6000_cost_data::rs6000_add_stmt_cost): Adjust the call to function
@@ -2733,7 +2733,7 @@
 	* fixed-value.c (fixed_arithmetic): Likewise.
 	* gimple-fold.c (gimple_fold_builtin_fputs): Likewise.
 	* gimple-ssa-strength-reduction.c (stmt_cost): Likewise.
-	* graphite-isl-ast-to-gimple.c
+	* graphite-isl-ast-to-gimple.cc
 	(gcc_expression_from_isl_expr_op): Likewise.
 	(gcc_expression_from_isl_expression): Likewise.
 	* ipa-fnsummary.c (will_be_nonconstant_expr_predicate):
@@ -2911,7 +2911,7 @@
 	one to the new one.
 	* ipa-param-manipulation.h (ipa_param_adjustments): New member
 	function get_updated_index_or_split.
-	* ipa-param-manipulation.c
+	* ipa-param-manipulation.cc
 	(ipa_param_adjustments::get_updated_index_or_split): New function.
 	* ipa-prop.c (adjust_agg_replacement_values): Reimplement, add
 	capability to identify scalarized parameters and perform substitution
@@ -4304,7 +4304,7 @@
 
 	PR lto/103211
 	* dbgcnt.def (ipa_attr): New counters.
-	* ipa-pure-const.c: Include dbgcnt.c
+	* ipa-pure-const.c: Include dbgcnt.cc
 	(ipa_make_function_const): Use debug counter.
 	(ipa_make_function_pure): Likewise.
 	(propagate_pure_const): Fix bug in my previous change.
@@ -4346,7 +4346,7 @@
 
 	* ipa-modref-tree.h
 	(struct modref_access_node): Move longer member functions to
-	ipa-modref-tree.c
+	ipa-modref-tree.cc
 	(modref_ref_node::try_merge_with): Turn into modreef_acces_node member
 	function.
 	* ipa-modref-tree.c (modref_access_node::contains): Move here
@@ -4379,7 +4379,7 @@
 2021-11-13  Jan Hubicka  <jh@suse.cz>
 
 	* ipa-fnsummary.c (compute_fn_summary): Use type_attribut_allowed_p
-	* ipa-param-manipulation.c
+	* ipa-param-manipulation.cc
 	(ipa_param_adjustments::type_attribute_allowed_p):
 	New member function.
 	(drop_type_attribute_if_params_changed_p): New function.
@@ -4515,7 +4515,7 @@
 
 2021-11-12  Richard Sandiford  <richard.sandiford@arm.com>
 
-	* config/aarch64/aarch64.c
+	* config/aarch64/aarch64.cc
 	(aarch64_vec_op_count::rename_cycles_per_iter): New function.
 	(aarch64_vec_op_count::min_nonpred_cycles_per_iter): Likewise.
 	(aarch64_vec_op_count::min_pred_cycles_per_iter): Likewise.
@@ -4691,7 +4691,7 @@
 
 2021-11-11  Aldy Hernandez  <aldyh@redhat.com>
 
-	* tree-ssa-threadbackward.c
+	* tree-ssa-threadbackward.cc
 	(back_threader_profitability::profitable_path_p): Remove loop
 	crossing restriction.
 
@@ -5373,7 +5373,7 @@
 
 2021-11-10  Andre Vieira  <andre.simoesdiasvieira@arm.com>
 
-	* config/aarch64/aarch64-builtins.c
+	* config/aarch64/aarch64-builtins.cc
 	(aarch64_general_gimple_fold_builtin): Mark argument as unused.
 
 2021-11-10  Martin Liska  <mliska@suse.cz>
@@ -5520,7 +5520,7 @@
 
 2021-11-10  Andre Vieira  <andre.simoesdiasvieira@arm.com>
 
-	* config/aarch64/aarch64-builtins.c
+	* config/aarch64/aarch64-builtins.cc
 	(aarch64_general_gimple_fold_builtin): Change pointer alignment and
 	alias.
 
@@ -5561,7 +5561,7 @@
 
 2021-11-10  Aldy Hernandez  <aldyh@redhat.com>
 
-	* tree-ssa-threadbackward.c
+	* tree-ssa-threadbackward.cc
 	(back_threader::maybe_register_path_dump): Abstract path dumping...
 	(dump_path): ...here.
 	(back_threader::resolve_phi): Call dump_path.
@@ -5617,7 +5617,7 @@
 
 2021-11-09  Aldy Hernandez  <aldyh@redhat.com>
 
-	* tree-ssa-threadbackward.c
+	* tree-ssa-threadbackward.cc
 	(back_threader::maybe_register_path_dump): New.
 	(back_threader::maybe_register_path): Call maybe_register_path_dump.
 
@@ -5632,7 +5632,7 @@
 	* tree.c (build_debug_expr_decl): New function.
 	* cfgexpand.c (avoid_deep_ter_for_debug): Use build_debug_expr_decl
 	instead of building a DEBUG_EXPR_DECL.
-	* ipa-param-manipulation.c
+	* ipa-param-manipulation.cc
 	(ipa_param_body_adjustments::prepare_debug_expressions): Likewise.
 	* omp-simd-clone.c (ipa_simd_modify_stmt_ops): Likewise.
 	* tree-ssa-ccp.c (optimize_atomic_bit_test_and): Likewise.
@@ -5937,7 +5937,7 @@
 	PR ipa/103107
 	* tree-inline.c (remap_gimple_stmt): Unshare the expression without
 	location before invoking remap_with_debug_expressions on it.
-	* ipa-param-manipulation.c
+	* ipa-param-manipulation.cc
 	(ipa_param_body_adjustments::prepare_debug_expressions): Likewise.
 
 2021-11-08  David Edelsohn  <dje.gcc@gmail.com>
@@ -6084,7 +6084,7 @@
 2021-11-07  Aldy Hernandez  <aldyh@redhat.com>
 
 	* tree-pass.h (make_pass_vrp_threader): Remove.
-	* tree-ssa-threadbackward.c
+	* tree-ssa-threadbackward.cc
 	(back_threader_profitability::profitable_path_p): Remove
 	ASSERT_EXPR references.
 	* tree-ssa-threadedge.c (jt_state::register_equivs_stmt): Same.
@@ -6333,7 +6333,7 @@
 
 2021-11-04  Tamar Christina  <tamar.christina@arm.com>
 
-	* config/aarch64/aarch64-builtins.c
+	* config/aarch64/aarch64-builtins.cc
 	(aarch64_general_gimple_fold_builtin): Add ashl, sshl, ushl, ashr,
 	ashr_simd, lshr, lshr_simd.
 	* config/aarch64/aarch64-simd-builtins.def (lshr): Use USHIFTIMM.
@@ -7936,7 +7936,7 @@
 	(DIAGNOSTICS_ESCAPE_FORMAT_BYTES): Likewise.
 	* diagnostic-format-json.cc (json_end_diagnostic): Add
 	"escape-source" attribute.
-	* diagnostic-show-locus.c
+	* diagnostic-show-locus.cc
 	(exploc_with_display_col::exploc_with_display_col): Replace
 	"tabstop" param with a cpp_char_column_policy and add an "aspect"
 	param.  Use these to compute m_display_col accordingly.
@@ -8219,7 +8219,7 @@
 	IX86_BUILTIN_FLOORPH256, IX86_BUILTIN_CEILPH256,
 	IX86_BUILTIN_TRUNCPH256, IX86_BUILTIN_FLOORPH512,
 	IX86_BUILTIN_CEILPH512, IX86_BUILTIN_TRUNCPH512): New builtin.
-	* config/i386/i386-builtins.c
+	* config/i386/i386-builtins.cc
 	(ix86_builtin_vectorized_function): Enable vectorization for
 	HFmode FLOOR/CEIL/TRUNC operation.
 	* config/i386/i386-expand.c (ix86_expand_args_builtin): Handle
@@ -8280,7 +8280,7 @@
 
 2021-10-28  Aldy Hernandez  <aldyh@redhat.com>
 
-	* tree-ssa-threadbackward.c
+	* tree-ssa-threadbackward.cc
 	(back_threader::find_taken_edge_switch): Use find_case_label_range
 	instead of find_taken_edge.
 
@@ -8999,7 +8999,7 @@
 
 2021-10-21  Aldy Hernandez  <aldyh@redhat.com>
 
-	* tree-ssa-threadbackward.c
+	* tree-ssa-threadbackward.cc
 	(back_threader::maybe_register_path): Remove circular paths check.
 
 2021-10-21  Richard Biener  <rguenther@suse.de>
@@ -9186,7 +9186,7 @@
 
 2021-10-20  Andre Simoes Dias Vieira  <andre.simoesdiasvieira@arm.com>
 
-	* config/aarch64/aarch64-builtins.c
+	* config/aarch64/aarch64-builtins.cc
 	(aarch64_general_gimple_fold_builtin):
 	lower vld1 and vst1 variants of the neon builtins
 	* config/aarch64/aarch64-protos.h:
@@ -9225,7 +9225,7 @@
 	PR tree-optimization/102814
 	* doc/invoke.texi: Document --param=max-fsm-thread-length.
 	* params.opt: Add --param=max-fsm-thread-length.
-	* tree-ssa-threadbackward.c
+	* tree-ssa-threadbackward.cc
 	(back_threader_profitability::profitable_path_p): Fail on paths
 	longer than max-fsm-thread-length.
 
@@ -10934,7 +10934,7 @@
 	(pass_jump_after_combine::gate): Same.
 	* doc/invoke.texi (-fthread-jumps): Enable for -O1.
 	* opts.c (default_options_table): Enable -fthread-jumps at -O1.
-	* tree-ssa-threadupdate.c
+	* tree-ssa-threadupdate.cc
 	(fwd_jt_path_registry::remove_jump_threads_including): Bail unless
 	flag_thread_jumps.
 
@@ -11019,13 +11019,13 @@
 	(pass_early_thread_jumps::gate): Same.
 	* tree-ssa-threadedge.c (jump_threader::thread_outgoing_edges):
 	Return if !flag_thread_jumps.
-	* tree-ssa-threadupdate.c
+	* tree-ssa-threadupdate.cc
 	(jt_path_registry::register_jump_thread): Assert that
 	flag_thread_jumps is true.
 
 2021-09-28  liuhongt  <hongtao.liu@intel.com>
 
-	* simplify-rtx.c
+	* simplify-rtx.cc
 	(simplify_context::simplify_binary_operation_1): Relax
 	condition of simplifying (vec_concat:M (vec_select op0
 	index0)(vec_select op1 index1)) to allow different modes
@@ -11052,10 +11052,10 @@
 	(path_range_query::precompute_phi_relations): Rename to...
 	(path_range_query::compute_phi_relations): ...this.
 	* gimple-range-path.h: Rename precompute* to compute*.
-	* tree-ssa-threadbackward.c
+	* tree-ssa-threadbackward.cc
 	(back_threader::find_taken_edge_switch): Same.
 	(back_threader::find_taken_edge_cond): Same.
-	* tree-ssa-threadedge.c
+	* tree-ssa-threadedge.cc
 	(hybrid_jt_simplifier::compute_ranges_from_state): Same.
 	(hybrid_jt_state::register_equivs_stmt): Inline...
 	* tree-ssa-threadedge.h: ...here.
@@ -11953,14 +11953,14 @@
 
 2021-09-19  Aldy Hernandez  <aldyh@redhat.com>
 
-	* tree-ssa-threadbackward.c
+	* tree-ssa-threadbackward.cc
 	(back_threader_registry::register_path): Use push_edge.
-	* tree-ssa-threadedge.c
+	* tree-ssa-threadedge.cc
 	(jump_threader::thread_around_empty_blocks): Same.
 	(jump_threader::thread_through_normal_block): Same.
 	(jump_threader::thread_across_edge): Same.  Also, use auto_bitmap.
 	Tidy up code.
-	* tree-ssa-threadupdate.c
+	* tree-ssa-threadupdate.cc
 	(jt_path_registry::allocate_thread_edge): Remove.
 	(jt_path_registry::push_edge): New.
 	(dump_jump_thread_path): Make static.
@@ -13127,7 +13127,7 @@
 	(_mm256_maskz_cvtepu16_ph): Likewise.
 	* config/i386/i386-builtin-types.def: Add corresponding builtin types.
 	* config/i386/i386-builtin.def: Add corresponding new builtins.
-	* config/i386/i386-expand.c
+	* config/i386/i386-expand.cc
 	(ix86_expand_args_builtin): Handle new builtin types.
 	(ix86_expand_round_builtin): Ditto.
 	* config/i386/i386-modes.def: Declare V2HF and V6HF.
@@ -13226,7 +13226,7 @@
 	(_mm256_maskz_cvtph_epu16): Likewise.
 	* config/i386/i386-builtin-types.def: Add new builtin types.
 	* config/i386/i386-builtin.def: Add new builtins.
-	* config/i386/i386-expand.c
+	* config/i386/i386-expand.cc
 	(ix86_expand_args_builtin): Handle new builtin types.
 	(ix86_expand_round_builtin): Ditto.
 	* config/i386/sse.md (sseintconvert): New.
@@ -13249,7 +13249,7 @@
 	(_mm_maskz_move_sh): Likewise.
 	* config/i386/i386-builtin-types.def: Add corresponding builtin types.
 	* config/i386/i386-builtin.def: Add corresponding new builtins.
-	* config/i386/i386-expand.c
+	* config/i386/i386-expand.cc
 	(ix86_expand_special_args_builtin): Handle new builtin types.
 	(ix86_expand_vector_init_one_nonzero): Adjust for FP16 target.
 	* config/i386/sse.md (VI2F): New mode iterator.
@@ -13296,7 +13296,7 @@
 2021-09-15  liuhongt  <hongtao.liu@intel.com>
 
 	PR target/102327
-	* config/i386/i386-expand.c
+	* config/i386/i386-expand.cc
 	(ix86_expand_vector_init_interleave): Use puncklwd to pack 2
 	HFmodes.
 	(ix86_expand_vector_set): Use blendw instead of pinsrw.
@@ -13456,7 +13456,7 @@
 	(_mm_maskz_getmant_ph): Likewise.
 	* config/i386/i386-builtin-types.def: Add corresponding builtin types.
 	* config/i386/i386-builtin.def: Add corresponding new builtins.
-	* config/i386/i386-expand.c
+	* config/i386/i386-expand.cc
 	(ix86_expand_args_builtin): Handle new builtin types.
 	(ix86_expand_round_builtin): Ditto.
 	* config/i386/sse.md (vecmemsuffix): Add HF vector modes.
@@ -13512,7 +13512,7 @@
 	(_mm256_maskz_roundscale_ph): Likewise.
 	* config/i386/i386-builtin-types.def: Add corresponding builtin types.
 	* config/i386/i386-builtin.def: Add corresponding new builtins.
-	* config/i386/i386-expand.c
+	* config/i386/i386-expand.cc
 	(ix86_expand_args_builtin): Handle new builtin types.
 	(ix86_expand_round_builtin): Ditto.
 	* config/i386/sse.md (<mask_codefor>reducep<mode><mask_name>):
@@ -13605,7 +13605,7 @@
 	(_mm256_maskz_rsqrt_ph): Likewise.
 	* config/i386/i386-builtin-types.def: Add corresponding builtin types.
 	* config/i386/i386-builtin.def: Add corresponding new builtins.
-	* config/i386/i386-expand.c
+	* config/i386/i386-expand.cc
 	(ix86_expand_args_builtin): Handle new builtins.
 	(ix86_expand_round_builtin): Ditto.
 	* config/i386/sse.md (VF_AVX512FP16VL): New.
@@ -13688,11 +13688,11 @@
 
 2021-09-13  Aldy Hernandez  <aldyh@redhat.com>
 
-	* tree-ssa-threadbackward.c
+	* tree-ssa-threadbackward.cc
 	(back_threader_profitability::profitable_path_p): Remove FSM
 	references.
 	(back_threader_registry::register_path): Same.
-	* tree-ssa-threadedge.c
+	* tree-ssa-threadedge.cc
 	(jump_threader::simplify_control_stmt_condition): Same.
 	* tree-ssa-threadupdate.c (jt_path_registry::jt_path_registry):
 	Add backedge_threads argument.
@@ -13857,7 +13857,7 @@
 	* tree-ssa-threadedge.c (jump_threader::jump_threader): Use
 	fwd_jt_path_registry.
 	* tree-ssa-threadedge.h (class jump_threader): Same..
-	* tree-ssa-threadupdate.c
+	* tree-ssa-threadupdate.cc
 	(jump_thread_path_registry::jump_thread_path_registry): Rename...
 	(jt_path_registry::jt_path_registry): ...to this.
 	(jump_thread_path_registry::~jump_thread_path_registry): Rename...
@@ -13957,7 +13957,7 @@
 	* gimple-range-path.cc (path_range_query::internal_range_of_expr):
 	Intersect with global range.
 	* tree-ssa-loop.c (tree_ssa_loop_done): Set PROP_loop_opts_done.
-	* tree-ssa-threadbackward.c
+	* tree-ssa-threadbackward.cc
 	(back_threader_profitability::profitable_path_p): Disable
 	threading through latches until after loop optimizations have run.
 
@@ -14039,7 +14039,7 @@
 	(_mm256_mask_cmp_ph_mask): Likewise.
 	* config/i386/i386-builtin-types.def: Add corresponding builtin types.
 	* config/i386/i386-builtin.def: Add corresponding new builtins.
-	* config/i386/i386-expand.c
+	* config/i386/i386-expand.cc
 	(ix86_expand_args_builtin): Handle new builtin types.
 	(ix86_expand_round_builtin): Ditto.
 	* config/i386/i386.md (ssevecmode): Add HF mode.
@@ -14096,7 +14096,7 @@
 	(_mm256_maskz_min_ph): Likewise.
 	* config/i386/i386-builtin-types.def: Add corresponding builtin types.
 	* config/i386/i386-builtin.def: Add corresponding new builtins.
-	* config/i386/i386-expand.c
+	* config/i386/i386-expand.cc
 	(ix86_expand_args_builtin): Handle new builtin types.
 	* config/i386/sse.md
 	(<code><mode>3<mask_name><round_saeonly_name>): Adjust to
@@ -14137,7 +14137,7 @@
 	(_mm_maskz_div_round_sh): Likewise.
 	* config/i386/i386-builtin-types.def: Add corresponding builtin types.
 	* config/i386/i386-builtin.def: Add corresponding new builtins.
-	* config/i386/i386-expand.c
+	* config/i386/i386-expand.cc
 	(ix86_expand_round_builtin): Handle new builtins.
 	* config/i386/sse.md (VF_128): Change description.
 	(<sse>_vm<plusminus_insn><mode>3<mask_scalar_name><round_scalar_name>):
@@ -14147,9 +14147,9 @@
 
 2021-09-10  H.J. Lu  <hjl.tools@gmail.com>
 
-	* config/i386/i386-expand.c
+	* config/i386/i386-expand.cc
 	(ix86_avx256_split_vector_move_misalign): Handle V16HF mode.
-	* config/i386/i386.c
+	* config/i386/i386.cc
 	(ix86_preferred_simd_mode): Handle HF mode.
 	* config/i386/sse.md (V_256H): New mode iterator.
 	(avx_vextractf128<mode>): Use it.
@@ -14261,7 +14261,7 @@
 	* config/i386/i386-builtin-types.def (V16HF, V8HF, V32HF):
 	Add new builtin types.
 	* config/i386/i386-builtin.def: Add corresponding builtins.
-	* config/i386/i386-expand.c
+	* config/i386/i386-expand.cc
 	(ix86_expand_args_builtin): Handle new builtin types.
 	(ix86_expand_round_builtin): Likewise.
 	* config/i386/immintrin.h: Include avx512fp16vlintrin.h
@@ -14459,7 +14459,7 @@
 
 	* common/config/i386/cpuinfo.h (get_available_features):
 	Detect FEATURE_AVX512FP16.
-	* common/config/i386/i386-common.c
+	* common/config/i386/i386-common.cc
 	(OPTION_MASK_ISA_AVX512FP16_SET,
 	OPTION_MASK_ISA_AVX512FP16_UNSET,
 	OPTION_MASK_ISA2_AVX512FP16_SET,
@@ -18385,7 +18385,7 @@
 	(verify_loop_structure): Likewise.
 	* cfgloopmanip.c (create_preheaders): Likewise.
 	(force_single_succ_latches): Likewise.
-	* config/aarch64/falkor-tag-collision-avoidance.c
+	* config/aarch64/falkor-tag-collision-avoidance.cc
 	(execute_tag_collision_avoidance): Likewise.
 	* config/mn10300/mn10300.c (mn10300_scan_for_setlb_lcc): Likewise.
 	* config/s390/s390.c (s390_adjust_loops): Likewise.
@@ -18439,7 +18439,7 @@
 	(pass_scev_cprop::execute): Likewise.
 	* tree-ssa-propagate.c (clean_up_loop_closed_phi): Likewise.
 	* tree-ssa-sccvn.c (do_rpo_vn): Likewise.
-	* tree-ssa-threadupdate.c
+	* tree-ssa-threadupdate.cc
 	(jump_thread_path_registry::thread_through_all_blocks): Likewise.
 	* tree-vectorizer.c (vectorize_loops): Likewise.
 	* tree-vrp.c (vrp_asserts::find_assert_locations): Likewise.
@@ -19255,12 +19255,12 @@
 
 2021-07-22  liuhongt  <hongtao.liu@intel.com>
 
-	* config/i386/i386-expand.c
+	* config/i386/i386-expand.cc
 	(ix86_broadcast_from_integer_constant): Rename to ..
 	(ix86_broadcast_from_constant): .. this, and extend it to
 	handle float mode.
 	(ix86_expand_vector_move): Extend to float mode.
-	* config/i386/i386-features.c
+	* config/i386/i386-features.cc
 	(replace_constant_pool_with_broadcast): Remove.
 	(remove_partial_avx_dependency_gate): Ditto.
 	(constant_pool_broadcast): Ditto.
@@ -19327,7 +19327,7 @@
 
 2021-07-21  Bill Schmidt  <wschmidt@linux.ibm.com>
 
-	* config/rs6000/rs6000-gen-builtins.c
+	* config/rs6000/rs6000-gen-builtins.cc
 	(write_autogenerated_header): New function.
 	(write_decls): Likewise.
 	(write_extern_fntype): New callback function.
@@ -20326,7 +20326,7 @@
 	* config/i386/driver-i386.c (host_detect_local_cpu): Check
 	"arch [32|64]" and "tune [32|64]" for 32-bit and 64-bit codegen.
 	Enable UINTR only for 64-bit codegen.
-	* config/i386/i386-options.c
+	* config/i386/i386-options.cc
 	(ix86_option_override_internal::DEF_PTA): Skip PTA_UINTR if not
 	in 64-bit mode.
 	* config/i386/i386.h (ARCH_ARG): New.
@@ -21456,7 +21456,7 @@
 	* config/i386/i386.md (*nabs<dwi>2_doubleword):
 	New insn_and_split pattern.
 	(*nabs<dwi>2_1): Ditto.
-	* config/i386/i386-features.c
+	* config/i386/i386-features.cc
 	(general_scalar_chain::compute_convert_gain):
 	Handle (NEG (ABS (...))) RTX.  Rewrite src code
 	scanner as switch statement.
@@ -21497,7 +21497,7 @@
 
 2021-06-30  Hafiz Abid Qadeer  <abidh@codesourcery.com>
 
-	* common/config/gcn/gcn-common.c
+	* common/config/gcn/gcn-common.cc
 	(gcn_option_optimization_table): Change OPT_fomit_frame_pointer to -O3.
 	* config/gcn/gcn.c (gcn_expand_prologue): Prefer the frame pointer
 	when emitting CFI.
@@ -21820,7 +21820,7 @@
 	PR ipa/93385
 	* ipa-param-manipulation.h (class ipa_param_body_adjustments): New
 	members m_dead_stmts and m_dead_ssas.
-	* ipa-param-manipulation.c
+	* ipa-param-manipulation.cc
 	(ipa_param_body_adjustments::mark_dead_statements): New function.
 	(ipa_param_body_adjustments::common_initialization): Call it on
 	all removed but not split parameters.
@@ -22676,7 +22676,7 @@
 2021-06-22  liuhongt  <hongtao.liu@intel.com>
 
 	PR target/100310
-	* config/i386/i386-expand.c
+	* config/i386/i386-expand.cc
 	(ix86_expand_special_args_builtin): Keep constm1_operand only
 	if it satisfies insn's operand predicate.
 
@@ -23225,7 +23225,7 @@
 
 2021-06-15  Richard Biener  <rguenther@suse.de>
 
-	* tree-ssa-threadupdate.c
+	* tree-ssa-threadupdate.cc
 	(jump_thread_path_registry::mark_threaded_blocks): Assert we
 	have marked irreducible regions.
 
@@ -24140,7 +24140,7 @@
 	PR target/82735
 	* config/i386/i386-expand.c (ix86_expand_builtin): Remove
 	assignment of cfun->machine->has_explicit_vzeroupper.
-	* config/i386/i386-features.c
+	* config/i386/i386-features.cc
 	(ix86_add_reg_usage_to_vzerouppers): Delete.
 	(ix86_add_reg_usage_to_vzeroupper): Ditto.
 	(rest_of_handle_insert_vzeroupper): Remove
@@ -24813,7 +24813,7 @@
 2021-05-28  Bernd Edlinger  <bernd.edlinger@hotmail.de>
 
 	* Makefile.in (generated_files): Add gimple-match.c and
-	generic-match.c
+	generic-match.cc
 
 2021-05-28  Joern Rennecke  <joern.rennecke@embecosm.com>
 
@@ -24970,7 +24970,7 @@
 	* gimple-fold.c (size_must_be_zero_p): Same.
 	* gimple-match-head.c: Include gimple-range.h.
 	* gimple-pretty-print.c (dump_ssaname_info): Convert to get_range_query.
-	* gimple-ssa-warn-restrict.c
+	* gimple-ssa-warn-restrict.cc
 	(builtin_memref::extend_offset_range): Same.
 	* graphite-sese-to-poly.c (add_param_constraints): Same.
 	* internal-fn.c (get_min_precision): Same.
@@ -25931,7 +25931,7 @@
 
 2021-05-19  Geng Qi  <gengqi@linux.alibaba.com>
 
-	* common/config/riscv/riscv-common.c
+	* common/config/riscv/riscv-common.cc
 	(riscv_subset_list::parsing_subset_version): Properly parse the letter
 	'p' in '-march'.
 	(riscv_subset_list::parse_std_ext,
@@ -26795,7 +26795,7 @@
 2021-05-11  Richard Biener  <rguenther@suse.de>
 
 	PR ipa/100513
-	* ipa-param-manipulation.c
+	* ipa-param-manipulation.cc
 	(ipa_param_body_adjustments::modify_call_stmt): Avoid
 	altering SSA_NAME_DEF_STMT by adjusting the calls LHS
 	via gimple_call_lhs_ptr.
@@ -27792,7 +27792,7 @@
 	(rs6000_xcoff_asm_globalize_decl_name): Don't strip storage
 	mapping class.
 	(rs6000_xcoff_asm_output_aligned_decl_common): Align is unsigned int.
-	If align is 0 from TLS class, use the same rules as varasm.c
+	If align is 0 from TLS class, use the same rules as varasm.cc
 	If not common, switch to BSS section manually.
 	If common, emit appropriate comm or lcomm directive.
 	(rs6000_xcoff_encode_section_info): Add logic to append all
@@ -27915,7 +27915,7 @@
 2021-04-30  Michael Meissner  <meissner@linux.ibm.com>
 
 	PR bootstrap/100327
-	* config/rs6000/rs6000.c
+	* config/rs6000/rs6000.cc
 	(TARGET_LIBGCC_FLOATING_MODE_SUPPORTED_P): Define.
 	(rs6000_libgcc_floating_mode_supported_p): New target hook.
 
@@ -29710,7 +29710,7 @@
 2021-04-10  Jakub Jelinek  <jakub@redhat.com>
 
 	PR middle-end/99989
-	* gimple-ssa-warn-alloca.c
+	* gimple-ssa-warn-alloca.cc
 	(alloca_type_and_limit::alloca_type_and_limit): Initialize limit to
 	0 with integer precision unconditionally.
 
@@ -29835,7 +29835,7 @@
 2021-04-07  Bin Cheng  <bin.cheng@linux.alibaba.com>
 
 	PR tree-optimization/98736
-	* tree-loop-distribution.c
+	* tree-loop-distribution.cc
 	* (loop_distribution::bb_top_order_init):
 	Compute RPO with programing order preserved by calling function
 	rev_post_order_and_mark_dfs_back_seme.
@@ -30076,7 +30076,7 @@
 2021-03-31  Richard Sandiford  <richard.sandiford@arm.com>
 
 	PR target/98119
-	* config/aarch64/aarch64.c
+	* config/aarch64/aarch64.cc
 	(aarch64_vectorize_preferred_vector_alignment): Query the size
 	of the provided SVE vector; do not assume that all SVE vectors
 	have the same size.
@@ -30680,7 +30680,7 @@
 
 2021-03-23  Marcus Comstedt  <marcus@mc.pp.se>
 
-	* common/config/riscv/riscv-common.c
+	* common/config/riscv/riscv-common.cc
 	(TARGET_DEFAULT_TARGET_FLAGS): Set default endianness.
 	* config.gcc (riscv32be-*, riscv64be-*): Set
 	TARGET_BIG_ENDIAN_DEFAULT to 1.
@@ -31000,7 +31000,7 @@
 2021-03-17  Tamar Christina  <tamar.christina@arm.com>
 
 	PR target/99542
-	* config/aarch64/aarch64.c
+	* config/aarch64/aarch64.cc
 	(aarch64_simd_clone_compute_vecsize_and_simdlen): Remove unused var.
 
 2021-03-16  Segher Boessenkool  <segher@kernel.crashing.org>
@@ -31044,7 +31044,7 @@
 2021-03-16  Jakub Jelinek  <jakub@redhat.com>
 
 	PR target/99542
-	* config/aarch64/aarch64.c
+	* config/aarch64/aarch64.cc
 	(aarch64_simd_clone_compute_vecsize_and_simdlen): If not a function
 	definition, walk TYPE_ARG_TYPES list if non-NULL for argument types
 	instead of DECL_ARGUMENTS.  Ignore types for uniform arguments.
@@ -31642,7 +31642,7 @@
 2021-03-02  David Malcolm  <dmalcolm@redhat.com>
 
 	PR c/99323
-	* diagnostic-show-locus.c
+	* diagnostic-show-locus.cc
 	(selftest::test_one_liner_many_fixits_2): Fix accidental usage of
 	column 0.
 
@@ -32951,7 +32951,7 @@
 
 	* lto-streamer.c (lto_get_section_name): Free temporary
 	buffer.
-	* tree-loop-distribution.c
+	* tree-loop-distribution.cc
 	(loop_distribution::merge_dep_scc_partitions): Free edge data.
 
 2021-02-03  Jakub Jelinek  <jakub@redhat.com>
@@ -33494,7 +33494,7 @@
 
 2021-01-28  Xing GUO  <higuoxing@gmail.com>
 
-	* common/config/riscv/riscv-common.c
+	* common/config/riscv/riscv-common.cc
 	(riscv_subset_list::parsing_subset_version): Fix -march option parsing
 	when `p` extension exists.
 
@@ -34286,7 +34286,7 @@
 2021-01-15  David Malcolm  <dmalcolm@redhat.com>
 
 	PR bootstrap/98696
-	* diagnostic.c
+	* diagnostic.cc
 	(selftest::test_print_parseable_fixits_bytes_vs_display_columns):
 	Escape the tempfile name when constructing the expected output.
 

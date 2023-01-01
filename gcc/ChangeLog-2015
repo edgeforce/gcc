@@ -103,7 +103,7 @@
 
 2015-12-24  Aditya Kumar  <aditya.k7@samsung.com>
 
-	* graphite-scop-detection.c
+	* graphite-scop-detection.cc
 	(scop_detection::get_nearest_dom_with_single_entry): Check l ==	l2.
 	(scop_detection::get_nearest_pdom_with_single_exit): Same.
 	(scop_detection::merge_sese): Whitespace.
@@ -694,7 +694,7 @@
 	* langhooks-def.h (LANG_HOOKS_GET_TYPE_BIAS): New.
 	(LANG_HOOKS_FOR_TYPES_INITIALIZER): Initialize the
 	get_bias_field.
-	* dwarf2out.c
+	* dwarf2out.cc
 	(base_type_die): In non-strict DWARF mode, invoke the
 	get_type_bias language hook for INTEGER_TYPE nodes.  If it
 	returns a bias, emit an attribute for it.
@@ -992,7 +992,7 @@
 2015-12-16  Aditya Kumar  <aditya.k7@samsung.com>
 
 	* graphite-dependences.c (scop_get_dependences): Use local pointers.
-	* graphite-isl-ast-to-gimple.c
+	* graphite-isl-ast-to-gimple.cc
 	(translate_isl_ast_to_gimple::scop_to_isl_ast): Use scop->dependence.
 	* graphite-optimize-isl.c (optimize_isl): Same.
 	* graphite-poly.c (new_scop): Remove initialization of removed
@@ -1701,7 +1701,7 @@
 	(dom_walker::dom_walker): New constructor.  Initialize private data
 	members.  If needed, set EDGE_EXECUTABLE for all edges in the CFG,
 	extracted from tree-ssa-sccvn.c.
-	(dom_walker::bb_reachable): New method extracted from tree-ssa-sccvn.c
+	(dom_walker::bb_reachable): New method extracted from tree-ssa-sccvn.cc
 	(dom_walker::propagate_unreachable_to_edges): Likewise.
 	(dom_walker::walk): Only call before_dom_children on reachable
 	blocks.  If before_dom_children returns an edge, then clear
@@ -1719,7 +1719,7 @@
 	* compare-elim.c (find_comparison_dom_walker::before_dom_children):
 	Change return type to an edge.  Always return NULL.
 	* fwprop.c (single_def_use_dom_walker::before_dom_children): Likewise.
-	* gimple-ssa-strength-reduction.c
+	* gimple-ssa-strength-reduction.cc
 	(find_candidates_dom_walker::before_dom_children): Likewise.
 	* ipa-prop.c (analysis_dom_walker::before_dom_children): Likewise.
 	(ipcp_modif_dom_walker::before_dom_children): Likewise.
@@ -1727,18 +1727,18 @@
 	(rewrite_update_dom_walker::before_dom_children): Likewise.
 	(mark_def_dom_children::before_dom_children): Likewise.
 	* tree-ssa-dse.c (dse_dom_walker::before_dom_children): Likewise.
-	* tree-ssa-loop-im.c
+	* tree-ssa-loop-im.cc
 	(invariantness_dom_walker::before_dom_children): Likewise.
 	(move_computations_dom_walker::before_dom_walker): Likewise.
-	* tree-ssa-phiopt.c
+	* tree-ssa-phiopt.cc
 	(nontrapping_dom_walker::before_dom_children): Likewise.
-	* tree-ssa-pre.c
+	* tree-ssa-pre.cc
 	(eliminate_dom_walker::before_dom_children): Likewise.
-	* tree-ssa-propagate.c
+	* tree-ssa-propagate.cc
 	(substitute_and_fold_dom_walker::before_dom_children): Likewise.
-	* tree-ssa-strlen.c
+	* tree-ssa-strlen.cc
 	(strlen_dom_walker::before_dom_children): Likewise.
-	* tree-ssa-uncprop.c
+	* tree-ssa-uncprop.cc
 	(uncprop_dom_walker::before_dom_children): Likewise.
 
 2015-12-10  Jakub Jelinek  <jakub@redhat.com>
@@ -1979,7 +1979,7 @@
 
 	* config/aarch64/aarch64-protos.h
 	(aarch64_cannot_change_mode_class): Bring back.
-	* config/aarch64/aarch64.c
+	* config/aarch64/aarch64.cc
 	(aarch64_cannot_change_mode_class): Likewise.
 	* config/aarch64/aarch64.h (CANNOT_CHANGE_MODE_CLASS): Likewise.
 	* config/aarch64/aarch64.md (aarch64_movdi_<mode>low): Use
@@ -2377,7 +2377,7 @@
 
 2015-12-06  Victoria Stepanyan  <victoria.stepanyan@amd.com>
 
-	* common/config/i386/i386-common.c
+	* common/config/i386/i386-common.cc
 	(OPTION_MASK_ISA_CLZERO_SET): New.
 	(ix86_handle_option): Handle clzero.
 	* config.gcc (i[34567]86-*-*): Add clzerointrin.h,
@@ -3226,12 +3226,12 @@
 	* genopinit.c: Move block comment to optabs.def.
 	(optab_tag, optab_def): Move to gensupport.h
 	(pattern): Likewise, renaming to optab_pattern.
-	(match_pattern): Move to gensupport.c
+	(match_pattern): Move to gensupport.cc
 	(gen_insn): Use find_optab.
 	(patterns, pattern_cmp): Replace pattern with optab_pattern.
 	(main): Likewise.  Use num_optabs.
 	* optabs.def: Add comment that was previously in genopinit.c.
-	* gensupport.h (optab_tag): Moved from genopinit.c
+	* gensupport.h (optab_tag): Moved from genopinit.cc
 	(optab_def): Likewise, expanding commentary.
 	(optab_pattern): Likewise, after renaming from pattern.
 	(optabs, num_optabs, find_optab): Declare.
@@ -4493,7 +4493,7 @@
 
 2015-11-23  Bilyan Borisov  <bilyan.borisov@arm.com>
 
-	* config/aarch64/aarch64-builtins.c
+	* config/aarch64/aarch64-builtins.cc
 	(aarch64_gimple_fold_builtin): Fold FMULX.
 
 2015-11-23  David Edelsohn  <dje.gcc@gmail.com>
@@ -4963,7 +4963,7 @@
 	(ast_build_before_for): Same.
 	(graphite_regenerate_ast_isl): Formatting changes.
 	* graphite-scop-detection.c (build_cross_bb_scalars_use): Same.
-	* sese.c (get_rename): Move to graphite-isl-ast-to-gimple.c
+	* sese.c (get_rename): Move to graphite-isl-ast-to-gimple.cc
 	(set_rename): Same.
 	(gsi_insert_earliest): Same.
 	(collect_all_ssa_names): Same.
@@ -8287,7 +8287,7 @@
 
 	Properly apply.
 	2015-11-05  Ramana Radhakrishnan  <ramana.radhakrishnan@arm.com>
-	* config/aarch64/aarch64.c
+	* config/aarch64/aarch64.cc
 	(aarch64_can_use_per_function_literal_pools_p): New.
 	(aarch64_use_blocks_for_constant_p): Adjust declaration
 	and use aarch64_can_use_function_literal_pools_p.
@@ -8345,7 +8345,7 @@
 
 	PR ipa/68057
 	PR ipa/68220
-	* ipa-polymorphic-call.c
+	* ipa-polymorphic-call.cc
 	(ipa_polymorphic_call_context::restrict_to_inner_type): Fix ordering
 	issue when offset is out of range.
 	(contains_type_p): Fix out of range check, clear dynamic flag.
@@ -8628,7 +8628,7 @@
 
 2015-11-05  Ramana Radhakrishnan  <ramana.radhakrishnan@arm.com>
 
-	* config/aarch64/aarch64.c
+	* config/aarch64/aarch64.cc
 	(aarch64_can_use_per_function_literal_pools_p): New.
 	(aarch64_use_blocks_for_constant_p): Adjust declaration
 	and use aarch64_can_use_function_literal_pools_p.
@@ -9010,7 +9010,7 @@
 2015-10-30  Evgeny Stupachenko  <evstupac@gmail.com>
 
 	* Makefile.in (OBJS): Add multiple_target.o.
-	* attrib.c (make_attribute): Moved from config/i386/i386.c
+	* attrib.c (make_attribute): Moved from config/i386/i386.cc
 	* config/i386/i386.c (make_attribute): Deleted.
 	* multiple_target.c (create_dispatcher_calls): New.
 	(get_attr_len): Ditto.
@@ -9458,7 +9458,7 @@
 	* tree-ssa-scopedtables.h (const_and_copies): Remove invalidate
 	method.
 	* tree-ssa-scopedtables.h (const_and_copies::invalidate): Remove.
-	* tree-ssa-threadedge.c
+	* tree-ssa-threadedge.cc
 	(record_temporary_equivalences_from_stmts_at_dest): Remove
 	backedge_seen argument and associated code which invalidated
 	equivalences based on the value of that argument.
@@ -10388,7 +10388,7 @@
 	* tree-ssa-threadupdate.c (duplicate_thread_path): Likewise.
 	* tree-ssanames.c (release_ssa_name_fn): Likewise.
 	* tree-stdarg.c (expand_ifn_va_arg): Likewise.
-	* tree-vect-loop-manip.c
+	* tree-vect-loop-manip.cc
 	(slpeel_tree_duplicate_loop_to_edge_cfg): Likewise.
 	(slpeel_checking_verify_cfg_after_peeling): Likewise.
 	(vect_do_peeling_for_loop_bound): Likewise.
@@ -10462,7 +10462,7 @@
 	* gimple.c (gimple_call_same_target_p): Check internal fn
 	uniqueness.
 	* tracer.c (ignore_bb_p): Check for IFN_UNIQUE call.
-	* tree-ssa-threadedge.c
+	* tree-ssa-threadedge.cc
 	(record_temporary_equivalences_from_stmts): Likewise.
 	* tree-cfg.c (gmple_call_initialize_ctrl_altering): Likewise.
 
@@ -10489,7 +10489,7 @@
 
 2015-10-27  Alan Hayward  <alan.hayward@arm.com>
 
-	* tree-vect-looop.c
+	* tree-vect-looop.cc
 	(vectorizable_live_operation): Change iterator.
 
 2015-10-27  Abderrazek Zaafrani  <a.zaafrani@samsung.com>
@@ -10947,7 +10947,7 @@
 2015-10-23  Jan Hubicka  <hubicka@ucw.cz>
 
 	PR ipa/pr67600
-	* ipa-polymorphic-call.c
+	* ipa-polymorphic-call.cc
 	(ipa_polymorphic_call_context::get_dynamic_type): Do not confuse
 	instance offset with offset of outer type.
 
@@ -11046,7 +11046,7 @@
 2015-10-23  Alan Hayward  <alan.hayward@arm.com>
 
 	PR tree-optimization/65947
-	* tree-vect-loop.c
+	* tree-vect-loop.cc
 	(vect_is_simple_reduction_1): Find condition reductions.
 	(vect_model_reduction_cost): Add condition reduction costs.
 	(get_initial_def_for_reduction): Add condition reduction initial var.
@@ -11594,10 +11594,10 @@
 
 2015-10-21  Jeff Law  <law@redhat.com>
 
-	* Makefile.in (OBJS): Remove sched-vis.c
+	* Makefile.in (OBJS): Remove sched-vis.cc
 	* sched-vis.c: Removed.  Code moved into...
 	* print-rtl.c: Here.  Include cfg.h, pretty-print.h and print-rtl.h.
-	* rtl.h: Remove prototypes for functions now living in print-rtl.c
+	* rtl.h: Remove prototypes for functions now living in print-rtl.cc
 	* print-rtl.h Add prototypes for new functions in print-rtl.c.
 	* auto-inc-dec.c: Include print-rtl.h
 	* cfgrtl.c, combine.c, final.c haifa-sched.c: Likewise.
@@ -11788,7 +11788,7 @@
 
 2015-10-19  Segher Boessenkool  <segher@kernel.crashing.org>
 
-	* common/config/mn10300/mn10300-common.c
+	* common/config/mn10300/mn10300-common.cc
 	(mn10300_option_optimization_table) <OPT_freorder_blocks_algorithm_>:
 	Use REORDER_BLOCKS_ALGORITHM_STC at -Os and up.
 
@@ -12986,7 +12986,7 @@
 
 2015-10-09  Uros Bizjak  <ubizjak@gmail.com>
 
-	* config/i386/i386.c
+	* config/i386/i386.cc
 	(expand_set_or_movmem_prologue_epilogue_by_misaligned_moves): Use
 	ROUND_DOWN where applicable.
 
@@ -13769,7 +13769,7 @@
 
 2015-10-05  Marek Polacek  <polacek@redhat.com>
 
-	* tree-ssa-loop-im.c
+	* tree-ssa-loop-im.cc
 	(move_computations_dom_walker::before_dom_children): Don't set
 	SSA_NAME_ANTI_RANGE_P.
 	* tree-ssa-phiopt.c (value_replacement): Likewise.
@@ -14237,7 +14237,7 @@
 	(build_scop_drs): Call renamed functions.
 	(new_pbb_from_pbb): Same.
 	(scop_ivs_can_be_represented): Delete as functionality now moved to
-	graphite-scop-detection.c
+	graphite-scop-detection.cc
 	(build_poly_scop): Remove call to scop_ivs_can_be_represented.
 
 2015-10-02  Aditya Kumar  <hiraditya@msn.com>
@@ -15962,7 +15962,7 @@
 	PR tree-optimization/47679
 	* Makefile.in (OBJS): Add tree-ssa-phionlycprop.o
 	* tree-ssa-dom.c: Remove unnecessary header includes.
-	(remove_stmt_or_phi): Moved from here into tree-ssa-phionlycprop.c
+	(remove_stmt_or_phi): Moved from here into tree-ssa-phionlycprop.cc
 	(get_rhs_or_phi_arg, get_lhs_or_phi_result): Likewise.
 	(propagate_rhs_into_lhs, eliminate_const_or_copy): Likewise.
 	(eliminate_degenerate_phis_1, pass_phi_only_cprop): Likewise.
@@ -17504,7 +17504,7 @@
 	(VOID_PDOUBLE_QI_V16SI_V8DF_INT): Ditto.
 	(VOID_PINT_HI_V8DI_V16SI_INT): Ditto.
 	(VOID_PLONGLONG_QI_V16SI_V8DI_INT): Ditto.
-	* config/i386/i386.c
+	* config/i386/i386.cc
 	(ix86_builtins): Add IX86_BUILTIN_SCATTERALTSIV8DF,
 	IX86_BUILTIN_SCATTERALTDIV16SF, IX86_BUILTIN_SCATTERALTSIV8DI,
 	IX86_BUILTIN_SCATTERALTDIV16SI.
@@ -17536,7 +17536,7 @@
 	(vect_check_gather_scatter): Use it instead of vect_check_gather.
 	(vect_analyze_data_refs): Add gatherscatter enum and maybe_scatter
 	variable and new checkings for it accordingly.
-	* tree-vect-stmts.c
+	* tree-vect-stmts.cc
 	(STMT_VINFO_GATHER_SCATTER_P(S)): Use it instead of
 	STMT_VINFO_GATHER_P(S).
 	(vect_check_gather_scatter): Use it instead of vect_check_gather.
@@ -18957,7 +18957,7 @@
 
 2015-08-20  James Greenhalgh  <james.greenhalgh@arm.com>
 
-	* common/config/aarch64/aarch64-common.c
+	* common/config/aarch64/aarch64-common.cc
 	(AARCH64_CPU_NAME_LENGTH): Delete.
 	(aarch64_option_extension): New.
 	(all_extensions): Likewise.
@@ -19055,7 +19055,7 @@
 2015-08-19  Marek Polacek  <polacek@redhat.com>
 
 	PR middle-end/67133
-	* gimple-ssa-isolate-paths.c
+	* gimple-ssa-isolate-paths.cc
 	(insert_trap_and_remove_trailing_statements): Rename to ...
 	(insert_trap): ... this.  Don't remove trailing statements; split
 	block instead.
@@ -20611,7 +20611,7 @@
 
 2015-07-31  Petr Murzin  <petr.murzin@intel.com>
 
-	* config/i386/i386.c
+	* config/i386/i386.cc
 	(bdesc_special_args): Convert mask type from signed to unsigned for
 	masked builtins.
 	(ix86_expand_args_builtin): Do not handle UINT_FTYPE_V2DF,
@@ -25436,7 +25436,7 @@
 2015-07-03  Richard Biener  <rguenther@suse.de>
 
 	* genmatch.c (commutative_tree_code, commutative_ternary_tree_code):
-	Copy from tree.c
+	Copy from tree.cc
 	(dt_operand::gen_gimple_expr): After valueizing operands
 	re-canonicalize operand order for commutative tree codes.
 
@@ -27209,7 +27209,7 @@
 2015-06-22  Jan Hubicka  <hubicka@ucw.cz>
 
 	PR ipa/66351
-	* ipa-polymorphic-call.c
+	* ipa-polymorphic-call.cc
 	(ipa_polymorphic_call_context::get_dynamic_type): Fix thinko when
 	initializing alias oracle; fix formating; set base_alias_set if it
 	is known.
@@ -28085,7 +28085,7 @@
 
 2015-06-12  Venkataramanan Kumar  <venkataramanan.kumar@amd.com>
 
-	* common/config/i386/i386-common.c
+	* common/config/i386/i386-common.cc
 	(OPTION_MASK_ISA_MWAITX_SET): New.
 	(ix86_handle_option): Handle mwaitx.
 	* config.gcc (i[34567]86-*-*): Add mwaitxintrin.h,
@@ -31136,7 +31136,7 @@
 
 2015-05-26  Jan Hubicka  <hubicka@ucw.cz>
 
-	* ipa-polymorphic-call.c
+	* ipa-polymorphic-call.cc
 	(ipa_polymorphic_call_context::get_dynamic_type): Short circuit the
 	case when call target is already known.
 
@@ -32034,7 +32034,7 @@
 	(type_known_to_have_no_derivations_p): This one.
 	* ipa-utils.h (type_known_to_have_no_deriavations_p): Rename to ..
 	(type_known_to_have_no_derivations_p): This one.
-	* ipa-polymorphic-call.c
+	* ipa-polymorphic-call.cc
 	(ipa_polymorphic_call_context::restrict_to_inner_type): Check that
 	type has linkage.
 
@@ -32255,7 +32255,7 @@
 2015-05-19  Jan Hubicka  <hubicka@ucw.cz>
 
 	* tree.c (verify_type_variant): Fix #undef.
-	(gimple_canonical_types_compatible_p): Move here from lto.c
+	(gimple_canonical_types_compatible_p): Move here from lto.cc
 	(verify_type): Verify TYPE_CANONICAL compatibility.
 	* tree.h (gimple_canonical_types_compatible_p): Declare.
 
@@ -33054,7 +33054,7 @@
 
 2015-05-12  Jan Hubicka  <hubicka@ucw.cz>
 
-	PR target/pr66047.c
+	PR target/pr66047.cc
 	* i386.c (ix86_function_sseregparm): Only return -1 if local function
 	with implied regparm is called from -mno-sse function.
 	(init_cumulative_args): Output error if ix86_function_sseregparm
@@ -33188,7 +33188,7 @@
 	* ipa-utils.h (odr_type_p): Move offline.
 	* tree.c (need_assembler_name_p): Fix handling of types
 	without linkages.
-	(type_in_anonymous_namespace_p): Move to ipa-devirt.c
+	(type_in_anonymous_namespace_p): Move to ipa-devirt.cc
 
 2015-05-12  David Malcolm  <dmalcolm@redhat.com>
 
@@ -34160,7 +34160,7 @@
 	* config/microblaze/microblaze.md (cbranchsi4): Added immediate
 	constraints.
 	(cbranchsi4_reg): New.
-	* config/microblaze/microblaze.c
+	* config/microblaze/microblaze.cc
 	(microblaze_expand_conditional_branch_reg): New.
 	* config/microblaze/microblaze-protos.h
 	(microblaze_expand_conditional_branch_reg): New prototype.
@@ -35987,7 +35987,7 @@
 	* tree-ssa-scopedtables.h: New file.
 	* tree-ssa-dom.c: Include tree-ssa-scopedtables.h.
 	(const_and_copies): Change name/type.
-	(record_const_or_copy): Move into tree-ssa-scopedtables.c
+	(record_const_or_copy): Move into tree-ssa-scopedtables.cc
 	(record_const_or_copy_1): Similarly.
 	(restore_vars_to_original_value): Similarly.
 	(pass_dominator::execute): Create and destroy const_and_copies table.
@@ -37499,7 +37499,7 @@
 2015-03-22  Jeff Law  <law@redhat.com>
 
 	PR rtl-optimization/64317
-	* Makefile.in (OBJS): Add gcse-common.c
+	* Makefile.in (OBJS): Add gcse-common.cc
 	* gcse.c: Include gcse-common.h
 	(struct modify_pair_s): Move structure definition to gcse-common.h
 	(compute_transp): Move function to gcse-common.c.
@@ -37680,7 +37680,7 @@
 	(parallelized_function_p): Rewrite using parallelized_function field of
 	cgraph_node.
 	(create_loop_fn): Remove adding to parallelized_functions.
-	* Makefile.in (GTFILES): Remove tree-parloops.c
+	* Makefile.in (GTFILES): Remove tree-parloops.cc
 
 2015-03-20  Vladimir Makarov  <vmakarov@redhat.com>
 
@@ -42524,10 +42524,10 @@
 
 2015-01-17  Maxim Kuvyrkov  <maxim.kuvyrkov@linaro.org>
 
-	* config/aarch64/aarch64.c
+	* config/aarch64/aarch64.cc
 	(aarch64_sched_first_cycle_multipass_dfa_lookahead): Implement hook.
 	(TARGET_SCHED_FIRST_CYCLE_MULTIPASS_DFA_LOOKAHEAD): Define.
-	* config/arm/arm.c
+	* config/arm/arm.cc
 	(arm_first_cycle_multipass_dfa_lookahead): Implement hook.
 	(TARGET_SCHED_FIRST_CYCLE_MULTIPASS_DFA_LOOKAHEAD): Define.
 

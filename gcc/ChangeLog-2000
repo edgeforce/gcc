@@ -3566,20 +3566,20 @@ Wed Nov 22 00:52:55 2000  J"orn Rennecke <amylaar@redhat.com>
 	(compile_file): Call stringpool_statistics if mem_report is on.
 	(main): Call init_stringpool.
 
-	* builtins.c (c_strlen), c-decl.c (finish_decl), c-lex.c
+	* builtins.c (c_strlen), c-decl.c (finish_decl), c-lex.cc
 	(process_directive), c-typeck.c (constructor_asmspec, struct
 	initializer_stack, start_init), except.c (create_rethrow_ref),
-	stmt.c (digit_strings), toplev.c (decode_f_option), tree.c
+	stmt.c (digit_strings), toplev.c (decode_f_option), tree.cc
 	(built_in_filename), varasm,c (in_named_name,
 	assemble_static_space, struct constant_descriptor, struct
 	deferred_string, struct pool_constant, force_const_mem),
-	i386.c (pic_label_name, global_offset_table_name), rs6000.c
+	i386.c (pic_label_name, global_offset_table_name), rs6000.cc
 	(rs6000_emit_prologue, rs6000_emit_epilogue) : Constify a char *.
 
 	* c-common.c (combine_strings): Combine strings in scratch
 	buffer, then pass to build_string.
 	* optabs.c (init_libfuncs), profile.c (init_edge_profiler,
-	output_func_start_profiler), stmt.c (init_stmt), alpha.c
+	output_func_start_profiler), stmt.c (init_stmt), alpha.cc
 	(alpha_need_linkage), arm.c (arm_encode_call_attribute),
 	i386.c (load_pic_register), ia64.c (ia64_encode_section_info),
 	rs6000.c (rs6000_encode_section_info): Create string in
@@ -4334,12 +4334,12 @@ Sat Nov 11 18:41:20 2000  Mark P Mitchell  <mark@codesourcery.com>
 
 2000-11-09  Joseph S. Myers  <jsm28@cam.ac.uk>
 
-	* calls.c (expand_call, emit_library_call_value_1), collect2.c
+	* calls.c (expand_call, emit_library_call_value_1), collect2.cc
 	(scan_prog_file), config/a29k/a29k.c (print_operand),
 	config/sparc/sparc.c (order_regs_for_local_alloc): Use memcpy ()
 	instead of bcopy ().
 	* real.h: Use memcmp () instead of bcmp ().
-	* config/m88k/m88k.c (m88k_layout_frame), config/sh/sh.c
+	* config/m88k/m88k.c (m88k_layout_frame), config/sh/sh.cc
 	(split_branches), config/sparc/sparc.c (ultra_flush_pipeline,
 	ultrasparc_sched_init, ultrasparc_sched_reorder),
 	config/sparc/sparc.h (CONDITIONAL_REGISTER_USAGE): Use memset ()
@@ -4473,27 +4473,27 @@ Wed Nov  8 21:53:41 MET 2000  Jan Hubicka  <jh@suse.cz>
 
 	* alias.c (init_alias_analysis), calls.c (expand_call,
 	emit_library_call_value_1), combine.c (init_reg_last_arrays),
-	cse.c (new_basic_block), dbxout.c (dbxout_type), diagnostic.c
-	(init_output_buffer, set_diagnostic_context), dwarf2out.c
-	(equate_decl_number_to_die, build_abbrev_table), emit-rtl.c
+	cse.c (new_basic_block), dbxout.c (dbxout_type), diagnostic.cc
+	(init_output_buffer, set_diagnostic_context), dwarf2out.cc
+	(equate_decl_number_to_die, build_abbrev_table), emit-rtl.cc
 	(init_emit_once), fold-const.c (mul_double, div_and_round_double),
 	function.c (assign_parms), gcse.c (compute_can_copy,
 	alloc_gcse_mem, alloc_reg_set_mem, record_one_set,
 	compute_hash_table, compute_set_hash_table,
-	compute_expr_hash_table), genattrtab.c (optimize_attrs), global.c
+	compute_expr_hash_table), genattrtab.c (optimize_attrs), global.cc
 	(global_alloc, global_conflicts), haifa-sched.c (compute_trg_info,
 	clear_units, schedule_block), integrate.c (initialize_for_inline,
-	expand_inline_function), jump.c (thread_jumps), local-alloc.c
+	expand_inline_function), jump.c (thread_jumps), local-alloc.cc
 	(local_alloc), loop.c (combine_movables, count_loop_regs_set,
 	load_mems_and_recount_loop_regs_set), print-tree.c (debug_tree),
 	regclass.c (init_reg_sets, init_reg_sets_1, regclass,
-	record_reg_classes, allocate_reg_info), reload.c
+	record_reg_classes, allocate_reg_info), reload.cc
 	(get_secondary_mem, remove_address_replacements, find_reloads),
 	reload1.c (reload, set_initial_label_offsets, finish_spills,
 	reload_as_needed, choose_reload_regs_init,
-	reload_cse_simplify_operands), reorg.c (dbr_schedule), sbitmap.c
-	(sbitmap_zero), simplify-rtx.c (simplify_plus_minus), ssa.c
-	(rename_registers), stmt.c (expand_end_case), unroll.c
+	reload_cse_simplify_operands), reorg.c (dbr_schedule), sbitmap.cc
+	(sbitmap_zero), simplify-rtx.c (simplify_plus_minus), ssa.cc
+	(rename_registers), stmt.c (expand_end_case), unroll.cc
 	(unroll_loop), varray.c (varray_grow), objc/objc-act.c: Use memset
 	() instead of bzero ().
 
@@ -4675,10 +4675,10 @@ Fri Nov  3 13:41:04 2000  Mark P Mitchell  <mark@codesourcery.com>
 
 2000-11-03  Joseph S. Myers  <jsm28@cam.ac.uk>
 
-	* c-decl.c (duplicate_decls, copy_lang_decl), dwarfout.c
+	* c-decl.c (duplicate_decls, copy_lang_decl), dwarfout.cc
 	(dwarfout_line), gcc.c (main, save_string), tree.c (init_obstacks,
 	perm_calloc, get_identifier, maybe_get_identifier,
-	real_value_from_int_cst, simple_cst_equal), varasm.c
+	real_value_from_int_cst, simple_cst_equal), varasm.cc
 	(assemble_name, assemble_real, immed_real_const_1,
 	compare_constant_1, decode_rtx_const, output_constant_pool): Use
 	strrchr () instead of rindex ().  Use memcmp () instead of bcmp
@@ -4781,8 +4781,8 @@ Thu Nov  2 19:20:12 2000  J"orn Rennecke <amylaar@redhat.com>
 2000-11-02  Joseph S. Myers  <jsm28@cam.ac.uk>
 
 	* collect2.c (main, write_c_file_stat), gcc.c (translate_options,
-	process_command, main), gcov.c (open_files, output_data), tlink.c
-	(frob_extension, scan_linker_output), toplev.c
+	process_command, main), gcov.c (open_files, output_data), tlink.cc
+	(frob_extension, scan_linker_output), toplev.cc
 	(file_name_nondirectory): Use strchr () and strrchr () instead of
 	index () and rindex ().
 
@@ -6137,7 +6137,7 @@ Tue Oct 17 20:05:51 2000  Martin Buchholz <martin@xemacs.org>
 
 	* config/pa/pa/pa-protos.h (output_64bit_and, output_64bit_ior):
 	Constify char * return value.
-	* config/pa/pa/pa.c
+	* config/pa/pa/pa.cc
 	(output_64bit_and, output_64bit_ior): Constify char * return value.
 	(pa_can_combine_p): Make static.
 	(function_arg): Decorate unused `named' argument. Fix comment typo.
@@ -6261,7 +6261,7 @@ Tue Oct 17 20:05:51 2000  Martin Buchholz <martin@xemacs.org>
 	(call_get_eh_context): Likewise.
 	(begin_protect_partials): Likewise.
 	(protect_with_terminate): Likewise.
-	* explow.c
+	* explow.cc
 	(plus_constant_wide): Likewise.
 	* expr.c (init_expr_once):
 	Likewise.
@@ -6278,7 +6278,7 @@ Tue Oct 17 20:05:51 2000  Martin Buchholz <martin@xemacs.org>
 	(allocate_bb_life_data): Make it static.  Likewiwse.
 	(init_flow): New function.
 	(size_int_type_wide): Remove ggc_p conditionals.
-	* function.c
+	* function.cc
 	(push_function_context_to): Don't call save_tree_status.
 	(pop_function_context_from): Or restore_tree_status.
 	(assign_stack_local_1): Don't call push_obstacks.
@@ -6307,7 +6307,7 @@ Tue Oct 17 20:05:51 2000  Martin Buchholz <martin@xemacs.org>
 	* integrate.c (save_for_inline): Don't mess with obstacks.
 	(integrate_decl_tree): Likewise.
 	(output_inline_function): Likewise.
-	* lists.c
+	* lists.cc
 	(init_EXPR_INSN_LIST_cache): Likewise.
 	* loop.c (temp_obstack):
 	Remove.
@@ -6326,9 +6326,9 @@ Tue Oct 17 20:05:51 2000  Martin Buchholz <martin@xemacs.org>
 	(print_node): Likewise.
 	* profile.c (output_func_start_profiler):
 	Remove call to temporary_allocation.
-	* reload1.c
+	* reload1.cc
 	(eliminate_regs_in_insn): Don't mess with obstacks.
-	* resource.c
+	* resource.cc
 	(mark_target_live_regs): Use xmalloc.
 	(free_resource_info): Free the memory.
 	* rtl.c (rtl_obstack):
@@ -6347,9 +6347,9 @@ Tue Oct 17 20:05:51 2000  Martin Buchholz <martin@xemacs.org>
 	(rtx_free): Likewise.
 	* sdbout.c (sdbout_queue_anonymous_type):
 	Use tree_cons, not saveable_tree_cons.
-	* simplify-rtx.c
+	* simplify-rtx.cc
 	(cselib_init): Don't mess with obstacks.
-	* stmt.c
+	* stmt.cc
 	(mark_block_nesting): Mark the label_chain.
 	(epxand_label): Use ggc_alloc, not oballoc.
 	(clear_last_expr): Don't mess with obstacks.
@@ -6368,7 +6368,7 @@ Tue Oct 17 20:05:51 2000  Martin Buchholz <martin@xemacs.org>
 	(compile_file): Remove ggc_p conditionals.
 	(rest_of_compilation): Call init_flow.  Remove ggc_p conditionals.
 	(decode_f_option): Remove ggc_p conditionals.
-	* tree.c
+	* tree.cc
 	(function_maybepermanent_obstack): Remove.
 	(maybepermanent_obstack): Likewise.
 	(function_obstack): Likewise.
@@ -6826,7 +6826,7 @@ Tue Oct 10 23:14:33 2000  Denis Chertykov  <denisc@overta.ru>
 	(calculate_can_reach_end): Remove.
 	(jump_optimize_1): Don't call it.
 	* output.h (check_function_return_warnings): Declare.
-	* toplev.c (warn_missing_noreturn): Move from c-decl.c
+	* toplev.c (warn_missing_noreturn): Move from c-decl.cc
 	(rest_of_compilation): Call check_function_return_warnings.
 
 2000-10-05  Richard Henderson  <rth@cygnus.com>
@@ -8678,7 +8678,7 @@ Wed Sep 13 02:31:23 EDT 2000  John Wehle  (john@feith.com)
 	(trap_cmp_op, mips_gen_conditional_trap): New func decls.
 	* config/mips/mips.h (ISA_HAS_COND_TRAP): New macro.
 	(PREDICATE_CODES): Add "trap_cmp_op".
-	* config/mips/mips.c
+	* config/mips/mips.cc
 	(trap_cmp_op, mips_gen_conditional_trap): New functions.
 	* config/mips/mips.md (trap, conditional_trap): New patterns.
 
@@ -9088,7 +9088,7 @@ Sun Sep 10 14:30:28 EDT 2000  John Wehle  (john@feith.com)
 
 2000-09-11  Michael Hayes  <mhayes@cygnus.com>
 
-	* loop.h (struct loop_mem_info): Move from loop.c
+	* loop.h (struct loop_mem_info): Move from loop.cc
 	(struct loop_info): Add fields store_mems, mems, mems_idx,
 	mems_allocated, unknown_address_altered,
 	unknown_constant_address_altered, num_mem_sets, and
@@ -11201,7 +11201,7 @@ Fri Aug 18 14:23:18 2000  Richard Kenner  <kenner@vlsi1.ultra.nyu.edu>
 Fri 18-Aug-2000 18:33:45 BST  Neil Booth  <NeilB@earthling.net>
 
 	* cpphash.h: Use HAVE_DESIGNATED_INITIALIZERS.
-	(_cpp_trigraph_map): Declaration moved from cpplex.c
+	(_cpp_trigraph_map): Declaration moved from cpplex.cc
 
 	* cppinit.c: Define _cpp_trigraph_map.  Use UCHAR_MAX + 1
 	instead	of 256.  Use consistent test for designated initializers.
@@ -18209,7 +18209,7 @@ Sat May 20 08:29:28 2000  H.J. Lu  <hjl@gnu.org>
 Sat May 20 07:27:35 2000  Alexandre Oliva  <aoliva@cygnus.com>
 
 	* fold-const.c (make_range): Handle degenerated intervals.
-	Fixes c-torture/execute/991221-1.c
+	Fixes c-torture/execute/991221-1.cc
 
 Fri May 19 18:16:31 2000  Richard Kenner  <kenner@vlsi1.ultra.nyu.edu>
 
@@ -18871,7 +18871,7 @@ Sat May 13 11:05:47 2000  Philippe De Muyter  <phdm@macqel.be>
 Sat May 13 00:09:59 2000  Denis Chertykov  <denisc@overta.ru>
 
 	* config/avr/t-avr: Added definition of FLOAT while generates
-	fp-bit.c
+	fp-bit.cc
 
 	* config/avr/avr.md: `NEXT_INSN (insn)' substituted to `insn' in
 	peepholes for tst+jump = sbrs/sbrc optimization.
@@ -19256,7 +19256,7 @@ Tue May  9 20:52:43 2000  Denis Chertykov  <denisc@overta.ru>
 	(call_value_insn): Likewise.
 
 	* config/avr/t-avr: Remove definition of FLOAT while generates
-	fp-bit.c
+	fp-bit.cc
 
 2000-05-09  Bruce Korb  <bkorb@gnu.org>
 
@@ -23468,7 +23468,7 @@ Tue Apr  4 00:41:53 2000  Jeffrey A Law  (law@cygnus.com)
 
 2000-04-03  Nick Clifton  <nickc@cygnus.com>
 
-	* Makefile.in (diagnostic.o): Depend upon diagnostic.c
+	* Makefile.in (diagnostic.o): Depend upon diagnostic.cc
 
 2000-04-03  Philip Blundell  <philb@gnu.org>
 

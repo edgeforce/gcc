@@ -1,4 +1,4 @@
-;; Support file for testcase Wmisleading-indentation.c
+;; Support file for testcase Wmisleading-indentation.cc
 ;; Adapted from gcc/config/i386/i386.md
 (define_attr "cpu" "none,pentium,pentiumpro,geode,k6,athlon,k8,core2,nehalem,
 		    atom,slm,generic,amdfam10,bdver1,bdver2,bdver3,bdver4,

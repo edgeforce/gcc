@@ -12690,7 +12690,7 @@
 
 	* config/i386/fmaintrin.h: New.
 	* config.gcc: Add fmaintrin.h.
-	* config/i386/i386.c
+	* config/i386/i386.cc
 	(enum ix86_builtins) <IX86_BUILTIN_VFMADDSS3>: New.
 	<IX86_BUILTIN_VFMADDSD3>: Likewise.
 	* config/i386/sse.md (fmai_vmfmadd_<mode>): New.
@@ -14732,9 +14732,9 @@
 
 	* lto-streamer-in.c (lto_read_tree): Call lto_streamer_cache_append
 	and tree_read_bitfields.
-	* lto-streamer-out.c (lto_is_streamable): Move from lto-streamer.c
+	* lto-streamer-out.c (lto_is_streamable): Move from lto-streamer.cc
 	(lto_write_tree): Call it.
-	* lto-streamer.c (lto_is_streamable): Move to lto-streamer-out.c
+	* lto-streamer.c (lto_is_streamable): Move to lto-streamer-out.cc
 	* streamer-hooks.h (struct streamer_hooks): Remove fields
 	name, is_streamable and alloc_tree. Update all users.
 	* tree-streamer-in.c (tree_read_bitfields): Factor out of ...
@@ -14789,7 +14789,7 @@
 	(lto_output_integer_cst): Likewise.
 	(lto_write_tree): Move to lto-streamer-out.c.
 	(lto_output_tree): Likewise.
-	* tree-streamer.c (lto_record_common_node): Move from lto-streamer.c
+	* tree-streamer.c (lto_record_common_node): Move from lto-streamer.cc
 	(preload_common_nodes): Likewise.
 	(lto_streamer_cache_create): Call it.
 	* tree-streamer.h: Include streamer-hooks.h.
@@ -15112,11 +15112,11 @@
 	(lto_tag_check): Likewise.
 	(hash_string_slot_node): Remove.  Update all users.
 	(eq_string_slot_node): Remove.  Update all users.
-	(string_for_index): Move to data-streamer-in.c
+	(string_for_index): Move to data-streamer-in.cc
 	(input_string_internal): Likewise.
 	(input_string_cst): Move to tree-streamer-in.c.
 	(input_identifier): Likewise.
-	(lto_input_string): Move to data-streamer-in.c
+	(lto_input_string): Move to data-streamer-in.cc
 	(input_record_start): Move to data-streamer.h
 	(canon_file_name): Use new definition of struct string_slot
 	from data-streamer.h.  Set S_SLOT.LEN.
@@ -15173,7 +15173,7 @@
 	(lto_output_string): Likewise.
 	(output_string_cst): Move to tree-streamer-out.c.
 	(output_identifier): Likewise.
-	(output_zero): Move to data-streamer-out.c
+	(output_zero): Move to data-streamer-out.cc
 	(output_uleb128): Likewise.
 	(output_sleb128): Likewise.
 	(output_record_start): Move to data-streamer.h
@@ -15219,7 +15219,7 @@
 	(output_bb): Likewise.
 	* lto-streamer.c: Include tree-streamer.h and streamer-hooks.h.
 	(streamer_hooks): Move to streamer-hooks.c.
-	(check_handled_ts_structures): Move to tree-streamer.c
+	(check_handled_ts_structures): Move to tree-streamer.cc
 	(lto_streamer_cache_add_to_node_array): Likewise.
 	(lto_streamer_cache_insert_1): Likewise.
 	(lto_streamer_cache_insert): Likewise.
@@ -15497,7 +15497,7 @@
 	* config/rs6000/darwin-ldouble-format: Move to
 	../libgcc/config/rs6000/ibm-ldouble-format.
 	* config/rs6000/darwin-ldouble.c: Move to
-	../libgcc/config/rs6000/ibm-ldouble.c
+	../libgcc/config/rs6000/ibm-ldouble.cc
 	* config/rs6000/libgcc-ppc-glibc.ver: Move to ../libgcc/config/rs6000.
 	* config/rs6000/libgcc-ppc64.ver: Likewise.
 	* config/rs6000/sfp-machine.h: Likewise.
@@ -19523,7 +19523,7 @@
 	default based on TARGET_ASM_NAMED_SECTION.
 	* common/common-target.def (have_named_sections): Default to true.
 	* common/config/default-common.c: Don't include tm.h.
-	* common/config/picochip/picochip-common.c
+	* common/config/picochip/picochip-common.cc
 	(TARGET_HAVE_NAMED_SECTIONS): Don't define.
 	* common/config/m32c/m32c-common.c: Remove.
 	* config.gcc (m32c*-*-*): Set target_has_targetm_common=no.
@@ -21910,7 +21910,7 @@
 	mep_handle_option, TARGET_HANDLE_OPTION,
 	TARGET_OPTION_OPTIMIZATION_TABLE, TARGET_DEFAULT_TARGET_FLAGS):
 	Move to mep-common.c.
-	* config/microblaze/microblaze.c
+	* config/microblaze/microblaze.cc
 	(microblaze_option_optimization_table,
 	TARGET_DEFAULT_TARGET_FLAGS, TARGET_OPTION_OPTIMIZATION_TABLE,
 	TARGET_EXCEPT_UNWIND_INFO): Move to microblaze-common.c.
@@ -23207,7 +23207,7 @@
 	(lto_streamer_write_tree): Declare.
 	(lto_streamer_read_tree): Declare.
 	(streamer_hooks_init): Declare.
-	(lto_is_streamable): Move to lto-streamer.c
+	(lto_is_streamable): Move to lto-streamer.cc
 
 2011-06-06  Andreas Krebbel  <Andreas.Krebbel@de.ibm.com>
 
@@ -28297,11 +28297,11 @@
 	(inline_read_summary): Use it.
 	(inline_write_summary): Write all the new data.
 	* ipa-prop.c (ipa_get_param_decl_index): Export.
-	(ipa_lattice_from_jfunc): Move here from ipa-cp.c
+	(ipa_lattice_from_jfunc): Move here from ipa-cp.cc
 	* ipa-prop.h (ipa_get_param_decl_index, ipa_lattice_from_jfunc):
 	Declare.
-	(ipa_get_lattice): Move here from ipa-cp.c
-	* Makefile.in (GTFILES): Add ipa-inline.h and ipa-inline-analysis.c
+	(ipa_get_lattice): Move here from ipa-cp.cc
+	* Makefile.in (GTFILES): Add ipa-inline.h and ipa-inline-analysis.cc
 	* params.def (PARAM_EARLY_INLINING_INSNS): Set to 11.
 	* cgraph.h (cgraph_clone_inlined_nodes, compute_inline_parameters,
 	cgraph_edge_inlinable_p): Remove.
@@ -28999,11 +28999,11 @@
 	* ipa-inline.c: ... this one; Update toplevel comment.
 	(ncalls_inlined, nfunctions_inlined): Move to ipa-inline-transform.c;
 	make global.
-	(update_noncloned_frequencies): Move to ipa-inline-transform.c
+	(update_noncloned_frequencies): Move to ipa-inline-transform.cc
 	(cgraph_mark_inline_edge): Rename to inline_call; move to
 	ipa-inline-transform.c.
 	(cgraph_clone_inlined_nodes): Rename to clone_inlined_nodes;
-	move to ipa-inline-transform.c
+	move to ipa-inline-transform.cc
 	(recursive_inlining, inline_small_functions, flatten_function,
 	ipa_inline, inline_always_inline_functions,
 	early_inline_small_functions): Update.
@@ -29012,7 +29012,7 @@
 	Declare.
 	* Makefile.in (ipa-inline-transform.o): New file.
 	* cgraphunit.c (save_inline_function_body): Move to
-	ipa-inline-transform.c
+	ipa-inline-transform.cc
 
 2011-04-19  DJ Delorie  <dj@redhat.com>
 
@@ -29114,7 +29114,7 @@
 	* gengtype.h: Updated copyright year.
 	(struct input_file_st): Add inpisplugin field.
 	(type_fileloc): New function.
-	* gengtype.c
+	* gengtype.cc
 	(write_typed_struct_alloc_def): Add gcc_assert.
 	(write_typed_alloc_defns): Ditto. Don't output for plugin files.
 	(write_typed_alloc_defns): Don't output for plugin files.
@@ -29216,7 +29216,7 @@
 	of functions called once, cold calls next.
 	(order, nnodes): Remove unused variables.
 	* Makefile.in (ipa-inline.o): No longer depent on ggc files.
-	(GTFILES): Remove ipa-inline.c
+	(GTFILES): Remove ipa-inline.cc
 	* sel-sched.c (fill_insns): Silence uninitialized var warning.
 
 2011-04-18  Eric Botcazou  <ebotcazou@adacore.com>
@@ -29322,7 +29322,7 @@
 	* lto-cgraph.c (lto_output_node, input_overwrite_node): Drop vtable
 	method.
 	* gimple-fold.c (can_refer_decl_in_current_unit_p): Mention PR20991 in
-	gimple-fold.c
+	gimple-fold.cc
 	* varasm.c (mark_decl_referenced): Drop vtable_method handling code.
 
 2011-04-17  Eric Botcazou  <ebotcazou@adacore.com>
@@ -29477,7 +29477,7 @@
 	(reset_inline_failed): Use initialize_inline_failed.
 	* cgraph.c: Include ipa-inline.h.
 	(cgraph_create_node_1): Do not initialize estimated_growth.
-	(initialize_inline_failed): More to ipa-inline-analysis.c
+	(initialize_inline_failed): More to ipa-inline-analysis.cc
 	(dump_cgraph_node): Do not dump inline flags.
 	* cgraph.h (cgraph_local_info): Remove inlineable, versionable
 	and disregard_inline_limits flags.
@@ -29960,7 +29960,7 @@
 	(cgraph_estimate_edge_time): Rename to estimate_edge_time; move to
 	ipa-inline-analysis.c.
 	(cgraph_estimate_time_after_inlining): Rename to
-	estiamte_time_after_inlining; move to ipa-inline-analysis.c
+	estiamte_time_after_inlining; move to ipa-inline-analysis.cc
 	(cgraph_estimate_edge_growth): Move to ipa-inline-analysis.c; rename
 	to estimate_edge_growth.
 	(cgraph_estimate_size_after_inlining): Move to ipa-inline-analysis.c;
@@ -35633,7 +35633,7 @@
 	(INIT_CUMULATIVE_ARGS): Pass FNDECL, VOIDmode.
 	(INIT_CUMULATIVE_INCOMING_ARGS): Pass current_function_decl, VOIDmode.
 	(INIT_CUMULATIVE_LIBCALL_ARGS): Pass NULL_TREE, MODE.
-	* config/rs6000/rs6000.c
+	* config/rs6000/rs6000.cc
 	(rs6000_elf_end_indicate_exec_stack): Rename to..
 	(rs6000_elf_file_end): ..this.  Only call file_end_indicate_exec_stack
 	for POWERPC_LINUX.  Move code emitting .gnu_attribute to here, from..
@@ -38087,7 +38087,7 @@
 
 2011-01-25  Sebastian Pop  <sebastian.pop@amd.com>
 
-	* graphite-sese-to-poly.c
+	* graphite-sese-to-poly.cc
 	(translate_scalar_reduction_to_array_for_stmt): Call unshare_expr.
 	(close_phi_written_to_memory): New.
 	(translate_scalar_reduction_to_array): Call close_phi_written_to_memory
@@ -39467,7 +39467,7 @@
 
 	PR lto/45721
 	PR lto/45375
-	* tree.h (symbol_alias_set_t): Move typedef here from varasm.c
+	* tree.h (symbol_alias_set_t): Move typedef here from varasm.cc
 	(symbol_alias_set_destroy, symbol_alias_set_contains,
 	propagate_aliases_backward): Declare.
 	* lto-streamer-out.c (struct sets): New sturcture.

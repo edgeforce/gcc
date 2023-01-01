@@ -530,7 +530,7 @@
 2004-01-02  Dan Nicolaescu  <dann@ics.uci.edu>
 
 	* gcc.dg/tree-ssa/sra-3.c: Replace test, old version was a
-	copy of sra-2.c
+	copy of sra-2.cc
 
 2004-01-01  Paul Brook  <paul@codesourcery.com>
 

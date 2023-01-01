@@ -100,7 +100,7 @@ ada-warn = $(ADA_CFLAGS) $(filter-out -pedantic, $(STRICT_WARN))
 # Unresolved warnings in specific files.
 ada/adaint.o-warn = -Wno-error
 
-ada/%.o: ada/gcc-interface/%.c
+ada/%.o: ada/gcc-interface/%.cc
 	$(COMPILE) $<
 	$(POSTCOMPILE)
 

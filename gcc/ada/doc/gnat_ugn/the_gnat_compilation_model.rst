@@ -3316,8 +3316,8 @@ To build this example:
 
   .. code-block:: sh
 
-      $ gcc -c file1.c
-      $ gcc -c file2.c
+      $ gcc -c file1.cc
+      $ gcc -c file2.cc
     
 * Then, compile the Ada units to produce a set of object files and ALI
   files:
@@ -3427,7 +3427,7 @@ example's:
 
   .. code-block:: sh
 
-      $ gcc -c main.c
+      $ gcc -c main.cc
     
 
 * Next, compile the Ada units to produce a set of object files and ALI

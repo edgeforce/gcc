@@ -715,7 +715,7 @@ $(DESTDIR)$(man7dir)/%$(man7ext): doc/%.7 installdirs
 	$(EXTRA_PROGRAMS) $(COLLECT2) lto-wrapper$(exeext) \
  $(EXTRA_PROGRAMS) gcc-cross$(exeext) \
 			     $(filter %.c, $(GTFILES)))) \
-	  $(filter insn-conditions.md,$^) > tmp-$*.c
+	  $(filter insn-conditions.md,$^) > tmp-$*.cc
 	  $(filter insn-conditions.md,$^) > tmp-$*.h
 	    $(filter-out $(BUILD_LIBDEPS), $^) $(BUILD_LIBS)
 	$(filter-out [%], $(GTFILES)) gtyp-input.list
@@ -918,7 +918,7 @@ ${QMTEST_DIR} stamp-qmtest:
 #	$(RUN_GEN) build/gencheck$(build_exeext) > tmp-check.h
 #	$(RUN_GEN) build/gencheck$(build_exeext) > tmp-check.h
 #	$(RUN_GEN) build/gencheck$(build_exeext) > tree-check.h
-	$(RUN_GEN) build/genconditions$(build_exeext) $(md_file) > tmp-condmd.c
+	$(RUN_GEN) build/genconditions$(build_exeext) $(md_file) > tmp-condmd.cc
 	$(RUN_GEN) build/gencondmd$(build_exeext) > tmp-cond.md
 	$(RUN_GEN) build/gengenrtl$(build_exeext) > tmp-genrtl.h
 	$(RUN_GEN) build/gengtype$(build_exeext) $(GENGTYPE_FLAGS) \
@@ -934,10 +934,10 @@ ${QMTEST_DIR} stamp-qmtest:
 	$(RUN_GEN) build/genmddump$(build_exeext) $(md_file) > tmp-mddump.md
 	$(RUN_GEN) build/genmodes$(build_exeext) -h > tmp-modes.h
 	$(RUN_GEN) build/genmodes$(build_exeext) -i > tmp-modes-inline.h
-	$(RUN_GEN) build/genmodes$(build_exeext) -m > tmp-min-modes.c
-	$(RUN_GEN) build/genmodes$(build_exeext) > tmp-modes.c
+	$(RUN_GEN) build/genmodes$(build_exeext) -m > tmp-min-modes.cc
+	$(RUN_GEN) build/genmodes$(build_exeext) > tmp-modes.cc
 	$(RUN_GEN) build/genopinit$(build_exeext) $(md_file) \
-	$(RUN_GEN) build/genpreds$(build_exeext) $(md_file) > tmp-preds.c
+	$(RUN_GEN) build/genpreds$(build_exeext) $(md_file) > tmp-preds.cc
 	$(RUN_GEN) build/genpreds$(build_exeext) -c $(md_file) > tmp-constrs.h
 	$(RUN_GEN) build/genpreds$(build_exeext) -h $(md_file) > tmp-preds.h
 	$(RUNTEST) --tool $* $(RUNTESTFLAGS))
@@ -956,10 +956,10 @@ ${QMTEST_DIR} stamp-qmtest:
 	$(SHELL) $(srcdir)/mkconfig.sh tm.h
 	$(SHELL) $(srcdir)/mkconfig.sh tm_p.h
 	  $(SHELL) $(srcdir)/../move-if-change \
-	$(SHELL) $(srcdir)/../move-if-change tmp-$*.c insn-$*.c
+	$(SHELL) $(srcdir)/../move-if-change tmp-$*.c insn-$*.cc
 	$(SHELL) $(srcdir)/../move-if-change tmp-$*.h insn-$*.h
 	$(SHELL) $(srcdir)/../move-if-change tmp-all-tree.def all-tree.def
-	$(SHELL) $(srcdir)/../move-if-change tmp-attrtab.c    insn-attrtab.c
+	$(SHELL) $(srcdir)/../move-if-change tmp-attrtab.c    insn-attrtab.cc
 	$(SHELL) $(srcdir)/../move-if-change tmp-case-cfn-macros.h \
 	$(SHELL) $(srcdir)/../move-if-change tmp-cfn-operators.pd \
 	$(SHELL) $(srcdir)/../move-if-change tmp-check.h tree-check.h
@@ -967,11 +967,11 @@ ${QMTEST_DIR} stamp-qmtest:
 #	$(SHELL) $(srcdir)/../move-if-change tmp-check.h tree-check.h
 #	$(SHELL) $(srcdir)/../move-if-change tmp-check.h tree-check.h
 	$(SHELL) $(srcdir)/../move-if-change tmp-common-target-hooks-def.h \
-	$(SHELL) $(srcdir)/../move-if-change tmp-condmd.c build/gencondmd.c
+	$(SHELL) $(srcdir)/../move-if-change tmp-condmd.c build/gencondmd.cc
 	$(SHELL) $(srcdir)/../move-if-change tmp-cond.md insn-conditions.md
 	$(SHELL) $(srcdir)/../move-if-change tmp-constrs.h tm-constrs.h
 	$(SHELL) $(srcdir)/../move-if-change tmp-c-target-hooks-def.h \
-	$(SHELL) $(srcdir)/../move-if-change tmp-dfatab.c     insn-dfatab.c
+	$(SHELL) $(srcdir)/../move-if-change tmp-dfatab.c     insn-dfatab.cc
 	$(SHELL) $(srcdir)/../move-if-change tmp-d-target-hooks-def.h \
 	$(SHELL) $(srcdir)/../move-if-change tmp-fixinc_list fixinc_list
 	$(SHELL) $(srcdir)/../move-if-change tmp-generic-match.c \
@@ -980,20 +980,20 @@ ${QMTEST_DIR} stamp-qmtest:
 	$(SHELL) $(srcdir)/../move-if-change tmp-gimple-match.c \
 	$(SHELL) $(srcdir)/../move-if-change tmp-gtype.state gtype.state
 	$(SHELL) $(srcdir)/../move-if-change tmp-header-vars b-header-vars
-	$(SHELL) $(srcdir)/../move-if-change tmp-latencytab.c insn-latencytab.c
+	$(SHELL) $(srcdir)/../move-if-change tmp-latencytab.c insn-latencytab.cc
 	$(SHELL) $(srcdir)/../move-if-change tmp-macro_list macro_list
 	$(SHELL) $(srcdir)/../move-if-change tmp-mddeps mddeps.mk
-	$(SHELL) $(srcdir)/../move-if-change tmp-min-modes.c min-insn-modes.c
+	$(SHELL) $(srcdir)/../move-if-change tmp-min-modes.c min-insn-modes.cc
 	$(SHELL) $(srcdir)/../move-if-change tmp-mlib.h multilib.h
-	$(SHELL) $(srcdir)/../move-if-change tmp-modes.c insn-modes.c
+	$(SHELL) $(srcdir)/../move-if-change tmp-modes.c insn-modes.cc
 	$(SHELL) $(srcdir)/../move-if-change tmp-modes.h insn-modes.h
 	$(SHELL) $(srcdir)/../move-if-change tmp-modes-inline.h \
 	$(SHELL) $(srcdir)/../move-if-change tmp-omp-device-properties.h \
-	$(SHELL) $(srcdir)/../move-if-change tmp-opinit.c insn-opinit.c
+	$(SHELL) $(srcdir)/../move-if-change tmp-opinit.c insn-opinit.cc
 	$(SHELL) $(srcdir)/../move-if-change tmp-opinit.h insn-opinit.h
 	$(SHELL) $(srcdir)/../move-if-change tmp-optionlist optionlist
 	$(SHELL) $(srcdir)/../move-if-change tmp-options.h options.h
-	$(SHELL) $(srcdir)/../move-if-change tmp-preds.c insn-preds.c
+	$(SHELL) $(srcdir)/../move-if-change tmp-preds.c insn-preds.cc
 	$(SHELL) $(srcdir)/../move-if-change tmp-preds.h tm-preds.h
 	$(SHELL) $(srcdir)/../move-if-change tmp-specs.h specs.h
 	$(SHELL) $(srcdir)/../move-if-change tmp-target-hooks-def.h \
@@ -1349,7 +1349,7 @@ AR_OBJS = file-find.o
 # as well.
 # a target to build even if it is up-to-date.  So we must verify that
 # at build time.
-		-Atmp-attrtab.c -Dtmp-dfatab.c -Ltmp-latencytab.c
+		-Atmp-attrtab.c -Dtmp-dfatab.c -Ltmp-latencytab.cc
 	  A) tr -d '\015' < tmp-tm.texi > tmp2-tm.texi ;; \
 AUTOCONF = autoconf
 # autoconf inserts -DCROSS_DIRECTORY_STRUCTURE if we are building a
@@ -1563,7 +1563,7 @@ C_COMMON_OBJS = c-family/c-common.o c-family/c-cppbuiltin.o c-family/c-dump.o \
 	cd $(toplevel_builddir) && $(MAKE) all-target-libgcc
 	  cd ../prev-gcc && \
 	-cd testsuite && rm -f *.out *.gcov *$(coverageexts)
-	-cd testsuite && rm -f x *.x *.x? *.exe *.rpo *.o *.s *.S *.c
+	-cd testsuite && rm -f x *.x *.x? *.exe *.rpo *.o *.s *.S *.cc
 CET_HOST_FLAGS = @CET_HOST_FLAGS@
 # c-family and .def files. All other files are flattened to a single directory.
   c-family/c-attribs.o c-family/c-warn.o c-family/c-spellcheck.o
@@ -1848,9 +1848,9 @@ d/d-target-hooks-def.h: s-d-target-hooks-def-h; @true
 DECNUM = $(srcdir)/../libdecnumber
 DECNUMFMT = $(srcdir)/../libdecnumber/$(enable_decimal_float)
 DECNUMINC = -I$(DECNUM) -I$(DECNUMFMT) -I../libdecnumber
-default-c.o: config/default-c.c
+default-c.o: config/default-c.cc
 # Default cross SYSTEM_HEADER_DIR, to be overridden by targets.
-default-d.o: config/default-d.c
+default-d.o: config/default-d.cc
 # Default native SYSTEM_HEADER_DIR, to be overridden by targets.
 # Default values for variables overridden in Makefile fragments.
 # defined in this file into the environment (and thus recursive makes).
@@ -2045,7 +2045,7 @@ D_TARGET_OBJS=@d_target_objs@
 # Dump a specs file to make -B./ read these specs over installed ones.
 DUMPFILE_H = $(srcdir)/../libcpp/include/line-map.h dumpfile.h
 	dumpfile.o \
-dumpvers: dumpvers.c
+dumpvers: dumpvers.cc
 # Duplicate entry to handle renaming of gccinstall
 # Duplicate entry to handle renaming of gccinstall.dvi
 # Duplicate entry to handle renaming of gccinstall.info
@@ -2488,7 +2488,7 @@ GCC_INSTALL_NAME := $(shell echo gcc|sed '$(program_transform_name)')
 #GCC is distributed in the hope that it will be useful,
 #GCC is free software; you can redistribute it and/or modify
 gcc-nm$(exeext): gcc-nm.o $(AR_OBJS) $(LIBDEPS)
-gcc-nm.c: gcc-ar.c
+gcc-nm.c: gcc-ar.cc
 gcc.o: $(BASEVER)
 GCC_OBJS = gcc.o gcc-main.o ggc-none.o
 GCC_PASSES=xgcc$(exeext) specs
@@ -2497,11 +2497,11 @@ gcc.pod: invoke.texi cppenv.texi cppopts.texi gcc-vers.texi
 gcc.pot: po/gcc.pot
  gcc-ranlib$(exeext) \
 gcc-ranlib$(exeext): gcc-ranlib.o $(AR_OBJS) $(LIBDEPS)
-gcc-ranlib.c: gcc-ar.c
+gcc-ranlib.c: gcc-ar.cc
 	gcc-rich-location.o \
 	  GCC_RUNTEST_PARALLELIZE_DIR=`${PWD_COMMAND}`/$(TESTSUITEDIR)/$(check_p_tool)-parallel ; \
 # GCC_RUNTEST_PARALLELIZE_DIR var in the environment and runtest_file_p
-gcc.srcextra: gengtype-lex.c
+gcc.srcextra: gengtype-lex.cc
 # GCC's selftests.
 GCC_TARGET_INSTALL_NAME := $(target_noncanonical)-$(shell echo gcc|sed '$(program_transform_name)')
 	"gcc_tooldir=$(gcc_tooldir)" \
@@ -2540,7 +2540,7 @@ generated-manpages: man
 # Generate header and source files from the machine description,
 # generate the 'build fragment' b-header-vars
 # generator program only if the machine description has changed,
-	    					generic-match.c
+	    					generic-match.cc
 generic-match.c: s-match generic-match-head.c ; @true
 	generic-match.o \
 generic-match.o-warn = -Wno-unused
@@ -2582,7 +2582,7 @@ GIMPLE_H = gimple.h gimple.def gsstruct.def $(VEC_H) \
 	gimple-iterator.o \
 	gimple-laddress.o \
 	gimple-low.o \
-	    					gimple-match.c
+	    					gimple-match.cc
        gimple-match.c generic-match.c \
 gimple-match.c: s-match gimple-match-head.c ; @true
 	gimple-match.o \
@@ -2829,7 +2829,7 @@ insn-attrtab.c insn-dfatab.c insn-latencytab.c: s-attrtab ; @true
 	insn-attrtab.o \
 	insn-automata.o \
   insn-conditions.md
-	  insn-conditions.md -htmp-opinit.h -ctmp-opinit.c
+	  insn-conditions.md -htmp-opinit.h -ctmp-opinit.cc
 insn-conditions.md: s-condmd; @true
 			  insn-config.h insn-flags.h insn-target-def.h
 	insn-dfatab.o \
@@ -2851,7 +2851,7 @@ insn-opinit.c insn-opinit.h: s-opinit ; @true
 	insn-opinit.o \
  insn-output.c insn-recog.c insn-emit.c insn-extract.c insn-peep.c \
 	insn-output.o \
-			  insn-peep.c insn-recog.c
+			  insn-peep.c insn-recog.cc
 	insn-peep.o \
 insn-preds.c: s-preds; @true
 	insn-preds.o \
@@ -3546,7 +3546,7 @@ REVISION_s  := \
 	-rm -f *.asm
 	-rm -f auto-host.h auto-build.h
 	-rm -f build/*
-	-rm -f *-checksum.c
+	-rm -f *-checksum.cc
 	-rm -f collect collect2 mips-tfile mips-tdump
 	-rm -f config.h tconfig.h bconfig.h tm_p.h tm.h
 	-rm -f config.status config.run config.cache config.bak
@@ -3582,7 +3582,7 @@ REVISION_s  := \
 	-@rm -f ./site.tmp
 	-@rm -f ./site.tmp
 	-rm -f specs $(SPECS)
-	-rm -f specs.h options.c options.h options-save.c
+	-rm -f specs.h options.c options.h options-save.cc
 	-rm -f */stamp-* */tmp-*
 	-rm -f s-* tmp-* stamp-* stmp-*
 	-rm -f TAGS */TAGS
@@ -3725,7 +3725,7 @@ SHELL = @SHELL@
 	shrink-wrap.o \
 # significant - do not remove it.
 	@# significantly reduces build times.
-simple_generated_c	= $(simple_rtl_generated_c) insn-enums.c
+simple_generated_c	= $(simple_rtl_generated_c) insn-enums.cc
 simple_generated_h	= $(simple_rtl_generated_h) insn-constants.h
 simple_rtl_generated_c	= insn-automata.c insn-emit.c \
 simple_rtl_generated_h	= insn-attr.h insn-attr-common.h insn-codes.h \
@@ -4067,8 +4067,8 @@ TM_MULTILIB_EXCEPTIONS_CONFIG=@TM_MULTILIB_EXCEPTIONS_CONFIG@
 tmpdir = /tmp
 					     > tmp-d-target-hooks-def.h
 tm_p_file_list=@tm_p_file_list@
-	    > tmp-generic-match.c
-	    > tmp-gimple-match.c
+	    > tmp-generic-match.cc
+	    > tmp-gimple-match.cc
 tm_p.h: cs-tm_p.h ; @true
 TM_P_H    = tm_p.h    $(tm_p_file_list)
 tm_p_include_list=@tm_p_include_list@

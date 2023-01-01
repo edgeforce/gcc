@@ -339,7 +339,7 @@
 	* gfortran.h (gfc_warning): Now returns bool. Add overload that
 	accepts opt.
 	(gfc_warning_1): Declare.
-	* error.c
+	* error.cc
 	(pp_warning_buffer,warningcount_buffered,werrorcount_buffered):	New.
 	(gfc_buffer_error): Set pp_warning_buffer.flush_p.
 	(gfc_clear_pp_buffer): New.
@@ -675,7 +675,7 @@
 	* mathbuiltins.def (OTHER_BUILTIN): Define built-ins for logb,
 	remainder, rint and signbit.
 	* trans-decl.c (save_fp_state, restore_fp_state): Move to
-	trans-intrinsic.c
+	trans-intrinsic.cc
 	(gfc_generate_function_code): Use new names for these two functions.
 	* trans-expr.c (gfc_conv_function_expr): Catch IEEE functions to
 	emit code from the front-end.

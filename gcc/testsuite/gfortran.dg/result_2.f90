@@ -1,6 +1,6 @@
 ! { dg-do compile }
 !
-! PR 50379: ICE in gfc_typenode_for_spec at fortran/trans-types.c
+! PR 50379: ICE in gfc_typenode_for_spec at fortran/trans-types.cc
 !
 ! Contributed by Vittorio Zecca <zeccav@gmail.com>
 

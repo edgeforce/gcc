@@ -1,4 +1,4 @@
-/* Header file for modules that link with gcc.c
+/* Header file for modules that link with gcc.cc
    Copyright (C) 1999-2016 Free Software Foundation, Inc.
 
 This file is part of GCC.

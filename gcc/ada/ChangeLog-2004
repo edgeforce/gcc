@@ -442,7 +442,7 @@
 
 2004-11-18  Arnaud Charlet  <charlet@adacore.com>
 
-	* adaint.h, adaint.c
+	* adaint.h, adaint.cc
 	(__gnat_portable_spawn): Fix cast of spawnvp third parameter
 	to avoid warnings.
 	Add also a cast to kill another warning.

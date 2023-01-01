@@ -464,7 +464,7 @@
 2012-12-17  James Greenhalgh  <james.greenhalgh@arm.com>
 	    Tejas Belagod  <tejas.belagod@arm.com>
 
-	* config/aarch64/aarch64.c
+	* config/aarch64/aarch64.cc
 	(aarch64_autovectorize_vector_sizes): New.
 	(TARGET_VECTORIZE_AUTOVECTORIZE_VECTOR_SIZES): Define.
 
@@ -1076,7 +1076,7 @@
 	(aarch64_tbl1<mode>): Likewise.
 	(aarch64_tbl2v16qi): Likewise.
 	(aarch64_combinev16qi): New.
-	* config/aarch64/aarch64.c
+	* config/aarch64/aarch64.cc
 	(aarch64_vectorize_vec_perm_const_ok): New.
 	(aarch64_split_combinev16qi): Likewise.
 	(MAX_VECT_LEN): Define.
@@ -1107,7 +1107,7 @@
 
 2012-12-05  James Greenhalgh  <james.greenhalgh@arm.com>
 
-	* config/aarch64/aarch64-builtins.c
+	* config/aarch64/aarch64-builtins.cc
 	(aarch64_builtin_vectorized_function): New.
 	* config/aarch64/aarch64-protos.h
 	(aarch64_builtin_vectorized_function): Declare.
@@ -2775,7 +2775,7 @@
 2012-11-20  James Greenhalgh  <james.greenhalgh@arm.com>
 	    Tejas Belagod  <tejas.belagod@arm.com>
 
-	* config/aarch64/aarch64-builtins.c
+	* config/aarch64/aarch64-builtins.cc
 	(aarch64_simd_builtin_type_bits): Rename to...
 	(aarch64_simd_builtin_type_mode): ...this, make sequential.
 	(aarch64_simd_builtin_datum): Refactor members.
@@ -2823,7 +2823,7 @@
 	(aarch64_sync_loop_insns): Likewise.
 	(struct aarch64_sync_generator): Remove.
 	(enum aarch64_sync_generator_tag): Likewise.
-	* config/aarch64/aarch64.c
+	* config/aarch64/aarch64.cc
 	(aarch64_legitimize_sync_memory): Remove function.
 	(aarch64_emit): Likewise.
 	(aarch64_insn_count): Likewise.
@@ -2908,7 +2908,7 @@
 
 2012-11-19  Sofiane Naci  <sofiane.naci@arm.com>
 
-	* config/aarch64/aarch64.c
+	* config/aarch64/aarch64.cc
 	(aarch64_output_mi_thunk): Refactor to generate RTL patterns.
 
 2012-11-19  Mans Rullgard  <mans@mansr.com>
@@ -6145,7 +6145,7 @@
 2012-10-26  Alexander Ivchenko  <alexander.ivchenko@intel.com>
 	    Uros Bizjak  <ubizjak@gmail.com>
 
-	* common/config/i386/i386-common.c
+	* common/config/i386/i386-common.cc
 	(OPTION_MASK_ISA_FXSR_SET): New.
 	(OPTION_MASK_ISA_XSAVE_SET): Likewise.
 	(OPTION_MASK_ISA_XSAVEOPT_SET): Likewise.
@@ -14385,7 +14385,7 @@
 	(double_int_minus_one_p): Likewise.
 	(double_int_equal_p): Likewise.
 	(double_int_popcount): Likewise.
-	* hash-table.c
+	* hash-table.cc
 	(double_int_mask): Reuse implementation for double_int::mask.
 	(double_int_max_value): Likewise.
 	(double_int_min_value): Likewise.
@@ -15083,7 +15083,7 @@
 2012-08-10  Richard Guenther  <rguenther@suse.de>
 
 	PR tree-optimization/54109
-	* tree-ssa-forwprop.c
+	* tree-ssa-forwprop.cc
 	(forward_propagate_addr_into_variable_array_index): Remove.
 	(forward_propagate_addr_expr_1): Adjust.
 
@@ -19549,7 +19549,7 @@
 	(MAY_HAVE_DEBUG_INSNS): Define as flag_var_tracking_assignments
 	instead of no-longer-available tree.h's MAY_HAVE_DEBUG_STMTS.
 	(dump_reg_info, dump_flow_info): Remove prototypes.
-	* bb-reorder.c (set_edge_can_fallthru_flag): Move from cfganal.c
+	* bb-reorder.c (set_edge_can_fallthru_flag): Move from cfganal.cc
 	to here, the only user.  Make static.
 	(reorder_basic_blocks): Call dump_reg_info before dump_flow_info.
 	* cfg.c: Do not include tm.h, tree.h, rtl.h, hard-reg-set.h, regs.h,
@@ -19578,7 +19578,7 @@
 	(inverted_post_order_compute): Use FOR_ALL_BB.
 	* cfgrtl.c (dump_flow_info): Moved from cfg.c.
 	Do not call dump_reg_info.
-	(debug_flow_info): Moved from cfg.c
+	(debug_flow_info): Moved from cfg.cc
 	(dump_bb_info): Moved from cfg.c.  Take 'verbose' argument
 	to avoid looking at TDF_* flags from tree-pass.h.
 	(flow_active_insn_p, forwarder_block_p, can_fallthru,
@@ -25197,7 +25197,7 @@
 	(cgraph_create_node_1): Rename to ...
 	(cgraph_create_empty_node): ... this one; export.
 	(cgraph_create_node): Update.
-	(cgraph_set_call_stmt_including_clones): Move to cgraphclones.c
+	(cgraph_set_call_stmt_including_clones): Move to cgraphclones.cc
 	(cgraph_create_edge_including_clones): Likewise.
 	(cgraph_find_replacement_node): Likewise.
 	(cgraph_clone_edge): Likewise.
@@ -25205,10 +25205,10 @@
 	(clone_function_name): Likewise.
 	(cgraph_create_virtual_clone): Likewise.
 	(cgraph_remove_node_and_inline_clones): Likewise.
-	(cgraph_redirect_edge_call_stmt_to_callee): Move here from cgraphunit.c
+	(cgraph_redirect_edge_call_stmt_to_callee): Move here from cgraphunit.cc
 	* cgraph.h: Reorder declarations so they match file of origin.
 	(cgraph_create_empty_node): Declare.
-	* cgraphunit.c (update_call_expr): Move to cgraphclones.c
+	* cgraphunit.c (update_call_expr): Move to cgraphclones.cc
 	(cgraph_copy_node_for_versioning): Likewise.
 	(cgraph_function_versioning): Likewise.
 	(cgraph_materialize_clone): Likewise.
@@ -26537,16 +26537,16 @@
 
 012-04-30  Jan Hubicka  <jh@suse.cz>
 
-	* cgraph.c (ld_plugin_symbol_resolution_names): Move to symtab.c
-	(cgraph_asm_nodes, cgraph_asm_last_node): Move to cgraphunit.c
+	* cgraph.c (ld_plugin_symbol_resolution_names): Move to symtab.cc
+	(cgraph_asm_nodes, cgraph_asm_last_node): Move to cgraphunit.cc
 	(cgraph_add_to_same_comdat_group): Remove.
 	(cgraph_add_asm_node): Move to cgraphunit.c.
-	(cgraph_make_decl_local): Move to symtab.c
+	(cgraph_make_decl_local): Move to symtab.cc
 	(cgraph_make_node_local_1): Update.
 	(cgraph_can_remove_if_no_direct_calls_and): Update.
 	(used_from_object_file_p): Update.
-	(resolution_used_from_other_file_p): Move to symtab.c
-	(cgraph_used_from_object_file_p): move to symtab.c
+	(resolution_used_from_other_file_p): Move to symtab.cc
+	(cgraph_used_from_object_file_p): move to symtab.cc
 	(verify_cgraph_node): Verify same comdat groups.
 	* cgraph.h (cgraph_asm_node): Rename to ...
 	(asm_node): ... this one.
@@ -26616,7 +26616,7 @@
 	(ld_plugin_symbol_resolution_names): New.
 	(symtab_add_to_same_comdat_group): New.
 	(symtab_dissolve_same_comdat_group_list): New.
-	(resolution_used_from_other_file_p): Move here from cgraph.c
+	(resolution_used_from_other_file_p): Move here from cgraph.cc
 	(symtab_used_from_object_file_p): New.
 	(symtab_make_decl_local): New.
 	* passes.c (register_pass): Update comments.
@@ -26721,7 +26721,7 @@
 	Strip "<built-in>" loc from displayed expansion context
 	* input.c (expand_location_1): When expanding to spelling location
 	in a context of a macro expansion, skip reserved system header
-	locations.  Update comments.  * tree-diagnostic.c
+	locations.  Update comments.  * tree-diagnostic.cc
 	(maybe_unwind_expanded_macro_loc): Likewise.
 
 	Make expand_location resolve to locus in main source file
@@ -27067,7 +27067,7 @@
 	rest_of_compilation.
 	(clone_of_p, verify_edge_count_and_frequency, cgraph_debug_gimple_stmt,
 	verify_edge_corresponds_to_fndecl, verify_cgraph_node, verify_cgraph):
-	Move to cgraph.c
+	Move to cgraph.cc
 	(cgraph_inline_p): Remove.
 	(cgraph_preserve_function_body_p): Move to ipa-inline-transform.
 	(init_cgraph): Add comment.
@@ -27076,11 +27076,11 @@
 	* cgraph.c: Update toplevel comment.
 	(clone_of_p, verify_edge_count_and_frequency, cgraph_debug_gimple_stmt,
 	verify_edge_corresponds_to_fndecl, verify_cgraph_node, verify_cgraph):
-	Move fere from cgraphunit.c
+	Move fere from cgraphunit.cc
 	(cgraph_mark_force_output_node): Move to cgraph.h
 	* cgraph.h: Reorder so the comments match the function placement.
 	(cgraph_analyze_function, cgraph_decide_is_function_needed): Remove.
-	(cgraph_mark_force_output_node): Move here from cgraph.c
+	(cgraph_mark_force_output_node): Move here from cgraph.cc
 	* tree.c (free_lang_data): Do not clear analyze_expr hook.
 	* ipa-inline-transform.c (preserve_function_body_p): New function.
 	(inline_transform): Update.
@@ -27519,7 +27519,7 @@
 	(varpool_enqueue_needed_node): Remove.
 	(varpool_mark_needed_node): Remove.
 	(varpool_reset_queue): Remove.
-	(varpool_finalize_decl): Move to cgraphunit.c
+	(varpool_finalize_decl): Move to cgraphunit.cc
 	(varpool_analyze_node): New functions based on former
 	varpool_analyze_pending_decls.
 	(varpool_analyze_pending_decls): Remove.

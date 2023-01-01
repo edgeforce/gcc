@@ -837,10 +837,10 @@ outest "$b-361 doc double !-c  -o" $mult "-o dir/$b.exe -fdump-rtl-final -fstack
 # gcc foo.c -o dir/foo ...
 outest "$b-362 doc single !-c  -o" $sing "-o dir/$b-0 -fdump-rtl-final -fstack-usage $gsplit_dwarf" {dir/} {{-0.c.???r.final -0.su !!$gspd -0.dwo !0 -0} {}}
 
-# gcc -save-temps -S foo.c
+# gcc -save-temps -S foo.cc
 outest "$b-363 doc single  -S -st" $sing "-save-temps -S" {} {{-0.i -0.s}}
 
-# gcc -save-temps -dumpbase save-foo -c foo.c
+# gcc -save-temps -dumpbase save-foo -c foo.cc
 outest "$b-364 doc single  -c -st -db" $sing "-save-temps -dumpbase $b -c" {} {{.i .s -0.o}}
 
 # gcc foo.c -c -o dir/foo.o -dumpbase alt/foo \

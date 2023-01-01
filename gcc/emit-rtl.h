@@ -1,4 +1,4 @@
-/* Exported functions from emit-rtl.c
+/* Exported functions from emit-rtl.cc
    Copyright (C) 2004-2016 Free Software Foundation, Inc.
 
 This file is part of GCC.

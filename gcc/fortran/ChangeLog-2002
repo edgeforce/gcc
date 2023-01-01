@@ -106,7 +106,7 @@
 
 2002-10-31  Paul Brook  <paul@nowt.org>
 
-	* f95-tree.c: Remove tree copying stuff that's now in gimple.c
+	* f95-tree.c: Remove tree copying stuff that's now in gimple.cc
 	* trans-expr.c (g95_conv_component_ref): Handle character string
 	components.
 	(g95_conv_string_parameter): Ditto.
@@ -275,7 +275,7 @@
 
 	* Make-lang.in (F95_ADDITIONAL_OBJS): Add tree_alias_comon.o.
 	(gt-f95-trans-types.h): Add dependancy information.
-	* config-lang.in (gtfiles): Add trans-types.c
+	* config-lang.in (gtfiles): Add trans-types.cc
 	* f95-lang.c (g95_be_parse_file): Pass error and warning counts
 	back to top-level code.
 	* trans-array.c, trans-types.c: Change format of array descriptor.

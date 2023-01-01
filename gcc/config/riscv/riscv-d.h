@@ -15,7 +15,7 @@ You should have received a copy of the GNU General Public License
 along with GCC; see the file COPYING3.  If not see
 <http://www.gnu.org/licenses/>.  */
 
-/* Routines implemented in riscv-d.cc  */
+/* Routines implemented in riscv-d  */
 extern void riscv_d_target_versions (void);
 extern void riscv_d_register_target_info (void);
 

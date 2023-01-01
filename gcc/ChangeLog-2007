@@ -908,7 +908,7 @@
 	(set_prologue_iterations): New declaration.
 	* tree-vect-analyze.c (vect_analyze_loop_form): Update 
 	LOOP_VINFO_NITERS_UNCHANGED.
-	* tree-vect-transform.c
+	* tree-vect-transform.cc
 	(vect_estimate_min_profitable_iters): Add new parameter and
 	code to  check if run time cost model test is needed.
 	Remove code that adds builtin vectorization cost to scalar
@@ -2458,7 +2458,7 @@
 	* tree-ssa-pre.c: Include params.h.
 	(compute_partial_antic_aux): Use PARAM_MAX_PARTIAL_ANTIC_LENGTH
 	to limit the maximum length of the PA set for a given block.
-	* Makefile.in: Add a dependency upon params.h for tree-ssa-pre.c
+	* Makefile.in: Add a dependency upon params.h for tree-ssa-pre.cc
 	* params.def (PARAM_MAX_PARTIAL_ANTIC_LENGTH): New parameter.
 
 2007-11-05  Nathan Sidwell  <nathan@codesourcery.com>
@@ -3109,7 +3109,7 @@
 
 	* ipa-type-escape.h: Expose function
 	is_array_access_through_pointer_and_index.
-	* ipa-type-escape.c
+	* ipa-type-escape.cc
 	(is_array_access_through_pointer_and_index):
 	Add three new parameters. Add support of
 	POINTER_PLUS_EXPR tree code.
@@ -5135,7 +5135,7 @@
 	fold_binary.
 	* fold-const.c (fold_undefer_overflow_warnings): Don't warn if
 	TREE_NO_WARNING is set on the statement.
-	* tree-ssa-forwprop.c
+	* tree-ssa-forwprop.cc
 	(tree_ssa_forward_propagate_single_use_vars): Don't test
 	TREE_NO_WARNING when calling fold_undefer_overflow_warnings.
 	* tree-cfg.c (fold_cond_expr_cond): Likewise.
@@ -8808,7 +8808,7 @@
 	* config.gcc: Delete stanza for arm-semi-aof and
 	armel-semi-aof targets.
 	* config/arm/arm-protos.h
-	* config/arm/arm.c
+	* config/arm/arm.cc
 	* config/arm/arm.h: Delete all #ifdef AOF_ASSEMBLER blocks;
 	make all #ifndef AOF_ASSEMBLER blocks unconditional.  Also
 	delete aof_pic_label and remove mention of AOF in comments.
@@ -9082,7 +9082,7 @@
 	internal macro. Default alignment factor for csect directives, chosen
 	to match what BIGGEST_ALIGNMENT allows.
 	(DATA_SECTION_ASM_OP): Use it.
-	* config/rs6000/rs6000.c
+	* config/rs6000/rs6000.cc
 	(rs6000_xcoff_output_readonly_section_asm_op):
 	Use XCOFF_CSECT_DEFAULT_ALIGNMENT_STR.
 	(rs6000_xcoff_output_readwrite_section_asm_op): Likewise.
@@ -9767,7 +9767,7 @@
 	TARGET_USE_BLOCKS_FOR_CONSTANT_P): Likewise.
 	* config/i386/winnt.c (i386_pe_valid_dllimport_attribute_p,
 	i386_pe_binds_local_p): Likewise.
-	* config/ia64/ia64.c
+	* config/ia64/ia64.cc
 	(ia64_first_cycle_multipass_dfa_lookahead_guard_spec,
 	ia64_needs_block_p, ia64_in_small_data_p, ia64_mangle_type,
 	ia64_invalid_conversion, ia64_invalid_unary_op,
@@ -11117,7 +11117,7 @@
 	(vect_enhance_data_refs_alignment): Use
 	PARAM_VECT_MAX_VERSION_FOR_ALIGNMENT_CHECKS instead of
 	PARAM_VECT_MAX_VERSION_CHECKS.
-	* tree-vect-transform.c
+	* tree-vect-transform.cc
 	(vect_create_cond_for_alias_checks): New.
 	(vect_transform_loop): Add call to
 	vect_create_cond_for_alias_checks.
@@ -11938,9 +11938,9 @@
 	(expand_smod_pow2): Likewise.
 	(expand_divmod): Likewise.
 	(emit_store_flag): Likewise.
-	* tree-vect-patterns.c
+	* tree-vect-patterns.cc
 	(vect_pattern_recog_1): Likewise.
-	* tree-ssa-loop-prefetch.c
+	* tree-ssa-loop-prefetch.cc
 	(nontemporal_store_p): Likewise.
 	* tree-vect-transform.c (vect_model_reduction_cost): Likewise.
 	(vect_create_epilog_for_reduction): Likewise.
@@ -11951,12 +11951,12 @@
 	(vect_strided_load_supported): Likewise.
 	(vectorizable_load): Likewise.
 	* combine.c (simplify_comparison): Likewise.
-	* tree-vect-generic.c
+	* tree-vect-generic.cc
 	(type_for_widest_vector_mode): Likewise.
 	(expand_vector_operations_1): Likewise.
 	* config/spu/spu.c (spu_expand_mov): Likewise.
 	(spu_emit_vector_compare): Likewise.
-	* config/rs6000/rs6000.c
+	* config/rs6000/rs6000.cc
 	(rs6000_emit_vector_compare): Likewise.
 	* stmt.c (add_case_node): Likewise.
 	* reload1.c (gen_reload):
@@ -13164,10 +13164,10 @@
 
 2007-07-30  Jan Sjodin  <jan.sjodin@amd.com>
 
-	* tree-data-ref.c
+	* tree-data-ref.cc
 	(split_constant_offset): Enable split_constant_offset to extract
 	constants from other statements.
-	* tree-vect-transform.c
+	* tree-vect-transform.cc
 	(vect_create_addr_base_for_vector_ref): Generate data_ref_base
 	to a temp var. Force base_offset to be simple.
 
@@ -19541,7 +19541,7 @@
 2007-05-25  Andrew Pinski  <andrew_pinski@playstation.sony.com>
 
 	PR tree-opt/32090
-	* tree-ssa-forwprop.c
+	* tree-ssa-forwprop.cc
 	(forward_propagate_addr_into_variable_array_index): Remove
 	the lhs argument.  Use the type of def_rhs instead of lhs.
 	(forward_propagate_addr_expr_1): Update use of
@@ -19659,7 +19659,7 @@
 2007-05-25  Richard Guenther  <rguenther@suse.de>
 
 	PR tree-optimization/31982
-	* tree-ssa-forwprop.c
+	* tree-ssa-forwprop.cc
 	(forward_propagate_addr_into_variable_array_index): Handle arrays
 	with element size one.
 
@@ -21180,7 +21180,7 @@
 	* cgraphunit.c: Include gt-cgraphunit.h
 	(static_ctors, static_dtors): New static vars.
 	(record_cdtor_fn, build_cdtor, cgraph_build_cdtor_fns): New functions,
-	based on implementation in c-common.c
+	based on implementation in c-common.cc
 	(cgraph_finalize_function): Call record_cdtor_fn.
 	(cgraph_optimize): Call cgraph_build_cdtor_fns.
 	* decl.c (finish_function): Do not call c_record_cdtor_fn.
@@ -22822,7 +22822,7 @@
 	TREE_TYPE on the new node.
 	* c-decl.c (lang_tree_node): Use GENERIC_NEXT
 	instead of checking GIMPLE_TUPLE_P in chain_next.
-	* tree-vect-transform.c
+	* tree-vect-transform.cc
 	(get_initial_def_for_induction): Look at
 	PHI_RESULT_TREE for the type of the phi node.
 	(update_vuses_to_preheader): Use PHI_CHAIN
@@ -23705,7 +23705,7 @@
 	(set_memory_partition): Move from tree-flow-inline.h.
 	(mark_non_addressable): Only clear the set of symbols for the
 	partition if it exists.
-	(dump_memory_partitions): Move from tree-ssa-operands.c
+	(dump_memory_partitions): Move from tree-ssa-operands.cc
 	(debug_memory_partitions): Likewise.
 	(need_to_partition_p): New.
 	(dump_mem_ref_stats): New.
@@ -25777,7 +25777,7 @@
 	* toplev.h (get_random_seed, set_random_seed): ... these.
 	* tree.c (get_file_function_name): Use the former.
 	* opts.c (common_handle_option): Use the latter.
-	* toplev.c
+	* toplev.cc
 
 2007-03-13  Steven Bosscher  <steven@gcc.gnu.org>
 
@@ -26406,7 +26406,7 @@
 	within_stmt parameter.
 	* tree-ssa-propagate.c (fold_predicate_in): Update call to
 	vrp_evaluate_conditional.
-	* tree-ssa-threadedge.c
+	* tree-ssa-threadedge.cc
 	(record_temporary_equivalences_from_stmts_at_dest): Change
 	simplify parameter to take a second tree parameter.
 	(simplify_control_stmt_condition): Likewise.
@@ -27433,7 +27433,7 @@
 	* c-common.c (static_ctors): New variable.
 	(static_dtors): Likewise.
 	(c_record_cdtor_fn): New function.
-	(build_cdtor): Move from c-decl.c
+	(build_cdtor): Move from c-decl.cc
 	(c_build_cdtor_fns): New function.
 
 	* output.h (assemble_addr_to_section): Declare.
@@ -32436,7 +32436,7 @@
 	(compute_inline_parameters): New function.
 	(gate_inline_passes): New gate.
 	(pass_inline_parameters): New pass.
-	(apply_inline): Move here from tree-optimize.c
+	(apply_inline): Move here from tree-optimize.cc
 	(pass_apply_inline): New pass.
 	* ipa.c (cgraph_remove_unreachable_nodes): Verify cgraph after
 	transforming.
@@ -33367,8 +33367,8 @@
 	(TODO_update*): Renumber.
 	(pass_ipa_increase_alignment,
 	pass_ipa_function_and_variable_visibility): New passes.
-	* cgraphunit.c (cgraph_increase_alignment): Move to tree-vectorizer.c
-	(cgraph_function_and_variable_visibility): Move to ipa.c
+	* cgraphunit.c (cgraph_increase_alignment): Move to tree-vectorizer.cc
+	(cgraph_function_and_variable_visibility): Move to ipa.cc
 	(cgraph_optimize): Don't call cgraph_function_and_variable_visibility,
 	cgraph_increase_alignment.
 	* ipa-inline.c (cgraph_decide_inlining): Don't push timevar.
@@ -33376,11 +33376,11 @@
 	calling tree-inline.
 	(cgraph_early_inlining): Do not call cgraph_remove_unreachable_nodes.
 	(pass_ipa_inline, pass_early_ipa_inlining): Set TODO_remove_functions
-	* tree-vectorizer.c (increase_alignment): Move here from cgraphunit.c
+	* tree-vectorizer.c (increase_alignment): Move here from cgraphunit.cc
 	(gate_increase_alignment): New function.
 	(pass_ipa_increase_alignment): New pass.
 	* ipa.c: Inline tree-pass.h and timevar.h
-	(function_and_variable_visibility): Move here from cgraphunit.c
+	(function_and_variable_visibility): Move here from cgraphunit.cc
 	* tree-optimize.c (pass_early_local_passes): Add TODO_remove_functions.
 	* passes.c (init_optimization_passes): Add the two new passes.
 	(execute_todo): Handle cgraph_remove_functions.
@@ -33477,12 +33477,12 @@
 2007-01-06  Jan Hubicka  <jh@suse.cz>
 
 	* tree-pass.h (pass_build_cgraph_edges): Declare.
-	* cgraphunit.c (record_refernece): Move to cgraphbuild.c
+	* cgraphunit.c (record_refernece): Move to cgraphbuild.cc
 	(visited_nodes): Remove.
 	(cgraph_create_edges): Move to cgraphbuild.c; rename to
 	build_cgrpah_edges; make visited_nodes local.
 	(cgraph_process_new_functions): DO not call initialize_inline_failed.
-	(record_references_in_initializer): Move to cgraphbuild.c
+	(record_references_in_initializer): Move to cgraphbuild.cc
 	(initialize_inline_failed, rebuild_cgraph_edges,
 	pass_rebuild_cgraph_edges): Move to cgraphbuild.c.
 	(verify_cgraph_node): Make visited_nodes local.

@@ -318,7 +318,7 @@ enum reg_class
    They give nonzero only if REGNO is a hard reg of the suitable class
    or a pseudo reg currently allocated to a suitable hard reg.
    Since they use reg_renumber, they are safe only once reg_renumber
-   has been allocated, which happens in reginfo.cc during register
+   has been allocated, which happens in reginfo during register
    allocation.  */
 
 #ifndef REG_OK_STRICT
@@ -546,7 +546,7 @@ do {									     \
 
 #define NO_FUNCTION_CSE 1
 
-/* According expr.cc, a value of around 6 should minimize code size, and
+/* According expr, a value of around 6 should minimize code size, and
    for the MN10300 series, that's our primary concern.  */
 #define MOVE_RATIO(speed) 6
 
@@ -624,7 +624,7 @@ do {									     \
 }
 
 /* Print an instruction operand X on file FILE.
-   look in mn10300.cc for details */
+   look in mn10300 for details */
 
 #define PRINT_OPERAND(FILE, X, CODE) \
   mn10300_print_operand (FILE, X, CODE)

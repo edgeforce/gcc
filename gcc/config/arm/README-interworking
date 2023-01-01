@@ -667,7 +667,7 @@ environment:
 *Step Two
      Compile the DLL source code:
 
-            arm-pe-gcc -O2 -c dll.c
+            arm-pe-gcc -O2 -c dll.cc
 
 *Step Three
      Use `dlltool' to create an exports file and a library file:
@@ -682,7 +682,7 @@ environment:
 *Step Five
      Compile the program's source code:
 
-            arm-pe-gcc -O2 -c prog.c
+            arm-pe-gcc -O2 -c prog.cc
 
 *Step Six
      Link together the program and the DLL's library file:
@@ -730,7 +730,7 @@ used.
 *Step Five
      Compile the program's source code, this is the same as before:
 
-            arm-pe-gcc -O2 -c prog.c
+            arm-pe-gcc -O2 -c prog.cc
 
 *Step Six
      Link together the program and the DLL's library file, passing the

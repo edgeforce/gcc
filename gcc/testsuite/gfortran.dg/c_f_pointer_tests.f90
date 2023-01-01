@@ -36,7 +36,7 @@ module c_f_pointer_tests
     type(myF90Derived), dimension(1:10), target :: tmpArray
 
     call c_f_pointer(myCDerived, myF90Type)
-    ! make sure numbers are ok.  initialized in c_f_tests_driver.c
+    ! make sure numbers are ok.  initialized in c_f_tests_driver.cc
     if(myF90Type%cInt .ne. 1) then
        STOP 1
     endif

@@ -269,7 +269,7 @@ func main() {
 			testExpr(b, pae+"["+cni+"]")
 
 			// Slice operation.
-			// Low index 0 is a special case in ggen.c
+			// Low index 0 is a special case in ggen.cc
 			// so test both 0 and 1.
 			testExpr(b, pae+"[0:"+cni+"]")
 			testExpr(b, pae+"[1:"+cni+"]")

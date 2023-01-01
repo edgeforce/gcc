@@ -32,14 +32,14 @@
   { "arch", "%{!misa=*:-misa=%(VALUE)}" }, \
 
 /* Assembler supports '-v' option; handle similar to
-   '../../gcc.cc:asm_options', 'HAVE_GNU_AS'.  */
+   '../../gcc:asm_options', 'HAVE_GNU_AS'.  */
 #define ASM_SPEC "%{v}"
 
 #define STARTFILE_SPEC "%{mmainkernel:crt0.o%s}"
 
 #define TARGET_CPU_CPP_BUILTINS() nvptx_cpu_cpp_builtins ()
 
-/* Avoid the default in ../../gcc.cc, which adds "-pthread", which is not
+/* Avoid the default in ../../gcc, which adds "-pthread", which is not
    supported for nvptx.  */
 #define GOMP_SELF_SPECS ""
 

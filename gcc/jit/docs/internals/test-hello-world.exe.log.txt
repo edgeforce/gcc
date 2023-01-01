@@ -88,7 +88,7 @@ JIT:     configure_time_options[1]: -march=x86-64
 JIT:    exiting: void gcc::jit::playback::context::make_fake_args(vec<char*>*, const char*, vec<gcc::jit::recording::requested_dump>*)
 JIT:    entering: toplev::main
 JIT:     argv[0]: ./test-hello-world.c.exe
-JIT:     argv[1]: /tmp/libgccjit-CKq1M9/fake.c
+JIT:     argv[1]: /tmp/libgccjit-CKq1M9/fake.cc
 JIT:     argv[2]: -fPIC
 JIT:     argv[3]: -O3
 JIT:     argv[4]: -g

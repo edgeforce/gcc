@@ -20,7 +20,7 @@
 # along with GCC; see the file COPYING3.  If not see
 # <http://www.gnu.org/licenses/>.
 
-# TODO: Extract riscv_subset_t from riscv-common.cc and make it can be compiled
+# TODO: Extract riscv_subset_t from riscv-common and make it can be compiled
 #       standalone to replace this script, that also prevents us implementing
 #       that twice and keep sync again and again.
 

@@ -263,7 +263,7 @@
 	* Make-lang.in (jit_OBJS): Drop jit/internal-api.o.
 	Add jit/jit-recording.o and jit/jit-playback.o.
 
-	* internal-api.c: Delete, moving content to new files jit-recording.c
+	* internal-api.c: Delete, moving content to new files jit-recording.cc
 	and jit-playback.c.
 	* internal-api.h: Delete, moving content to new files
 	jit-common.h, jit-playback.h, jit-recording.h.
@@ -723,7 +723,7 @@
 2014-08-08  David Malcolm  <dmalcolm@redhat.com>
 
 	* TODO.rst: Function ptrs are done.
-	* internal-api.c
+	* internal-api.cc
 	(gcc::jit::recording::context::new_function_ptr_type): New method.
 	(gcc::jit::recording::context::new_call_through_ptr): New method.
 	(gcc::jit::recording::memento_of_get_pointer::make_debug_string):

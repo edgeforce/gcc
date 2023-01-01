@@ -27,7 +27,7 @@
    The PIPELINE_MODEL is the pipeline model of the micro-arch, represented as a
    string, defined in riscv.md.
    The TUNE_INFO is the detail cost model for this core, represented as an
-   identifier, reference to riscv.cc.  */
+   identifier, reference to riscv.  */
 
 #ifndef RISCV_TUNE
 #define RISCV_TUNE(TUNE_NAME, PIPELINE_MODEL, TUNE_INFO)

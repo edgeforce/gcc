@@ -948,7 +948,7 @@ extern tree build_allocator (tree type, tree init, tree result_type,
    should not be allocated in a register.  Returns true if successful.  */
 extern bool gnat_mark_addressable (tree t);
 
-/* Save EXP for later use or reuse.  This is equivalent to save_expr in tree.c
+/* Save EXP for later use or reuse.  This is equivalent to save_expr in tree.cc
    but we know how to handle our own nodes.  */
 extern tree gnat_save_expr (tree exp);
 

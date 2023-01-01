@@ -981,7 +981,7 @@
 2021-10-15  Richard Biener  <rguenther@suse.de>
 
 	PR c/102763
-	* gimple-parser.c
+	* gimple-parser.cc
 	(c_parser_gimple_postfix_expression_after_primary): Check
 	for a pointer do be dereferenced by ->.
 

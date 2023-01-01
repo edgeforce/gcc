@@ -1,4 +1,4 @@
-/* This test code is included into vsx-vector-6.p7.c, vsx-vector-6.p8.c
+/* This test code is included into vsx-vector-6.p7.c, vsx-vector-6.p8.cc
    and vsx-vector-6.p9.c.  The .c files have the tests for the number
    of instructions generated for each cpu type.  */
 

@@ -61,7 +61,7 @@ trap "rm -r $T" 0
 pwd=`${PWDCMD-pwd}`
 kopt=$pwd/$T/keyword-options
 kopt2=$pwd/$T/keyword2-options
-emsg=$pwd/$T/emsgids.c
+emsg=$pwd/$T/emsgids.cc
 posr=$pwd/$T/po-sources
 posrcxx=$pwd/$T/po-cxx-sources
 pottmp1=$pwd/$T/tmp1.pot

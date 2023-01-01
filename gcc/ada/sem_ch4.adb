@@ -4420,7 +4420,7 @@ package body Sem_Ch4 is
                --  these cases (gigi cannot handle the packed case, since it
                --  has the bounds of the packed array type, not the original
                --  bounds of the type). However, if the prefix is itself a
-               --  selected component, as in a.b.c (i), gigi may regard a.b.c
+               --  selected component, as in a.b.c (i), gigi may regard a.b.cc
                --  as a dynamic-sized temporary, so we do generate an actual
                --  subtype for this case.
 

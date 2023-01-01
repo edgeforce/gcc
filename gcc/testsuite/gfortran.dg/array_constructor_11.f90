@@ -20,7 +20,7 @@ contains
     call test (1, order, 3,  (/ (i, i = 1, order, 3) /))
     call test (order, 1, -3, (/ (i, i = order, 1, -3) /))
 
-    ! Triggers compile-time iterator calculations in trans-array.c
+    ! Triggers compile-time iterator calculations in trans-array.cc
     call test (1, 1000, 2,   (/ (i, i = 1, 1000, 2),   (i, i = order, 0, 1) /))
     call test (1, 0, 3,      (/ (i, i = 1, 0, 3),      (i, i = order, 0, 1) /)) ! { dg-warning "will be executed zero times" }
     call test (1, 2000, -5,  (/ (i, i = 1, 2000, -5),  (i, i = order, 0, 1) /)) ! { dg-warning "will be executed zero times" }

@@ -275,8 +275,8 @@ one() {
     FAIL_VERSION=$3
 
     NAME=${KIND}-${EXP}
-    FILE1=${NAME}-1.c
-    FILE2=${NAME}-2.c
+    FILE1=${NAME}-1.cc
+    FILE2=${NAME}-2.cc
     rm -f $FILE1
     touch $FILE1
     cmd $KIND $FILE1
@@ -290,8 +290,8 @@ one() {
 	    NAME=${KIND}-${EXP_XFAIL}
 	fi
 
-	FILE1=${NAME}-1.c
-	FILE2=${NAME}-2.c
+	FILE1=${NAME}-1.cc
+	FILE2=${NAME}-2.cc
 	rm -f $FILE1
 	touch $FILE1
 	cmd $KIND $FILE1
@@ -312,8 +312,8 @@ two() {
     FAIL_VERSION=$4
 
     NAME=${KIND1}-${KIND2}-${EXP}
-    FILE1=${NAME}-1.c
-    FILE2=${NAME}-2.c
+    FILE1=${NAME}-1.cc
+    FILE2=${NAME}-2.cc
 
     rm -f $FILE1
     touch $FILE1
@@ -329,8 +329,8 @@ two() {
 	    NAME=${KIND1}-${KIND2}-${EXP_XFAIL}
 	fi
 
-	FILE1=${NAME}-1.c
-	FILE2=${NAME}-2.c
+	FILE1=${NAME}-1.cc
+	FILE2=${NAME}-2.cc
 	rm -f $FILE1
 	touch $FILE1
 	cmd $KIND1 $FILE1
@@ -354,8 +354,8 @@ three() {
     FAIL_VERSION=$5
 
     NAME=${KIND1}-${KIND2}-${KIND3}-${EXP}
-    FILE1=${NAME}-1.c
-    FILE2=${NAME}-2.c
+    FILE1=${NAME}-1.cc
+    FILE2=${NAME}-2.cc
     rm -f $FILE1
     touch $FILE1
     cmd $KIND1 $FILE1
@@ -371,8 +371,8 @@ three() {
 	    NAME=${KIND1}-${KIND2}-${KIND3}-${EXP_XFAIL}
 	fi
 
-	FILE1=${NAME}-1.c
-	FILE2=${NAME}-2.c
+	FILE1=${NAME}-1.cc
+	FILE2=${NAME}-2.cc
 	rm -f $FILE1
 	touch $FILE1
 	cmd $KIND1 $FILE1
@@ -451,8 +451,8 @@ dgdo_progs() {
     NAME="$4"
     XPR="$5"
     
-    FILE1=${NAME}-1.c
-    FILE2=${NAME}-2.c
+    FILE1=${NAME}-1.cc
+    FILE2=${NAME}-2.cc
     rm -f $FILE1
     touch $FILE1
     echo '/* { dg-do' $WHAT '{' $KIND "$XPR" '} } */' >> $FILE1
@@ -521,8 +521,8 @@ deep_progs() {
     CMD2="$4"
     CMD3="$5"
 
-    FILE1=${NAME}-1.c
-    FILE2=${NAME}-2.c
+    FILE1=${NAME}-1.cc
+    FILE2=${NAME}-2.cc
     rm -f $FILE1
     touch $FILE1
     echo "$CMD1" "$CMD2" "$CMD3" > $FILE1

@@ -1606,7 +1606,7 @@
   operands[2] = GEN_INT (32 - INTVAL (operands[2]));
   ")
 
-;; Define the subtract-one-and-jump insns so loop.c
+;; Define the subtract-one-and-jump insns so loop.cc
 ;; knows what to generate.
 (define_expand "doloop_end"
   [(use (match_operand 0 "" ""))      ; loop pseudo

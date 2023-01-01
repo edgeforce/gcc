@@ -1,4 +1,4 @@
-/* Prototypes for exported functions defined in xstormy16.c
+/* Prototypes for exported functions defined in xstormy16.cc
    Copyright (C) 2000-2022 Free Software Foundation, Inc.
    Contributed by Red Hat, Inc.
 

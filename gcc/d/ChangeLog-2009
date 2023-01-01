@@ -46,7 +46,7 @@
 
 	* dmd/..., phobos/...: Now working for D1 (Not on GCC 4.3.4?)
 
-	* asmstmt.cc: Merge from dmd/statement.c
+	* asmstmt.cc: Merge from dmd/statement.cc
 
 	* phobos/acinclude.m4, phobos/configure.in, phobos/phobos-ver-syms.in:
 	Posix is now defined.

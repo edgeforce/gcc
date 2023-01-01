@@ -3436,7 +3436,7 @@
 	* name-lookup.h
 	(debug (cp_binding_level &)): New.
 	(debug (cp_binding_level *)): New.
-	* parser.c
+	* parser.cc
 	(debug (cp_parser &)): New.
 	(debug (cp_parser *)): New.
 	(debug (cp_token &)): New.

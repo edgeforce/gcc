@@ -8079,7 +8079,7 @@
 	* gcc.dg/pointer-arith-10.c (foo): Likewise.
 	* gcc.dg/pr25682.c (d, foo): Likewise.
 	* gcc.dg/format/cast-1.c (f): Likewise.
-	* gcc.dg/c90-const-expr-10.c
+	* gcc.dg/c90-const-expr-10.cc
 	* gcc.dg/pr41551.c (uintptr_t): New typedef, replacing...
 	(size_t): ...this.  All uses changed.
 	* gcc.c-torture/execute/pr22098-1.c (uintptr_t): Likewise.
@@ -9337,7 +9337,7 @@
 	* gcc.dg/simulate-thread/atomic-load-int128.c (simulate_thread_main):
 	Move initialization of 'value' to main().
 	(main): Initialize 'value';
-	* gcc.dg/simulate-thread/speculative-store.c
+	* gcc.dg/simulate-thread/speculative-store.cc
 	(simulate_thread_step_verify): Return 0 when successful.
 	* gcc.dg/simulate-thread/simulate-thread.h (HOSTILE_THREAD_THRESHOLD):
 	Reduce threshold.

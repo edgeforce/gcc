@@ -139,7 +139,7 @@
 
 	* dmd*/clone.c, dmd*/e2ir.c: New files.
 
-	* Make-lang.in: Add new clone.c
+	* Make-lang.in: Add new clone.cc
 
 	* d-codegen.{h, cc}, d-glue.cc: Use _d_callinterfacefinalizer.
 	Also use _d_delinterface instead of casting.

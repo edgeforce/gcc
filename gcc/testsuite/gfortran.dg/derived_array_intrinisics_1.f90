@@ -1,7 +1,7 @@
 ! { dg-do compile }
 ! { dg-options "-fdump-tree-original" }
 ! Test the fix for PR45081 in which derived type array valued intrinsics failed
-! to simplify, which caused an ICE in trans-array.c
+! to simplify, which caused an ICE in trans-array.cc
 !
 ! Contributed by Thorsten Ohl <ohl@physik.uni-wuerzburg.de>
 ! 

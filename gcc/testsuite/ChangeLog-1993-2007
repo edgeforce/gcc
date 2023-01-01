@@ -2998,7 +2998,7 @@
 	PR c/25309
 	* gcc.dg/large-size-array-2.c: Expect diagnostic for too-large
 	array.
-	* gcc.dg/large-size-array-4.c: New.  Copy of large-size-array-2.c
+	* gcc.dg/large-size-array-4.c: New.  Copy of large-size-array-2.cc
 	without -O2.
 
 2007-09-26  Richard Guenther  <rguenther@suse.de>
@@ -6486,7 +6486,7 @@
 
 2007-07-16  Rask Ingemann Lambertsen  <rask@sygehus.dk>
 
-	* gcc.c-torture/execute/20061101-2.c: Variant of 20061101-1.c
+	* gcc.c-torture/execute/20061101-2.c: Variant of 20061101-1.cc
 	  adapted to work on targets with 16-bit or wider int.
 	* gcc.c-torture/execute/pr29797-2.c: Likewise for pr29797-1.c.
 	* gcc.c-torture/execute/pr31448-2.c: Likewise for pr31448.c.
@@ -10148,8 +10148,8 @@
 
 2007-04-05  Janis Johnson  <janis187@us.ibm.com>
 
-	* gcc.dg/dfp/signbit-1.c
-	* gcc.dg/dfp/signbit-2.c
+	* gcc.dg/dfp/signbit-1.cc
+	* gcc.dg/dfp/signbit-2.cc
 
 2007-04-05  Paul Thomas  <pault@gcc.gnu.org>
 
@@ -11124,13 +11124,13 @@
 
 2007-03-08  Richard Sandiford  <richard@codesourcery.com>
 
-	* gcc.c-torture/execute/builtins/memmove-lib.c: Include lib/bzero.c
+	* gcc.c-torture/execute/builtins/memmove-lib.c: Include lib/bzero.cc
 	and lib/bfill.c on VxWorks targets.
 	* gcc.c-torture/execute/builtins/memmove-2-lib.c: Likewise.
 	* gcc.c-torture/execute/builtins/strchr-lib.c: Include lib/bzero.c,
 	lib/bfill.c and lib/memmove.c on VxWorks targets.
 	* gcc.c-torture/execute/builtins/strrchr-lib.c: Likewise.
-	* gcc.c-torture/execute/builtins/memops-asm-lib.c: Include lib/bfill.c
+	* gcc.c-torture/execute/builtins/memops-asm-lib.c: Include lib/bfill.cc
 	on VxWorks targets.
 	* gcc.c-torture/execute/builtins/lib/bzero.c: New file.
 	* gcc.c-torture/execute/builtins/lib/bfill.c: Likewise.
@@ -13903,7 +13903,7 @@
 	PR c/2707
 	PR c++/26167
 	* gcc.dg/Wconversion-integer.c: New. Supersedes
-	Wconversion-negative-constants.c
+	Wconversion-negative-constants.cc
 	* gcc.dg/Wconversion-real.c: New.
 	* gcc.dg/Wconversion-real-integer.c: New.
 	* gcc.dg/Wconversion-negative-constants.c: Deleted.
@@ -13924,7 +13924,7 @@
 	* gcc.dg/Wconversion-2.c: Likewise. Renamed as
 	Wtraditional-conversion-2.c .
 	* gcc.dg/dfp/Wconversion-2.c: Likewise. Renamed as
-	Wtraditional-conversion-2.c
+	Wtraditional-conversion-2.cc
 	* gcc.dg/Wconversion-negative-constants.c: New.
 
 2006-11-23  Andrew Pinski  <pinskia@gmail.com>
@@ -19919,15 +19919,15 @@
 	(check_effective_target_vect_widen_sum_qi_to_hi): New.
 	(check_effective_target_vect_widen_sum_hi_to_si): New.
 	* gcc.dg/vect/vect-reduc-dot-s16.c: Remove, split into
-	vect-reduc-dot-s16a.c and vect-reduc-dot-s16b.c
+	vect-reduc-dot-s16a.c and vect-reduc-dot-s16b.cc
 	* vect-reduc-dot-s16a.c: New, split from vect-reduc-dot-s16.c.
 	* vect-reduc-dot-s16b.c: New, split from vect-reduc-dot-s16.c.
 	* gcc.dg/vect/vect-reduc-pattern-2.c: Remove, split into
 	vect-reduc-pattern-2a.c, vect-reduc-pattern-2b.c and
-	vect-reduc-pattern-2c.c
+	vect-reduc-pattern-2c.cc
 	* gcc.dg/vect/vect-reduc-pattern-1.c: Remove, split into
 	vect-reduc-pattern-1a.c, vect-reduc-pattern-1b.c and
-	vect-reduc-pattern-1c.c
+	vect-reduc-pattern-1c.cc
 
 2005-02-16  Paul Thomas  <pault@gcc.gnu.org>
 
@@ -20475,10 +20475,10 @@
 
 2006-01-28  Zack Weinberg  <zackw@panix.com>
 
-	* gcc.dg/Woverlength-strings.c
-	* gcc.dg/Woverlength-strings-pedantic-c89.c
-	* gcc.dg/Woverlength-strings-pedantic-c89-no.c
-	* gcc.dg/Woverlength-strings-pedantic-c99.c
+	* gcc.dg/Woverlength-strings.cc
+	* gcc.dg/Woverlength-strings-pedantic-c89.cc
+	* gcc.dg/Woverlength-strings-pedantic-c89-no.cc
+	* gcc.dg/Woverlength-strings-pedantic-c99.cc
 	* gcc.dg/Woverlength-strings-pedantic-c99-no.c: New tests.
 
 2006-01-28  Adam Nemet  <anemet@caviumnetworks.com>
@@ -20741,7 +20741,7 @@
 
 2006-01-19  Andrew Pinski  <pinskia@physics.uc.edu>
 
-	* objc.dg/gnu-encoding/struct-layout-encoding-1_generate.c
+	* objc.dg/gnu-encoding/struct-layout-encoding-1_generate.cc
 	(switchfiles): Fix fprintf's by adding srcdir or removing it.
 
 2006-01-19  Diego Novillo  <dnovillo@redhat.com>
@@ -20893,7 +20893,7 @@
 
 2006-01-17  Andrew Pinski  <pinskia@physics.uc.edu>
 
-	* objc.dg/gnu-encoding/struct-layout-encoding-1_generate.c
+	* objc.dg/gnu-encoding/struct-layout-encoding-1_generate.cc
 	(switchfiles): xfail txxx where xxx >= 25.
 
 2006-01-17  Andrew Pinski  <pinskia@physics.uc.edu>
@@ -21898,7 +21898,7 @@
 
 2005-12-16  Andrew Pinski  <pinskia@physics.uc.edu>
 
-	* objc.dg/gnu-encoding/struct-layout-encoding-1_generate.c
+	* objc.dg/gnu-encoding/struct-layout-encoding-1_generate.cc
 	(base_types): Change C++ style comments to C style comments.  Remove
 	aligned types from the array.  Keep Enums disabled.
 	(complex_types): Remove aligned types from the array.
@@ -27601,12 +27601,12 @@
 	gcc.dg/990214-1.c, gcc.dg/991129-1.c, gcc.dg/991209-1.c,
 	gcc.dg/991214-1.c, gcc.dg/asm-1.c, gcc.dg/attr-returns_twice-1.c,
 	gcc.dg/clobbers.c, gcc.dg/i386-387-7.c, gcc.dg/i386-387-8.c,
-	gcc.dg/i386-3dnowA-1.c, gcc.dg/i386-3dnowA-2.c, gcc.dg/i386-asm-1.c
-	gcc.dg/i386-asm-2.c, gcc.dg/i386-asm-3.c, gcc.dg/i386-bitfield3.c
+	gcc.dg/i386-3dnowA-1.c, gcc.dg/i386-3dnowA-2.c, gcc.dg/i386-asm-1.cc
+	gcc.dg/i386-asm-2.c, gcc.dg/i386-asm-3.c, gcc.dg/i386-bitfield3.cc
 	gcc.dg/i386-call-1.c, gcc.dg/i386-memset-1.c,
 	gcc.dg/i386-signbit-3.c, gcc.dg/i386-ssefn-1.c,
-	gcc.dg/i386-ssefn-2.c, gcc.dg/i386-ssefn-3.c, gcc.dg/i386-ssefn-4.c
-	gcc.dg/i386-volatile-1.c, gcc.dg/i386-xorps.c, gcc.dg/pr12092-1.c
+	gcc.dg/i386-ssefn-2.c, gcc.dg/i386-ssefn-3.c, gcc.dg/i386-ssefn-4.cc
+	gcc.dg/i386-volatile-1.c, gcc.dg/i386-xorps.c, gcc.dg/pr12092-1.cc
 	gcc.dg/pr14289-1.c, gcc.dg/pr19236-1.c, gcc.dg/pr20204.c,
 	gcc.dg/pr9771-1.c, gcc.dg/register-var-1.c,
 	gcc.dg/sibcall-5.c, gcc.dg/charset/asm3.c,
@@ -28775,7 +28775,7 @@
 	* gcc.target/mips/mips.exp: Minor formatting.  Call setup_mips_tests.
 	(setup_mips_tests, dg-mips-options): New procedures.
 	* gcc.target/mips/asm-1.c, gcc.target/mips/fix-vr4130-1.c,
-	* gcc.target/mips/fix-vr4130-2.c, gcc.target/mips/fix-vr4130-3.c
+	* gcc.target/mips/fix-vr4130-2.c, gcc.target/mips/fix-vr4130-3.cc
 	* gcc.target/mips/fix-vr4130-4.c, gcc.target/mips/mips-3d-1.c,
 	* gcc.target/mips/mips-3d-2.c, gcc.target/mips/mips-3d-3.c,
 	* gcc.target/mips/mips-3d-4.c, gcc.target/mips/mips-3d-5.c,
@@ -29922,7 +29922,7 @@
 2005-03-22  Ben Elliston  <bje@au.ibm.com>
 
 	* gcc.misc-tests/options.exp (check_for_options): Create a real C
-	program, compile it into a real executable and then delete the .c
+	program, compile it into a real executable and then delete the .cc
 	and .x files afterwards, to avoid problems on testglue targets.
 
 2005-03-21  Stuart Hastings  <stuart@apple.com>
@@ -32525,7 +32525,7 @@
 	26_if1_b100w_bitfield_b.c, 26_if1_b100w_bitfield_f.c,
 	27_if0_b100w_bitfield_0.c, 27_if0_b100w_bitfield_3.c,
 	27_if0_b100w_bitfield_7.c, 27_if0_b100w_bitfield_8.c,
-	27_if0_b100w_bitfield_b.c, 27_if0_b100w_bitfield_f.c
+	27_if0_b100w_bitfield_b.c, 27_if0_b100w_bitfield_f.cc
 
 	* gcc.target/xstormy16/data_below100: New files:
 	01_const_to_b100b.c, 02_const_to_b100w.c, 03_var_to_b100b.c,
@@ -32554,7 +32554,7 @@
 	26_if1_b100w_bitfield_b.c, 26_if1_b100w_bitfield_f.c,
 	27_if0_b100w_bitfield_0.c, 27_if0_b100w_bitfield_3.c,
 	27_if0_b100w_bitfield_7.c, 27_if0_b100w_bitfield_8.c,
-	27_if0_b100w_bitfield_b.c, 27_if0_b100w_bitfield_f.c
+	27_if0_b100w_bitfield_b.c, 27_if0_b100w_bitfield_f.cc
 
 	* gcc.target/xstormy16/sfr: New files:
 	01_const_to_sfrb.c, 02_const_to_sfrw.c, 03_var_to_sfrb.c,
@@ -32585,7 +32585,7 @@
 	26_if1_sfrw_bitfield_f.c, 27_if0_sfrw_bitfield_0.c,
 	27_if0_sfrw_bitfield_3.c, 27_if0_sfrw_bitfield_7.c,
 	27_if0_sfrw_bitfield_8.c, 27_if0_sfrw_bitfield_b.c,
-	27_if0_sfrw_bitfield_f.c
+	27_if0_sfrw_bitfield_f.cc
 
 2004-12-08  Kriang Lerdsuwanakij  <lerdsuwa@users.sourceforge.net>
 
@@ -37468,124 +37468,124 @@
 
 2004-07-02  Zack Weinberg  <zack@codesourcery.com>
 
-	* gcc.c-torture/execute/builtin-abs-1.c
-	* gcc.c-torture/execute/builtin-abs-2.c
-	* gcc.c-torture/execute/builtin-complex-1.c
-	* gcc.c-torture/execute/builtins/string-1-lib.c
-	* gcc.c-torture/execute/builtins/string-1.c
-	* gcc.c-torture/execute/builtins/string-2-lib.c
-	* gcc.c-torture/execute/builtins/string-2.c
-	* gcc.c-torture/execute/builtins/string-3-lib.c
-	* gcc.c-torture/execute/builtins/string-3.c
-	* gcc.c-torture/execute/builtins/string-4-lib.c
-	* gcc.c-torture/execute/builtins/string-4.c
-	* gcc.c-torture/execute/builtins/string-5-lib.c
-	* gcc.c-torture/execute/builtins/string-5.c
-	* gcc.c-torture/execute/builtins/string-6-lib.c
-	* gcc.c-torture/execute/builtins/string-6.c
-	* gcc.c-torture/execute/builtins/string-7-lib.c
-	* gcc.c-torture/execute/builtins/string-7.c
-	* gcc.c-torture/execute/builtins/string-8-lib.c
-	* gcc.c-torture/execute/builtins/string-8.c
-	* gcc.c-torture/execute/builtins/string-9-lib.c
-	* gcc.c-torture/execute/builtins/string-9.c
-	* gcc.c-torture/execute/builtins/string-asm-1-lib.c
-	* gcc.c-torture/execute/builtins/string-asm-1.c
-	* gcc.c-torture/execute/builtins/string-asm-2-lib.c
-	* gcc.c-torture/execute/builtins/string-asm-2.c
-	* gcc.c-torture/execute/stdio-opt-1.c
-	* gcc.c-torture/execute/stdio-opt-2.c
-	* gcc.c-torture/execute/stdio-opt-3.c
-	* gcc.c-torture/execute/string-opt-1.c
-	* gcc.c-torture/execute/string-opt-10.c
-	* gcc.c-torture/execute/string-opt-11.c
-	* gcc.c-torture/execute/string-opt-12.c
-	* gcc.c-torture/execute/string-opt-13.c
-	* gcc.c-torture/execute/string-opt-14.c
-	* gcc.c-torture/execute/string-opt-15.c
-	* gcc.c-torture/execute/string-opt-16.c
-	* gcc.c-torture/execute/string-opt-2.c
-	* gcc.c-torture/execute/string-opt-6.c
-	* gcc.c-torture/execute/string-opt-7.c
+	* gcc.c-torture/execute/builtin-abs-1.cc
+	* gcc.c-torture/execute/builtin-abs-2.cc
+	* gcc.c-torture/execute/builtin-complex-1.cc
+	* gcc.c-torture/execute/builtins/string-1-lib.cc
+	* gcc.c-torture/execute/builtins/string-1.cc
+	* gcc.c-torture/execute/builtins/string-2-lib.cc
+	* gcc.c-torture/execute/builtins/string-2.cc
+	* gcc.c-torture/execute/builtins/string-3-lib.cc
+	* gcc.c-torture/execute/builtins/string-3.cc
+	* gcc.c-torture/execute/builtins/string-4-lib.cc
+	* gcc.c-torture/execute/builtins/string-4.cc
+	* gcc.c-torture/execute/builtins/string-5-lib.cc
+	* gcc.c-torture/execute/builtins/string-5.cc
+	* gcc.c-torture/execute/builtins/string-6-lib.cc
+	* gcc.c-torture/execute/builtins/string-6.cc
+	* gcc.c-torture/execute/builtins/string-7-lib.cc
+	* gcc.c-torture/execute/builtins/string-7.cc
+	* gcc.c-torture/execute/builtins/string-8-lib.cc
+	* gcc.c-torture/execute/builtins/string-8.cc
+	* gcc.c-torture/execute/builtins/string-9-lib.cc
+	* gcc.c-torture/execute/builtins/string-9.cc
+	* gcc.c-torture/execute/builtins/string-asm-1-lib.cc
+	* gcc.c-torture/execute/builtins/string-asm-1.cc
+	* gcc.c-torture/execute/builtins/string-asm-2-lib.cc
+	* gcc.c-torture/execute/builtins/string-asm-2.cc
+	* gcc.c-torture/execute/stdio-opt-1.cc
+	* gcc.c-torture/execute/stdio-opt-2.cc
+	* gcc.c-torture/execute/stdio-opt-3.cc
+	* gcc.c-torture/execute/string-opt-1.cc
+	* gcc.c-torture/execute/string-opt-10.cc
+	* gcc.c-torture/execute/string-opt-11.cc
+	* gcc.c-torture/execute/string-opt-12.cc
+	* gcc.c-torture/execute/string-opt-13.cc
+	* gcc.c-torture/execute/string-opt-14.cc
+	* gcc.c-torture/execute/string-opt-15.cc
+	* gcc.c-torture/execute/string-opt-16.cc
+	* gcc.c-torture/execute/string-opt-2.cc
+	* gcc.c-torture/execute/string-opt-6.cc
+	* gcc.c-torture/execute/string-opt-7.cc
 	* gcc.c-torture/execute/string-opt-8.c:
 	Replace with ...
 
-	* gcc.c-torture/execute/builtins/abs-2.c
-	* gcc.c-torture/execute/builtins/abs-3.c
-	* gcc.c-torture/execute/builtins/complex-1.c
-	* gcc.c-torture/execute/builtins/fprintf.c
-	* gcc.c-torture/execute/builtins/fputs.c
-	* gcc.c-torture/execute/builtins/memcmp.c
-	* gcc.c-torture/execute/builtins/memmove.c
-	* gcc.c-torture/execute/builtins/memops-asm.c
-	* gcc.c-torture/execute/builtins/mempcpy-2.c
-	* gcc.c-torture/execute/builtins/mempcpy.c
-	* gcc.c-torture/execute/builtins/memset.c
-	* gcc.c-torture/execute/builtins/printf.c
-	* gcc.c-torture/execute/builtins/sprintf.c
-	* gcc.c-torture/execute/builtins/strcat.c
-	* gcc.c-torture/execute/builtins/strchr.c
-	* gcc.c-torture/execute/builtins/strcmp.c
-	* gcc.c-torture/execute/builtins/strcpy.c
-	* gcc.c-torture/execute/builtins/strcspn.c
-	* gcc.c-torture/execute/builtins/strlen-2.c
-	* gcc.c-torture/execute/builtins/strlen.c
-	* gcc.c-torture/execute/builtins/strncat.c
-	* gcc.c-torture/execute/builtins/strncmp-2.c
-	* gcc.c-torture/execute/builtins/strncmp.c
-	* gcc.c-torture/execute/builtins/strncpy.c
-	* gcc.c-torture/execute/builtins/strpbrk.c
-	* gcc.c-torture/execute/builtins/strpcpy-2.c
-	* gcc.c-torture/execute/builtins/strpcpy.c
-	* gcc.c-torture/execute/builtins/strrchr.c
-	* gcc.c-torture/execute/builtins/strspn.c
-	* gcc.c-torture/execute/builtins/strstr-asm.c
+	* gcc.c-torture/execute/builtins/abs-2.cc
+	* gcc.c-torture/execute/builtins/abs-3.cc
+	* gcc.c-torture/execute/builtins/complex-1.cc
+	* gcc.c-torture/execute/builtins/fprintf.cc
+	* gcc.c-torture/execute/builtins/fputs.cc
+	* gcc.c-torture/execute/builtins/memcmp.cc
+	* gcc.c-torture/execute/builtins/memmove.cc
+	* gcc.c-torture/execute/builtins/memops-asm.cc
+	* gcc.c-torture/execute/builtins/mempcpy-2.cc
+	* gcc.c-torture/execute/builtins/mempcpy.cc
+	* gcc.c-torture/execute/builtins/memset.cc
+	* gcc.c-torture/execute/builtins/printf.cc
+	* gcc.c-torture/execute/builtins/sprintf.cc
+	* gcc.c-torture/execute/builtins/strcat.cc
+	* gcc.c-torture/execute/builtins/strchr.cc
+	* gcc.c-torture/execute/builtins/strcmp.cc
+	* gcc.c-torture/execute/builtins/strcpy.cc
+	* gcc.c-torture/execute/builtins/strcspn.cc
+	* gcc.c-torture/execute/builtins/strlen-2.cc
+	* gcc.c-torture/execute/builtins/strlen.cc
+	* gcc.c-torture/execute/builtins/strncat.cc
+	* gcc.c-torture/execute/builtins/strncmp-2.cc
+	* gcc.c-torture/execute/builtins/strncmp.cc
+	* gcc.c-torture/execute/builtins/strncpy.cc
+	* gcc.c-torture/execute/builtins/strpbrk.cc
+	* gcc.c-torture/execute/builtins/strpcpy-2.cc
+	* gcc.c-torture/execute/builtins/strpcpy.cc
+	* gcc.c-torture/execute/builtins/strrchr.cc
+	* gcc.c-torture/execute/builtins/strspn.cc
+	* gcc.c-torture/execute/builtins/strstr-asm.cc
 	* gcc.c-torture/execute/builtins/strstr.c:
 	... these new files.
 
-	* gcc.c-torture/execute/builtins/abs-2-lib.c
-	* gcc.c-torture/execute/builtins/abs-3-lib.c
-	* gcc.c-torture/execute/builtins/complex-1-lib.c
-	* gcc.c-torture/execute/builtins/fprintf-lib.c
-	* gcc.c-torture/execute/builtins/fputs-lib.c
-	* gcc.c-torture/execute/builtins/memcmp-lib.c
-	* gcc.c-torture/execute/builtins/memmove-lib.c
-	* gcc.c-torture/execute/builtins/memops-asm-lib.c
-	* gcc.c-torture/execute/builtins/mempcpy-2-lib.c
-	* gcc.c-torture/execute/builtins/mempcpy-lib.c
-	* gcc.c-torture/execute/builtins/memset-lib.c
-	* gcc.c-torture/execute/builtins/printf-lib.c
-	* gcc.c-torture/execute/builtins/sprintf-lib.c
-	* gcc.c-torture/execute/builtins/strcat-lib.c
-	* gcc.c-torture/execute/builtins/strchr-lib.c
-	* gcc.c-torture/execute/builtins/strcmp-lib.c
-	* gcc.c-torture/execute/builtins/strcpy-lib.c
-	* gcc.c-torture/execute/builtins/strcspn-lib.c
-	* gcc.c-torture/execute/builtins/strlen-2-lib.c
-	* gcc.c-torture/execute/builtins/strlen-lib.c
-	* gcc.c-torture/execute/builtins/strncat-lib.c
-	* gcc.c-torture/execute/builtins/strncmp-2-lib.c
-	* gcc.c-torture/execute/builtins/strncmp-lib.c
-	* gcc.c-torture/execute/builtins/strncpy-lib.c
-	* gcc.c-torture/execute/builtins/strpbrk-lib.c
-	* gcc.c-torture/execute/builtins/strpcpy-2-lib.c
-	* gcc.c-torture/execute/builtins/strpcpy-lib.c
-	* gcc.c-torture/execute/builtins/strrchr-lib.c
-	* gcc.c-torture/execute/builtins/strspn-lib.c
-	* gcc.c-torture/execute/builtins/strstr-asm-lib.c
-	* gcc.c-torture/execute/builtins/strstr-lib.c
-	* gcc.c-torture/execute/builtins/lib/abs.c
-	* gcc.c-torture/execute/builtins/lib/fprintf.c
-	* gcc.c-torture/execute/builtins/lib/memset.c
-	* gcc.c-torture/execute/builtins/lib/printf.c
-	* gcc.c-torture/execute/builtins/lib/sprintf.c
-	* gcc.c-torture/execute/builtins/lib/strcpy.c
-	* gcc.c-torture/execute/builtins/lib/strcspn.c
-	* gcc.c-torture/execute/builtins/lib/strncat.c
-	* gcc.c-torture/execute/builtins/lib/strncmp.c
-	* gcc.c-torture/execute/builtins/lib/strncpy.c
-	* gcc.c-torture/execute/builtins/lib/strpbrk.c
-	* gcc.c-torture/execute/builtins/lib/strspn.c
+	* gcc.c-torture/execute/builtins/abs-2-lib.cc
+	* gcc.c-torture/execute/builtins/abs-3-lib.cc
+	* gcc.c-torture/execute/builtins/complex-1-lib.cc
+	* gcc.c-torture/execute/builtins/fprintf-lib.cc
+	* gcc.c-torture/execute/builtins/fputs-lib.cc
+	* gcc.c-torture/execute/builtins/memcmp-lib.cc
+	* gcc.c-torture/execute/builtins/memmove-lib.cc
+	* gcc.c-torture/execute/builtins/memops-asm-lib.cc
+	* gcc.c-torture/execute/builtins/mempcpy-2-lib.cc
+	* gcc.c-torture/execute/builtins/mempcpy-lib.cc
+	* gcc.c-torture/execute/builtins/memset-lib.cc
+	* gcc.c-torture/execute/builtins/printf-lib.cc
+	* gcc.c-torture/execute/builtins/sprintf-lib.cc
+	* gcc.c-torture/execute/builtins/strcat-lib.cc
+	* gcc.c-torture/execute/builtins/strchr-lib.cc
+	* gcc.c-torture/execute/builtins/strcmp-lib.cc
+	* gcc.c-torture/execute/builtins/strcpy-lib.cc
+	* gcc.c-torture/execute/builtins/strcspn-lib.cc
+	* gcc.c-torture/execute/builtins/strlen-2-lib.cc
+	* gcc.c-torture/execute/builtins/strlen-lib.cc
+	* gcc.c-torture/execute/builtins/strncat-lib.cc
+	* gcc.c-torture/execute/builtins/strncmp-2-lib.cc
+	* gcc.c-torture/execute/builtins/strncmp-lib.cc
+	* gcc.c-torture/execute/builtins/strncpy-lib.cc
+	* gcc.c-torture/execute/builtins/strpbrk-lib.cc
+	* gcc.c-torture/execute/builtins/strpcpy-2-lib.cc
+	* gcc.c-torture/execute/builtins/strpcpy-lib.cc
+	* gcc.c-torture/execute/builtins/strrchr-lib.cc
+	* gcc.c-torture/execute/builtins/strspn-lib.cc
+	* gcc.c-torture/execute/builtins/strstr-asm-lib.cc
+	* gcc.c-torture/execute/builtins/strstr-lib.cc
+	* gcc.c-torture/execute/builtins/lib/abs.cc
+	* gcc.c-torture/execute/builtins/lib/fprintf.cc
+	* gcc.c-torture/execute/builtins/lib/memset.cc
+	* gcc.c-torture/execute/builtins/lib/printf.cc
+	* gcc.c-torture/execute/builtins/lib/sprintf.cc
+	* gcc.c-torture/execute/builtins/lib/strcpy.cc
+	* gcc.c-torture/execute/builtins/lib/strcspn.cc
+	* gcc.c-torture/execute/builtins/lib/strncat.cc
+	* gcc.c-torture/execute/builtins/lib/strncmp.cc
+	* gcc.c-torture/execute/builtins/lib/strncpy.cc
+	* gcc.c-torture/execute/builtins/lib/strpbrk.cc
+	* gcc.c-torture/execute/builtins/lib/strspn.cc
 	* gcc.c-torture/execute/builtins/lib/strstr.c:
 	New files containing support routines.
 
@@ -39317,11 +39317,11 @@
 2004-03-23  Zack Weinberg  <zack@codesourcery.com>
 
 	PR 12267, 12391, 12560, 13129, 14114, 14133
-	* gcc.dg/Wold-style-definition-1.c, gcc.dg/builtins-30.c
-	* gcc.dg/unused-4.c, gcc.dg/noncompile/label-1.c
+	* gcc.dg/Wold-style-definition-1.c, gcc.dg/builtins-30.cc
+	* gcc.dg/unused-4.c, gcc.dg/noncompile/label-1.cc
 	* gcc.dg/noncompile/label-lineno-1.c, objc.dg/naming-1.m:
 	Adjust error regexps.
-	* gcc.dg/Wshadow-2.c, gcc.dg/noncompile/incomplete-3.c
+	* gcc.dg/Wshadow-2.c, gcc.dg/noncompile/incomplete-3.cc
 	* gcc.dg/noncompile/undeclared-1.c: New test cases.
 	* gcc.dg/decl-5.c, gcc.dg/redecl-1.c: Remove XFAIL.
 	* gcc.dg/local1.c: Add explanatory comment.
@@ -40610,7 +40610,7 @@
 
 2004-01-19  Eric Botcazou  <ebotcazou@libertysurf.fr>
 
-	* gcc.dg/compat/fnptr-by-value-1_x.c, scalar-by-value-1_y.c
+	* gcc.dg/compat/fnptr-by-value-1_x.c, scalar-by-value-1_y.cc
 	scalar-by-value-3_x.c, scalar-by-value-3_y.c,
 	scalar-by-value-4_x.c, scalar-by-value-4_y.c,
 	scalar-return-1_x.c, scalar-return-2_y.c,
@@ -40631,12 +40631,12 @@
 	struct-by-value-2_x.c, struct-by-value-2_y.c,
 	struct-by-value-3_y.c, struct-by-value-4_x.c,
 	struct-by-value-4_y.c, struct-by-value-5_y.c,
-	struct-by-value-6_y.c, struct-by-value-7_y.c
-	struct-by-value-8_x.c, struct-by-value-8_y.c
-	struct-by-value-9_x.c, struct-by-value-9_y.c
+	struct-by-value-6_y.c, struct-by-value-7_y.cc
+	struct-by-value-8_x.c, struct-by-value-8_y.cc
+	struct-by-value-9_x.c, struct-by-value-9_y.cc
 	struct-return-10_x.c, struct-return-10_y.c,
-	struct-return-19_x.c, struct-return-20_x.c
-	struct-return-2_x.c, struct-return-2_y.c
+	struct-return-19_x.c, struct-return-20_x.cc
+	struct-return-2_x.c, struct-return-2_y.cc
 	struct-return-3_x.c: Guard non-C99 tests with SKIP_COMPLEX_INT,
 	SKIP_ATTRIBUTE and SKIP_ZERO_ARRAY.  Turns SKIPVA into SKIP_VA.
 
@@ -40840,8 +40840,8 @@
 
 2004-01-10  Zack Weinberg  <zack@codesourcery.com>
 
-	* gcc.dg/Wshadow-1.c, gcc.dg/attr-noinline.c, gcc.dg/decl3.c
-	* gcc.dg/redecl-1.c, gcc.dg/visibility-7.c, gcc.dg/wtr-static-1.c
+	* gcc.dg/Wshadow-1.c, gcc.dg/attr-noinline.c, gcc.dg/decl3.cc
+	* gcc.dg/redecl-1.c, gcc.dg/visibility-7.c, gcc.dg/wtr-static-1.cc
 	* gcc.dg/noncompile/20020220-1.c, objc.dg/method-1.m:
 	Update dg-error regexps.
 
@@ -41314,7 +41314,7 @@
 
 2003-12-17  Eric Botcazou  <ebotcazou@libertysurf.fr>
 
-	* lib/gcc-dg.exp (gcc-dg-debug-runtest): Do not run debug-[12].c
+	* lib/gcc-dg.exp (gcc-dg-debug-runtest): Do not run debug-[12].cc
 	at -O with stabs debugging formats.
 	* gcc.dg/debug/debug-1.c: Turn 'p' into a global variable.
 	* gcc.dg/debug/debug-2.c: Likewise.
@@ -43576,7 +43576,7 @@
 
 2003-07-04  Zack Weinberg  <zack@codesourcery.com>
 
-	* gcc.c-torture/execute/wchar_t-1.x: New file; XFAIL wchar_t-1.c
+	* gcc.c-torture/execute/wchar_t-1.x: New file; XFAIL wchar_t-1.cc
 	everywhere.
 	* gcc.dg/concat.c: Concatenation of string constants with
 	__FUNCTION__ / __PRETTY_FUNCTION__ is now a hard error.
@@ -45821,7 +45821,7 @@
 
 2003-03-05  Eric Botcazou  <ebotcazou@libertysurf.fr>
 
-	* gcc.c-torture/compile/20030305-1.c
+	* gcc.c-torture/compile/20030305-1.cc
 
 2003-03-05  Jan Hubicka  <jh@suse.cz>
 
@@ -46342,7 +46342,7 @@
 2003-01-25  Jan Hubicka  <jh@suse.cz>
 
 	PR opt/8492
-	* gcc.c-torture/compile/20030125-1.c
+	* gcc.c-torture/compile/20030125-1.cc
 
 2003-01-25  Nathan Sidwell  <nathan@codesourcery.com>
 
@@ -47518,7 +47518,7 @@
 2002-11-11  Franz Sirl  <Franz.Sirl-kernel@lauterbach.com>
 
 	PR c/8467
-	* gcc.c-torture/execute/20021111-1.c
+	* gcc.c-torture/execute/20021111-1.cc
 
 2002-11-09  Eric Botcazou  <ebotcazou@libertysurf.fr>
 
@@ -51240,7 +51240,7 @@
 2001-12-06  Zack Weinberg  <zack@codesourcery.com>
 
 	* gcc.c-torture/execute/memcheck: Delete entire directory.
-	(files: blkarg.c blkarg.x driver.c driver.h t1.c t2.c t3.c
+	(files: blkarg.c blkarg.x driver.c driver.h t1.c t2.c t3.cc
 	t4.c t5.c t6.c t7.c t8.c t9.c template memcheck.exp)
 
 2001-12-05  Neil Booth  <neil@daikokuya.demon.co.uk>
@@ -54010,7 +54010,7 @@ Wed May 23 2001  Jeffrey D. Oldham  <oldham@codesourcery.com>
 
 2000-12-11  Neil Booth  <neilb@earthling.net>
 
-	* gcc.dg/cpp/defined_trad.c
+	* gcc.dg/cpp/defined_trad.cc
 
 2000-12-11  Neil Booth  <neilb@earthling.net>
 
@@ -54035,7 +54035,7 @@ Wed May 23 2001  Jeffrey D. Oldham  <oldham@codesourcery.com>
 
 	* gcc.dg/wtr-aggr-init-1.c, wtr-escape-1.c, wtr-int-type-1.c,
 	wtr-label-1.c, wtr-static-1.c, wtr-strcat-1.c, wtr-suffix-1.c,
-	wtr-switch-1.c, wtr-unary-plus-1.c, wtr-union-init-1.c
+	wtr-switch-1.c, wtr-unary-plus-1.c, wtr-union-init-1.cc
 	wtr-union-init-2.c, wtr-union-init-3.c: Update.
 	* gcc.dg/cpp/extratokens.c, tr-warn4.c, tr-warn5.c, tr-warn6.c:
 	Update.
@@ -55803,37 +55803,37 @@ Mon 18-Sep-2000 19:23:11 BST  Neil Booth  <NeilB@earthling.net>
 
 	* Moved files:
 	Old name				New name
-	gcc.c-torture/noncompile/920507-1.c	gcc.dg/noncompile/920507-1.c
-	gcc.c-torture/noncompile/920616-2.c	gcc.dg/noncompile/920616-2.c
-	gcc.c-torture/noncompile/920721-2.c	gcc.dg/noncompile/920721-2.c
-	gcc.c-torture/noncompile/920824-1.c	gcc.dg/noncompile/920824-1.c
-	gcc.c-torture/noncompile/920923-1.c	gcc.dg/noncompile/920923-1.c
-	gcc.c-torture/noncompile/921102-1.c	gcc.dg/noncompile/921102-1.c
-	gcc.c-torture/noncompile/921116-1.c	gcc.dg/noncompile/921116-1.c
-	gcc.c-torture/noncompile/930301-1.c	gcc.dg/noncompile/930301-1.c
-	gcc.c-torture/noncompile/930622-1.c	gcc.dg/noncompile/930622-1.c
-	gcc.c-torture/noncompile/930622-2.c	gcc.dg/noncompile/930622-2.c
-	gcc.c-torture/noncompile/930714-1.c	gcc.dg/noncompile/930714-1.c
-	gcc.c-torture/noncompile/931203-1.c	gcc.dg/noncompile/931203-1.c
-	gcc.c-torture/noncompile/940112-1.c	gcc.dg/noncompile/940112-1.c
-	gcc.c-torture/noncompile/940227-1.c	gcc.dg/noncompile/940227-1.c
-	gcc.c-torture/noncompile/940510-1.c	gcc.dg/noncompile/940510-1.c
-	gcc.c-torture/noncompile/950825-1.c	gcc.dg/noncompile/950825-1.c
-	gcc.c-torture/noncompile/950921-1.c	gcc.dg/noncompile/950921-1.c
-	gcc.c-torture/noncompile/951123-1.c	gcc.dg/noncompile/951123-1.c
-	gcc.c-torture/noncompile/971104-1.c	gcc.dg/noncompile/971104-1.c
-	gcc.c-torture/noncompile/990416-1.c	gcc.dg/noncompile/990416-1.c
-	gcc.c-torture/noncompile/init-1.c	gcc.dg/noncompile/init-1.c
-	gcc.c-torture/noncompile/init-2.c	gcc.dg/noncompile/init-2.c
-	gcc.c-torture/noncompile/invalid_asm.c	gcc.dg/noncompile/invalid_asm.c
-	gcc.c-torture/noncompile/va-arg-1.c	gcc.dg/noncompile/va-arg-1.c
+	gcc.c-torture/noncompile/920507-1.c	gcc.dg/noncompile/920507-1.cc
+	gcc.c-torture/noncompile/920616-2.c	gcc.dg/noncompile/920616-2.cc
+	gcc.c-torture/noncompile/920721-2.c	gcc.dg/noncompile/920721-2.cc
+	gcc.c-torture/noncompile/920824-1.c	gcc.dg/noncompile/920824-1.cc
+	gcc.c-torture/noncompile/920923-1.c	gcc.dg/noncompile/920923-1.cc
+	gcc.c-torture/noncompile/921102-1.c	gcc.dg/noncompile/921102-1.cc
+	gcc.c-torture/noncompile/921116-1.c	gcc.dg/noncompile/921116-1.cc
+	gcc.c-torture/noncompile/930301-1.c	gcc.dg/noncompile/930301-1.cc
+	gcc.c-torture/noncompile/930622-1.c	gcc.dg/noncompile/930622-1.cc
+	gcc.c-torture/noncompile/930622-2.c	gcc.dg/noncompile/930622-2.cc
+	gcc.c-torture/noncompile/930714-1.c	gcc.dg/noncompile/930714-1.cc
+	gcc.c-torture/noncompile/931203-1.c	gcc.dg/noncompile/931203-1.cc
+	gcc.c-torture/noncompile/940112-1.c	gcc.dg/noncompile/940112-1.cc
+	gcc.c-torture/noncompile/940227-1.c	gcc.dg/noncompile/940227-1.cc
+	gcc.c-torture/noncompile/940510-1.c	gcc.dg/noncompile/940510-1.cc
+	gcc.c-torture/noncompile/950825-1.c	gcc.dg/noncompile/950825-1.cc
+	gcc.c-torture/noncompile/950921-1.c	gcc.dg/noncompile/950921-1.cc
+	gcc.c-torture/noncompile/951123-1.c	gcc.dg/noncompile/951123-1.cc
+	gcc.c-torture/noncompile/971104-1.c	gcc.dg/noncompile/971104-1.cc
+	gcc.c-torture/noncompile/990416-1.c	gcc.dg/noncompile/990416-1.cc
+	gcc.c-torture/noncompile/init-1.c	gcc.dg/noncompile/init-1.cc
+	gcc.c-torture/noncompile/init-2.c	gcc.dg/noncompile/init-2.cc
+	gcc.c-torture/noncompile/invalid_asm.c	gcc.dg/noncompile/invalid_asm.cc
+	gcc.c-torture/noncompile/va-arg-1.c	gcc.dg/noncompile/va-arg-1.cc
 
-	gcc.c-torture/noncompile/940712-1.c	gcc.dg/cpp/19940712-1.c
+	gcc.c-torture/noncompile/940712-1.c	gcc.dg/cpp/19940712-1.cc
 	gcc.c-torture/noncompile/940712-1.h	gcc.dg/cpp/19940712-1.h
 	gcc.c-torture/noncompile/940712-1a.h	gcc.dg/cpp/19940712-1a.h
 	gcc.c-torture/noncompile/940712-1b.h	gcc.dg/cpp/19940712-1b.h
-	gcc.c-torture/noncompile/951025-1.c	gcc.dg/cpp/19951025-1.c
-	gcc.c-torture/noncompile/951227-1.c	gcc.dg/cpp/19951227-1.c
+	gcc.c-torture/noncompile/951025-1.c	gcc.dg/cpp/19951025-1.cc
+	gcc.c-torture/noncompile/951227-1.c	gcc.dg/cpp/19951227-1.cc
 
 2000-06-29  Zack Weinberg  <zack@wolery.cumb.org>
 
@@ -55869,7 +55869,7 @@ Mon 18-Sep-2000 19:23:11 BST  Neil Booth  <NeilB@earthling.net>
 
 	* New files:
 	gcc.misc-tests/linkage.exp
-	gcc.c-torture/execute/920730-1t.c
+	gcc.c-torture/execute/920730-1t.cc
 	gcc.c-torture/execute/920730-1t.x
 	gcc.c-torture/compile/920520-1.x
 	gcc.c-torture/compile/920521-1.x
@@ -55878,20 +55878,20 @@ Mon 18-Sep-2000 19:23:11 BST  Neil Booth  <NeilB@earthling.net>
 
 	* Moved files (possibly with modifications to fit a new harness):
 	Old name				New name
-	gcc.c-torture/code_quality/920608-1.c	gcc.c-torture/compile/920608-1.c
-	gcc.c-torture/special/920413-1.c	gcc.dg/920413-1.c
-	gcc.c-torture/special/920520-1.c	gcc.c-torture/compile/920520-1.c
-	gcc.c-torture/special/920521-1.c	gcc.c-torture/compile/920521-1.c
-	gcc.c-torture/special/920717-x.c	gcc.misc-tests/linkage-x.c
-	gcc.c-torture/special/920717-y.c	gcc.misc-tests/linkage-y.c
-	gcc.c-torture/special/920730-1.c	gcc.c-torture/execute/920730-1.c
-	gcc.c-torture/special/930510-1.c	gcc.dg/cpp/19930510-1.c
-	gcc.c-torture/special/951130-1.c	gcc.dg/951130-1.c
-	gcc.c-torture/special/960224-1.c	gcc.dg/cpp/19960224-1.c
-	gcc.c-torture/special/960224-2.c	gcc.dg/cpp/19960224-2.c
-	gcc.c-torture/special/981006-1.c	gcc.c-torture/compile/981006-1.c
-	gcc.c-torture/special/eeprof-1.c	gcc.c-torture/execute/eeprof-1.c
-	gcc.failure/940409-1.c			gcc.dg/940409-1.c
+	gcc.c-torture/code_quality/920608-1.c	gcc.c-torture/compile/920608-1.cc
+	gcc.c-torture/special/920413-1.c	gcc.dg/920413-1.cc
+	gcc.c-torture/special/920520-1.c	gcc.c-torture/compile/920520-1.cc
+	gcc.c-torture/special/920521-1.c	gcc.c-torture/compile/920521-1.cc
+	gcc.c-torture/special/920717-x.c	gcc.misc-tests/linkage-x.cc
+	gcc.c-torture/special/920717-y.c	gcc.misc-tests/linkage-y.cc
+	gcc.c-torture/special/920730-1.c	gcc.c-torture/execute/920730-1.cc
+	gcc.c-torture/special/930510-1.c	gcc.dg/cpp/19930510-1.cc
+	gcc.c-torture/special/951130-1.c	gcc.dg/951130-1.cc
+	gcc.c-torture/special/960224-1.c	gcc.dg/cpp/19960224-1.cc
+	gcc.c-torture/special/960224-2.c	gcc.dg/cpp/19960224-2.cc
+	gcc.c-torture/special/981006-1.c	gcc.c-torture/compile/981006-1.cc
+	gcc.c-torture/special/eeprof-1.c	gcc.c-torture/execute/eeprof-1.cc
+	gcc.failure/940409-1.c			gcc.dg/940409-1.cc
 
 2000-06-28  Zack Weinberg  <zack@wolery.cumb.org>
 
@@ -55923,85 +55923,85 @@ Mon 18-Sep-2000 19:23:11 BST  Neil Booth  <NeilB@earthling.net>
 	* gcc.dg/cpp/cpp.exp: New driver.
 	* gcc.dg/cpp/20000627-1.c: New test.
 	* gcc.c-torture/special/special.exp: Remove entry for 921210-1.c.
-	* gcc.c-torture/special/921210-1.c: Move to gcc.dg/cpp/19921210-1.c
+	* gcc.c-torture/special/921210-1.c: Move to gcc.dg/cpp/19921210-1.cc
 	and rewrite as a compilation test.
 
 	* gcc.dg: Move many files into the cpp subdirectory, possibly
 	renaming or editing them as well.
 	Old name		New name
-	990119-1.c		cpp/19990119-1.c
-	990228-1.c		cpp/19990228-1.c
-	990407-1.c		cpp/19990407-1.c
-	990409-1.c		cpp/19990409-1.c
-	990413-1.c		cpp/19990413-1.c
-	990703-1.c		cpp/19990703-1.c
-	20000127-1.c		cpp/20000127-1.c
-	20000129-1.c		cpp/20000129-1.c
-	20000207-1.c		cpp/20000207-1.c
-	20000207-2.c		cpp/20000207-2.c
-	20000209-1.c		cpp/20000209-1.c
-	20000209-2.c		cpp/20000209-2.c
-	20000301-1.c		cpp/20000301-1.c
-	20000419-1.c		cpp/20000419-1.c
+	990119-1.c		cpp/19990119-1.cc
+	990228-1.c		cpp/19990228-1.cc
+	990407-1.c		cpp/19990407-1.cc
+	990409-1.c		cpp/19990409-1.cc
+	990413-1.c		cpp/19990413-1.cc
+	990703-1.c		cpp/19990703-1.cc
+	20000127-1.c		cpp/20000127-1.cc
+	20000129-1.c		cpp/20000129-1.cc
+	20000207-1.c		cpp/20000207-1.cc
+	20000207-2.c		cpp/20000207-2.cc
+	20000209-1.c		cpp/20000209-1.cc
+	20000209-2.c		cpp/20000209-2.cc
+	20000301-1.c		cpp/20000301-1.cc
+	20000419-1.c		cpp/20000419-1.cc
 	20000510-1.S		cpp/20000510-1.S
-	20000519-1.c		cpp/20000519-1.c
-	20000529-1.c		cpp/20000529-1.c
-	20000625-1.c		cpp/20000625-1.c
-	20000625-2.c		cpp/20000625-2.c
-	cpp-as1.c		cpp/assert1.c
-	cpp-as2.c		cpp/assert2.c
-	cxx-comments-1.c	cpp/cxxcom1.c
-	cxx-comments-2.c	cpp/cxxcom2.c
-	endif-label.c		cpp/endif.c
-	cpp-hash1.c		cpp/hash1.c
-	cpp-hash2.c		cpp/hash2.c
-	cpp-if1.c		cpp/if-1.c
-	cpp-if2.c		cpp/if-2.c
-	cpp-if3.c		cpp/if-3.c
-	cpp-if4.c		cpp/if-4.c
-	cpp-if5.c		cpp/if-5.c
-	cpp-cond.c		cpp/if-cexp.c
-	cpp-missingop.c		cpp/if-mop.c
-	cpp-missingparen.c	cpp/if-mpar.c
-	cpp-opprec.c		cpp/if-oppr.c
-	cpp-ifparen.c		cpp/if-paren.c
-	cpp-shortcircuit.c	cpp/if-sc.c
-	cpp-shift.c		cpp/if-shift.c
-	cpp-unary.c		cpp/if-unary.c
-	cpp-li1.c		cpp/line1.c
-	cpp-li2.c		cpp/line2.c
-	lineno.c		cpp/line3.c
-	lineno-2.c		cpp/line4.c
-	cpp-mi.c		cpp/mi1.c
+	20000519-1.c		cpp/20000519-1.cc
+	20000529-1.c		cpp/20000529-1.cc
+	20000625-1.c		cpp/20000625-1.cc
+	20000625-2.c		cpp/20000625-2.cc
+	cpp-as1.c		cpp/assert1.cc
+	cpp-as2.c		cpp/assert2.cc
+	cxx-comments-1.c	cpp/cxxcom1.cc
+	cxx-comments-2.c	cpp/cxxcom2.cc
+	endif-label.c		cpp/endif.cc
+	cpp-hash1.c		cpp/hash1.cc
+	cpp-hash2.c		cpp/hash2.cc
+	cpp-if1.c		cpp/if-1.cc
+	cpp-if2.c		cpp/if-2.cc
+	cpp-if3.c		cpp/if-3.cc
+	cpp-if4.c		cpp/if-4.cc
+	cpp-if5.c		cpp/if-5.cc
+	cpp-cond.c		cpp/if-cexp.cc
+	cpp-missingop.c		cpp/if-mop.cc
+	cpp-missingparen.c	cpp/if-mpar.cc
+	cpp-opprec.c		cpp/if-oppr.cc
+	cpp-ifparen.c		cpp/if-paren.cc
+	cpp-shortcircuit.c	cpp/if-sc.cc
+	cpp-shift.c		cpp/if-shift.cc
+	cpp-unary.c		cpp/if-unary.cc
+	cpp-li1.c		cpp/line1.cc
+	cpp-li2.c		cpp/line2.cc
+	lineno.c		cpp/line3.cc
+	lineno-2.c		cpp/line4.cc
+	cpp-mi.c		cpp/mi1.cc
 	cpp-mic.h		cpp/mi1c.h
 	cpp-micc.h		cpp/mi1cc.h
 	cpp-mind.h		cpp/mi1nd.h
 	cpp-mindp.h		cpp/mi1ndp.h
 	cpp-mix.h		cpp/mi1x.h
-	cpp-mi2.c		cpp/mi2.c
+	cpp-mi2.c		cpp/mi2.cc
 	cpp-mi2a.h		cpp/mi2a.h
 	cpp-mi2b.h		cpp/mi2b.h
 	cpp-mi2c.h		cpp/mi2c.h
-	cpp-mi3.c		cpp/mi3.c
+	cpp-mi3.c		cpp/mi3.cc
 	cpp-mi3.def		cpp/mi3.def
-	poison-1.c		cpp/poison.c
-	pr-impl.c		cpp/prag-imp.c
-	cpp-redef-2.c		cpp/redef1.c
-	cpp-redef.c		cpp/redef2.c
-	strpaste.c		cpp/strp1.c
-	strpaste-2.c		cpp/strp2.c
-	cpp-tradpaste.c		cpp/tr-paste.c
-	cpp-tradstringify.c	cpp/tr-str.c
-	cpp-tradwarn1.c		cpp/tr-warn1.c
-	cpp-tradwarn2.c		cpp/tr-warn2.c
-	trigraphs.c		cpp/trigraphs.c
-	cpp-unc1.c		cpp/unc1.c
-	cpp-unc2.c		cpp/unc2.c
-	cpp-unc3.c		cpp/unc3.c
-	cpp-unc.c		cpp/unc4.c
-	undef.c			cpp/undef1.c
-	undef-2.c		cpp/undef2.c
-	cpp-wi1.c		cpp/widestr1.c
+	poison-1.c		cpp/poison.cc
+	pr-impl.c		cpp/prag-imp.cc
+	cpp-redef-2.c		cpp/redef1.cc
+	cpp-redef.c		cpp/redef2.cc
+	strpaste.c		cpp/strp1.cc
+	strpaste-2.c		cpp/strp2.cc
+	cpp-tradpaste.c		cpp/tr-paste.cc
+	cpp-tradstringify.c	cpp/tr-str.cc
+	cpp-tradwarn1.c		cpp/tr-warn1.cc
+	cpp-tradwarn2.c		cpp/tr-warn2.cc
+	trigraphs.c		cpp/trigraphs.cc
+	cpp-unc1.c		cpp/unc1.cc
+	cpp-unc2.c		cpp/unc2.cc
+	cpp-unc3.c		cpp/unc3.cc
+	cpp-unc.c		cpp/unc4.cc
+	undef.c			cpp/undef1.cc
+	undef-2.c		cpp/undef2.cc
+	cpp-wi1.c		cpp/widestr1.cc
 
 2000-06-27  Mark Mitchell  <mark@codesourcery.com>
 
@@ -59751,7 +59751,7 @@ rlsruhe.de>
 
 1995-04-18  Torbjorn Granlund  <tege@rtl.cygnus.com>
 
-	* c-torture/compile/921109-2.c
+	* c-torture/compile/921109-2.cc
 
 1995-04-18  Mike Stump  <mrs@cygnus.com>
 
@@ -60691,18 +60691,18 @@ rlsruhe.de>
 1993-08-02  Jeff Wheat  (cassidy@cygnus.com)
 
 	* gcc.unsorted: flow.c and loop.c - renamed to avoid conflicts
-	  with compiler objects. New names are test-flow.c and test-loop.c
+	  with compiler objects. New names are test-flow.c and test-loop.cc
 
 1993-07-27  Jeff Wheat  (cassidy@cygnus.com)
 
 	* Upgraded c-torture tests from 1.19 to 1.20
 
 	* new files:
-	* gcc.compile: 930609-1.c 930611-1.c 930618-1.c 930621-1.c
-	* gcc.compile: 930623-1.c 930623-2.c
-	* gcc.noncompile: 930622-1.c 930622-2.c
-	* gcc.failure: 920411-1.c 920627-2.c
-	* gcc.ieee: 920518-1.c 920810-1.c 930529-1.c
+	* gcc.compile: 930609-1.c 930611-1.c 930618-1.c 930621-1.cc
+	* gcc.compile: 930623-1.c 930623-2.cc
+	* gcc.noncompile: 930622-1.c 930622-2.cc
+	* gcc.failure: 920411-1.c 920627-2.cc
+	* gcc.ieee: 920518-1.c 920810-1.c 930529-1.cc
 
 1993-07-20  Jeff Wheat  (cassidy@cygnus.com)
 
@@ -60730,7 +60730,7 @@ rlsruhe.de>
 	  (Makefile): Modified further.
 	* chill.compile (emptymod.ch gdbme.ch neg_range.ch
 	    signal.ch): Added test files.
-	  * chill.execute (.cvsignore printf.grt printr.c
+	  * chill.execute (.cvsignore printf.grt printr.cc
 	    in-printf.grt rts.c chprintf.grt rts.h): Added
 	  test-support files.
 	    (Makefile): More corrections.
@@ -60745,13 +60745,13 @@ rlsruhe.de>
 	* Upgraded c-torture tests from 1.18 to 1.19
 
 	* gcc.compile: added test(s):
-	  930607-1.c
+	  930607-1.cc
 	* gcc.execute: added test(s):
-	  930603-1.c 930603-2.c 930603-3.c 930608-1.c conversion.c inst-check.c
+	  930603-1.c 930603-2.c 930603-3.c 930608-1.c conversion.c inst-check.cc
 
 	* added new subdirectory for misc tests: gcc.misc-tests
 	* gcc.misc-test(s): added tests:
-	  inst-check.c test-consts.c test-ior.c test-switch.c
+	  inst-check.c test-consts.c test-ior.c test-switch.cc
 
 1993-06-09  Brendan Kehoe  (brendan@lisa.cygnus.com)
 

@@ -381,7 +381,7 @@ proc check_effective_target_vma_equals_lma { } {
     global tool
 
     return [check_cached_effective_target vma_equals_lma {
-	set src vma_equals_lma[pid].c
+	set src vma_equals_lma[pid].cc
 	set exe vma_equals_lma[pid].exe
 	verbose "check_effective_target_vma_equals_lma  compiling testfile $src" 2
 	set f [open $src "w"]
@@ -479,7 +479,7 @@ proc check_alias_available { } {
     global tool
 
     return [check_cached_effective_target alias_available {
-	set src alias[pid].c
+	set src alias[pid].cc
 	set obj alias[pid].o
         verbose "check_alias_available  compiling testfile $src" 2
 	set f [open $src "w"]
@@ -2750,7 +2750,7 @@ proc check_effective_target_powerpc64 { } {
 	# instruction.  Include the current process ID in the file
 	# names to prevent conflicts with invocations for multiple
 	# testsuites.
-	set src ppc[pid].c
+	set src ppc[pid].cc
 	set exe ppc[pid].x
 
 	set f [open $src "w"]
@@ -3976,7 +3976,7 @@ proc aarch64_sve_bits { } {
     return [check_cached_effective_target aarch64_sve_bits {
 	global tool
 
-	set src dummy[pid].c
+	set src dummy[pid].cc
 	set f [open $src "w"]
 	puts $f "int bits = __ARM_FEATURE_SVE_BITS;"
 	close $f
@@ -11150,7 +11150,7 @@ proc check_effective_target_pie_copyreloc { } {
 	# reloc.  Include the current process ID in the file names to
 	# prevent conflicts with invocations for multiple testsuites.
 
-	set src pie[pid].c
+	set src pie[pid].cc
 	set obj pie[pid].o
 
 	set f [open $src "w"]
@@ -11196,7 +11196,7 @@ proc check_effective_target_got32x_reloc { } {
 	# Include the current process ID in the file names to prevent
 	# conflicts with invocations for multiple testsuites.
 
-	set src got32x[pid].c
+	set src got32x[pid].cc
 	set obj got32x[pid].o
 
 	set f [open $src "w"]
@@ -11244,7 +11244,7 @@ proc check_effective_target_tls_get_addr_via_got { } {
 	# Include the current process ID in the file names to prevent
 	# conflicts with invocations for multiple testsuites.
 
-	set src tls_get_addr_via_got[pid].c
+	set src tls_get_addr_via_got[pid].cc
 	set obj tls_get_addr_via_got[pid].o
 
 	set f [open $src "w"]
@@ -12030,7 +12030,7 @@ proc check_effective_target_R_flag_in_section { } {
 
     return [check_cached_effective_target R_flag_in_section {
 
-	set src pie[pid].c
+	set src pie[pid].cc
 	set obj pie[pid].o
 
 	set f [open $src "w"]
@@ -12070,7 +12070,7 @@ proc check_effective_target_o_flag_in_section { } {
 
     return [check_cached_effective_target o_flag_in_section {
 
-	set src pie[pid].c
+	set src pie[pid].cc
 	set obj pie[pid].o
 
 	set f [open $src "w"]

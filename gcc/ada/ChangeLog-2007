@@ -7466,7 +7466,7 @@
 	g-socthi-vms.adb: Move signalling
 	fd management to a nested package, so that they can conveniently be
 	moved to a subunit that is shared across Windows, VMS, and VxWorks
-	(Ada implementation) or completed with imported bodies from socket.c
+	(Ada implementation) or completed with imported bodies from socket.cc
 	(UNIX case).
 	(Read_Signalling_Fd, Write_Signalling_Fd, Create_Signalling_Fds): New
 	subprograms.

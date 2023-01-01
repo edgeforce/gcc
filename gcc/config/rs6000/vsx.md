@@ -6144,7 +6144,7 @@
    (SFBOOL_MTVSR_D_V4SF		13)])		;; SFBOOL_MTVSRD_D as V4SFmode
 
 ;; Attempt to optimize some common GLIBC operations using logical operations to
-;; pick apart SFmode operations.  For example, there is code from e_powf.c
+;; pick apart SFmode operations.  For example, there is code from e_powf.cc
 ;; after macro expansion that looks like:
 ;;
 ;;	typedef union {

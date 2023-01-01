@@ -601,15 +601,15 @@
 	(build_function_type_for_method): New function.
 	(objc_decl_method_attributes): Call build_function_type_for_method.
 	(really_start_method): Likewise.
-	* objc-gnu-runtime-abi-01.c
+	* objc-gnu-runtime-abi-01.cc
 	(gnu_runtime_abi_01_get_type_arg_list_base): Change prototype and
 	adjust function accordingly.  Update header comment.
 	(build_objc_method_call): Call build_function_type_for_method.
-	* objc-next-runtime-abi-01.c
+	* objc-next-runtime-abi-01.cc
 	(next_runtime_abi_01_get_type_arg_list_base): Change prototype and
 	adjust function accordingly.  Update header comment.
 	(build_objc_method_call): Call build_function_type_for_method.
-	* objc-next-runtime-abi-02.c
+	* objc-next-runtime-abi-02.cc
 	(next_runtime_abi_02_get_type_arg_list_base): Change prototype and
 	adjust function accordingly.  Update header comment.
 	(objc_copy_to_temp_side_effect_params): Take fntype instead of a
@@ -803,7 +803,7 @@
 	* objc-next-runtime-abi-02.c: New.
 	* objc-lang.c: Include c-lang.h.
 	(LANG_HOOKS_EH_PERSONALITY): Removed.
-	* objc-act.h: Moved many declarations and code from objc-act.c
+	* objc-act.h: Moved many declarations and code from objc-act.cc
 	into objc-act.h to make them available outside objc-act.c.
 	(objc_eh_runtime_type): Removed.
 	(objc_eh_personality): Removed.

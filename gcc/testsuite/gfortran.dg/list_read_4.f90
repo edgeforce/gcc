@@ -2,7 +2,7 @@
 ! Test of gfortran list directed read> check delimiters are correctly
 ! treated.  Written in f77 so that g77 will run for comparison.
 !
-! f , e and i edit reads are terminated separately by read_real.c
+! f , e and i edit reads are terminated separately by read_real.cc
 !
 ! PThomas                                                   Jan 2005
 ! BDavis        

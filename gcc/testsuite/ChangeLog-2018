@@ -2504,7 +2504,7 @@
 2018-11-15  Martin Sebor  <msebor@redhat.com>
 
 	PR c/83656
-	* gcc.dg/20021006-1.c
+	* gcc.dg/20021006-1.cc
 	* gcc.dg/Wbuiltin-declaration-mismatch.c: New test.
 	* gcc.dg/Wbuiltin-declaration-mismatch-2.c: New test.
 	* gcc.dg/Wbuiltin-declaration-mismatch-3.c: New test.
@@ -2556,9 +2556,9 @@
 	* c-c++-common/diagnostic-format-json-3.c: New test.
 	* c-c++-common/diagnostic-format-json-4.c: New test.
 	* c-c++-common/diagnostic-format-json-5.c: New test.
-	* gcc.dg/plugin/diagnostic_plugin_test_show_locus.c
+	* gcc.dg/plugin/diagnostic_plugin_test_show_locus.cc
 	(custom_diagnostic_finalizer): Add diagnostic_t param.
-	* gcc.dg/plugin/location_overflow_plugin.c
+	* gcc.dg/plugin/location_overflow_plugin.cc
 	(verify_unpacked_ranges): Likewise.
 	(verify_no_columns): Likewise.
 	* gfortran.dg/diagnostic-format-json-1.F90: New test.
@@ -3323,7 +3323,7 @@
 
 2018-11-07  Chenghua Xu  <paul.hua.gm@gmail.com>
 
-	* gcc.target/mips/loongson-shift-count-truncated-1.c
+	* gcc.target/mips/loongson-shift-count-truncated-1.cc
 	(dg-options): Run under -mloongson-mmi option.
 	Include loongson-mmiintrin.h instead of loongson.h.
 	* gcc.target/mips/loongson-simd.c: Likewise.
@@ -3837,7 +3837,7 @@
 	* c-c++-common/substring-location-PR-87721.c: New test.
 	* gcc.dg/plugin/diagnostic-test-string-literals-1.c: Add test for
 	PR 87721.
-	* gcc.dg/plugin/diagnostic_plugin_test_string_literals.c
+	* gcc.dg/plugin/diagnostic_plugin_test_string_literals.cc
 	(test_string_literals): Fold the index arguments before checking
 	for INTEGER_CST.
 
@@ -4582,7 +4582,7 @@
 	(__builtin_ia32_vfnmaddps512_maskz): Likewise.
 	(__builtin_ia32_vfnmsubpd512_maskz): Likewise.
 	(__builtin_ia32_vfnmsubps512_maskz): Likewise.
-	* gcc.target/i386/sse-13.c
+	* gcc.target/i386/sse-13.cc
 	(__builtin_ia32_vfmsubpd512_mask): Likewise.
 	(__builtin_ia32_vfmsubpd512_maskz): Likewise.
 	(__builtin_ia32_vfmsubps512_mask): Likewise.
@@ -4593,7 +4593,7 @@
 	(__builtin_ia32_vfnmaddps512_maskz): Likewise.
 	(__builtin_ia32_vfnmsubpd512_maskz): Likewise.
 	(__builtin_ia32_vfnmsubps512_maskz): Likewise.
-	* gcc.target/i386/sse-23.c
+	* gcc.target/i386/sse-23.cc
 	(__builtin_ia32_vfmsubpd512_mask): Likewise.
 	(__builtin_ia32_vfmsubpd512_maskz): Likewise.
 	(__builtin_ia32_vfmsubps512_mask): Likewise.
@@ -4671,7 +4671,7 @@
 2018-10-21  H.J. Lu  <hongjiu.lu@intel.com>
 
 	PR target/87662
-	* gcc.target/i386/pr87662.c
+	* gcc.target/i386/pr87662.cc
 
 2018-10-20  H.J. Lu  <hongjiu.lu@intel.com>
 
@@ -5299,10 +5299,10 @@
 	* g++.dg/warn/Wformat-ranges-c++11.C: New test.
 	* g++.dg/warn/Wformat-ranges.C: New test, based on
 	gcc.dg/format/diagnostic-ranges.c.
-	* gcc.dg/plugin/diagnostic-test-string-literals-1.c
+	* gcc.dg/plugin/diagnostic-test-string-literals-1.cc
 	(test_multitoken_macro): Generalize expected output to work with
 	both C and C++.
-	* gcc.dg/plugin/diagnostic-test-string-literals-2.c
+	* gcc.dg/plugin/diagnostic-test-string-literals-2.cc
 	(test_stringified_token_1): Likewise.
 	(test_stringified_token_3): Likewise.
 
@@ -6869,7 +6869,7 @@
 	PR c++/87091
 	* g++.dg/pr85523.C: Extend expected output to show line
 	before line-insertion fix-it hint.
-	* gcc.dg/plugin/diagnostic-test-show-locus-bw-line-numbers.c
+	* gcc.dg/plugin/diagnostic-test-show-locus-bw-line-numbers.cc
 	(test_fixit_insert_newline): Add previous line to expected output.
 	* gcc.dg/plugin/diagnostic-test-show-locus-bw.c: Likewise.
 	* gcc.dg/plugin/diagnostic-test-show-locus-color.c: Likewise.
@@ -7347,7 +7347,7 @@
 
 2018-08-16  David Malcolm  <dmalcolm@redhat.com>
 
-	* gcc.dg/plugin/diagnostic-test-show-locus-bw-line-numbers.c
+	* gcc.dg/plugin/diagnostic-test-show-locus-bw-line-numbers.cc
 	(test_fixit_insert_newline): Update expected output to show '+'
 	characters in margin of line-insertion fix-it hint.
 
@@ -12450,7 +12450,7 @@
 2018-04-30  David Malcolm  <dmalcolm@redhat.com>
 
 	PR c++/85523
-	* gcc.dg/plugin/diagnostic-test-show-locus-generate-patch.c
+	* gcc.dg/plugin/diagnostic-test-show-locus-generate-patch.cc
 	(test_add_fixit_insert_formatted_single_line): New function.
 	(test_add_fixit_insert_formatted_multiline): New function.
 	Extend expected output of generated patch to include fix-it hints
@@ -12461,7 +12461,7 @@
 
 2018-04-30  David Malcolm  <dmalcolm@redhat.com>
 
-	* gcc.dg/plugin/diagnostic_plugin_test_show_locus.c
+	* gcc.dg/plugin/diagnostic_plugin_test_show_locus.cc
 	(test_show_locus): Update for location_get_source_line returning a
 	char_span.  Use char_span for handling words in the
 	"test_many_nested_locations" fix-it example.
@@ -18364,7 +18364,7 @@
 
 2018-02-14  Carl Love  <cel@us.ibm.com>
 
-	* gcc.target/powerpc/builtins-4-int128-runnable.c
+	* gcc.target/powerpc/builtins-4-int128-runnable.cc
 	(dg-require-effective-target): Change vsx_hw to p8vector_hw.
 	(dg-options): Change -maltivec -mvsx to -mpower8-vector.
 

@@ -15,7 +15,7 @@ You should have received a copy of the GNU General Public License
 along with GCC; see the file COPYING3.  If not see
 <http://www.gnu.org/licenses/>.  */
 
-/* Routines implemented in sparc-d.cc  */
+/* Routines implemented in sparc-d  */
 extern void sparc_d_target_versions (void);
 extern void sparc_d_register_target_info (void);
 

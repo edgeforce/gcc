@@ -406,7 +406,7 @@ package body System.Task_Primitives.Operations is
       function State
         (Int : System.Interrupt_Management.Interrupt_ID) return Character;
       pragma Import (C, State, "__gnat_get_interrupt_state");
-      --  Get interrupt state.  Defined in a-init.c
+      --  Get interrupt state.  Defined in a-init.cc
       --  The input argument is the interrupt number,
       --  and the result is one of the following:
 

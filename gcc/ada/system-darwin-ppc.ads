@@ -97,7 +97,7 @@ package System is
    --  The values defined here are derived from the following Darwin
    --  sources:
    --
-   --  Libc/pthreads/pthread.c
+   --  Libc/pthreads/pthread.cc
    --    pthread_init calls host_info to retrieve the HOST_PRIORITY_INFO.
    --    This file includes "pthread_internals".
    --  Libc/pthreads/pthread_internals.h
@@ -109,7 +109,7 @@ package System is
    --  xnu/osfmk/mach/host_info.h
    --    This file contains the definition of the host_info_t data structure
    --    and the function prototype for host_info.
-   --  xnu/osfmk/kern/host.c
+   --  xnu/osfmk/kern/host.cc
    --    This file defines the function host_info which sets the
    --    priority_info field of struct host_info_t. This file includes
    --    <kern/processor.h>.

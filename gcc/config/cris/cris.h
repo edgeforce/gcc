@@ -330,7 +330,7 @@ extern int cris_cpu_version;
     Note that to make this macro affect the alignment of stack
    locals, a fix was required, and special precautions when handling
    the stack pointer in various other macros (TARGET_ASM_FUNCTION_PROLOGUE
-   et al) were required.  See file "function.cc".  If you would just define
+   et al) were required.  See file "function".  If you would just define
    this macro, it would only affect the builtin alloca and variable
    local data (non-ANSI, non-K&R, Gnu C extension).  */
 #define STACK_BOUNDARY \
@@ -489,7 +489,7 @@ enum reg_class
 #define INDEX_REG_CLASS GENERAL_REGS
 
 /* Since it uses reg_renumber, it is safe only once reg_renumber
-   has been allocated, which happens in reginfo.cc during register
+   has been allocated, which happens in reginfo during register
    allocation.  */
 #define REGNO_OK_FOR_BASE_P(REGNO)					\
  ((REGNO) <= CRIS_LAST_GENERAL_REGISTER					\
@@ -568,7 +568,7 @@ enum reg_class
    number and dwarf frame register, we would either need to include all
    registers in the gcc description (with some marked fixed of course), or
    an inverse mapping from dwarf register to gcc register.  There is one
-   need in dwarf2out.cc:expand_builtin_init_dwarf_reg_sizes.  Right now, I
+   need in dwarf2out:expand_builtin_init_dwarf_reg_sizes.  Right now, I
    don't see that we need exact correspondence between DWARF *frame*
    registers and DEBUGGER_REGNO, so map them onto GCC registers.  */
 #define DWARF_FRAME_REGNUM(REG) (REG)
@@ -653,7 +653,7 @@ struct cum_args {int regs;};
 
 /* Node: Function entry */
 
-/* See cris.cc for TARGET_ASM_FUNCTION_PROLOGUE and
+/* See cris for TARGET_ASM_FUNCTION_PROLOGUE and
    TARGET_ASM_FUNCTION_EPILOGUE.  */
 
 /* Node: Profiling */

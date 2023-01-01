@@ -103,7 +103,7 @@ along with GCC; see the file COPYING3.  If not see
   fputs (",0\n", asm_out_file);						\
 } while (0)
 
-/* These are IBM XCOFF extensions we need to reference in dbxout.c
+/* These are IBM XCOFF extensions we need to reference in dbxout.cc
    and xcoffout.c.  */
 
 /* AIX XCOFF uses this for typedefs.  This can have any value, since it is

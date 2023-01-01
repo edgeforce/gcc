@@ -373,7 +373,7 @@ package body System.Interrupts is
       function State
         (Int : System.Interrupt_Management.Interrupt_ID) return Character;
       pragma Import (C, State, "__gnat_get_interrupt_state");
-      --  Get interrupt state for interrupt number Int. Defined in init.c
+      --  Get interrupt state for interrupt number Int. Defined in init.cc
 
       Default : constant Character := 's';
       --    's'   Interrupt_State pragma set state to System (use "default"

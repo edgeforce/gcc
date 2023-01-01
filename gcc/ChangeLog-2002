@@ -1450,12 +1450,12 @@ Wed Dec  4 15:20:54 CET 2002  Jan Hubicka  <jh@suse.cz>
 
 2002-12-02  Nathanael Nerode  <neroden@gcc.gnu.org>
 
-	* Makefile.in configure configure.in dummy-conditions.c fix-header.c
-	gcov-iov.c gen-protos.c genattr.c genattrtab.c genautomata.c
-	gencheck.c gencodes.c genconditions.c genconfig.c genconstants.c
+	* Makefile.in configure configure.in dummy-conditions.c fix-header.cc
+	gcov-iov.c gen-protos.c genattr.c genattrtab.c genautomata.cc
+	gencheck.c gencodes.c genconditions.c genconfig.c genconstants.cc
 	genemit.c genextract.c genflags.c gengenrtl.c gengtype-lex.l
-	gengtype-yacc.y gengtype.c genopinit.c genoutput.c genpeep.c
-	genpreds.c genrecog.c gensupport.c mkconfig.sh read-rtl.c
+	gengtype-yacc.y gengtype.c genopinit.c genoutput.c genpeep.cc
+	genpreds.c genrecog.c gensupport.c mkconfig.sh read-rtl.cc
 	scan-decls.c scan.c config/sh/sh.h doc/configfiles.texi
 	doc/install-old.texi: Replace hconfig.h with bconfig.h.
 	* Makefile.in: Replace HCONFIG_H with BCONFIG_H.
@@ -8253,13 +8253,13 @@ Tue Sep 17 13:40:13 2002  Nicola Pero  <n.pero@mi.flashnet.it>
 	* basic_block.h (gcov_type): Explain why it is signed.
 	* final.c: Don't include profile.h.
 	(struct function_list, functions_head, functions_tail,
-	end_final): Moved to profile.c
+	end_final): Moved to profile.cc
 	(final): Move arc chaining code to profile.c.
 	* function.c (prepare_function_start): Remove duplicate line.
 	* output.h (end_final): Remove prototype.
 	* predict.c (estimate_loops_at_level): Use gcov_type.
 	* profile.c (struct function_list, functions_head,
-	functions_tail): Moved from final.c
+	functions_tail): Moved from final.cc
 	(need_func_profiler): Remove.
 	(instrument_edges): Don't set need_func_profiler.
 	(get_exec_counts): Avoid signed/unsigned warning.
@@ -9013,13 +9013,13 @@ Tue Sep  3 11:32:14 2002  Nicola Pero  <n.pero@mi.flashnet.it>
 	config/m68k/mot3300.h config/m68k/sgs.h config/m68k/tower-as.h
 	config/m88k/m88k.c config/m88k/m88k.h config/mcore/mcore-pe.h
 	config/mcore/mcore.c config/mips/mips.c config/mips/mips.h
-	config/ns32k/ns32k.md config/pa/pa-linux.h config/pa/pa.c
+	config/ns32k/ns32k.md config/pa/pa-linux.h config/pa/pa.cc
 	config/pa/pa.h config/pa/pa.md config/romp/romp.h
 	config/rs6000/linux64.h config/rs6000/lynx.h
 	config/rs6000/rs6000.c config/rs6000/sysv4.h config/rs6000/xcoff.h
-	config/s390/s390.c config/s390/s390.md config/sh/sh.c
+	config/s390/s390.c config/s390/s390.md config/sh/sh.cc
 	config/sparc/sparc.c config/sparc/sysv4.h
-	config/stormy16/stormy16.h dbxout.c defaults.h dwarf2out.c
+	config/stormy16/stormy16.h dbxout.c defaults.h dwarf2out.cc
 	dwarfout.c except.c final.c varasm.c vmsdbgout.c: Replace
 	ASM_OUTPUT_INTERNAL_LABEL macro with a call to the target hook.
 
@@ -12453,7 +12453,7 @@ Wed Jul 24 17:23:16 CEST 2002  Jan Hubicka  <jh@suse.cz>
 
 2002-07-24  Gabriel Dos Reis  <gdr@nerim.net>
 
-	* pretty-print.h: Add macros from cp/error.c
+	* pretty-print.h: Add macros from cp/error.cc
 
 2002-07-24  Alan Modra  <amodra@bigpond.net.au>
 
@@ -12526,7 +12526,7 @@ Wed Jul 24 17:23:16 CEST 2002  Jan Hubicka  <jh@suse.cz>
 	* tree.c (FILE_FUNCTION_PREFIX_LEN): Remove.
 	* config/alpha/alpha-interix.h, config/mips/linux.h
 	(ASM_OUTPUT_DEFINE_LABEL_DIFFERENCE_SYMBOL): Remove.
-	* config/mmix/mmix-protos.h, config/mmix/mmix.c
+	* config/mmix/mmix-protos.h, config/mmix/mmix.cc
 	(mmix_asm_output_define_label_difference_symbol): Remove.
 	* config/mmix/mmix.h
 	(ASM_OUTPUT_DEFINE_LABEL_DIFFERENCE_SYMBOL): Remove.
@@ -15417,7 +15417,7 @@ Tue Jun 18 20:53:32 2002  J"orn Rennecke <joern.rennecke@superh.com>
 
 	* config/mips/mips-protos.h (mips_initial_elimination_offset): Declare.
 	(mips_set_return_address, mips_restore_gp): Declare.
-	* config/mips/mips.h (struct mips_frame_info): Move to mips.c
+	* config/mips/mips.h (struct mips_frame_info): Move to mips.cc
 	(current_frame_info): Remove.
 	(INITIAL_ELIMINATION_OFFSET): Use mips_initial_elimination_offset.
 	* config/mips/mips.c: Remove uses of current_frame_info.
@@ -16449,7 +16449,7 @@ Tue Jun 11 21:53:37 CEST 2002  Jan Hubicka  <jh@suse.cz>
 	__gthr_win32_* extern implementations if #defined
 	__GTHREAD_HIDE_WIN32API.
 	* config/i386/t-mingw32 (LIB2FUNCS_EXTRA): Set to
-	$(srcdir)/config/i386/gthr-win32.c
+	$(srcdir)/config/i386/gthr-win32.cc
 	* config/i386/gthr-win32.c: New implementation file.
 	(__gthr_win32_once, __gthr_win32_key_create,
 	__gthr_win32_key_delete, __gthr_win32_getspecific,
@@ -18189,7 +18189,7 @@ Tue Jun  4 19:29:42 CEST 2002  Jan Hubicka  <jh@suse.cz>
 	* ggc.h: Delete mark_optab prototype.
 	* ggc-common.c (ggc_mark_rtx_children): Use canonical name for
 	mem_attrs marker procedure.
-	* gengtype.c (get_output_file): Include headers in gtype-desc.c
+	* gengtype.c (get_output_file): Include headers in gtype-desc.cc
 	explicitly rather than deducing them from file names.
 	(write_gc_structure_fields): Handle arrays of structures.
 	(main): Return nonzero exit code if errors occur during output.
@@ -21078,7 +21078,7 @@ config/alpha:
 	config/ia64/aix.h, config/ia64/sysv4.h, config/alpha/alpha.c,
 	config/mips/mips.c, config/romp/romp.c, config/rs6000/sysv4.h,
 	config/rs6000/xcoff.h, config/s390/s390.c, config/sparc/aout.h,
-	config/sparc/lynx.h, config/xtensa/xtensa.c
+	config/sparc/lynx.h, config/xtensa/xtensa.cc
 	(TARGET_ASM_SELECT_RTX_SECTION): New.
 
 	* config/alpha/elf.h (SELECT_RTX_SECTION): Move ...
@@ -21204,7 +21204,7 @@ Sun May 19 00:24:23 CEST 2002  Jan Hubicka  <jh@suse.cz>
 	* config/1750a/1750a.h, config/i860/sysv3.h
 	(READONLY_DATA_SECTION_ASM_OP): New.
 	READONLY_DATA_SECTION_ASM_OP.
-	* config/i386/interix.c, config/i386/winnt.c
+	* config/i386/interix.c, config/i386/winnt.cc
 	(i386_pe_unique_section): Always use .rdata prefix.
 	* config/pa/som.h (readonly_data): Always switch to read-only section.
 	(READONLY_DATA_SECTION): Predicate on flag_pic.
@@ -26396,7 +26396,7 @@ objc:
 	* langhooks-def.h (lhd_set_decl_assembler_name,
 	LANG_HOOKS_SET_DECL_ASSEMBLER_NAME): New.
 	(LANG_HOOKS_INITIALIZER): Update.
-	* langhooks.c (lhd_set_decl_assembler_name): New, from tree.c
+	* langhooks.c (lhd_set_decl_assembler_name): New, from tree.cc
 	* langhooks.h (struct lang_hooks): New hook.
 	* tree.c (set_decl_assembler_name): Move to langhooks.c.
 	(lang_set_decl_assembler_name): Remove.
@@ -27595,27 +27595,27 @@ objc:
 	big it is.  Don't declare or use union real_extract.
 
 	* emit-rtl.c (init_emit_once), varasm.c (immed_real_const_1,
-	decode_rtx_const, output_constant_pool), config/a29k/a29k.c
+	decode_rtx_const, output_constant_pool), config/a29k/a29k.cc
 	(print_operand), config/arm/arm.c (output_move_double),
 	config/arm/arm.md (consttable_4, consttable_8),
 	config/romp/romp.c (output_fpops), config/s390/s390.h
-	(ASM_OUTPUT_SPECIAL_POOL_ENTRY), config/xtensa/xtensa.c
+	(ASM_OUTPUT_SPECIAL_POOL_ENTRY), config/xtensa/xtensa.cc
 	(xtensa_output_literal): Don't use union real_extract.
 
-	* config/dsp16xx/dsp16xx.c (print_operand), config/i860/i860.c
+	* config/dsp16xx/dsp16xx.c (print_operand), config/i860/i860.cc
 	(sfmode_constant_to_ulong), config/ns32k/merlin.h
 	(PRINT_OPERAND), config/ns32k/ns32k.c (print_operand),
 	config/pdp11/pdp11.h (PRINT_OPERAND), config/we32k/we32k.h
 	(PRINT_OPERAND): Don't use local version of union
 	real_extract.
 
-	* config/convex/convex.c (check_float_value), config/vax/vax.c
+	* config/convex/convex.c (check_float_value), config/vax/vax.cc
 	(vax_float_literal), config/m88k/m88k.md (divdf3),
 	config/dsp16xx/dsp16xx.md (fixuns_trunchfhi2),
 	config/pdp11/pdp11.c (output_move_quad): Don't do host
 	arithmetic on target floating point quantities.
 
-	* config/a29k/a29k.md, config/dsp16xx/dsp16xx.c
+	* config/a29k/a29k.md, config/dsp16xx/dsp16xx.cc
 	(output_dsp16xx_float_const): Don't test HOST_FLOAT_FORMAT.
 
 	* fold-const.c (fold), simplify-rtx.c (simplify_binary_real):
@@ -28124,8 +28124,8 @@ Tue Mar 19 14:12:32 2002  Richard Kenner  <kenner@vlsi1.ultra.nyu.edu>
 
 	* emit-rtl.c (gen_int_mode): New function.
 	* rtl.h: Prototype for it.
-	* combine.c (make_extraction, simplify_comparison), expmed.c
-	(store_bit_field, expand_mult_highpart, expand_divmod), expr.c
+	* combine.c (make_extraction, simplify_comparison), expmed.cc
+	(store_bit_field, expand_mult_highpart, expand_divmod), expr.cc
 	(convert_modes, store_field), optabs.c (expand_fix),
 	simplify-rtx.c (neg_const_int, simplify_unary_real),
 
@@ -30922,7 +30922,7 @@ Mon Feb 18 11:55:55 CET 2002  Jan Hubicka  <jh@suse.cz>
 	printf style arguments. Change calls where necessary.
 	* output.h (output_operand_lossage): Change declaration
 	accordingly. Update copyright.
-	* config/arc/arc.c config/fr30/fr30.c config/m32r/m32r.c
+	* config/arc/arc.c config/fr30/fr30.c config/m32r/m32r.cc
 	config/m88k/m88k.c : Adapt all calls to output_operand_lossage.
 	Update copyright date where necessary.
 

@@ -248,7 +248,7 @@
 2018-12-15  Jan Hubicka  <hubicka@ucw.cz>
 
 	PR ipa/88561
-	* ipa-polymorphic-call.c
+	* ipa-polymorphic-call.cc
 	(ipa_polymorphic_call_context::ipa_polymorphic_call_context): Handle
 	arguments of thunks correctly.
 	(ipa_polymorphic_call_context::get_dynamic_context): Be ready for
@@ -430,7 +430,7 @@
 2018-12-19  David Malcolm  <dmalcolm@redhat.com>
 
 	PR c++/87504
-	* gcc-rich-location.c
+	* gcc-rich-location.cc
 	(maybe_range_label_for_tree_type_mismatch::get_text): Move here from
 	c/c-typeck.c.
 	(binary_op_rich_location::binary_op_rich_location): New ctor.
@@ -622,7 +622,7 @@
 
 	PR testsuite/86153
 	PR middle-end/83239
-	* vr-values.c
+	* vr-values.cc
 	(vr_values::vrp_evaluate_conditional_warnv_with_ops): Extend
 	simplification of overflow tests to cover cases in which we
 	can determine the result of the comparison.
@@ -854,7 +854,7 @@
 	* tree-ssa-propagate.h
 	(substitute_and_fold_engine::substitute_and_fold): Add an optional
 	block parameter.
-	* tree-ssa-propagate.c
+	* tree-ssa-propagate.cc
 	(substitute_and_fold_engine::substitute_and_fold): Likewise.
 	When passed, only walk blocks dominated by that block.
 	* tree-vrp.h (range_includes_p): Declare.
@@ -1523,7 +1523,7 @@
 	PR middle-end/87813
 	* gimple-ssa-evrp-analyze.h (class evrp_range_analyzer): Add
 	m_update_global_ranges member.  Add corresponding argument to ctor.
-	* gimple-ssa-evrp-analyze.c
+	* gimple-ssa-evrp-analyze.cc
 	(evrp_range_analyzer::evrp_range_analyzer): Add new argument and
 	initialize m_update_global_ranges.
 	(evrp_range_analyzer::set_ssa_range_info): Assert that we are
@@ -3956,7 +3956,7 @@
 2018-11-15  David Malcolm  <dmalcolm@redhat.com>
 
 	PR tree-optimization/88015
-	* graphite-isl-ast-to-gimple.c
+	* graphite-isl-ast-to-gimple.cc
 	(translate_isl_ast_to_gimple::scop_to_isl_ast): Add missing check
 	for dump_enabled_p.
 	* graphite-sese-to-poly.c (build_poly_scop): Likewise.
@@ -4078,7 +4078,7 @@
 
 2018-11-14  Aldy Hernandez  <aldyh@redhat.com>
 
-	* gimple-ssa-evrp-analyze.c
+	* gimple-ssa-evrp-analyze.cc
 	(evrp_range_analyzer::record_ranges_from_incoming_edge): Rename
 	ignore_equivs_equal_p to equal_p.
 	* ipa-cp.c (meet_with_1): Use equal_p instead of
@@ -4403,7 +4403,7 @@
 
 2018-11-13  Andre Vieira  <andre.simoesdiasvieira@arm.com>
 
-	* config/aarch64/aarch64.c
+	* config/aarch64/aarch64.cc
 	(aarch64_vectorize_preferred_vector_alignment): Change return type to
 	poly_uint64.
 	(aarch64_simd_vector_alignment_reachable): Adapt to preferred vector
@@ -4735,7 +4735,7 @@
 	value_range_base::constant_p, value_range_base::zero_p,
 	value_range_base::singleton_p): Move from value_range.
 	(value_range::dump): Add.
-	* gimple-ssa-evrp-analyze.c
+	* gimple-ssa-evrp-analyze.cc
 	(evrp_range_analyzer::record_ranges_from_phis): Use set_varying.
 	* ipa-cp.c (ipcp_vr_lattice::print): Use dump_value_range.
 	* tree-ssa-threadedge.c (record_temporary_equivalences_from_phis):
@@ -6606,7 +6606,7 @@
 
 2018-10-30  Jan Hubicka  <jh@suse.cz>
 
-	* tree.c
+	* tree.cc
 	(free_lang_data_d, add_tree_to_fld_list, fld_worklist_push): Move
 	head in file.
 	(free_lang_data_in_type): Forward declare.
@@ -6684,7 +6684,7 @@
 
 2018-10-30  Sameera Deshpande  <sameera.deshpande@linaro.org>
 
-	* config/aarch64/falkor-tag-collision-avoidance.c
+	* config/aarch64/falkor-tag-collision-avoidance.cc
 	(execute_tag_collision_avoidance): Call df_note_add_problem.
 
 2018-10-30  Martin Liska  <mliska@suse.cz>
@@ -7170,7 +7170,7 @@
 
 2018-10-24  Alexandre Oliva  <aoliva@redhat.com>
 
-	* gimple-ssa-isolate-paths.c
+	* gimple-ssa-isolate-paths.cc
 	(find_implicit_erroneous_behavior): Do not change code if the
 	pass is running for warnings only.
 	(find_explicit_erroneous_behavior): Likewise.
@@ -7266,7 +7266,7 @@
 
 	* tree-vrp.c (add_assert_info): Guard dump_printf with
 	dump_enabled_p.
-	* gimple-ssa-evrp-analyze.c
+	* gimple-ssa-evrp-analyze.cc
 	(evrp_range_analyzer::record_ranges_from_incoming_edge):
 	Use value_range::ignore_equivs_equal_p.
 
@@ -7365,7 +7365,7 @@
 
 2018-10-22  Richard Biener  <rguenther@suse.de>
 
-	* gimple-ssa-evrp-analyze.c
+	* gimple-ssa-evrp-analyze.cc
 	(evrp_range_analyzer::record_ranges_from_incoming_edge): Be
 	smarter about what ranges to use.
 	* tree-vrp.c (add_assert_info): Dump here.
@@ -7494,7 +7494,7 @@
 	* gimple-ssa-store-merging.c (handled_load): Pass cfun to
 	stmt_can_throw_internal.
 	(pass_store_merging::execute): Likewise.
-	* gimple-ssa-strength-reduction.c
+	* gimple-ssa-strength-reduction.cc
 	(find_candidates_dom_walker::before_dom_children): Pass cfun to
 	stmt_could_throw_p.
 	* gimplify-me.c (gimple_regimplify_operands): Pass cfun to
@@ -7536,7 +7536,7 @@
 	(convert_to_divmod): Likewise.
 	* tree-ssa-phiprop.c (propagate_with_phi): Likewise.
 	* tree-ssa-pre.c (compute_avail): Pass cfun to stmt_could_throw_p.
-	* tree-ssa-propagate.c
+	* tree-ssa-propagate.cc
 	(substitute_and_fold_dom_walker::before_dom_children): Likewise.
 	* tree-ssa-reassoc.c (suitable_cond_bb): Likewise.
 	(maybe_optimize_range_tests): Likewise.
@@ -7973,7 +7973,7 @@
 	* doc/cpp.texi (__STDC_VERSION__): Document C2X handling.
 	* doc/invoke.texi (-std=c2x, -std=gnu2x): Document new options.
 	* doc/standards.texi (C Language): Document C2X.
-	* dwarf2out.c (highest_c_language), config/rl78/rl78.c
+	* dwarf2out.c (highest_c_language), config/rl78/rl78.cc
 	(rl78_option_override): Handle "GNU C2X" language name.
 
 2018-10-17  Joseph Myers  <joseph@codesourcery.com>
@@ -7991,7 +7991,7 @@
 
 	* bitmap.c (bitmap_head::dump): New.
 	* bitmap.h (bitmap_head): Add dump().
-	* gimple-ssa-evrp-analyze.c
+	* gimple-ssa-evrp-analyze.cc
 	(evrp_range_analyzer::try_find_new_range): Adjust for value_range API.
 	(evrp_range_analyzer::set_ssa_range_info): Same.
 	(evrp_range_analyzer::record_ranges_from_phis): Same.
@@ -8198,7 +8198,7 @@
 	* doc/invoke.texi: Add -fdiagnostics-minimum-margin-width=.
 	* opts.c (common_handle_option): Handle
 	OPT_fdiagnostics_minimum_margin_width_.
-	* selftest-diagnostic.c
+	* selftest-diagnostic.cc
 	(selftest::test_diagnostic_context::test_diagnostic_context):
 	Initialize min_margin_width to 6.
 	* toplev.c (general_init): Initialize global_dc->min_margin_width.
@@ -10531,7 +10531,7 @@
 	* gimple-ssa-sprintf.c (fmtwarn): Update for introduction of
 	format_string_diagnostic_t.
 	(fmtwarn_n): Likewise.
-	* substring-locations.c
+	* substring-locations.cc
 	(format_string_diagnostic_t::format_string_diagnostic_t) New ctor.
 	(format_warning_n_va): Convert to...
 	(format_string_diagnostic_t::emit_warning_n_va): ...this.
@@ -10954,7 +10954,7 @@
 	    Andreas Krebbel  <krebbel@linux.ibm.com>
 
 	PR tree-optimization/86844
-	* gimple-ssa-store-merging.c
+	* gimple-ssa-store-merging.cc
 	(imm_store_chain_info::coalesce_immediate): For overlapping stores, if
 	there are any overlapping stores in between them, make sure they are
 	also coalesced or we give up completely.
@@ -10991,7 +10991,7 @@
 
 2018-09-12  Aldy Hernandez  <aldyh@redhat.com>
 
-	* gimple-ssa-warn-alloca.c
+	* gimple-ssa-warn-alloca.cc
 	(alloca_type_and_limit::alloca_type_and_limit): Initialize limit
 	field for ALLOCA_BOUND_*_LARGE.
 
@@ -12781,7 +12781,7 @@
 	* substring-locations.c (format_warning_n_va): Likewise.
 	* tree-inline.c (expand_call_inline): Likewise.
 	* tree-ssa-ccp.c (pass_post_ipa_warn::execute): Likewise.
-	* tree-ssa-loop-niter.c
+	* tree-ssa-loop-niter.cc
 	(do_warn_aggressive_loop_optimizations): Likewise.
 	* tree-ssa-uninit.c (warn_uninit): Likewise.
 	* tree.c (warn_deprecated_use): Likewise.
@@ -13156,7 +13156,7 @@
 	(append_compiler_options): Likewise to the dropped options.
 	(append_diag_options): Likewise to the passed-on options.
 	* opts.c (common_handle_option): Handle the new option.
-	* selftest-diagnostic.c
+	* selftest-diagnostic.cc
 	(test_diagnostic_context::test_diagnostic_context): Enable
 	show_labels_p.
 	* substring-locations.c: Include "gcc-rich-location.h".
@@ -13182,7 +13182,7 @@
 2018-08-15  Martin Sebor  <msebor@redhat.com>
 
 	PR tree-optimization/71625
-	* config/aarch64/aarch64-builtins.c
+	* config/aarch64/aarch64-builtins.cc
 	(aarch64_init_simd_builtin_types): Clear Poly8_t's TYPE_STRING_FLAG.
 
 2018-08-15  Ilya Leoshkevich  <iii@linux.ibm.com>
@@ -13191,7 +13191,7 @@
 
 2018-08-15  Iain Sandoe  <iain@sandoe.co.uk>
 
-	* config/darwin.c
+	* config/darwin.cc
 	 (darwin_function_switched_text_sections): Delete.
 	* gcc/config/darwin.h
 	 (TARGET_ASM_FUNCTION_SWITCHED_TEXT_SECTIONS): Likewise.
@@ -13278,7 +13278,7 @@
 
 2018-08-12  Chung-Ju Wu  <jasonwucj@gmail.com>
 
-	* config/nds32/nds32-predicates.c
+	* config/nds32/nds32-predicates.cc
 	(nds32_can_use_bclr_p): Change return type as bool.
 	(nds32_can_use_bset_p): Ditto.
 	(nds32_can_use_btgl_p): Ditto.
@@ -13297,7 +13297,7 @@
 
 2018-08-12  Chung-Ju Wu  <jasonwucj@gmail.com>
 
-	* common/config/nds32/nds32-common.c
+	* common/config/nds32/nds32-common.cc
 	(nds32_option_optimization_table): Enalbe -malways-align.
 
 2018-08-12  Chung-Ju Wu  <jasonwucj@gmail.com>
@@ -13608,7 +13608,7 @@
 	Use a table to get an arch level.
 	* config/s390/s390-opts.h (enum processor_type):
 	Remove enum values.
-	* config/s390/s390.c
+	* config/s390/s390.cc
 	(processor_table): Remove entries, add arch_level values.
 	(s390_issue_rate): Remove cases.
 	(s390_option_override): Adjust
@@ -16833,7 +16833,7 @@
 2018-07-12  Jakub Jelinek  <jakub@redhat.com>
 
 	PR tree-optimization/86492
-	* gimple-ssa-store-merging.c
+	* gimple-ssa-store-merging.cc
 	(imm_store_chain_info::coalesce_immediate_stores): Call
 	check_no_overlap even for the merge_overlapping case.  Formatting fix.
 
@@ -17660,7 +17660,7 @@
 
 2018-07-02  Richard Henderson  <richard.henderson@linaro.org>
 
-	* config/aarch64/aarch64-protos.h, config/aarch64/aarch64.c
+	* config/aarch64/aarch64-protos.h, config/aarch64/aarch64.cc
 	(aarch64_sve_prepare_conditional_op): Remove.
 	* config/aarch64/aarch64-sve.md (cond_<SVE_INT_BINARY><SVE_I>):
 	Allow aarch64_simd_reg_or_zero as select operand; remove
@@ -21224,7 +21224,7 @@
 	* config/nds32/linux.h: New file.
 	* config/nds32/nds32-elf.opt: New file.
 	* config/nds32/nds32-linux.opt: New file.
-	* config/nds32/nds32-fp-as-gp.c
+	* config/nds32/nds32-fp-as-gp.cc
 	(pass_nds32_fp_as_gp::gate): Consider TARGET_LINUX_ABI.
 	* config/nds32/nds32.c (nds32_conditional_register_usage): Consider
 	TARGET_LINUX_ABI.
@@ -21862,7 +21862,7 @@
 	* config/nds32/nds32-intrinsic.md (unaligned_storedi): Modify patterns
 	implementation.
 	(unaligned_store_dw): Ditto.
-	* config/nds32/nds32-memory-manipulation.c
+	* config/nds32/nds32-memory-manipulation.cc
 	(nds32_expand_movmemsi_loop_known_size): Refactoring implementation.
 	(nds32_gen_dup_4_byte_to_word_value): Rename to ...
 	(nds32_gen_dup_4_byte_to_word_value_aux): ... this.
@@ -22734,7 +22734,7 @@
 
 2018-05-19  Chung-Ju Wu  <jasonwucj@gmail.com>
 
-	* config/nds32/nds32.c
+	* config/nds32/nds32.cc
 	(nds32_md_asm_adjust): Consider flag_inline_asm_r15 variable.
 	* config/nds32/nds32.opt (minline-asm-r15): New option.
 
@@ -22781,7 +22781,7 @@
 
 2018-05-19  Chung-Ju Wu  <jasonwucj@gmail.com>
 
-	* config/nds32/nds32-md-auxiliary.c
+	* config/nds32/nds32-md-auxiliary.cc
 	(nds32_valid_smw_lwm_base_p): Refine.
 	(nds32_output_smw_single_word): Refine.
 	(nds32_output_smw_double_word): New.
@@ -22825,7 +22825,7 @@
 	    Chung-Ju Wu  <jasonwucj@gmail.com>
 
 	* config/nds32/constants.md (unspec_element): Add UNSPEC_ICT.
-	* config/nds32/nds32-md-auxiliary.c
+	* config/nds32/nds32-md-auxiliary.cc
 	(symbolic_reference_mentioned_p): New.
 	(nds32_legitimize_ict_address): New.
 	(nds32_expand_ict_move): New.
@@ -24191,7 +24191,7 @@
 2018-05-04  Richard Biener  <rguenther@suse.de>
 
 	* bb-reorder.c (sanitize_hot_paths): Release hot_bbs_to_check.
-	* gimple-ssa-store-merging.c
+	* gimple-ssa-store-merging.cc
 	(imm_store_chain_info::output_merged_store): Remove redundant create,
 	release split_store vector contents on failure.
 	* tree-vect-slp.c (vect_schedule_slp_instance): Avoid leaking
@@ -24208,7 +24208,7 @@
 	* config/rs6000/rs6000-c.c (rs6000_target_modify_macros): Remove Xilinx
 	FP support.
 	(rs6000_cpu_cpp_builtins): Ditto.
-	* config/rs6000/rs6000-linux.c
+	* config/rs6000/rs6000-linux.cc
 	(rs6000_linux_float_exceptions_rounding_supported_p): Ditto.
 	* config/rs6000/rs6000-opts.h (enum fpu_type_t): Delete.
 	* config/rs6000/rs6000.c (rs6000_debug_reg_global): Remove Xilinx FP
@@ -25070,7 +25070,7 @@
 
 2018-04-22  Chung-Ju Wu  <jasonwucj@gmail.com>
 
-	* config/nds32/nds32.c
+	* config/nds32/nds32.cc
 	(TARGET_HARD_REGNO_MODE_OK): Move to the bottom of file.
 	(TARGET_MODES_TIEABLE_P): Likewise.
 
@@ -25234,7 +25234,7 @@
 
 2018-04-19  Sebastian Peryt  <sebastian.peryt@intel.com>
 
-	* common/config/i386/i386-common.c
+	* common/config/i386/i386-common.cc
 	(OPTION_MASK_ISA_MOVDIRI_SET, OPTION_MASK_ISA_MOVDIR64B_SET,
 	OPTION_MASK_ISA_MOVDIRI_UNSET,
 	OPTION_MASK_ISA_MOVDIR64B_UNSET): New defines.
@@ -26357,7 +26357,7 @@
 
 2018-04-06  Kuan-Lin Chen  <kuanlinchentw@gmail.com>
 
-	* common/config/nds32/nds32-common.c
+	* common/config/nds32/nds32-common.cc
 	(nds32_option_optimization_table): Enable -mreleax-hint by default.
 
 2018-04-05  Jakub Jelinek  <jakub@redhat.com>
@@ -26630,12 +26630,12 @@
 	* config/nds32/constants.md (unspec_volatile_element): Add
 	UNSPEC_VOLATILE_RELAX_GROUP.
 	* config/nds32/nds32-relax-opt.c: New file.
-	* config/nds32/nds32-predicates.c
+	* config/nds32/nds32-predicates.cc
 	(nds32_symbol_load_store_p): New function.
 	* config/nds32/nds32-protos.h
 	(nds32_symbol_load_store_p): Declare function.
 	(make_pass_nds32_relax_opt): Declare new rtl pass function.
-	* config/nds32/nds32.c
+	* config/nds32/nds32.cc
 	(nds32_register_pass): New function to register pass.
 	(nds32_register_passes): New function to register passes.
 	* config/nds32/nds32.md (relax_group): New pattern.
@@ -28225,7 +28225,7 @@
 
 	* config/nds32/nds32-protos.h (nds32_expand_setmem): Declare.
 	* config/nds32/nds32-multiple.md (setmemsi): Define.
-	* config/nds32/nds32-memory-manipulation.c
+	* config/nds32/nds32-memory-manipulation.cc
 	(nds32_gen_dup_4_byte_to_word_value): New.
 	(emit_setmem_word_loop): New.
 	(emit_setmem_byte_loop): New.
@@ -28237,7 +28237,7 @@
 2018-03-04  Kito Cheng  <kito.cheng@gmail.com>
 	    Chung-Ju Wu  <jasonwucj@gmail.com>
 
-	* config/nds32/nds32-memory-manipulation.c
+	* config/nds32/nds32-memory-manipulation.cc
 	(nds32_emit_load_store): New.
 	(nds32_emit_post_inc_load_store): New.
 	(nds32_emit_mem_move): New.
@@ -28262,13 +28262,13 @@
 	(nds32_expand_store_multiple): Ditto.
 	(nds32_valid_multiple_load_store): Rename ...
 	(nds32_valid_multiple_load_store_p): ... to this.
-	* config/nds32/nds32-memory-manipulation.c
+	* config/nds32/nds32-memory-manipulation.cc
 	(nds32_expand_load_multiple): Refine implementation.
 	(nds32_expand_store_multiple): Ditto.
 	* config/nds32/nds32-multiple.md
 	(load_multiple): Update nds32_expand_load_multiple interface.
 	(store_multiple): Update nds32_expand_store_multiple interface.
-	* config/nds32/nds32-predicates.c
+	* config/nds32/nds32-predicates.cc
 	(nds32_valid_multiple_load_store): Rename ...
 	(nds32_valid_multiple_load_store_p): ... to this and refine
 	implementation.
@@ -28317,7 +28317,7 @@
 	    Kito Cheng  <kito.cheng@gmail.com>
 	    Chung-Ju Wu  <jasonwucj@gmail.com>
 
-	* config/nds32/nds32-intrinsic.c
+	* config/nds32/nds32-intrinsic.cc
 	(nds32_expand_builtin_null_ftype_reg): Delete.
 	(nds32_expand_builtin_reg_ftype_imm): Ditto.
 	(nds32_expand_builtin_null_ftype_reg_imm): Ditto.
@@ -28702,7 +28702,7 @@
 2018-02-26  Ramana Radhakrishnan  <ramana.radhakrishnan@arm.com>
 
 	PR target/84521
-	* common/config/aarch64/aarch64-common.c
+	* common/config/aarch64/aarch64-common.cc
 	(aarch_option_optimization_table[]): Switch
 	off fomit-frame-pointer
 
@@ -29926,7 +29926,7 @@
 	(symtab_node::output_to_lto_symbol_table_p): Move here
 	from lto-streamer-out.c:output_symbol_p.
 	* lto-streamer-out.c (write_symbol): Turn early exit to assert.
-	(output_symbol_p): Move all logic to symtab.c
+	(output_symbol_p): Move all logic to symtab.cc
 	(produce_symtab): Update.
 
 2018-02-08  Andreas Krebbel  <krebbel@linux.vnet.ibm.com>
@@ -30160,7 +30160,7 @@
 2018-02-07  Jakub Jelinek  <jakub@redhat.com>
 
 	PR tree-optimization/84235
-	* tree-ssa-scopedtables.c
+	* tree-ssa-scopedtables.cc
 	(avail_exprs_stack::simplify_binary_operation): Fir MINUS_EXPR, punt
 	if the subtraction is performed in floating point type where NaNs are
 	honored.  For *DIV_EXPR, punt for ALL_FRACT_MODE_Ps where we can't
@@ -31118,7 +31118,7 @@
 	* tree-ssa-dom.c (dom_opt_dom_walker::dom_opt_dom_walker): Likewise,
 	but converting true to REACHABLE_BLOCKS.
 	* tree-ssa-sccvn.c (sccvn_dom_walker::sccvn_dom_walker): Likewise.
-	* tree-vrp.c
+	* tree-vrp.cc
 	(check_array_bounds_dom_walker::check_array_bounds_dom_walker):
 	Likewise, but converting it to REACHABLE_BLOCKS_PRESERVING_FLAGS.
 	(vrp_dom_walker::vrp_dom_walker): Likewise, but converting it to
@@ -31506,7 +31506,7 @@
 2018-01-18  Richard Biener  <rguenther@suse.de>
 
 	PR tree-optimization/83887
-	* graphite-scop-detection.c
+	* graphite-scop-detection.cc
 	(scop_detection::get_nearest_dom_with_single_entry): Remove.
 	(scop_detection::get_nearest_pdom_with_single_exit): Likewise.
 	(scop_detection::merge_sese): Re-implement with a flood-fill
@@ -31764,7 +31764,7 @@
 	to last if both are JUMP_INSNs.
 
 	PR tree-optimization/83843
-	* gimple-ssa-store-merging.c
+	* gimple-ssa-store-merging.cc
 	(imm_store_chain_info::output_merged_store): Handle bit_not_p on
 	store_immediate_info for bswap/nop orig_stores.
 
@@ -34700,7 +34700,7 @@
 
 2018-01-03  Richard Sandiford  <richard.sandiford@linaro.org>
 
-	* tree-vectorizer.h (vec_load_store_type): Moved from tree-vec-stmts.c
+	* tree-vectorizer.h (vec_load_store_type): Moved from tree-vec-stmts.cc
 	(vect_model_store_cost): Take a vec_load_store_type instead of a
 	vect_def_type.
 	* tree-vect-stmts.c (vec_load_store_type): Move to tree-vectorizer.h.

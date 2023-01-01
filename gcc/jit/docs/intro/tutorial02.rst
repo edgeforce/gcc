@@ -375,7 +375,7 @@ Full example
 
 Here's what the above looks like as a complete program:
 
-   .. literalinclude:: ../examples/tut02-square.c
+   .. literalinclude:: ../examples/tut02-square.cc
     :lines: 1-
     :language: c
 

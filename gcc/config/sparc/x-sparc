@@ -1,4 +1,4 @@
-driver-sparc.o: $(srcdir)/config/sparc/driver-sparc.cc
+driver-sparc.o: $(srcdir)/config/sparc/driver-sparc
 	$(COMPILE) $<
 	$(POSTCOMPILE)
 

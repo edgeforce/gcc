@@ -32,7 +32,7 @@ namespace jit {
    The tempdir has the following layout:
 
      /tmp/libgccjit-XXXXXX/
-			 ./fake.c
+			 ./fake.cc
 			    (doesn't exist, but the rest of the
 			     compiler needs a source code filename)
 

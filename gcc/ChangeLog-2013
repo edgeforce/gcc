@@ -1636,7 +1636,7 @@
 
 2013-12-18  James Greenhalgh  <james.greenhalgh@arm.com>
 
-	* common/config/aarch64/aarch64-common.c
+	* common/config/aarch64/aarch64-common.cc
 	(aarch64_rewrite_selected_cpu): New.
 	(aarch64_rewrite_mcpu): New.
 	* config/aarch64/aarch64-protos.h
@@ -3281,7 +3281,7 @@
 
 	* linux-android.c: Rename to linux.c.
 	* t-linux-android: Rename to t-linux.  Update references
-	to linux-android.c
+	to linux-android.cc
 	* config.gcc: Update references to t-linux-android and linux-android.o.
 
 2013-12-07  Alan Modra  <amodra@gmail.com>
@@ -4870,7 +4870,7 @@
 
 2013-11-26  James Greenhalgh  <james.greenhalgh@arm.com>
 
-	* config/aarch64/aarch64-builtins.c
+	* config/aarch64/aarch64-builtins.cc
 	(aarch64_types_bsl_p_qualifiers): New.
 	(aarch64_types_bsl_s_qualifiers): Likewise.
 	(aarch64_types_bsl_u_qualifiers): Likewise.
@@ -4890,7 +4890,7 @@
 
 2013-11-26  James Greenhalgh  <james.greenhalgh@arm.com>
 
-	* config/aarch64/aarch64-builtins.c
+	* config/aarch64/aarch64-builtins.cc
 	(aarch64_type_qualifiers): Add qualifier_poly.
 	(aarch64_build_scalar_type): Also build Poly types.
 	(aarch64_build_vector_type): Likewise.
@@ -4902,7 +4902,7 @@
 
 2013-11-26  James Greenhalgh  <james.greenhalgh@arm.com>
 
-	* config/aarch64/aarch64-builtins.c
+	* config/aarch64/aarch64-builtins.cc
 	(VAR1): Use new naming scheme for aarch64_builtins.
 	(aarch64_builtin_vectorized_function): Use new aarch64_builtins names.
 
@@ -5992,7 +5992,7 @@
 
 2013-11-20  James Greenhalgh  <james.greenhalgh@arm.com>
 
-	* config/aarch64/aarch64-builtins.c
+	* config/aarch64/aarch64-builtins.cc
 	(aarch64_simd_itype): Remove.
 	(aarch64_simd_builtin_datum): Remove itype, add qualifiers pointer.
 	(VAR1): Use qualifiers.
@@ -7713,10 +7713,10 @@
 	(symtab_node_name): Rename to symtab_node::name.
 	(cgraph_node_asm_name): Remove.
 	(varpool_node_asm_name): Remove.
-	* cgraph.c cgraphclones.c cgraphunit.c ipa-cp.c ipa-devirt.c
-	ipa-inline-analysis.c ipa-inline-transform.c ipa-inline.c
-	ipa-profile.c ipa-prop.c ipa-pure-const.c ipa-ref.c ipa-reference.c
-	ipa-utils.c ipa.c symtab.c tree-inline.c tree-sra.c
+	* cgraph.c cgraphclones.c cgraphunit.c ipa-cp.c ipa-devirt.cc
+	ipa-inline-analysis.c ipa-inline-transform.c ipa-inline.cc
+	ipa-profile.c ipa-prop.c ipa-pure-const.c ipa-ref.c ipa-reference.cc
+	ipa-utils.c ipa.c symtab.c tree-inline.c tree-sra.cc
 	tree-ssa-structalias.c value-prof.c varpool.c Adjust.
 
 2013-11-18  Kyrylo Tkachov  <kyrylo.tkachov@arm.com>
@@ -7891,7 +7891,7 @@
 
 	* basic-block.h (has_abnormal_or_eh_outgoing_edge): Renamed from
 	has_abnormal_or_outgoing_edge.  Check for EH edges as well.
-	* gimple-ssa-isolate-paths.c
+	* gimple-ssa-isolate-paths.cc
 	(find_implicit_erroneous_behaviour): Corresponding changes.
 	Do not check stmt_ends_bb_p or GIMPLE_RETURN anymore.
 	(find_explicit_erroneous_behaviour): Likewise.
@@ -9222,7 +9222,7 @@
 2013-11-13  Jeff Law  <law@redhat.com>
 
 	PR tree-optimization/59102
-	* gimple-ssa-isolate-paths.c
+	* gimple-ssa-isolate-paths.cc
 	(insert_trap_and_remove_trailing_statments): Ensure STMT is a
 	gimple assignment before looking at gimple_assign_lhs.
 
@@ -9276,7 +9276,7 @@
 	gsi_start_nondebug_bb, gsi_start_nondebug_after_labels_bb,
 	gsi_last_nondebug_bb, gsi_bb, gsi_seq): Move to gimple-iterator.h.
 	(struct walk_stmt_info): Move to gimple-walk.h.
-	(gimple_seq_set_location): Move to gimple.c
+	(gimple_seq_set_location): Move to gimple.cc
 	* gimple-walk.c: New File.
 	(walk_gimple_seq_mod, walk_gimple_seq, walk_gimple_asm, walk_gimple_op,
 	walk_gimple_stmt, get_base_loadstore, walk_stmt_load_store_addr_ops,
@@ -9824,7 +9824,7 @@
 	* tree-ssa-sccvn.c: Likewise.
 	* tree-ssa-strlen.c: Likewise.
 	* tree-ssa.c: Likewise.
-	* tree-switch-conversio: Likewise.n.c
+	* tree-switch-conversio: Likewise.n.cc
 	* tree-tailcall.c: Likewise.
 	* tree-vect-data-refs.c: Likewise.
 	* tree-vect-generic.c: Likewise.
@@ -10097,7 +10097,7 @@
 
 2013-11-08  James Greenhalgh  <james.greenhalgh@arm.com>
 
-	* config/arm/aarch-common.c
+	* config/arm/aarch-common.cc
 	(search_term): New typedef.
 	(shift_rtx_costs): New array.
 	(arm_rtx_shift_left_p): New.
@@ -10197,7 +10197,7 @@
 	(create_loads_and_stores_for_name): Same.
 	(transform_to_exit_first_loop): Same.
 	(create_parallel_loop): Same.
-	* tree-ssa-loop-im.c
+	* tree-ssa-loop-im.cc
 	(move_computations_dom_walker::before_dom_children): Same.
 	* tree-ssa-loop-manip.c (rewrite_phi_with_iv): Same.
 	* tree-ssa-pre.c (eliminate_dom_walker::before_dom_children): Same.
@@ -10242,8 +10242,8 @@
 	(get_attribute_namespace): Likewise.
 	* builtins.c (more_const_call_expr_args_p): Move from tree.h.
 	(validate_arglist): Move earlier in the file. Make static.
-	(expand_stack_restore): Move from stmt.c
-	(expand_stack_save): Move from stmt.c
+	(expand_stack_restore): Move from stmt.cc
+	(expand_stack_save): Move from stmt.cc
 	(rewrite_call_expr_array): Move earlier in the file.
 	(rewrite_call_expr_valist): Likewise.
 	* cfgexpand.c: Include hard-reg-set.h before tree.h
@@ -10253,16 +10253,16 @@
 	(n_occurrences): Move from stmt.c.
 	(check_operand_nalternatives): Move from stmt.c.
 	(tree_conflicts_with_clobbers_p): Move from stmt.c.
-	(expand_asm_operands): Move from stmt.c
-	(expand_asm_stmt): Move from stmt.c
-	(expand_computed_goto): Move from stmt.c
-	(expand_goto): Move from stmt.c
-	(expand_null_return_1): Move from stmt.c
-	(expand_null_return): Move from stmt.c
-	(expand_value_return): Move from stmt.c
-	(expand_return): Move from stmt.c
-	(expand_main_function): Move from function.c
-	(stack_protect_prologue): Move from function.c
+	(expand_asm_operands): Move from stmt.cc
+	(expand_asm_stmt): Move from stmt.cc
+	(expand_computed_goto): Move from stmt.cc
+	(expand_goto): Move from stmt.cc
+	(expand_null_return_1): Move from stmt.cc
+	(expand_null_return): Move from stmt.cc
+	(expand_value_return): Move from stmt.cc
+	(expand_return): Move from stmt.cc
+	(expand_main_function): Move from function.cc
+	(stack_protect_prologue): Move from function.cc
 	* cgraphclones.c (build_function_type_skip_args): Move from tree.c.
 	(build_function_decl_skip_args): Move from tree.c.
 	* explow.c (tree_expr_size): Move from tree.c.
@@ -10282,17 +10282,17 @@
 	* stmt.c (expand_computed_goto): Move to cfgexpand.c.
 	(expand_goto): Move to cfgexpand.c.
 	(n_occurrences): Move to cfgexpand.c.
-	(expand_asm_loc): Move to cfgexpand.c
+	(expand_asm_loc): Move to cfgexpand.cc
 	(tree_conflicts_with_clobbers_p): Move to cfgexpand.c.
 	(expand_asm_operands): Move to cfgexpand.c.
 	(expand_asm_stmt): Move to cfgexpand.c.
-	(check_operand_nalternatives): Move to cfgexpand.c
+	(check_operand_nalternatives): Move to cfgexpand.cc
 	(expand_null_return): Move to cfgexpand.c.
 	(expand_value_return): Move to cfgexpand.c.
 	(expand_null_return_1): Move to cfgexpand.c.
 	(expand_return): Move to cfgexpand.c.
 	(expand_stack_save): Move to builtins.c.
-	(expand_stack_restore): Move to builtins.c
+	(expand_stack_restore): Move to builtins.cc
 	* symtab.c: Include output.h.
 	(decl_assembler_name_hash): Move from tree.c.
 	(decl_assembler_name_equal): Move from tree.c.
@@ -10656,7 +10656,7 @@
 	* common.opt (-fisolate-erroneous-paths): Add option and documentation.
 	* gimple-ssa-isolate-paths.c: New file.
 	* gimple.c (check_loadstore): New function.
-	(infer_nonnull_range): Moved into gimple.c from tree-vrp.c
+	(infer_nonnull_range): Moved into gimple.c from tree-vrp.cc
 	Verify OP is in the argument list and the argument corresponding
 	to OP is a pointer type.  Use operand_equal_p rather than
 	pointer equality when testing if OP is on the nonnull list.
@@ -11526,8 +11526,8 @@
 	(pop_allocnos): Add priniting more debug info.
 	(color_allocnos): Remove prefs for conflicting hard regs.
 	Call update_costs_from_prefs.
-	* ira-conflicts.c (commutative_constraint_p): Move to ira.c
-	(get_dup_num): Rename, modify, and move to ira.c
+	* ira-conflicts.c (commutative_constraint_p): Move to ira.cc
+	(get_dup_num): Rename, modify, and move to ira.cc
 	(process_regs_for_copy): Add prefs.
 	(add_insn_allocno_copies): Put src as first arg of
 	process_regs_for_copy.  Remove dead code.  Call ira_setup_alts.
@@ -12367,8 +12367,8 @@
 	(df_bb_verify): Likewise.
 	* ipa-pure-const.c (finish_state): Remove.
 	(propagate): Adjust.
-	* tree-data-ref.c tree-ssa-alias.c tree-ssa-loop-ivcanon.c
-	tree-ssa-threadedge.c tree-vect-loop-manip.c tree-vect-slp.c
+	* tree-data-ref.c tree-ssa-alias.c tree-ssa-loop-ivcanon.cc
+	tree-ssa-threadedge.c tree-vect-loop-manip.c tree-vect-slp.cc
 	var-tracking.c: Adjust.
 	* vec.c (stack_vecs): Remove.
 	(register_stack_vec): Likewise.
@@ -12541,7 +12541,7 @@
 
 	* Makefile.in (C_COMMON_OBJS): Remove tree-mudflap.
 	(OBJS): Remove tree-nomudflap.o
-	(GTFILES): Remove tree-mudflap.c
+	(GTFILES): Remove tree-mudflap.cc
 	* builtins.c (expand_builtin_alloc): Remove mudflap support.
 	* gcc.c (MFWRAP_SPEC, MFLIB_SPEC): Likewise.
 	(mfwrap_spec, mflib_spec): Likewise.
@@ -14983,7 +14983,7 @@
 	iterative_hash_canonical_type, gimple_canonical_type_hash,
 	gimple_canonical_types_compatible_p, gimple_canonical_type_eq,
 	gimple_register_canonical_type, print_gimple_types_stats,
-	free_gimple_type_tables): Move to lto/lto.c
+	free_gimple_type_tables): Move to lto/lto.cc
 	(gt-gimple.h): Do not include.
 	* gimple.h (gimple_register_canonical_type,
 	print_gimple_types_stats, free_gimple_type_tables): Remove.
@@ -15747,7 +15747,7 @@
 	* ipa-pure-const.c (warn_function_noreturn): Make static.
 	(execute_warn_function_noreturn, gate_warn_function_noreturn,
 	class pass_warn_function_noreturn, make_pass_warn_function_noreturn):
-	Relocate from tree-cfg.c
+	Relocate from tree-cfg.cc
 	* tree-cfg.c (tree_node_can_be_shared, gimple_empty_block_p): Make
 	static.
 	(execute_warn_function_noreturn, gate_warn_function_noreturn,
@@ -17192,7 +17192,7 @@
 
 	* gimple.c (gimple_replace_lhs): Move to tree-ssa.c and rename.
 	(struct count_ptr_d, count_ptr_derefs, count_uses_and_derefs): Move to
-	tree-ssa.c
+	tree-ssa.cc
 	(create_gimple_tmp): Delete.
 	(get_expr_type, build_assign, build_type_cast): Move to...
 	* gimple-builder.c: New File.
@@ -17203,7 +17203,7 @@
 	* tree-ssa.h: And here.
 	* tree-ssa.c (struct count_ptr_d, count_ptr_derefs,
 	count_uses_and_derefs): Relocate from gimple.c.
-	(gimple_replace_ssa_lhs): Renamed gimple_replace_ssa from gimple.c
+	(gimple_replace_ssa_lhs): Renamed gimple_replace_ssa from gimple.cc
 	* tree-ssa-reassoc.c (repropagate_negates): Use gimple_replace_ssa_lhs.
 	* tree-ssa-math-opts (execute_cse_reciprocals): Use
 	gimple_replace_ssa_lhs.
@@ -18247,7 +18247,7 @@
 	successors of the joiner's clone reach the same block, verify the
 	PHI arguments are equal.  If not, cancel the jump threading request.
 	* tree-ssa-threadedge.c (phi_args_equal_on_edges): Moved into
-	tree-ssa-threadupdate.c
+	tree-ssa-threadupdate.cc
 	(thread_across_edge): Don't check PHI argument equality when
 	threading through joiner block here.
 
@@ -18818,7 +18818,7 @@
 
 2013-09-12  Andrew MacLeod  <amacleod@redhat.com>
 
-	* tree-flow.h (FREE_SSANAMES): Move to tree-ssanames.c
+	* tree-flow.h (FREE_SSANAMES): Move to tree-ssanames.cc
 	(SSANAMES, MODIFIED_NORETURN_CALLS, DEFAULT_DEFS, ptr_info_def,
 	num_ssa_names, ssa_name): Move to tree-ssanames.h + prototypes.
 	* tree-flow-inline.h (make_ssa_name, copy_ssa_name, duplicate_ssa_name,
@@ -19548,7 +19548,7 @@
 	(*movdi_aarch64): Likewise
 	(*movsf_aarch64): Likewise
 	(*movdf_aarch64): Likewise
-	* config/arm/arm.c
+	* config/arm/arm.cc
 	(cortexa7_older_only): Rename TYPE_FCPYS to TYPE_FMOV.
 	* config/arm/iwmmxt.md
 	(*iwmmxt_movsi_insn): Rename type fcpys as fmov.
@@ -19971,7 +19971,7 @@
 	* lto-streamer.h (lto_global_var_decls): Remove.
 	* Makefile.in (OBJS): Remove lto-symtab.o.
 	(lto-symtab.o): Remove.
-	(GTFILES): Remove lto-symtab.c
+	(GTFILES): Remove lto-symtab.cc
 	* lto-symtab.c: Move to lto/
 
 2013-09-06  Andreas Krebbel  <Andreas.Krebbel@de.ibm.com>
@@ -22264,7 +22264,7 @@
 2013-08-18  Jan Hubicka  <jh@suse.cz>
 
 	* Makeifle-in (ipa-devirt.o): New.
-	(GTFILES): Add ipa-utils.h and ipa-devirt.c
+	(GTFILES): Add ipa-utils.h and ipa-devirt.cc
 	* cgraphunit.c (decide_is_symbol_needed): Do not care about virtuals.
 	(analyze_functions): Look into possible targets of polymorphic call.
 	* dumpfile.c (dump_files): Add type-inheritance dump.
@@ -22933,7 +22933,7 @@
 
 2013-08-06  Jan Hubicka  <jh@suse.cz>
 
-	* cgraph.c (cgraph_get_body): New function based on lto.c
+	* cgraph.c (cgraph_get_body): New function based on lto.cc
 	implementation.
 	* cgraph.h (cgraph_get_body): Declare.
 	* cgraphclones.c (cgraph_create_virtual_clone): Commonize WPA and
@@ -24623,7 +24623,7 @@
 	* ipa-cp.c (gather_context_independent_values): Use
 	ipa_get_param_move_cost.
 	(get_replacement_map): Remove PARAM; move parameter folding
-	into tree-inline.c
+	into tree-inline.cc
 	(create_specialized_node): Update.
 	* ipa-prop.c (ipa_populate_param_decls): Do not look for origins;
 	assert that we have gimple body; update move_cost.
@@ -25678,7 +25678,7 @@
 
 2013-07-20  James Greenhalgh  <james.greenhalgh@arm.com>
 
-	* config/aarch64/aarch64-builtins.c
+	* config/aarch64/aarch64-builtins.cc
 	(aarch64_fold_builtin): Fold abs in all modes.
 	* config/aarch64/aarch64-simd-builtins.def
 	(abs): Enable for all modes.
@@ -26077,7 +26077,7 @@
 
 	* config/aarch64/aarch64-protos.h (aarch64_symbol_type):
 	Define SYMBOL_TINY_GOT, update comment.
-	* config/aarch64/aarch64.c
+	* config/aarch64/aarch64.cc
 	(aarch64_load_symref_appropriately): Handle SYMBOL_TINY_GOT.
 	(aarch64_expand_mov_immediate): Likewise.
 	(aarch64_print_operand): Likewise.
@@ -26452,7 +26452,7 @@
 
 2013-07-03  James Greenhalgh  <james.greenhalgh@arm.com>
 
-	* config/aarch64/aarch64-builtins.c
+	* config/aarch64/aarch64-builtins.cc
 	(aarch64_simd_expand_builtin): Handle AARCH64_SIMD_STORE1.
 	* config/aarch64/aarch64-simd-builtins.def (ld1): New.
 	(st1): Likewise.
@@ -29751,7 +29751,7 @@
 
 	* config/aarch64/aarch64-simd.md (clzv4si2): Support for CLZ
 	instruction (AdvSIMD).
-	* config/aarch64/aarch64-builtins.c
+	* config/aarch64/aarch64-builtins.cc
 	(aarch64_builtin_vectorized_function): Handler for BUILT_IN_CLZ.
 	* config/aarch64/aarch-simd-builtins.def: Entry for CLZ.
 
@@ -31646,7 +31646,7 @@
 
 2013-05-01  James Greenhalgh  <james.greenhalgh@arm.com>
 
-	* config/aarch64/aarch64-builtins.c
+	* config/aarch64/aarch64-builtins.cc
 	(aarch64_gimple_fold_builtin.c): Fold more modes for reduc_splus_.
 	* config/aarch64/aarch64-simd-builtins.def
 	(reduc_splus_): Add new modes.
@@ -32056,7 +32056,7 @@
 
 2013-04-29  James Greenhalgh  <james.greenhalgh@arm.com>
 
-	* config/aarch64/aarch64-builtins.c
+	* config/aarch64/aarch64-builtins.cc
 	(aarch64_builtin_vectorized_function): Vectorize over ifloorf,
 	iceilf, lround, iroundf.
 
@@ -32118,7 +32118,7 @@
 
 2013-04-29  James Greenhalgh  <james.greenhalgh@arm.com>
 
-	* config/aarch64/aarch64-builtins.c
+	* config/aarch64/aarch64-builtins.cc
 	(aarch64_fold_builtin): Fold float conversions.
 	* config/aarch64/aarch64-simd-builtins.def
 	(floatv2si, floatv4si, floatv2di): New.
@@ -32131,7 +32131,7 @@
 
 2013-04-29  James Greenhalgh  <james.greenhalgh@arm.com>
 
-	* config/aarch64/aarch64-builtins.c
+	* config/aarch64/aarch64-builtins.cc
 	(aarch64_builtin_vectorized_function): Use new names for
 	fcvt builtins.
 	* config/aarch64/aarch64-simd-builtins.def (fcvtzs): Split as...
@@ -32175,7 +32175,7 @@
 
 2013-04-29  James Greenhalgh  <james.greenhalgh@arm.com>
 
-	* config/aarch64/aarch64-builtins.c
+	* config/aarch64/aarch64-builtins.cc
 	(aarch64_builtin_vectorized_function): Fold to standard pattern names.
 	* config/aarch64/aarch64-simd-builtins.def (frintn): New.
 	(frintz): Rename to...
@@ -32656,7 +32656,7 @@
 
 2013-04-25  James Greenhalgh  <james.greenhalgh@arm.com>
 
-	* config/aarch64/aarch64-builtins.c
+	* config/aarch64/aarch64-builtins.cc
 	(aarch64_fold_builtin): New.
 	* config/aarch64/aarch64-protos.h (aarch64_fold_builtin): New.
 	* config/aarch64/aarch64.c (TARGET_FOLD_BUILTIN): Define.
@@ -32667,7 +32667,7 @@
 2013-04-25  James Greenhalgh  <james.greenhalgh@arm.com>
 	    Tejas Belagod  <tejas.belagod@arm.com>
 
-	* config/aarch64/aarch64-builtins.c
+	* config/aarch64/aarch64-builtins.cc
 	(aarch64_gimple_fold_builtin): New.
 	* config/aarch64/aarch64-protos.h (aarch64_gimple_fold_builtin): New.
 	* config/aarch64/aarch64-simd-builtins.def (addv): New.
@@ -33051,7 +33051,7 @@
 
 2013-04-22  James Greenhalgh  <james.greenhalgh@arm.com>
 
-	* config/aarch64/aarch64-builtins.c
+	* config/aarch64/aarch64-builtins.cc
 	(CF): Remove.
 	(CF0, CF1, CF2, CF3, CF4, CF10): New.
 	(VAR<1-12>): Add MAP parameter.
@@ -33068,7 +33068,7 @@
 
 2013-04-22  James Greenhalgh  <james.greenhalgh@arm.com>
 
-	* config/aarch64/aarch64-builtins.c
+	* config/aarch64/aarch64-builtins.cc
 	(aarch64_simd_builtin_type_mode): Handle SF types.
 	(sf_UP): Define.
 	(BUILTIN_GPF): Define.
@@ -33783,7 +33783,7 @@
 2013-04-10  Joern Rennecke  <joern.rennecke@embecosm.com>
 
 	PR tree-optimization/55524
-	* tree-ssa-math-opts.c
+	* tree-ssa-math-opts.cc
 	(convert_mult_to_fma): Don't use an fms construct
 	when we don't have an fms operation, but fnma, and it looks
 	likely that we'll be able to use the latter.
@@ -34484,7 +34484,7 @@
 
 	* config/aarch64/aarch64.md (*mov<mode>_aarch64): Add alternatives for
 	scalar move.
-	* config/aarch64/aarch64.c
+	* config/aarch64/aarch64.cc
 	(aarch64_simd_scalar_immediate_valid_for_move): New.
 	* config/aarch64/aarch64-protos.h
 	(aarch64_simd_scalar_immediate_valid_for_move): New.
@@ -34724,33 +34724,33 @@
 	(DUMPFILE_H): New.
 	(test-dump.o): New.  This object is not added to any executable,
 	but is present for ad-hoc testing.
-	* bitmap.c
+	* bitmap.cc
 	(debug (const bitmap_head_def &)): New.
 	(debug (const bitmap_head_def *)): New.
 	* bitmap.h
 	(extern debug (const bitmap_head_def &)): New.
 	(extern debug (const bitmap_head_def *)): New.
-	* cfg.c
+	* cfg.cc
 	(debug (edge_def &)): New.
 	(debug (edge_def *)): New.
-	* cfghooks.c
+	* cfghooks.cc
 	(debug (basic_block_def &)): New.
 	(debug (basic_block_def *)): New.
 	* dumpfile.h
 	(dump_node (const_tree, int, FILE *)): Correct source file.
-	* dwarf2out.c
+	* dwarf2out.cc
 	(debug (die_struct &)): New.
 	(debug (die_struct *)): New.
 	* dwarf2out.h
 	(extern debug (die_struct &)): New.
 	(extern debug (die_struct *)): New.
-	* gimple-pretty-print.c
+	* gimple-pretty-print.cc
 	(debug (gimple_statement_d &)): New.
 	(debug (gimple_statement_d *)): New.
 	* gimple-pretty-print.h
 	(extern debug (gimple_statement_d &)): New.
 	(extern debug (gimple_statement_d *)): New.
-	* ira-build.c
+	* ira-build.cc
 	(debug (ira_allocno_copy &)): New.
 	(debug (ira_allocno_copy *)): New.
 	(debug (ira_allocno &)): New.
@@ -34760,25 +34760,25 @@
 	(extern debug (ira_allocno_copy *)): New.
 	(extern debug (ira_allocno &)): New.
 	(extern debug (ira_allocno *)): New.
-	* ira-lives.c
+	* ira-lives.cc
 	(debug (live_range &)): New.
 	(debug (live_range *)): New.
 	* lra-int.h
 	(debug (lra_live_range &)): New.
 	(debug (lra_live_range *)): New.
-	* lra-lives.c
+	* lra-lives.cc
 	(debug (lra_live_range &)): New.
 	(debug (lra_live_range *)): New.
-	* omega.c
+	* omega.cc
 	(debug (omega_pb_d &)): New.
 	(debug (omega_pb_d *)): New.
 	* omega.h
 	(extern debug (omega_pb_d &)): New.
 	(extern debug (omega_pb_d *)): New.
-	* print-rtl.c
+	* print-rtl.cc
 	(debug (const rtx_def &)): New.
 	(debug (const rtx_def *)): New.
-	* print-tree.c
+	* print-tree.cc
 	(debug_tree (tree): Move within file.
 	(debug_raw (const tree_node &)): New.
 	(debug_raw (const tree_node *)): New.
@@ -34797,7 +34797,7 @@
 	* rtl.h
 	(extern debug (const rtx_def &)): New.
 	(extern debug (const rtx_def *)): New.
-	* sbitmap.c
+	* sbitmap.cc
 	(debug_raw (simple_bitmap_def &)): New.
 	(debug_raw (simple_bitmap_def *)): New.
 	(debug (simple_bitmap_def &)): New.
@@ -34807,7 +34807,7 @@
 	(extern debug (simple_bitmap_def *)): New.
 	(extern debug_raw (simple_bitmap_def &)): New.
 	(extern debug_raw (simple_bitmap_def *)): New.
-	* sel-sched-dump.c
+	* sel-sched-dump.cc
 	(debug (vinsn_def &)): New.
 	(debug (vinsn_def *)): New.
 	(debug_verbose (vinsn_def &)): New.
@@ -34831,7 +34831,7 @@
 	(extern debug (vec<rtx> *)): New.
 	* sel-sched-ir.h
 	(_list_iter_cond_expr): Make inline instead of static.
-	* sreal.c
+	* sreal.cc
 	(debug (sreal &)): New.
 	(debug (sreal *)): New.
 	* sreal.h
@@ -34850,7 +34850,7 @@
 	(extern debug_body (const tree_node *)): New.
 	(extern debug (vec<tree, va_gc> &)): New.
 	(extern debug (vec<tree, va_gc> *)): New.
-	* tree-cfg.c
+	* tree-cfg.cc
 	(debug (struct loop &)): New.
 	(debug (struct loop *)): New.
 	(debug_verbose (struct loop &)): New.
@@ -34861,7 +34861,7 @@
 	(extern debug (struct loop *)): New.
 	(extern debug_verbose (struct loop &)): New.
 	(extern debug_verbose (struct loop *)): New.
-	* tree-data-ref.c
+	* tree-data-ref.cc
 	(debug (data_reference &)): New.
 	(debug (data_reference *)): New.
 	(debug (vec<data_reference_p> &)): New.
@@ -34875,13 +34875,13 @@
 	(extern debug (vec<data_reference_p> *)): New.
 	(extern debug (vec<ddr_p> &)): New.
 	(extern debug (vec<ddr_p> *)): New.
-	* tree-ssa-alias.c
+	* tree-ssa-alias.cc
 	(debug (pt_solution &)): New.
 	(debug (pt_solution *)): New.
 	* tree-ssa-alias.h
 	(extern debug (pt_solution &)): New.
 	(extern debug (pt_solution *)): New.
-	* tree-ssa-alias.c
+	* tree-ssa-alias.cc
 	(debug (_var_map &)): New.
 	(debug (_var_map *)): New.
 	(debug (tree_live_info_d &)): New.
@@ -37100,7 +37100,7 @@
 
 2013-02-28  James Greenhalgh  <james.greenhalgh@arm.com>
 
-	* config/aarch64/aarch64.c
+	* config/aarch64/aarch64.cc
 	(aarch64_float_const_representable): Remove unused variable.
 
 2013-02-28  James Greenhalgh  <james.greenhalgh@arm.com>
@@ -37109,12 +37109,12 @@
 
 2013-02-28  James Greenhalgh  <james.greenhalgh@arm.com>
 
-	* config/aarch64/aarch64-builtins.c
+	* config/aarch64/aarch64-builtins.cc
 	(aarch64_init_simd_builtins): Make static.
 
 2013-02-28  James Greenhalgh  <james.greenhalgh@arm.com>
 
-	* config/aarch64/aarch64.c
+	* config/aarch64/aarch64.cc
 	(aarch64_simd_make_constant): Make static.
 
 2013-02-28  Martin Jambor  <mjambor@suse.cz>
@@ -40055,7 +40055,7 @@
 
 2013-01-08  James Greenhalgh  <james.greenhalgh@arm.com>
 
-	* config/aarch64/aarch64-builtins.c
+	* config/aarch64/aarch64-builtins.cc
 	(aarch64_builtin_vectorized_function): Handle sqrt, sqrtf.
 
 2013-01-08  Martin Jambor  <mjambor@suse.cz>
@@ -40195,7 +40195,7 @@
 	(aarch64_output_simd_mov_immediate): Likewise.
 	* config/aarch64/aarch64-simd.md (*aarch64_simd_mov<mode>): Refactor
 	move immediate case.
-	* config/aarch64/aarch64.c
+	* config/aarch64/aarch64.cc
 	(aarch64_const_double_zero_rtx_p): Rename to...
 	(aarch64_float_const_zero_rtx_p): ...this.
 	(aarch64_print_operand): Allow printing of new constants.

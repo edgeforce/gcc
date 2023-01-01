@@ -1822,7 +1822,7 @@
 	Andrew Vaught  <andyv@firstinter.net>
 
 	PR fortran/15190
-	* decl.c (gfc_match_type_spec), io.c (match_io), parse.c
+	* decl.c (gfc_match_type_spec), io.c (match_io), parse.cc
 	(decode_statement): Enforce required space in free-form.
 
 2004-06-22  Richard Kenner  <kenner@vlsi1.ultra.nyu.edu>
@@ -1924,7 +1924,7 @@
 
 2004-06-12  Tobias Schlueter  <tobias.schlueter@physik.uni-muenchen.de>
 
-	* Make-lang.in (F95_OBJS, F95_PARSER_OBJS): Alphabetize.  Move data.c
+	* Make-lang.in (F95_OBJS, F95_PARSER_OBJS): Alphabetize.  Move data.cc
 	* data.c (gfc_get_section_index):  Remove dependency on trans.h.
 
 2004-06-12  Steven G. Kargl  <kargls@comcast.net>

@@ -3385,7 +3385,7 @@ cd30002.a
 cd30003.a
 cd30004.a
 cd300050.am
-cd300051.c
+cd300051.cc
 cd3014a.ada
 cd3014c.ada
 cd3014d.ada
@@ -3842,10 +3842,10 @@ cxb2003.a
 cxb3001.a
 cxb3002.a
 cxb3003.a
-cxb30040.c
+cxb30040.cc
 cxb30041.am
 cxb3005.a
-cxb30060.c
+cxb30060.cc
 cxb30061.am
 cxb3007.a
 cxb3008.a
@@ -3853,8 +3853,8 @@ cxb3009.a
 cxb3010.a
 cxb3011.a
 cxb3012.a
-cxb30130.c
-cxb30131.c
+cxb30130.cc
+cxb30131.cc
 cxb30132.am
 cxb3014.a
 cxb3015.a

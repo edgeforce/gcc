@@ -7273,7 +7273,7 @@
 	using indirect dis[atch.
 	(java_decl_ok_for_sibcall): Use output_class, not current_class.
 	(java_get_callee_fndecl): Use class local atable.
-	* jcf-parse.c
+	* jcf-parse.cc
 	(always_initialize_class_p): Decl moved to java-tree.h.
 	(HANDLE_CLASS_INFO): Set output_class.
 	(read_class): Likewise.
@@ -8263,7 +8263,7 @@
 
 2003-03-16  Mohan Embar  <gnustuff@thisiscool.com>
 
-	* Make-lang.in: added win32-host.c
+	* Make-lang.in: added win32-host.cc
 	* jcf.h: defined macro JCF_OPEN_EXACT_CASE which
 	resolves to open() on non-Win32 platforms and
 	Win32-specific jcf_open_exact_case() on Win32
@@ -11285,7 +11285,7 @@
 	* class.c (add_method_1): Create the initialized static class
 	table if necessary.
 	(finish_class): Always emit deferred inline methods.
-	* decl.c (emit_init_test_initialization): Moved to expr.c
+	* decl.c (emit_init_test_initialization): Moved to expr.cc
 	(complete_start_java_method): Don't traverse
 	DECL_FUNCTION_INIT_TEST_TABLE.
 	(lang_mark_tree): Mark hash tables in function decls.
@@ -13036,7 +13036,7 @@
 
 2000-11-07  Joseph S. Myers  <jsm28@cam.ac.uk>
 
-	* expr.c (note_instructions), jcf-io.c (find_class), jcf-parse.c
+	* expr.c (note_instructions), jcf-io.c (find_class), jcf-parse.cc
 	(init_outgoing_cpool), lex.c (java_init_lex): Use memset ()
 	instead of bzero ().
 
@@ -15063,7 +15063,7 @@
 
 	* expr.c (build_class_init): Mark the decl to be ignored by
 	check_init.
-	* java-tree.h (DECL_BIT_INDEX): Move definition from check-init.c
+	* java-tree.h (DECL_BIT_INDEX): Move definition from check-init.cc
 	* check-init.c: Move DECL_BIT_INDEX to java-tree.h
 	* class.c (init_test_hash_newfunc): New function.
 	(decl_hash): New function.
@@ -19874,7 +19874,7 @@ Tue Mar  9 11:52:08 1999  Alexandre Petit-Bianco  <apbianco@cygnus.com>
 	* java-tree.h (CLASS_FROM_CURRENTLY_COMPILED_SOURCE_P,
 	HAS_BEEN_ALREADY_PARSED_P, IS_A_COMMAND_LINE_FILENAME_P): New macros.
 	(CLASS_P): Moved around.
-	(java_parse_abort_on_error): Macro moved from jcf-parse.c
+	(java_parse_abort_on_error): Macro moved from jcf-parse.cc
 	* jcf-parse.c (java_parse_abort_on_error): Macro moved to
 	java-tree.h
 	(jcf_parse_source): Changed leading comment. Removed unnecessary
@@ -21246,7 +21246,7 @@ Tue Mar  9 11:52:08 1999  Alexandre Petit-Bianco  <apbianco@cygnus.com>
 
 1998-07-13  Nick Clifton  <nickc@cygnus.com>
 
-	* lang-options.h: Format changed to match changes in gcc/toplev.c
+	* lang-options.h: Format changed to match changes in gcc/toplev.cc
 	to implement a --help option.
 
 1998-07-10  Brendan Kehoe  <brendan@cygnus.com>

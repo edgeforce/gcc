@@ -1,5 +1,5 @@
 /* Match-and-simplify patterns for shared GENERIC and GIMPLE folding.
-   This file is consumed by genmatch which produces gimple-match.c
+   This file is consumed by genmatch which produces gimple-match.cc
    and generic-match.c from it.
 
    Copyright (C) 2014-2016 Free Software Foundation, Inc.

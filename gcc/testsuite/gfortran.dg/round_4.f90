@@ -16,7 +16,7 @@
 !
 ! If it doesn't work on your system, please check whether strtod handles
 ! rounding correctly and whether your system is supported in
-! libgfortran/config/fpu*.c
+! libgfortran/config/fpu*.cc
 !
 ! Please only add ... run { target { ! { triplets } } } if it is unfixable
 ! on your target - and a note why (strtod has broken rounding support, etc.)

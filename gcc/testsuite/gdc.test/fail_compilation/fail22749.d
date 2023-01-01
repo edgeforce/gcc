@@ -1,4 +1,4 @@
-// EXTRA_FILES: imports/imp22749.c
+// EXTRA_FILES: imports/imp22749.cc
 /* TEST_OUTPUT:
 ---
 fail_compilation/fail22749.d(12): Error: cannot take address of bit-field `field`

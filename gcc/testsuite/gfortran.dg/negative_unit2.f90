@@ -2,7 +2,7 @@
 ! Test case submitted by Dominique d'Humieres
 program negative_unit2
   integer :: i, j
-  ! i should be <= NEWUNIT_FIRST in libgfortran/io/unit.c
+  ! i should be <= NEWUNIT_FIRST in libgfortran/io/unit.cc
   i = -100
   write(unit=i,fmt=*, iostat=j) 10
   if (j == 0) STOP 1

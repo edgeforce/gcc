@@ -78,8 +78,8 @@ extern const char *rs6000_machine;
 #define ALTIVEC_REG_BIT(REGNO) (0x80000000 >> ((REGNO) - FIRST_ALTIVEC_REGNO))
 
 
-/* Declare functions in rs6000-logue.cc or called in rs6000.cc
-   from rs6000-logue.cc  */
+/* Declare functions in rs6000-logue or called in rs6000
+   from rs6000-logue  */
 
 extern int uses_TOC (void);
 extern void rs6000_output_function_prologue (FILE *file);
@@ -112,7 +112,7 @@ quad_address_offset_p (HOST_WIDE_INT offset)
   return (IN_RANGE (offset, -32768, 32767) && ((offset) & 0xf) == 0);
 }
 
-/* Mach-O (Darwin) support for longcalls, emitted from  rs6000-logue.cc.  */
+/* Mach-O (Darwin) support for longcalls, emitted from  rs6000-logue.  */
 
 #if TARGET_MACHO
 
@@ -126,8 +126,8 @@ extern vec<branch_island, va_gc> *branch_islands;
 
 #endif
 
-/* Declare functions in rs6000-call.cc or called in rs6000.cc
-   from rs6000-call.cc  */
+/* Declare functions in rs6000-call or called in rs6000
+   from rs6000-call  */
 extern int rs6000_darwin64_struct_check_p (machine_mode mode, const_tree type);
 extern bool rs6000_discover_homogeneous_aggregate (machine_mode mode,
 						   const_tree type,

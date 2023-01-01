@@ -201,7 +201,7 @@ if [ $? -ne 0 ]; then
 fi
 ./macrosub > macrosub.out 2>&1
 
-gcc -c cd300051.c
+gcc -c cd300051.cc
 host_gnatmake -q -gnatws widechr.adb
 if [ $? -ne 0 ]; then
    display "**** Failed to compile widechr"
@@ -220,7 +220,7 @@ display " done."
 
 display_noeol "Compiling support files..."
 
-target_gcc -c *.c
+target_gcc -c *.cc
 if [ $? -ne 0 ]; then
    display "**** Failed to compile C code"
    exit 1

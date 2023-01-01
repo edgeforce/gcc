@@ -29,7 +29,7 @@ a call to `printf` and uses it to write a message to stdout.
 Don't worry about the content of the program for now; we'll cover
 the details in later parts of this tutorial.
 
-   .. literalinclude:: ../examples/tut01-hello-world.c
+   .. literalinclude:: ../examples/tut01-hello-world.cc
     :language: c
 
 Copy the above to `tut01-hello-world.c`.

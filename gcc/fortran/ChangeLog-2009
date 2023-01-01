@@ -2595,7 +2595,7 @@
 	PR fortran/39352
 	* f95-lang.c: Add gfc_maybe_initialize_eh.
 	* gfortran.h: Add gfc_maybe_initialize_eh prototype.
-	* Make-lang.in: Add new .h dendencies for f95-lang.c
+	* Make-lang.in: Add new .h dendencies for f95-lang.cc
 	* openmp.c (resolve_omp_do): Call gfc_maybe_initialize_eh.
 	* misc.c (gfc_free): Avoid #define trickery for free.
 

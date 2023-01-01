@@ -3068,8 +3068,8 @@
 	(__gnat_readdir): Add new parameter length (pointer to int). Update
 	implementation to use it and add specific Win32 code for Unicode
 	support.
-	(__gnat_get_env_value_ptr): Remove. Replaced by __gnat_getenv in env.c
-	(__gnat_set_env_value): Remove. Replaced by __gnat_setenv in env.c
+	(__gnat_get_env_value_ptr): Remove. Replaced by __gnat_getenv in env.cc
+	(__gnat_set_env_value): Remove. Replaced by __gnat_setenv in env.cc
 	(convert_addresses): Do not define this dummy routine on VMS.
 
 	* mingw32.h (GNAT_UNICODE_SUPPORT): New definition, if set the GNAT
@@ -3093,17 +3093,17 @@
 	* g-os_lib.adb (Copy_Time_Stamp): Fix off-by-one range computation.
 	(Get_Directory): Fix wrong indexing.
 	(Getenv): replace __gnat_get_env_value_ptr from adaint.c by
-	__gnat_getenv from env.c
+	__gnat_getenv from env.cc
 	(Setenv): replace __gnat_set_env_value from adaint.c by __gnat_setenv
-	from env.c
+	from env.cc
 
 	* env.h, env.c: New file.
 
 	* s-scaval.adb (Initialize): Replace __gnat_get_env_value_ptr from
-	adaint.c by __gnat_getenv from env.c
+	adaint.c by __gnat_getenv from env.cc
 
 	* s-shasto.adb (Initialize): replace __gnat_get_env_value_ptr from
-	adaint.c by __gnat_getenv from env.c
+	adaint.c by __gnat_getenv from env.cc
 
 	* Make-lang.in: Add env.o in the list of C object needed by gnat1
 	and gnatbind.

@@ -726,7 +726,7 @@
 
 2019-12-09  David Malcolm  <dmalcolm@redhat.com>
 
-	* gcc.dg/plugin/diagnostic_plugin_test_show_locus.c
+	* gcc.dg/plugin/diagnostic_plugin_test_show_locus.cc
 	(custom_diagnostic_finalizer): Add pp_newline call before call to
 	diagnostic_show_locus.
 
@@ -787,7 +787,7 @@
 2019-12-09  Lewis Hyatt  <lhyatt@gmail.com>
 
 	PR preprocessor/49973
-	* gcc.dg/plugin/diagnostic_plugin_test_show_locus.c
+	* gcc.dg/plugin/diagnostic_plugin_test_show_locus.cc
 	(test_show_locus): Tweak so that expected output is the same as
 	before the diagnostic-show-locus.c changes.
 	* gcc.dg/cpp/pr66415-1.c: Likewise.
@@ -4167,7 +4167,7 @@
 	* gcc.dg/torture/pr87693.c: Same.
 	* gcc.dg/torture/pr91178.c: Add dg-require-effective-target size32plus.
 	* gcc.dg/torture/pr91178-2.c: Same.
-	* gcc.dg/torture/20181024-1.c
+	* gcc.dg/torture/20181024-1.cc
 	* gcc.dg/torture/pr86554-1.c: Use 32-bit integers.
 	* gcc.dg/tree-ssa/pr91091-1.c: Same.
 
@@ -4248,7 +4248,7 @@
 	PR testsuite/52641
 	* gcc.c-torture/execute/20190820-1.c:
 	Add dg-require-effective-target int32plus.
-	* gcc.c-torture/execute/pr85331.c
+	* gcc.c-torture/execute/pr85331.cc
 	Add dg-require-effective-target double64plus.
 	* gcc.dg/pow-sqrt-1.c: Same.
 	* gcc.dg/pow-sqrt-2.c: Same.
@@ -4445,7 +4445,7 @@
 	* gcc.target/i386/avx512f-vrndscaless-1.c: Add scan-assembler-times
 	directives for newly expected instructions.
 	* gcc.target/i386/avx512f-vrndscalesd-1.c: Likewise.
-	* gcc.target/i386/avx512f-vrndscaless-2.c
+	* gcc.target/i386/avx512f-vrndscaless-2.cc
 	(avx512f_test): Add tests for new intrinsics.
 	* gcc.target/i386/avx512f-vrndscalesd-2.c: Likewise.
 	* gcc.target/i386/avx-1.c (__builtin_ia32_rndscalefss_round,
@@ -5308,7 +5308,7 @@
 
 	* gcc.dg/plugin/diagnostic_group_plugin.c (test_begin_group_cb):
 	Clear the prefix before emitting the "END GROUP" line.
-	* gcc.dg/plugin/diagnostic_plugin_test_show_locus.c
+	* gcc.dg/plugin/diagnostic_plugin_test_show_locus.cc
 	(custom_diagnostic_finalizer): Temporarily clear prefix when
 	calling diagnostic_show_locus, rather than destroying it
 	afterwards.
@@ -12451,7 +12451,7 @@
 	* gcc.target/i386/pr66819-3.c: Specifically, check that there is no
 	call to "bar".
 	* gcc.target/i386/pr66819-4.c: Likewise.
-	* gcc.target/i386/pr82662.c
+	* gcc.target/i386/pr82662.cc
 	* gcc.target/i386/ptwrite2.c: Make the checks look for the specific
 	destination register, don't try the m32 test on m64 targets.
 
@@ -14348,7 +14348,7 @@
 
 2019-04-09  Uroš Bizjak  <ubizjak@gmail.com>
 
-	* gcc.target/i386/ifcvt-onecmpl-abs-1.c
+	* gcc.target/i386/ifcvt-onecmpl-abs-1.cc
 	(dg-options): Use -O2 -fdump-rtl-ce1.
 	(dg-final): Scan ce1 RTL dump instead of asm dump.
 
@@ -16935,7 +16935,7 @@
 
 2019-01-23  Xiong Hu Luo  <luoxhu@linux.vnet.ibm.com>
 
-	* gcc.target/powerpc/crypto-builtin-1.c
+	* gcc.target/powerpc/crypto-builtin-1.cc
 	(crypto1_be, crypto2_be, crypto3_be, crypto4_be, crypto5_be):
 	New testcases.
 
@@ -17226,7 +17226,7 @@
 	* jit.dg/add-driver-options-testlib.c: Add support file for
 	test-add-driver-options.c testcase.
 	* jit.dg/all-non-failing-tests.h: Add note about
-	test-add-driver-options.c
+	test-add-driver-options.cc
 	* jit.dg/jit.exp (jit-dg-test): Update to support
 	add-driver-options-testlib.c compilation.
 	* jit.dg/test-add-driver-options.c: New testcase.

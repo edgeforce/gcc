@@ -24,7 +24,7 @@ func _() {
 	_ = x.a
 	_ = x.b // no follow-on error here
 	x.b()   // no follow-on error here
-	_ = x.c
+	_ = x.cc
 	_ = x.E // no follow-on error here
 	x.E()   // no follow-on error here
 }

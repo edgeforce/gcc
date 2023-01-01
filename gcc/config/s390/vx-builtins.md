@@ -180,7 +180,7 @@
   "vllez<bhfgq>\t%v0,%1"
   [(set_attr "op_type" "VRX")])
 
-; vec_revb (vec_insert_and_zero(x))             bswap-and-replicate-1.c
+; vec_revb (vec_insert_and_zero(x))             bswap-and-replicate-1.cc
 ; vllebrzh, vllebrzf, vllebrzg
 (define_insn "*vec_insert_and_zero_bswap<mode>"
   [(set (match_operand:V_HW_HSD                    0 "register_operand"       "=v")
@@ -517,7 +517,7 @@
 ; implemented as: op0 = (op1 & op3) | (op2 & ~op3)
 
 ; Used to expand the vec_sel builtin. Operands op1 and op2 already got
-; swapped in s390-c.cc when we get here.
+; swapped in s390-c when we get here.
 
 (define_insn "vsel<mode>"
   [(set (match_operand:V_HW_FT               0 "register_operand" "=v")
@@ -2295,8 +2295,8 @@
   emit_move_insn (operands[2], constv);
 })
 
-; vec_insert (__builtin_bswap32 (*a), b, 1)        set-element-bswap-2.c
-; b[1] = __builtin_bswap32 (*a)                    set-element-bswap-3.c
+; vec_insert (__builtin_bswap32 (*a), b, 1)        set-element-bswap-2.cc
+; b[1] = __builtin_bswap32 (*a)                    set-element-bswap-3.cc
 ; vlebrh, vlebrf, vlebrg
 (define_insn "*vec_set_bswap_elem<mode>"
   [(set (match_operand:V_HW_HSD                                     0 "register_operand" "=v")
@@ -2308,7 +2308,7 @@
   "vlebr<bhfgq>\t%v0,%1,%2"
   [(set_attr "op_type" "VRX")])
 
-; vec_revb (vec_insert (*a, vec_revb (b), 1))      set-element-bswap-1.c
+; vec_revb (vec_insert (*a, vec_revb (b), 1))      set-element-bswap-1.cc
 ; vlebrh, vlebrf, vlebrg
 (define_insn "*vec_set_bswap_vec<mode>"
   [(set (match_operand:V_HW_HSD                                     0 "register_operand"       "=v")
@@ -2322,8 +2322,8 @@
   "vlebr<bhfgq>\t%v0,%1,%2"
   [(set_attr "op_type" "VRX")])
 
-; *a = vec_extract (vec_revb (b), 1);              get-element-bswap-3.c
-; *a = vec_revb (b)[1];                            get-element-bswap-4.c
+; *a = vec_extract (vec_revb (b), 1);              get-element-bswap-3.cc
+; *a = vec_revb (b)[1];                            get-element-bswap-4.cc
 ; vstebrh, vstebrf, vstebrg
 (define_insn "*vec_extract_bswap_vec<mode>"
   [(set (match_operand:<non_vec>                  0 "memory_operand"   "=R")
@@ -2334,8 +2334,8 @@
   "vstebr<bhfgq>\t%v1,%0,%2"
   [(set_attr "op_type" "VRX")])
 
-; *a = __builtin_bswap32 (vec_extract (b, 1));     get-element-bswap-1.c
-; *a = __builtin_bswap32 (b[1]);                   get-element-bswap-2.c
+; *a = __builtin_bswap32 (vec_extract (b, 1));     get-element-bswap-1.cc
+; *a = __builtin_bswap32 (b[1]);                   get-element-bswap-2.cc
 ; vstebrh, vstebrf, vstebrg
 (define_insn "*vec_extract_bswap_elem<mode>"
   [(set (match_operand:<non_vec>                  0 "memory_operand"   "=R")

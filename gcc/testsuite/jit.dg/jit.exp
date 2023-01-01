@@ -342,7 +342,7 @@ dg-init
 
 # Gather a list of all tests.
 
-# C tests within the testsuite: gcc/testsuite/jit.dg/test-*.c
+# C tests within the testsuite: gcc/testsuite/jit.dg/test-*.cc
 set tests [find $srcdir/$subdir test-*.c]
 
 # C++ tests within the testsuite: gcc/testsuite/jit.dg/test-*.cc
@@ -488,7 +488,7 @@ proc jit-dg-test { prog do_what extra_tool_flags } {
     }
 
     # test-add-driver-options.c needs a shared library built from
-    # add-driver-options-testlib.c
+    # add-driver-options-testlib.cc
     if {[string match "*test-add-driver-options.c" $prog]} {
 	global srcdir
 	global subdir
@@ -967,7 +967,7 @@ proc jit-verify-dynamic-library { args } {
     verbose "  obj_filename: ${obj_filename}"
 
     # Build a test executable from
-    # verify-dynamic-library.c
+    # verify-dynamic-library.cc
     set test_src "verify-dynamic-library.c"
     set test_executable ${test_src}.exe
     verbose "  test_executable: ${test_executable}"
@@ -1021,7 +1021,7 @@ proc jit-verify-executable { args } {
 
 set DEFAULT_CFLAGS "-I$srcdir/../jit -lgccjit -g -Wall -Werror"
 
-# We need to link with --export-dynamic for test-calling-external-function.c
+# We need to link with --export-dynamic for test-calling-external-function.cc
 # so that the JIT-built code can call into functions from the main program.
 
 if { [check_effective_target_rdynamic] } {

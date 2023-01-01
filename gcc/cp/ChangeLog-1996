@@ -3485,13 +3485,13 @@ Wed Feb 21 00:06:17 1996  Jason Merrill  <jason@yorick.cygnus.com>
 	(instantiate_class_template): Use it and pop_tinst_level.
 	(instantiate_decl): Likewise.
 
-	* call.c class.c cp-tree.h decl.c decl2.c error.c lex.c method.c
+	* call.c class.c cp-tree.h decl.c decl2.c error.c lex.c method.cc
 	pt.c ptree.c tree.def: Remove all traces of UNINSTANTIATED_P_TYPE.
 
 Tue Feb 20 18:21:51 1996  Jason Merrill  <jason@yorick.cygnus.com>
 
-	* call.c class.c cp-tree.h cvt.c decl.c decl2.c error.c expr.c
-	init.c lex.c method.c parse.y pt.c repo.c search.c spew.c tree.c
+	* call.c class.c cp-tree.h cvt.c decl.c decl2.c error.c expr.cc
+	init.c lex.c method.c parse.y pt.c repo.c search.c spew.c tree.cc
 	tree.def typeck.c typeck2.c xref.c: Massive, systemic changes for
 	the new template implementation.
 

@@ -2,7 +2,7 @@
 /* REQUIRED_ARGS: -O
  */
 
-// Adapted from DMC++ test file test3/ccompile.c
+// Adapted from DMC++ test file test3/ccompile.cc
 
 
     struct HDS        {

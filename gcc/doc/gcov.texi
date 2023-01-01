@@ -1220,7 +1220,7 @@ register and dump the gcov information, respectively.  We also see undefined
 references to @code{__gcov_init} and @code{__gcov_exit}:
 
 @smallexample
-$ gcc --coverage -c app.c
+$ gcc --coverage -c app.cc
 $ nm app.o
 0000000000000000 r a
 0000000000000030 T application
@@ -1246,8 +1246,8 @@ present in the @code{.gcov_info} section and there are no undefined references
 to @code{__gcov_init} and @code{__gcov_exit}:
 
 @smallexample
-$ gcc --coverage -fprofile-info-section -c main.c
-$ gcc --coverage -fprofile-info-section -c app.c
+$ gcc --coverage -fprofile-info-section -c main.cc
+$ gcc --coverage -fprofile-info-section -c app.cc
 $ objdump -h app.o
 
 app.o:     file format elf64-x86-64
@@ -1317,7 +1317,7 @@ application:
 $ rm -f app.gcda main.gcda
 $ echo "" | ./a.out 2>gcda-0.txt
 $ ./a.out <gcda-0.txt 2>gcda-1.txt | gcov-tool merge-stream
-$ gcov -bc app.c
+$ gcov -bc app.cc
 File 'app.c'
 Lines executed:69.23% of 13
 Branches executed:66.67% of 6
@@ -1336,7 +1336,7 @@ a fully covered application:
 
 @smallexample
 $ ./a.out <gcda-1.txt 2>gcda-2.txt | gcov-tool merge-stream
-$ gcov -bc app.c
+$ gcov -bc app.cc
 File 'app.c'
 Lines executed:100.00% of 13
 Branches executed:100.00% of 6

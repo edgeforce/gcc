@@ -298,7 +298,7 @@ ADA_INCLUDES_FOR_SUBDIR = -I. -I$(fsrcdir)/ada
 	$(CC) -c $(ALL_ADAFLAGS) $(ADA_INCLUDES) $< $(OUTPUT_OPTION)
 
 # how to regenerate this file
-Makefile: ../config.status $(srcdir)/ada/gcc-interface/Makefile.in $(srcdir)/ada/Makefile.in $(srcdir)/version.c
+Makefile: ../config.status $(srcdir)/ada/gcc-interface/Makefile.in $(srcdir)/ada/Makefile.in $(srcdir)/version.cc
 	cd ..; \
 	LANGUAGES="$(CONFIG_LANGUAGES)" \
 	CONFIG_HEADERS= \
@@ -2758,7 +2758,7 @@ OSCONS_EXTRACT=$(OSCONS_CC) -S s-oscons-tmplt.i
 # Note: if you need to build with a non-GNU compiler, you could adapt the
 # following definitions (written for VMS DEC-C)
 #OSCONS_CPP=../../../$(DECC) -E /comment=as_is -DNATIVE \
-#             -DTARGET='""$(target)""' -I$(OSCONS_SRCDIR) s-oscons-tmplt.c
+#             -DTARGET='""$(target)""' -I$(OSCONS_SRCDIR) s-oscons-tmplt.cc
 #
 #OSCONS_EXTRACT=../../../$(DECC) -DNATIVE \
 #                 -DTARGET='""$(target)""' -I$(OSCONS_SRCDIR) s-oscons-tmplt.c ; \
@@ -3070,38 +3070,38 @@ a-tags.o  : a-tags.adb a-tags.ads
 
 # need to keep the frame pointer in this file to pop the stack properly on
 # some targets.
-tracebak.o  : tracebak.c tb-gcc.c
+tracebak.o  : tracebak.c tb-gcc.cc
 	$(COMPILER) -c $(ALL_COMPILERFLAGS) $(ADA_CFLAGS) $(ALL_CPPFLAGS) \
 	      $(INCLUDES) -fno-omit-frame-pointer $< $(OUTPUT_OPTION)
 
 adadecode.o : adadecode.c adadecode.h
-aux-io.o  : aux-io.c
-argv.o    : argv.c
-cal.o     : cal.c
-deftarg.o : deftarg.c
-errno.o   : errno.c
-exit.o    : adaint.h exit.c
-expect.o  : expect.c
-final.o   : final.c
-rtfinal.o : rtfinal.c
-rtinit.o  : rtinit.c
-locales.o : locales.c
-mkdir.o   : mkdir.c
+aux-io.o  : aux-io.cc
+argv.o    : argv.cc
+cal.o     : cal.cc
+deftarg.o : deftarg.cc
+errno.o   : errno.cc
+exit.o    : adaint.h exit.cc
+expect.o  : expect.cc
+final.o   : final.cc
+rtfinal.o : rtfinal.cc
+rtinit.o  : rtinit.cc
+locales.o : locales.cc
+mkdir.o   : mkdir.cc
 socket.o  : socket.c gsocket.h
-sysdep.o  : sysdep.c
+sysdep.o  : sysdep.cc
 raise.o   : raise.c raise.h
 sigtramp-armdroid.o      : sigtramp-armdroid.c sigtramp.h
 sigtramp-vxworks.o       : sigtramp-vxworks.c sigtramp.h sigtramp-vxworks-target.inc
 sigtramp-vxworks-vxsim.o : sigtramp-vxworks-vxsim.c sigtramp.h sigtramp-vxworks-target.inc
-terminals.o : terminals.c
-vx_stack_info.o : vx_stack_info.c
+terminals.o : terminals.cc
+vx_stack_info.o : vx_stack_info.cc
 
 raise-gcc.o : raise-gcc.c raise.h
 	$(COMPILER) -c $(ALL_COMPILERFLAGS) $(ADA_CFLAGS) \
 		-iquote $(srcdir) -iquote $(ftop_srcdir)/libgcc \
 		$(ALL_CPPFLAGS) $(INCLUDES) $< $(OUTPUT_OPTION)
 
-cio.o     : cio.c
+cio.o     : cio.cc
 	$(COMPILER) -c $(ALL_COMPILERFLAGS) $(ADA_CFLAGS) \
 	         $(ALL_CPPFLAGS) $(INCLUDES) $< $(OUTPUT_OPTION)
 
@@ -3109,7 +3109,7 @@ init.o    : init.c adaint.h raise.h
 	$(COMPILER) -c $(ALL_COMPILERFLAGS) $(ADA_CFLAGS) \
 	         $(ALL_CPPFLAGS) $(INCLUDES) $< $(OUTPUT_OPTION)
 
-init-vxsim.o : init-vxsim.c
+init-vxsim.o : init-vxsim.cc
 	$(COMPILER) -c $(ALL_COMPILERFLAGS) $(ADA_CFLAGS) \
 	         $(ALL_CPPFLAGS) $(INCLUDES) $< $(OUTPUT_OPTION)
 
@@ -3117,12 +3117,12 @@ initialize.o : initialize.c raise.h
 	$(COMPILER) -c $(ALL_COMPILERFLAGS) $(ADA_CFLAGS) \
 	         $(ALL_CPPFLAGS) $(INCLUDES) $< $(OUTPUT_OPTION)
 
-link.o : link.c
+link.o : link.cc
 	$(COMPILER) -c $(ALL_COMPILERFLAGS) $(ADA_CFLAGS) \
 		$(ALL_CPPFLAGS) $(INCLUDES_FOR_SUBDIR) \
 		$< $(OUTPUT_OPTION)
 
-targext.o : targext.c
+targext.o : targext.cc
 	$(COMPILER) -c $(ALL_COMPILERFLAGS) $(ADA_CFLAGS) \
 		-iquote $(srcdir) \
 		$(ALL_CPPFLAGS) $(INCLUDES_FOR_SUBDIR) \

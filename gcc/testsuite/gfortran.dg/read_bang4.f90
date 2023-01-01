@@ -3,7 +3,7 @@
 ! Note: The uninitialized pointer was not the cause of the problem
 !       observed with this test case. This tests the case with UTF-8
 !       files. The large string test the realloc use in push_char4 of
-!       list_read.c
+!       list_read.cc
 program test
   implicit none
   integer :: i, j, k, ios

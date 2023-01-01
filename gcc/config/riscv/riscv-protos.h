@@ -35,7 +35,7 @@ enum riscv_symbol_type {
 };
 #define NUM_SYMBOL_TYPES (SYMBOL_TLS_GD + 1)
 
-/* Routines implemented in riscv.cc.  */
+/* Routines implemented in riscv.  */
 extern enum riscv_symbol_type riscv_classify_symbolic_expression (rtx);
 extern bool riscv_symbolic_constant_p (rtx, enum riscv_symbol_type *);
 extern int riscv_regno_mode_ok_for_base_p (int, machine_mode, bool);
@@ -79,17 +79,17 @@ extern poly_uint64 riscv_regmode_natural_size (machine_mode);
 extern bool riscv_v_ext_vector_mode_p (machine_mode);
 extern bool riscv_shamt_matches_mask_p (int, HOST_WIDE_INT);
 
-/* Routines implemented in riscv-c.cc.  */
+/* Routines implemented in riscv-c.  */
 void riscv_cpu_cpp_builtins (cpp_reader *);
 void riscv_register_pragmas (void);
 
-/* Routines implemented in riscv-builtins.cc.  */
+/* Routines implemented in riscv-builtins.  */
 extern void riscv_atomic_assign_expand_fenv (tree *, tree *, tree *);
 extern rtx riscv_expand_builtin (tree, rtx, rtx, machine_mode, int);
 extern tree riscv_builtin_decl (unsigned int, bool);
 extern void riscv_init_builtins (void);
 
-/* Routines implemented in riscv-common.cc.  */
+/* Routines implemented in riscv-common.  */
 extern std::string riscv_arch_str (bool version_p = true);
 extern void riscv_parse_arch_string (const char *, struct gcc_options *, location_t);
 
@@ -112,7 +112,7 @@ struct riscv_cpu_info {
 
 extern const riscv_cpu_info *riscv_find_cpu (const char *);
 
-/* Routines implemented in riscv-selftests.cc.  */
+/* Routines implemented in riscv-selftests.  */
 #if CHECKING_P
 namespace selftest {
 extern void riscv_run_selftests (void);
@@ -138,7 +138,7 @@ enum avl_type
   NONVLMAX,
   VLMAX,
 };
-/* Routines implemented in riscv-vector-builtins.cc.  */
+/* Routines implemented in riscv-vector-builtins.  */
 extern void init_builtins (void);
 extern const char *mangle_builtin_type (const_tree);
 #ifdef GCC_TARGET_H

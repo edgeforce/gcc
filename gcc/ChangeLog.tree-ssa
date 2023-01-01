@@ -1330,7 +1330,7 @@
 	(tree-ssa-copy.o): Add dependencies.
 	* tree-flow.h (propagate_value, replace_exp): Prototype.
 	(cprop_into_stmt, cprop_into_successor_phis): Likewise.
-	* tree-ssa-copy.c: New file, most functions copied from tree-ssa-dom.c
+	* tree-ssa-copy.c: New file, most functions copied from tree-ssa-dom.cc
 	(cprop_into_stmt): Handle pointer & reference types better.
 	* tree-ssa-dom.c (opt_stats_d): Kill uninteresting stats.
 	(dump_dominator_optimization_stats): Corresponding changes.
@@ -1497,7 +1497,7 @@
 	Remove the RTL inliner.
 	* calls.c (try_to_integrate): Remove.
 	(expand_call): Do not try to expand calls inline.
-	* dbxout.c (dbxout_symbol_location): Don't mention integrate.c
+	* dbxout.c (dbxout_symbol_location): Don't mention integrate.cc
 	in comments.
 	* expmed.c (extract_fixed_bit_field): Always propagate the
 	target for the shift if it is a REG.
@@ -2053,7 +2053,7 @@
 2004-02-09  Richard Henderson  <rth@redhat.com>
 
 	* langhooks.h (lang_hooks_for_functions): Add missing_noreturn_ok_p.
-	* langhooks-def.h, c-lang.c, objc/objc-lang.c
+	* langhooks-def.h, c-lang.c, objc/objc-lang.cc
 	(LANG_HOOKS_FUNCTION_MISSING_NORETURN_OK_P): New.
 	* c-objc-common.c (c_missing_noreturn_ok_p): Return bool.
 	(c_objc_common_init): Don't set lang_missing_noreturn_ok_p.
@@ -2917,7 +2917,7 @@
 	rtl_make_forwarder_block, rtl_create_basic_block,
 	rtl_delete_block, rtl_split_block, rtl_merge_blocks,
 	tidy_fallthru_edge, rtl_split_edge, cfg_layout_merge_blocks,
-	cfg_layout_split_edge): Parts not specific to rtl moved to cfghooks.c
+	cfg_layout_split_edge): Parts not specific to rtl moved to cfghooks.cc
 	(tidy_fallthru_edges): Moved to cfghooks.c.
 	(rtl_move_block_after): New.
 	(redirect_edge_with_latch_update, update_cfg_after_block_merging):
@@ -3183,7 +3183,7 @@
 	(create_memory_tags): Call may_be_aliased.
 	Mark new memory tags for renaming.
 	(compute_alias_sets): Don't do debugging dumps.
-	(find_variable_in): Move from tree-must-alias.c
+	(find_variable_in): Move from tree-must-alias.cc
 	(remove_element_from): Likewise.
 	(find_addressable_vars): Likewise
 	(promote_call_clobbered_vars): New.
@@ -3721,7 +3721,7 @@
 2003-12-16  Andrew MacLeod  <amacleod@redhat.com>
 
 	* tree-flow-inline.h (free_vuse, free_vdefs): Moved to
-	tree-ssa-operands.c
+	tree-ssa-operands.cc
 	(get_def_ops, get_use_ops, get_vdef_ops, get_vuse_ops): Use the new
 	more direct structure pointer.
 	(get_use_op_ptr, get_def_op_ptr): Cast is no longer necessary.
@@ -3908,11 +3908,11 @@
 	(append_vdef): Renamed from add_def, and moved from tree-dfa.c.
 	(append_vuse): Renamed from add_def, and moved from tree-dfa.c.
 	(add_vuse): New. Entry point to add a vuse to a stmt.
-	(get_call_flags): Moved from tree-dfa.c
+	(get_call_flags): Moved from tree-dfa.cc
 	(get_stmt_operands, get_expr_operands, add_stmt_operand): Moved from
 	tree-dfa.c, and use new optype interface.
 	(note_addressabe, add_call_clobber_ops, add_call_read_ops): Moved from
-	tree-dfa.c
+	tree-dfa.cc
 
 2003-12-15  Diego Novillo  <dnovillo@redhat.com>
 
@@ -4743,7 +4743,7 @@
 	* Makefile.in (tree-ssanames.o): Depend on gt-tree-ssanames.h.
 	(tree-eh.o): Depend on gt-tree-eh.h.
 	(gr-tree-ssanames.h, gt-tree-eh.h): New targets.
-	(GTFILES): Add tree-ssanames.c, tree-eh.c
+	(GTFILES): Add tree-ssanames.c, tree-eh.cc
 	* tree-eh.c: Include ggc.h and gt-tree-eh.h
 	(lower_eh_constructs): Allecate throw_stmt_table in ggc.
 	* tree-ssanames.c: Include ggc.h and gt-tree-ssanames.h
@@ -4840,7 +4840,7 @@
 	(lookup_avail_expr): If necessary, initialize block local
 	avail_exprs.
 	(record_range): If necessary, initialize block local vrp_varaibles.
-	* tree-ssa.c
+	* tree-ssa.cc
 	* tree-ssa.c (rewrite_initialize_block_local_data): Accept and use
 	"recycled" argument.  For recycled structures, only clear varrays
 	that have been initialized.  For new blocks, do not initialize
@@ -5305,7 +5305,7 @@
 	* tree-ssa-dom.c, tree-ssa-live.c, tree-ssa.c: Similarly.
 	* tree.c (dump_tree_statistics): Call into tree-ssaname statistics
 	dumper too.
-	(make_ssa_name): Kill.  Now in tree-ssanames.c
+	(make_ssa_name): Kill.  Now in tree-ssanames.cc
 
 2003-11-18  Richard Henderson  <rth@redhat.com>
 
@@ -9722,7 +9722,7 @@
 	* tree-ssa.c: Simplify by moving everything specific to the
 	dominator optimizer into tree-ssa-dom.c.  Call into the dominator
 	optimizer after rewriting all the basic blocks.
-	* tree-ssa-dom.c: New file.  Mostly extracted from tree-ssa.c
+	* tree-ssa-dom.c: New file.  Mostly extracted from tree-ssa.cc
 	* tree-flow.h (tree_ssa_dominator_optimize): Prototype.
 	(dump_dominator_optimization_stats): Likewise.
 	(debug_dominator_optimization_stats): Likewise.
@@ -12339,7 +12339,7 @@
 	(create_alias_vars): Ditto.
 	* tree-dfa.c (compute_may_aliases): Fix check for
 	create_alias_vars.
-	Move deletion of alias vars back to here, from tree-ssa.c
+	Move deletion of alias vars back to here, from tree-ssa.cc
 	* tree-ssa.c (delete_tree_ssa): Remove delete_alias_vars call.
 
 2003-02-25  Jeff Law  <law@redhat.com>
@@ -12776,7 +12776,7 @@
 	gsi_step_in_bb. Also verify BB of new stmt.
 	* tree-dfa.c (compute_immediate_uses, dump_immediate_uses,
 	collect_dfa_stats, compute_may_aliases): Use block_stmt_iterator.
-	* tree-flow-inline.h (gsi_step_in_bb): Moved to tree-cfg.c
+	* tree-flow-inline.h (gsi_step_in_bb): Moved to tree-cfg.cc
 	(bsi_end_p): Renamed from gsi_end_bb_p.
 	(bsi_next): renamed from gsi_step_bb
 	(bsi_prev): New function.

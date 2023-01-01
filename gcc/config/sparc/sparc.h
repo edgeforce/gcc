@@ -1318,7 +1318,7 @@ do {									\
    They give nonzero only if REGNO is a hard reg of the suitable class
    or a pseudo reg currently allocated to a suitable hard reg.
    Since they use reg_renumber, they are safe only once reg_renumber
-   has been allocated, which happens in reginfo.cc during register
+   has been allocated, which happens in reginfo during register
    allocation.  */
 
 #define REGNO_OK_FOR_INDEX_P(REGNO) \
@@ -1362,7 +1362,7 @@ do {									\
 
 /* Try a machine-dependent way of reloading an illegitimate address
    operand.  If we find one, push the reload and jump to WIN.  This
-   macro is used in only one place: `find_reloads_address' in reload.cc.  */
+   macro is used in only one place: `find_reloads_address' in reload.  */
 #define LEGITIMIZE_RELOAD_ADDRESS(X,MODE,OPNUM,TYPE,IND_LEVELS,WIN)	   \
 do {									   \
   int win;								   \

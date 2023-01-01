@@ -214,7 +214,7 @@ package body Lib.Writ is
 
       flag_compare_debug : Int;
       pragma Import (C, flag_compare_debug);
-      --  Import from toplev.c
+      --  Import from toplev.cc
 
       -----------------------
       -- Local Subprograms --

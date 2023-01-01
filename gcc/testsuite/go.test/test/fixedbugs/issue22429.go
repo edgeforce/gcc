@@ -14,5 +14,5 @@ type T struct {
 
 func f(a *[8]T, i,j,k int) float32 {
 	b := *a
-	return b[i].a + b[j].b + b[k].c
+	return b[i].a + b[j].b + b[k].cc
 }

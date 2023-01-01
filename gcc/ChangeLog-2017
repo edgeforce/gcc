@@ -240,7 +240,7 @@
 	_mm512_maskz_shldv_epi64): Don't require avx512bw for these intrinsics.
 	* config/i386/avx512bitalgintrin.h (_mm_bitshuffle_epi64_mask,
 	_mm_mask_bitshuffle_epi64_mask): Likewise.
-	* common/config/i386/i386-common.c
+	* common/config/i386/i386-common.cc
 	(OPTION_MASK_ISA_AVX512VPOPCNTDQ_SET,
 	OPTION_MASK_ISA_AVX512BITALG_SET): Or in OPTION_MASK_ISA_AVX512F_SET.
 	(OPTION_MASK_ISA_AVX512F_UNSET): Or in
@@ -603,7 +603,7 @@
 	* gimple-ssa-strength-reduction.c (restructure_reference): Likewise.
 	* gimple-ssa-warn-restrict.c (builtin_memref::builtin_memref):
 	Likewise.
-	* ipa-polymorphic-call.c
+	* ipa-polymorphic-call.cc
 	(ipa_polymorphic_call_context::ipa_polymorphic_call_context): Likewise.
 	* ipa-prop.c (compute_complex_assign_jump_func): Likewise.
 	(get_ancestor_addr_info): Likewise.
@@ -1236,7 +1236,7 @@
 	* gimple-fold.c (get_base_constructor): Return the offset as a
 	poly_int64_pod rather than a HOST_WIDE_INT.
 	(fold_const_aggregate_ref_1): Track polynomial sizes and offsets.
-	* ipa-polymorphic-call.c
+	* ipa-polymorphic-call.cc
 	(ipa_polymorphic_call_context::set_by_invariant)
 	(extr_type_from_vtbl_ptr_store): Track polynomial offsets.
 	(ipa_polymorphic_call_context::ipa_polymorphic_call_context)
@@ -2320,7 +2320,7 @@
 2017-12-17  Martin Sebor  <msebor@redhat.com>
 
 	PR bootstrap/83446
-	* gimple-ssa-warn-restrict.c
+	* gimple-ssa-warn-restrict.cc
 	(builtin_memref::offset_out_of_bounds): Correct the handling of
 	anti-ranges.
 
@@ -2642,7 +2642,7 @@
 	* tree-ssa-threadupdate.c (uses_in_bb): New.
 	(estimate_threading_killed_stmts): New.
 	* tree-ssa-threadupdate.h (estimate_threading_killed_stmts): Prototype.
-	* tree-ssa-threadedge.c
+	* tree-ssa-threadedge.cc
 	(record_temporary_equivalences_from_stmts_at_dest): Expand limit
 	when its hit.
 
@@ -3009,7 +3009,7 @@
 	* gimple-ssa-evrp-analyze.h (class evrp_range_analyzer): Make
 	push_value_range a public interface.  Add new argument to
 	record_ranges_from_stmt.
-	* gimple-ssa-evrp-analyze.c
+	* gimple-ssa-evrp-analyze.cc
 	(evrp_range_analyzer::record_ranges_from_stmt): Add new argument.
 	Update comments.  Handle recording temporary equivalences.
 	* tree-ssa-dom.c (dom_opt_opt_walker::before_dom_children): Add
@@ -3707,7 +3707,7 @@
 
 	* tree-vector-builder.h
 	(tree_vector_builder::binary_encoded_nelts): Declare.
-	* tree-vector-builder.c
+	* tree-vector-builder.cc
 	(tree_vector_builder::binary_encoded_nelts): New function.
 	* fold-const.c (negate_expr_p): Likewise.
 	(operand_equal_p, fold_checksum_tree): Likewise.
@@ -3750,7 +3750,7 @@
 
 	* tree-vector-builder.h
 	(tree_vector_builder::new_binary_operation): Declare.
-	* tree-vector-builder.c
+	* tree-vector-builder.cc
 	(tree_vector_builder::new_binary_operation): New function.
 	* fold-const.c (fold_relational_const): Use it.
 	(const_binop): Likewise.  Check that both input vectors have
@@ -4239,7 +4239,7 @@
 	(dom_opt_dom_walker::optimize_stmt): Use EVRP ranges to optimize
 	conditionals.
 
-	* gimple-ssa-evrp-analyze.c
+	* gimple-ssa-evrp-analyze.cc
 	(evrp_range_analyzer::extract_range_from_stmt):  Always use
 	vr_values::update_value_range so preexisting range info is
 	medged with new range info, even if the new range is VR_VARYING.
@@ -4305,7 +4305,7 @@
 
 	PR tree-optimization/83170
 	PR tree-optimization/83241
-	* gimple-ssa-store-merging.c
+	* gimple-ssa-store-merging.cc
 	(imm_store_chain_info::try_coalesce_bswap): Update vuse field from
 	gimple_vuse (ins_stmt) in case it has changed.
 	(imm_store_chain_info::output_merged_store): Likewise.
@@ -4498,7 +4498,7 @@
 	* tree-ssa-ccp.c (ccp_finalize): Likewise.
 	* omp-grid.c (grid_process_kernel_body_copy): Likewise.
 	* builtins.c (fold_builtin_3): Likewise.
-	* graphite-scop-detection.c
+	* graphite-scop-detection.cc
 	(scop_detection::stmt_has_simple_data_refs_p): Likewise.
 	* hsa-gen.c (hsa_function_representation::hsa_function_representation):
 	Likewise.
@@ -4796,7 +4796,7 @@
 
 2017-11-28  Jeff Law  <law@redhat.com>
 
-	* gimple-ssa-evrp-analyze.c
+	* gimple-ssa-evrp-analyze.cc
 	(evrp_range_analyzer::record_ranges_from_phis): Only use SCEV to
 	refine ranges if scev_initialized_p returns true.
 	* vr-values.c (vr_values::extract_range_from_phi_node): Likewise.
@@ -5768,7 +5768,7 @@
 2017-11-21  Jakub Jelinek  <jakub@redhat.com>
 
 	PR tree-optimization/83086
-	* gimple-ssa-store-merging.c
+	* gimple-ssa-store-merging.cc
 	(imm_store_chain_info::try_coalesce_bswap): Test this_n.base_addr
 	rather than n.base_addr.
 
@@ -5820,7 +5820,7 @@
 2017-11-21  Jakub Jelinek  <jakub@redhat.com>
 
 	PR tree-optimization/83047
-	* gimple-ssa-store-merging.c
+	* gimple-ssa-store-merging.cc
 	(imm_store_chain_info::output_merged_store): If the loads with the
 	same vuse are in different basic blocks, for load_gsi pick a load
 	location that is dominated by the other loads.
@@ -6200,7 +6200,7 @@
 
 2017-11-17  Luis Machado  <luis.machado@linaro.org>
 
-	* config/aarch64/aarch64.c
+	* config/aarch64/aarch64.cc
 	(qdf24xx_prefetch_tune) <default_opt_level>: Set to -1.
 	(qdf24xx_tunings) <autoprefetcher_model>: Set to
 	tune_params::AUTOPREFETCHER_WEAK.
@@ -6476,7 +6476,7 @@
 
 2017-11-14  Jan Hubicka  <hubicka@ucw.cz>
 
-	* tree-ssa-loop-manip.c
+	* tree-ssa-loop-manip.cc
 	(scale_dominated_blocks_in_loop): Update to profile counts.
 	(tree_transform_and_unroll_loop): Likewise.
 
@@ -6806,7 +6806,7 @@
 	(get_single_symbol): Likewise.
 	(switch_update): Move structure definition here.
 	(to_remove_edges, to_update_switch_stmts): Provide externs.
-	* tree-vrp.c: Move all methods for vr-values class to vr-values.c
+	* tree-vrp.c: Move all methods for vr-values class to vr-values.cc
 	(vrp_val_max, vrp_val_min, vrp_val_is_max): Make externally visible.
 	(vrp_val_is_min, set_value_range): Likewise.
 	(set_and_canonicalize_value_range, copy_value_range): Likewise.
@@ -6834,7 +6834,7 @@
 2017-11-10  Jeff Law  <law@redhat.com>
 
 	* vr-values.h (VR_INITIALIZER): Move #define here.
-	* gimple-ssa-evrp.c: New file with contents extracted from tree-vrp.c
+	* gimple-ssa-evrp.c: New file with contents extracted from tree-vrp.cc
 	* Makefile.in (OBJS): Add tree-evrp.o
 	* tree-vrp.h (assert_info): Move structure definition here.
 	(set_value_range_to_varying): Prototype.
@@ -7205,7 +7205,7 @@
 2017-11-13  Jakub Jelinek  <jakub@redhat.com>
 
 	PR tree-optimization/82954
-	* gimple-ssa-store-merging.c
+	* gimple-ssa-store-merging.cc
 	(imm_store_chain_info::coalesce_immediate_stores): If
 	!infof->ops[N].base_addr, split group if info->ops[N].base_addr.
 
@@ -7378,7 +7378,7 @@
 2017-11-10  Tamar Christina  <tamar.christina@arm.com>
 
 	PR target/82641
-	* config/arm/arm.c
+	* config/arm/arm.cc
 	(arm_option_override): Refactor.
 	(arm_option_reconfigure_globals): New.
 	(arm_options_perform_arch_sanity_checks): New.
@@ -7457,7 +7457,7 @@
 2017-11-10  Jakub Jelinek  <jakub@redhat.com>
 
 	PR bootstrap/82916
-	* gimple-ssa-store-merging.c
+	* gimple-ssa-store-merging.cc
 	(pass_store_merging::terminate_all_aliasing_chains): For
 	gimple_store_p stmts also call refs_output_dependent_p.
 
@@ -7955,7 +7955,7 @@
 2017-11-07  Julia Koval  <julia.koval@intel.com>
 
 	PR target/82812
-	* common/config/i386/i386-common.c
+	* common/config/i386/i386-common.cc
 	(OPTION_MASK_ISA_GENERAL_REGS_ONLY_UNSET): Remove MPX from flag.
 	(ix86_handle_option): Move MPX to isa_flags2 and GFNI to isa_flags.
 	* config/i386/i386-c.c (ix86_target_macros_internal): Ditto.
@@ -8259,7 +8259,7 @@
 2017-11-06  Jakub Jelinek  <jakub@redhat.com>
 
 	PR tree-optimization/82838
-	* gimple-ssa-store-merging.c
+	* gimple-ssa-store-merging.cc
 	(imm_store_chain_info::output_merged_store): Call force_gimple_operand_1
 	on a separate gimple_seq which is then appended to seq.
 
@@ -10794,7 +10794,7 @@
 
 2017-10-20  Richard Biener  <rguenther@suse.de>
 
-	* graphite-isl-ast-to-gimple.c
+	* graphite-isl-ast-to-gimple.cc
 	(translate_isl_ast_to_gimple::graphite_copy_stmts_from_block):
 	Remove return value and simplify, dump copied stmt after lhs
 	adjustment.
@@ -11226,7 +11226,7 @@
 
 2017-10-18  Richard Biener  <rguenther@suse.de>
 
-	* graphite-isl-ast-to-gimple.c
+	* graphite-isl-ast-to-gimple.cc
 	(translate_isl_ast_to_gimple::set_rename): Simplify.
 	(translate_isl_ast_to_gimple::set_rename_for_each_def): Inline...
 	(graphite_copy_stmts_from_block): ... here.
@@ -11393,7 +11393,7 @@
 
 2017-10-17  Richard Biener  <rguenther@suse.de>
 
-	* graphite-scop-detection.c
+	* graphite-scop-detection.cc
 	(scop_detection::stmt_has_simple_data_refs_p): Always use
 	the full nest as region.
 	(try_generate_gimple_bb): Likewise.
@@ -11485,7 +11485,7 @@
 
 2017-10-16  Tamar Christina  <tamar.christina@arm.com>
 
-	* config/aarch64/aarch64-builtins.c
+	* config/aarch64/aarch64-builtins.cc
 	(aarch64_types_quadopu_lane_qualifiers): New.
 	(TYPES_QUADOPU_LANE): New.
 	* config/aarch64/aarch64-simd.md (aarch64_<sur>dot<vsi2qi>): New.
@@ -11662,7 +11662,7 @@
 
 2017-10-13  Richard Biener  <rguenther@suse.de>
 
-	* graphite-isl-ast-to-gimple.c
+	* graphite-isl-ast-to-gimple.cc
 	(translate_isl_ast_to_gimple::get_rename_from_scev): Remove unused
 	parameters and dominance check.
 	(translate_isl_ast_to_gimple::graphite_copy_stmts_from_block): Adjust.
@@ -11780,7 +11780,7 @@
 	the loop tree root.
 	(copy_bb_and_scalar_dependences): Remove premature codegen
 	error on PHIs in blocks duplicated into multiple places.
-	* graphite-scop-detection.c
+	* graphite-scop-detection.cc
 	(scop_detection::stmt_has_simple_data_refs_p): For a loop not
 	in the region use it as loop and nest to analyze the DR in.
 	(try_generate_gimple_bb): Likewise.
@@ -11793,7 +11793,7 @@
 	return the single successor of the entry block.
 	* graphite-isl-ast-to-gimple.c (graphite_regenerate_ast_isl):
 	Reset the SCEV hashtable and niters.
-	* graphite-scop-detection.c
+	* graphite-scop-detection.cc
 	(scop_detection::graphite_can_represent_scev): Add SCOP parameter,
 	assert that we only have POLYNOMIAL_CHREC that vary in loops
 	contained in the region.
@@ -11842,7 +11842,7 @@
 2017-10-13  Richard Biener  <rguenther@suse.de>
 
 	PR tree-optimization/82525
-	* graphite-isl-ast-to-gimple.c
+	* graphite-isl-ast-to-gimple.cc
 	(translate_isl_ast_to_gimple::widest_int_from_isl_expr_int): Split
 	out from ...
 	(translate_isl_ast_to_gimple::gcc_expression_from_isl_expr_int): Here.
@@ -12027,7 +12027,7 @@
 
 2017-10-11  David Edelsohn  <dje.gcc@gmail.com>
 
-	* config/rs6000/rs6000.c
+	* config/rs6000/rs6000.cc
 	(rs6000_xcoff_asm_output_aligned_decl_common): Test for NULL decl.
 
 2017-10-11  Segher Boessenkool  <segher@kernel.crashing.org>
@@ -12393,7 +12393,7 @@
 	* graphite-sese-to-poly.c (tree_int_to_gmp): Likewise.
 	* internal-fn.c (get_min_precision): Likewise.
 	* ipa-cp.c (ipcp_store_vr_results): Likewise.
-	* ipa-polymorphic-call.c
+	* ipa-polymorphic-call.cc
 	(ipa_polymorphic_call_context::ipa_polymorphic_call_context): Likewise.
 	* ipa-prop.c (ipa_print_node_jump_functions_for_edge): Likewise.
 	(ipa_modify_call_arguments): Likewise.
@@ -12455,11 +12455,11 @@
 	* config/bfin/bfin.c (bfin_local_alignment): Likewise.
 	* config/msp430/msp430.c (msp430_attr): Likewise.
 	* config/nds32/nds32.c (nds32_insert_attributes): Likewise.
-	* config/powerpcspe/powerpcspe-c.c
+	* config/powerpcspe/powerpcspe-c.cc
 	(altivec_resolve_overloaded_builtin): Likewise.
 	* config/powerpcspe/powerpcspe.c (rs6000_aggregate_candidate)
 	(rs6000_expand_ternop_builtin): Likewise.
-	* config/rs6000/rs6000-c.c
+	* config/rs6000/rs6000-c.cc
 	(altivec_resolve_overloaded_builtin): Likewise.
 	* config/rs6000/rs6000.c (rs6000_aggregate_candidate): Likewise.
 	(rs6000_expand_ternop_builtin): Likewise.
@@ -13188,7 +13188,7 @@
 	the loop tree root.
 	(copy_bb_and_scalar_dependences): Remove premature codegen
 	error on PHIs in blocks duplicated into multiple places.
-	* graphite-scop-detection.c
+	* graphite-scop-detection.cc
 	(scop_detection::stmt_has_simple_data_refs_p): For a loop not
 	in the region use it as loop and nest to analyze the DR in.
 	(try_generate_gimple_bb): Likewise.
@@ -13303,7 +13303,7 @@
 
 2017-09-29  Richard Biener  <rguenther@suse.de>
 
-	* graphite-isl-ast-to-gimple.c
+	* graphite-isl-ast-to-gimple.cc
 	(translate_isl_ast_to_gimple::set_codegen_error): New function.
 	(binary_op_to_tree): Use it.
 	(get_rename_from_scev): Likewise.
@@ -13354,7 +13354,7 @@
 2017-09-27  Christophe Lyon  <christophe.lyon@linaro.org>
 
 	PR target/71727
-	* config/aarch64/aarch64.c
+	* config/aarch64/aarch64.cc
 	(aarch64_builtin_support_vector_misalignment): Always return false
 	when misalignment is unknown.
 
@@ -14636,7 +14636,7 @@
 
 2017-09-16  Chung-Ju Wu  <jasonwucj@gmail.com>
 
-	* common/config/nds32/nds32-common.c
+	* common/config/nds32/nds32-common.cc
 	(nds32_option_optimization_table): Refine formatting.
 	(nds32_option_optimization_table): Use -fsched-pressure and
 	-fomit-frame-pointer for specific optimization level.
@@ -14687,7 +14687,7 @@
 2017-09-15  Jackson Woodruff  <jackson.woodruff@arm.com>
 
 	PR tree-optimization/71026
-	* match.pd: Move RDIV patterns from fold-const.c
+	* match.pd: Move RDIV patterns from fold-const.cc
 	* fold-const.c (distribute_real_division): Removed.
 	(fold_binary_loc): Remove calls to distribute_real_divison.
 
@@ -14908,7 +14908,7 @@
 	* config/powerpcspe/powerpcspe.h (CANNOT_CHANGE_MODE_CLASS): Delete.
 	* config/powerpcspe/powerpcspe-protos.h
 	(rs6000_cannot_change_mode_class_ptr): Delete.
-	* config/powerpcspe/powerpcspe.c
+	* config/powerpcspe/powerpcspe.cc
 	(rs6000_cannot_change_mode_class_ptr): Delete.
 	(TARGET_CAN_CHANGE_MODE_CLASS): Redefine.
 	(rs6000_option_override_internal): Assign to
@@ -15364,7 +15364,7 @@
 	Delete.
 	* config/powerpcspe/powerpcspe-protos.h
 	(rs6000_secondary_memory_needed_mode): Delete.
-	* config/powerpcspe/powerpcspe.c
+	* config/powerpcspe/powerpcspe.cc
 	(TARGET_SECONDARY_MEMORY_NEEDED_MODE): Redefine.
 	(rs6000_secondary_memory_needed_mode): Make static.
 	* config/rs6000/rs6000.h (SECONDARY_MEMORY_NEEDED_MODE): Delete.
@@ -16247,7 +16247,7 @@
 
 2017-09-06  Richard Biener  <rguenther@suse.de>
 
-	* gimple-ssa-strength-reduction.c
+	* gimple-ssa-strength-reduction.cc
 	(find_candidates_dom_walker::before_dom_children): Also allow
 	pointer types.
 
@@ -16274,7 +16274,7 @@
 
 2017-09-06  Richard Biener  <rguenther@suse.de>
 
-	* gimple-ssa-strength-reduction.c
+	* gimple-ssa-strength-reduction.cc
 	(find_candidates_dom_walker::before_doom_children): Use a
 	type and not a mode check.
 
@@ -16476,10 +16476,10 @@
 	* config/mips/mips.c (mips_function_value_1) Likewise.
 	(mips_block_move_straight): Likewise.
 	(mips_expand_ins_as_unaligned_store): Likewise.
-	* config/powerpcspe/powerpcspe.c
+	* config/powerpcspe/powerpcspe.cc
 	(rs6000_darwin64_record_arg_advance_flush): Likewise.
 	(rs6000_darwin64_record_arg_flush): Likewise.
-	* config/rs6000/rs6000.c
+	* config/rs6000/rs6000.cc
 	(rs6000_darwin64_record_arg_advance_flush): Likewise.
 	(rs6000_darwin64_record_arg_flush): Likewise.
 	* config/sparc/sparc.c (sparc_function_arg_1): Likewise.
@@ -17237,7 +17237,7 @@
 	(TARGET_HARD_REGNO_CALL_PART_CLOBBERED): Redefine.
 	* config/powerpcspe/powerpcspe.h (HARD_REGNO_CALL_PART_CLOBBERED):
 	Delete.
-	* config/powerpcspe/powerpcspe.c
+	* config/powerpcspe/powerpcspe.cc
 	(rs6000_hard_regno_call_part_clobbered): New function.
 	(TARGET_HARD_REGNO_CALL_PART_CLOBBERED): Redefine.
 	* config/rs6000/rs6000.h (HARD_REGNO_CALL_PART_CLOBBERED): Delete.
@@ -19220,7 +19220,7 @@
 	(GET_MODE_UNIT_PRECISION): Use mode_to_unit_precision.
 	(GET_MODE_NUNITS): Use mode_to_nunits.
 	* system.h (ALWAYS_INLINE): New macro.
-	* config/powerpcspe/powerpcspe-c.c
+	* config/powerpcspe/powerpcspe-c.cc
 	(altivec_resolve_overloaded_builtin): Use machine_mode instead of
 	int for arg1_mode and arg2_mode.
 
@@ -19432,7 +19432,7 @@
 	(nvptx_preferred_simd_mode): Likewise.
 	* config/pa/pa.c (pa_secondary_reload): Likewise.
 	* config/pa/predicates.md (base14_operand): Likewise.
-	* config/powerpcspe/powerpcspe-c.c
+	* config/powerpcspe/powerpcspe-c.cc
 	(altivec_resolve_overloaded_builtin): Likewise.
 	* config/powerpcspe/powerpcspe.c (rs6000_setup_reg_addr_masks):
 	Likewise.
@@ -21027,7 +21027,7 @@
 
 	PR middle-end/19706
 	* config/aarch64/aarch64.md (xorsign<mode>3): New optabs.
-	* config/aarch64/aarch64-builtins.c
+	* config/aarch64/aarch64-builtins.cc
 	(aarch64_builtin_vectorized_function): Added CASE_CFN_XORSIGN.
 	* config/aarch64/aarch64-simd-builtins.def: Added xorsign BINOP.
 	* config/aarch64/aarch64-simd.md: Added xorsign<mode>3
@@ -21762,7 +21762,7 @@
 
 2017-08-01  Tamar Christina  <tamar.christina@arm.com>
 
-	* config/aarch64/aarch64.c
+	* config/aarch64/aarch64.cc
 	(aarch64_can_const_movi_rtx_p): Move 0 check.
 
 2017-08-01  Bin Cheng  <bin.cheng@arm.com>
@@ -22027,7 +22027,7 @@
 	use it where we are interested in the element type.
 
 	PR tree-optimization/81603
-	* ipa-polymorphic-call.c
+	* ipa-polymorphic-call.cc
 	(ipa_polymorphic_call_context::ipa_polymorphic_call_context): Perform
 	offset arithmetic in offset_int, bail out if the resulting bit offset
 	doesn't fit into shwi.
@@ -22226,7 +22226,7 @@
 
 2017-07-28  Tamar Christina  <tamar.christina@arm.com>
 
-	* config/aarch64/aarch64.c
+	* config/aarch64/aarch64.cc
 	(aarch64_internal_mov_immediate): Add new special pattern.
 	* config/aarch64/aarch64.md (*movdi_aarch64):
 	Add reg/32bit const mov case.
@@ -22244,7 +22244,7 @@
 
 2017-07-28  Tamar Christina  <tamar.christina@arm.com>
 
-	* config/aarch64/aarch64.c
+	* config/aarch64/aarch64.cc
 	(aarch64_simd_container_mode): Add prototype.
 	(aarch64_expand_mov_immediate): Add HI support.
 	(aarch64_reinterpret_float_as_int, aarch64_float_const_rtx_p: New.
@@ -24156,7 +24156,7 @@
 	* doc/invoke.texi (AVR Options) <-mgas-isr-prologues>: Document it.
 	* config/avr/avr.opt (-mgas-isr-prologues): New option and...
 	(TARGET_GASISR_PROLOGUES): ...target mask.
-	* common/config/avr/avr-common.c
+	* common/config/avr/avr-common.cc
 	(avr_option_optimization_table) [OPT_LEVELS_1_PLUS_NOT_DEBUG]:
 	Set -mgas-isr-prologues.
 	* config/avr/avr-passes.def (avr_pass_pre_proep): Add
@@ -24876,7 +24876,7 @@
 	(ix86_operands_ok_for_move_multiple): Likewise.
 	* config/microblaze/microblaze-protos.h
 	(microblaze_expand_conditional_branch_reg): Likewise.
-	* config/microblaze/microblaze.c
+	* config/microblaze/microblaze.cc
 	(microblaze_expand_conditional_branch_reg): Likewise.
 	* config/powerpcspe/powerpcspe.c (rs6000_init_hard_regno_mode_ok):
 	Likewise.
@@ -26919,7 +26919,7 @@
 
 2017-06-20  David Malcolm  <dmalcolm@redhat.com>
 
-	* diagnostic-show-locus.c
+	* diagnostic-show-locus.cc
 	(selftest::test_fixit_deletion_affecting_newline): New function.
 	(selftest::diagnostic_show_locus_c_tests): Call it.
 
@@ -28065,7 +28065,7 @@
 2017-06-09  Richard Biener  <rguenther@suse.de>
 
 	PR middle-end/81007
-	* ipa-polymorphic-call.c
+	* ipa-polymorphic-call.cc
 	(ipa_polymorphic_call_context::restrict_to_inner_class):
 	Skip FIELD_DECLs with error_mark_node type.
 	* passes.def (all_lowering_passes): Run pass_build_cgraph_edges
@@ -30277,7 +30277,7 @@
 	predicate::or_with, predicate::evaluate, predicate::probability,
 	dump_condition, dump_clause, predicate::dump,
 	predicate::remap_after_duplication, predicate::remap_after_inlining,
-	predicate::stream_in, predicate::stream_out): Move to ipa-predicate.c
+	predicate::stream_in, predicate::stream_out): Move to ipa-predicate.cc
 	(evaluate_conditions_for_known_args): Update.
 	(set_cond_stmt_execution_predicate): Update.
 	* ipa-inline.h: Include ipa-predicate.h
@@ -30563,7 +30563,7 @@
 	(backprop::process_use): Likewise.
 	(backprop::intersect_uses): Likewise.
 	(note_replacement): Likewise.
-	* gimple-ssa-store-merging.c
+	* gimple-ssa-store-merging.cc
 	(pass_store_merging::terminate_all_aliasing_chains): Likewise.
 	(imm_store_chain_info::coalesce_immediate_stores): Likewise.
 	(pass_store_merging::execute): Likewise.
@@ -30891,7 +30891,7 @@
 	call_ms2sysv_pad_in, call_ms2sysv_pad_out and call_ms2sysv_extra_regs.
 	(struct machine_frame_state): New fields sp_realigned and
 	sp_realigned_offset.
-	* config/i386/i386.c
+	* config/i386/i386.cc
 	(enum xlogue_stub): New enum.
 	(enum xlogue_stub_sets): New enum.
 	(class xlogue_layout): New class.
@@ -32506,7 +32506,7 @@
 
 2017-05-02  David Malcolm  <dmalcolm@redhat.com>
 
-	* diagnostic-show-locus.c
+	* diagnostic-show-locus.cc
 	(layout::should_print_annotation_line_p): Make private.
 	(layout::print_annotation_line): Make private.
 	(layout::annotation_line_showed_range_p): Make private.
@@ -34448,7 +34448,7 @@
 	(known_aggs_to_agg_replacement_list): Likewise.
 	* ipa-inline-analysis.c: Likewise.
 	* ipa-inline.h (estimate_edge_time, estimate_edge_hints): Likewise.
-	* ipa-polymorphic-call.c
+	* ipa-polymorphic-call.cc
 	(ipa_polymorphic_call_context::restrict_to_inner_class): Likewise.
 	* loop-unroll.c (analyze_insn_to_expand_var): Likewise.
 	* lra.c (lra_optional_reload_pseudos, lra_subreg_reload_pseudos):
@@ -35167,7 +35167,7 @@
 2017-03-24  Richard Biener  <rguenther@suse.de>
 
 	PR tree-optimization/80167
-	* graphite-isl-ast-to-gimple.c
+	* graphite-isl-ast-to-gimple.cc
 	(translate_isl_ast_to_gimple::is_valid_rename): Handle default-defs
 	properly.
 	(translate_isl_ast_to_gimple::get_rename): Likewise.
@@ -35658,8 +35658,8 @@
 	* tree-ssa-threadedge.c (thread_across_edge): Make static and simplify
 	definition.  Simplify marker handling (do it here).   Assume we always
 	have the available expression and the const/copies tables.
-	(thread_outgoing_edges): New function extracted from tree-ssa-dom.c
-	and tree-vrp.c
+	(thread_outgoing_edges): New function extracted from tree-ssa-dom.cc
+	and tree-vrp.cc
 	* tree-ssa-threadedge.h (thread_outgoing_edges): Declare.
 	* tree-vrp.c (equiv_stack): No longer file scoped.
 	(vrp_dom_walker): New class.
@@ -35730,7 +35730,7 @@
 	(eliminate_redundant_computations): Likewise.
 	(record_equivalences_from_stmt): Likewise.
 	* tree-ssa-scopedtables.c: Include options.h and params.h.
-	(vuse_eq): New function, moved from tree-ssa-dom.c
+	(vuse_eq): New function, moved from tree-ssa-dom.cc
 	(build_and_record_new_cond): Likewise.
 	(record_conditions): Likewise.  Accept vector of conditions rather
 	than edge_equivalence structure for first argument.
@@ -36618,7 +36618,7 @@
 2017-03-01  Martin Sebor  <msebor@redhat.com>
 
 	PR middle-end/79692
-	* gimple-ssa-sprintf.c
+	* gimple-ssa-sprintf.cc
 	(directive::known_width_and_precision): New function.
 	(format_integer): Use it.
 	(get_mpfr_format_length): Consider the full range of precision
@@ -41128,7 +41128,7 @@
 2017-01-06  Edgar E. Iglesias <edgar.iglesias@xilinx.com>
 	    David Holsgrove <david.holsgrove@xilinx.com>
 
-	* common/config/microblaze/microblaze-common.c
+	* common/config/microblaze/microblaze-common.cc
 	(TARGET_EXCEPT_UNWIND_INFO): Remove.
 	* config/microblaze/microblaze-protos.h (microblaze_eh_return):
 	New prototype.
@@ -41344,7 +41344,7 @@
 	(selftest::aarch64_run_selftests): New function.
 	(TARGET_RUN_TARGET_SELFTESTS): Wire it up to
 	selftest::aarch64_run_selftests.
-	* config/i386/i386.c
+	* config/i386/i386.cc
 	(selftest::ix86_test_loading_dump_fragment_1): New function.
 	(selftest::ix86_test_loading_call_insn): New function.
 	(selftest::ix86_test_loading_full_dump): New function.

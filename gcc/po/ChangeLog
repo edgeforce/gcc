@@ -1964,7 +1964,7 @@
 
 Mon Jul  9 13:27:15 2001  Jeffrey A Law  (law@cygnus.com)
 
-	* POTFILES.in: Add ssa-ccp.c
+	* POTFILES.in: Add ssa-ccp.cc
 
 Thu Jun 28 16:11:30 2001  Jeffrey A Law  (law@cygnus.com)
 
@@ -2048,7 +2048,7 @@ Tue Jun 19 08:03:43 2001  Jeffrey A Law  (law@cygnus.com)
 Thu Nov 30 01:28:08 2000  Jeffrey A Law  (law@cygnus.com)
 
 	* POTFILES.in: Move divmod routines from config/mn10200 to config/
-	Add dominance.c
+	Add dominance.cc
 
 2000-11-25  Philipp Thomas  <pthomas@suse.de>
 	* sv.po: New swedish translation file.
@@ -2196,7 +2196,7 @@ Mon Nov 22 23:17:13 1999  Jeffrey A Law  (law@cygnus.com)
 
 Sun Oct 31 17:17:18 1999  Jeffrey A Law  (law@cygnus.com)
 
-	* POTFILES.in: Add simplify-rtx.c
+	* POTFILES.in: Add simplify-rtx.cc
 
 1999-10-23  Manfred Hollstein  <mhollstein@cygnus.com>
 
@@ -4014,7 +4014,7 @@ notice and this notice are preserved.
 
 Mon Jul  9 13:27:15 2001  Jeffrey A Law  (law@cygnus.com)
 
-	* POTFILES.in: Add ssa-ccp.c
+	* POTFILES.in: Add ssa-ccp.cc
 
 Thu Jun 28 16:11:30 2001  Jeffrey A Law  (law@cygnus.com)
 
@@ -4098,7 +4098,7 @@ Tue Jun 19 08:03:43 2001  Jeffrey A Law  (law@cygnus.com)
 Thu Nov 30 01:28:08 2000  Jeffrey A Law  (law@cygnus.com)
 
 	* POTFILES.in: Move divmod routines from config/mn10200 to config/
-	Add dominance.c
+	Add dominance.cc
 
 2000-11-25  Philipp Thomas  <pthomas@suse.de>
 	* sv.po: New swedish translation file.
@@ -4246,7 +4246,7 @@ Mon Nov 22 23:17:13 1999  Jeffrey A Law  (law@cygnus.com)
 
 Sun Oct 31 17:17:18 1999  Jeffrey A Law  (law@cygnus.com)
 
-	* POTFILES.in: Add simplify-rtx.c
+	* POTFILES.in: Add simplify-rtx.cc
 
 1999-10-23  Manfred Hollstein  <mhollstein@cygnus.com>
 

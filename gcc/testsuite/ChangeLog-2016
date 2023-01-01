@@ -663,9 +663,9 @@
 
 	PR preprocessor/78680
 	* gcc.dg/format/pr78680.c: New test case.
-	* gcc.dg/plugin/diagnostic-test-expressions-1.c
+	* gcc.dg/plugin/diagnostic-test-expressions-1.cc
 	(test_multiline_token): New function.
-	* gcc.dg/plugin/diagnostic-test-string-literals-1.c
+	* gcc.dg/plugin/diagnostic-test-string-literals-1.cc
 	(test_backslash_continued_logical_lines): New function.
 
 2016-12-12  Nathan Sidwell  <nathan@acm.org>
@@ -1554,7 +1554,7 @@
 	* gcc.target/aarch64/advsimd-intrinsics/arm-neon-ref.h
 	(AARCH64_ONLY, CHECK_CRYPTO): New macros.
 	(Poly64x1_t, Poly64x2_t): Added types.
-	* gcc.target/aarch64/advsimd-intrinsics/p64_p128.c
+	* gcc.target/aarch64/advsimd-intrinsics/p64_p128.cc
 	(vmov_n_p64, vmovq_n_p64): Added.
 	(vld2_lane_p64, vld2q_lane_p64): Likewise.
 	(vld3_lane_p64, vld3q_lane_p64): Likewise.
@@ -2183,7 +2183,7 @@
 2016-11-21  David Malcolm  <dmalcolm@redhat.com>
 
 	PR preprocessor/78324
-	* gcc.dg/plugin/diagnostic-test-string-literals-1.c
+	* gcc.dg/plugin/diagnostic-test-string-literals-1.cc
 	(test_multitoken_macro): New function.
 	* gcc.dg/plugin/diagnostic-test-string-literals-3.c: New test
 	case.
@@ -2443,7 +2443,7 @@
 
 2016-11-17  David Malcolm  <dmalcolm@redhat.com>
 
-	* gcc.dg/plugin/diagnostic-test-string-literals-1.c
+	* gcc.dg/plugin/diagnostic-test-string-literals-1.cc
 	(test_raw_string_one_liner): New function.
 	(test_raw_string_multiline): New function.
 
@@ -3738,7 +3738,7 @@
 	expected error message.
 	* gcc.target/powerpc/vsu/vec-xst-len-12.c (store_data): Change
 	expected error message.
-	* gcc.target/powerpc/vsu/vec-all-nez-7.c
+	* gcc.target/powerpc/vsu/vec-all-nez-7.cc
 	(test_all_not_equal_and_not_zero): Change expected error message.
 
 2016-10-26  Jakub Jelinek  <jakub@redhat.com>
@@ -5567,7 +5567,7 @@
 2016-09-23  David Malcolm  <dmalcolm@redhat.com>
 
 	PR preprocessor/77672
-	* gcc.dg/plugin/diagnostic-test-string-literals-1.c
+	* gcc.dg/plugin/diagnostic-test-string-literals-1.cc
 	(test_terminator_location): New function.
 
 2016-09-23  Richard Biener  <rguenther@suse.de>
@@ -6325,7 +6325,7 @@
 
 2016-09-13  David Malcolm  <dmalcolm@redhat.com>
 
-	* gcc.dg/plugin/diagnostic_plugin_test_show_locus.c
+	* gcc.dg/plugin/diagnostic_plugin_test_show_locus.cc
 	(test_show_locus): Replace rich_location::add_fixit_insert calls
 	with add_fixit_insert_before and add_fixit_insert_after.
 
@@ -6680,9 +6680,9 @@
 
 2016-08-30  David Malcolm  <dmalcolm@redhat.com>
 
-	* gcc.dg/plugin/diagnostic-test-show-locus-bw.c
+	* gcc.dg/plugin/diagnostic-test-show-locus-bw.cc
 	(test_many_nested_locations): New function.
-	* gcc.dg/plugin/diagnostic_plugin_test_show_locus.c
+	* gcc.dg/plugin/diagnostic_plugin_test_show_locus.cc
 	(test_show_locus): Handle "test_many_nested_locations".
 
 2016-08-30  David Malcolm  <dmalcolm@redhat.com>
@@ -6790,7 +6790,7 @@
 
 2016-08-26  David Malcolm  <dmalcolm@redhat.com>
 
-	* gcc.dg/plugin/diagnostic-test-show-locus-color.c
+	* gcc.dg/plugin/diagnostic-test-show-locus-color.cc
 	(test_fixit_insert): Update expected output.
 	(test_fixit_remove): Likewise.
 	(test_fixit_replace): Likewise.
@@ -7101,7 +7101,7 @@
 
 2016-08-18  David Malcolm  <dmalcolm@redhat.com>
 
-	* gcc.dg/plugin/diagnostic_plugin_test_show_locus.c
+	* gcc.dg/plugin/diagnostic_plugin_test_show_locus.cc
 	(custom_diagnostic_finalizer): Update for change to
 	diagnostic_show_locus.
 
@@ -7192,7 +7192,7 @@
 	(test_field_precision_specifier): New function.
 	(test_embedded_nul): Update expected caret placement.
 	(test_non_contiguous_strings): Update line number.
-	* gcc.dg/plugin/diagnostic-test-string-literals-1.c
+	* gcc.dg/plugin/diagnostic-test-string-literals-1.cc
 	(__emit_string_literal_range): Add "caret_idx" param.
 	(test_simple_string_literal): Add value for new param, updating
 	expected output..
@@ -7209,13 +7209,13 @@
 	(test_U): Likewise.
 	(test_L): Likewise.
 	(test_macro): Add value for new param.
-	* gcc.dg/plugin/diagnostic-test-string-literals-2.c
+	* gcc.dg/plugin/diagnostic-test-string-literals-2.cc
 	(__emit_string_literal_range): Add "caret_idx" param.
 	(test_stringified_token_1): Add value for new param.  Update
 	expected message, from "range" to "location".
 	(test_stringized_token_2): Likewise, adding param to macro.
 	(test_stringified_token_3): Likewise.
-	* gcc.dg/plugin/diagnostic_plugin_test_string_literals.c
+	* gcc.dg/plugin/diagnostic_plugin_test_string_literals.cc
 	(emit_warning): Convert param from source_range to location_t.
 	(test_string_literals): Add caret_idx param, and use it when
 	constructing a substring_loc.  Update error message, from
@@ -8355,7 +8355,7 @@
 	* g++.dg/spellcheck-identifiers-2.C: New test case, based on
 	gcc.dg/spellcheck-identifiers-2.c.
 	* g++.dg/spellcheck-typenames.C: New test case, based on
-	gcc.dg/spellcheck-typenames.c
+	gcc.dg/spellcheck-typenames.cc
 
 2016-07-20  Jonathan Wakely  <jwakely@redhat.com>
 
@@ -9776,17 +9776,17 @@
 
 2016-06-21  Wilco Dijkstra  <wdijkstr@arm.com>
 
-	* gcc.target/aarch64/advsimd-intrinsics/vrnd.c
+	* gcc.target/aarch64/advsimd-intrinsics/vrnd.cc
 	(dg-require-effective-target): Use arm_v8_neon_hw.
-	* gcc.target/aarch64/advsimd-intrinsics/vrnda.c
+	* gcc.target/aarch64/advsimd-intrinsics/vrnda.cc
 	(dg-require-effective-target): Likewise.
-	* gcc.target/aarch64/advsimd-intrinsics/vrndm.c
+	* gcc.target/aarch64/advsimd-intrinsics/vrndm.cc
 	(dg-require-effective-target): Likewise.
-	* gcc.target/aarch64/advsimd-intrinsics/vrndn.c
+	* gcc.target/aarch64/advsimd-intrinsics/vrndn.cc
 	(dg-require-effective-target): Likewise.
-	* gcc.target/aarch64/advsimd-intrinsics/vrndp.c
+	* gcc.target/aarch64/advsimd-intrinsics/vrndp.cc
 	(dg-require-effective-target): Likewise.
-	* gcc.target/aarch64/advsimd-intrinsics/vrndx.c
+	* gcc.target/aarch64/advsimd-intrinsics/vrndx.cc
 	(dg-require-effective-target): Likewise.
 	* lib/target-supports.exp (check_runtime arm_v8_neon_hw_available):
 	Add AArch64 check.
@@ -10411,7 +10411,7 @@
 
 2016-06-08  Alan Lawrence  <alan.lawrence@arm.com>
 
-	* gcc.target/aarch64/aapcs64/aapcs64.exp: Also execute rec_*.c
+	* gcc.target/aarch64/aapcs64/aapcs64.exp: Also execute rec_*.cc
 	* gcc.target/aarch64/aapcs64/rec_align-5.c: New.
 	* gcc.target/aarch64/aapcs64/rec_align-6.c: New.
 	* gcc.target/aarch64/aapcs64/rec_align-7.c: New.
@@ -12252,11 +12252,11 @@
 
 2016-05-10  David Malcolm  <dmalcolm@redhat.com>
 
-	* gcc.dg/plugin/diagnostic-test-show-locus-bw.c
+	* gcc.dg/plugin/diagnostic-test-show-locus-bw.cc
 	(test_very_wide_line): Add ruler to expected output.
-	* gcc.dg/plugin/diagnostic-test-show-locus-color.c
+	* gcc.dg/plugin/diagnostic-test-show-locus-color.cc
 	(test_very_wide_line): Likewise.
-	* gcc.dg/plugin/diagnostic_plugin_test_show_locus.c
+	* gcc.dg/plugin/diagnostic_plugin_test_show_locus.cc
 	(test_show_locus): Within the handling of "test_very_wide_line",
 	enable show_ruler_p on the diagnostic context.
 
@@ -14343,7 +14343,7 @@
 2016-03-18  David Malcolm  <dmalcolm@redhat.com>
 
 	PR c/70281
-	* gcc.dg/plugin/diagnostic-test-expressions-1.c
+	* gcc.dg/plugin/diagnostic-test-expressions-1.cc
 	(test_builtin_types_compatible_p): New test function.
 	* gcc.dg/pr70281.c: New test case.
 
@@ -16496,7 +16496,7 @@
 
 2016-02-02  Wilco Dijkstra  <wdijkstr@arm.com>
 
-	* gcc.target/aarch64/scalar_shift_1.c
+	* gcc.target/aarch64/scalar_shift_1.cc
 	(test_corners_sisd_di): Improve force to SIMD register.
 	(test_corners_sisd_si): Likewise.
 	* gcc.target/aarch64/vect-ld1r-compile-fp.c:
@@ -16863,7 +16863,7 @@
 	* gcc.dg/plugin/diagnostic-test-show-locus-color.c: Update
 	expected multiline output to reflect the colorization being
 	disabled before newlines.
-	* gcc.dg/plugin/diagnostic_plugin_test_show_locus.c
+	* gcc.dg/plugin/diagnostic_plugin_test_show_locus.cc
 	(custom_diagnostic_finalizer): Replace call to
 	pp_newline_and_flush with call to pp_flush.
 	* gcc.dg/unroll-2.c: Add dg-allow-blank-lines-in-output directive.
@@ -17068,9 +17068,9 @@
 2016-01-21  Christian Bruel  <christian.bruel@st.com>
 
 	PR target/68674
-	* gcc.target/i386/pr68674.c
-	* gcc.target/aarch64/pr68674.c
-	* gcc.target/arm/pr68674.c
+	* gcc.target/i386/pr68674.cc
+	* gcc.target/aarch64/pr68674.cc
+	* gcc.target/arm/pr68674.cc
 
 2016-01-22  Kyrylo Tkachov  <kyrylo.tkachov@arm.com>
 

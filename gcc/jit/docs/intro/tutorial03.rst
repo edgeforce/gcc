@@ -370,7 +370,7 @@ install it with `yum install python-xdot`):
 Full example
 ************
 
-   .. literalinclude:: ../examples/tut03-sum-of-squares.c
+   .. literalinclude:: ../examples/tut03-sum-of-squares.cc
     :lines: 1-
     :language: c
 

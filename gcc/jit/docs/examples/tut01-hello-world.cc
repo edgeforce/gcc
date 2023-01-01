@@ -1,4 +1,4 @@
-/* Smoketest example for libgccjit.so C++ API
+/* Smoketest example for libgccjit.so
    Copyright (C) 2014-2016 Free Software Foundation, Inc.
 
 This file is part of GCC.
@@ -17,76 +17,91 @@ You should have received a copy of the GNU General Public License
 along with GCC; see the file COPYING3.  If not see
 <http://www.gnu.org/licenses/>.  */
 
-#include <libgccjit++.h>
+#include <libgccjit.h>
 
 #include <stdlib.h>
 #include <stdio.h>
 
 static void
-create_code (gccjit::context ctxt)
+create_code (gcc_jit_context *ctxt)
 {
-  /* Let's try to inject the equivalent of this C code:
+  /* Let's try to inject the equivalent of:
      void
      greet (const char *name)
      {
         printf ("hello %s\n", name);
      }
   */
-  gccjit::type void_type = ctxt.get_type (GCC_JIT_TYPE_VOID);
-  gccjit::type const_char_ptr_type =
-    ctxt.get_type (GCC_JIT_TYPE_CONST_CHAR_PTR);
-  gccjit::param param_name =
-    ctxt.new_param (const_char_ptr_type, "name");
-  std::vector<gccjit::param> func_params;
-  func_params.push_back (param_name);
-  gccjit::function func =
-    ctxt.new_function (GCC_JIT_FUNCTION_EXPORTED,
-                       void_type,
-                       "greet",
-                       func_params, 0);
+  gcc_jit_type *void_type =
+    gcc_jit_context_get_type (ctxt, GCC_JIT_TYPE_VOID);
+  gcc_jit_type *const_char_ptr_type =
+    gcc_jit_context_get_type (ctxt, GCC_JIT_TYPE_CONST_CHAR_PTR);
+  gcc_jit_param *param_name =
+    gcc_jit_context_new_param (ctxt, NULL, const_char_ptr_type, "name");
+  gcc_jit_function *func =
+    gcc_jit_context_new_function (ctxt, NULL,
+                                  GCC_JIT_FUNCTION_EXPORTED,
+                                  void_type,
+                                  "greet",
+                                  1, &param_name,
+                                  0);
 
-  gccjit::param param_format =
-    ctxt.new_param (const_char_ptr_type, "format");
-  std::vector<gccjit::param> printf_params;
-  printf_params.push_back (param_format);
-  gccjit::function printf_func =
-    ctxt.new_function (GCC_JIT_FUNCTION_IMPORTED,
-                       ctxt.get_type (GCC_JIT_TYPE_INT),
-                       "printf",
-                       printf_params, 1);
+  gcc_jit_param *param_format =
+    gcc_jit_context_new_param (ctxt, NULL, const_char_ptr_type, "format");
+  gcc_jit_function *printf_func =
+    gcc_jit_context_new_function (ctxt, NULL,
+				  GCC_JIT_FUNCTION_IMPORTED,
+				  gcc_jit_context_get_type (
+				     ctxt, GCC_JIT_TYPE_INT),
+				  "printf",
+				  1, &param_format,
+				  1);
+  gcc_jit_rvalue *args[2];
+  args[0] = gcc_jit_context_new_string_literal (ctxt, "hello %s\n");
+  args[1] = gcc_jit_param_as_rvalue (param_name);
 
-  gccjit::block block = func.new_block ();
-  block.add_eval (ctxt.new_call (printf_func,
-                                 ctxt.new_rvalue ("hello %s\n"),
-                                 param_name));
-  block.end_with_return ();
+  gcc_jit_block *block = gcc_jit_function_new_block (func, NULL);
+
+  gcc_jit_block_add_eval (
+    block, NULL,
+    gcc_jit_context_new_call (ctxt,
+                              NULL,
+                              printf_func,
+                              2, args));
+  gcc_jit_block_end_with_void_return (block, NULL);
 }
 
 int
 main (int argc, char **argv)
 {
-  gccjit::context ctxt;
+  gcc_jit_context *ctxt;
   gcc_jit_result *result;
 
   /* Get a "context" object for working with the library.  */
-  ctxt = gccjit::context::acquire ();
+  ctxt = gcc_jit_context_acquire ();
+  if (!ctxt)
+    {
+      fprintf (stderr, "NULL ctxt");
+      exit (1);
+    }
 
   /* Set some options on the context.
-     Turn this on to see the code being generated, in assembler form.  */
-  ctxt.set_bool_option (GCC_JIT_BOOL_OPTION_DUMP_GENERATED_CODE, 0);
+     Let's see the code being generated, in assembler form.  */
+  gcc_jit_context_set_bool_option (
+    ctxt,
+    GCC_JIT_BOOL_OPTION_DUMP_GENERATED_CODE,
+    0);
 
   /* Populate the context.  */
   create_code (ctxt);
 
   /* Compile the code.  */
-  result = ctxt.compile ();
+  result = gcc_jit_context_compile (ctxt);
   if (!result)
     {
       fprintf (stderr, "NULL result");
       exit (1);
     }
-
-  ctxt.release ();
 
   /* Extract the generated code from "result".  */
   typedef void (*fn_type) (const char *);
@@ -102,6 +117,7 @@ main (int argc, char **argv)
   greet ("world");
   fflush (stdout);
 
+  gcc_jit_context_release (ctxt);
   gcc_jit_result_release (result);
   return 0;
 }

@@ -1188,7 +1188,7 @@ Mon Dec 17 17:57:05 CET 2001  Jan Hubicka  <jh@suse.cz>
 	config/mmix/mmix.c, config/mn10200/mn10200.c, config/mn10300/mn10300.c,
 	config/ns32k/ns32k.c, config/pa/pa.c, config/pdp11/pdp11.c,
 	config/sh/sh.c, config/sparc/sparc.c, config/stormy16/stormy16.c,
-	config/v850/v850.c, config/vax/vax.c, config/we32k/we32k.c
+	config/v850/v850.c, config/vax/vax.c, config/we32k/we32k.cc
 	(TARGET_ASM_BYTE_OP, TARGET_ASM_ALIGNED_HI_OP,
 	TARGET_ASM_ALIGNED_SI_OP, TARGET_ASM_ALIGNED_DI_OP,
 	TARGET_ASM_UNALIGNED_HI_OP, TARGET_ASM_UNALIGNED_SI_OP,
@@ -3631,9 +3631,9 @@ Fri Nov 30 08:26:57 2001  Richard Kenner  <kenner@vlsi1.ultra.nyu.edu>
 	(HOST_RTL): Remove hashtab.o safe-ctype.o.
 	(OBJS): Remove splay-tree.o.
 	(gen-protos): Depend on $(HOST_LIBS), not ../libiberty/libiberty.a.
-	(distclean): No need to delete splay-tree.c obstack.c
+	(distclean): No need to delete splay-tree.c obstack.cc
 	hashtab.c safe-ctype.c.
-	(mostlyclean): Delete build copies of print-rtl.c bitmap.c
+	(mostlyclean): Delete build copies of print-rtl.c bitmap.cc
 	errors.c ggc-none.c (all prefixed with $(HOST_PREFIX_1).
 	* aclocal.m4 (gcc_AC_FUNC_VFPRINTF_DOPRNT, gcc_AC_FUNC_STRSTR):
 	Delete.
@@ -4005,7 +4005,7 @@ Tue Nov 27 08:21:47 2001  Richard Kenner  <kenner@vlsi1.ultra.nyu.edu>
 	(lang_independent_f_options, parse_options_and_default_flags,
 	process_options): Remove trailing periods.
 	* Makefile.in: Update.
-objc:	* objc-act.c (objc_post_options, objc_init_options): Use c-common.c
+objc:	* objc-act.c (objc_post_options, objc_init_options): Use c-common.cc
 	functions.
 	(ojbc_init): Update.
 
@@ -5171,8 +5171,8 @@ objc:
 	save_string) :  New functions to implement an include facility
 	in .md files.
 	* gensupport.h : Add prototype for init_md_reader_args.
-	* genattr.c genattrtab.c gencodes.c genconfig.c genemit.c
-	genextract.c genflags.c genopinit.c genoutput.c
+	* genattr.c genattrtab.c gencodes.c genconfig.c genemit.cc
+	genextract.c genflags.c genopinit.c genoutput.cc
 	genpeep.c genrecog.c: Change call to init_md_reader to
 	init_md_reader_args.
 	* md.texi: Document (include "path") and -I directives for RTL
@@ -7242,7 +7242,7 @@ Mon Oct 29 19:22:07 2001  Richard Kenner  <kenner@vlsi1.ultra.nyu.edu>
 
 2001-10-29  Joseph S. Myers  <jsm28@cam.ac.uk>
 
-	* c-parse.in (expr_no_commas, primary), c-typeck.c
+	* c-parse.in (expr_no_commas, primary), c-typeck.cc
 	(parser_build_binary_op): Use IS_EXPR_CODE_CLASS.
 
 2001-10-29  David Edelsohn  <edelsohn@gnu.org>
@@ -9971,7 +9971,7 @@ Tue Sep 25 17:13:56 CEST 2001  Jan Hubicka  <jh@suse.cz>
 	* basic-block.h (alloc_block, alloc_aux_for_block, alloc_aux_for_blocks,
 	free_aux_for_block, alloc_aux_for_edge, alloc_aux_for_edges,
 	free_aux_for_edge): Declare.
-	* cfg.c
+	* cfg.cc
 	(HAVE_return): Undefine.
 	* basic-block.h (alloc_block, alloc_aux_for_block, alloc_aux_for_blocks,
 	free_aux_for_block, alloc_aux_for_edge, alloc_aux_for_edges,
@@ -11661,7 +11661,7 @@ Mon Sep 10 14:21:26 CEST 2001  Jan Hubicka  <jh@suse.cz>
 	commit_edge_insertions, dump_flow_info, debug_flow_info,
 	dump_edge_info, dump_bb, debug_bb, debug_bb_n, print_rtl_with_bb,
 	verify_flow_info, purge_dead_edges, purge_all_dead_edges):
-	Move here from flow.c
+	Move here from flow.cc
 	* cfganal.c: New file.
 	(forwarder_block_p, can_fallthru, mark_critical_edges,
 	 mark_dfs_back_edges, need_fake_edge_p, flow_call_edges_add,
@@ -11672,17 +11672,17 @@ Mon Sep 10 14:21:26 CEST 2001  Jan Hubicka  <jh@suse.cz>
 	 flow_reverse_top_sort_order_compute, flow_depth_first_order_compute,
 	 flow_dfs_compute_reverse_init, flow_dfs-compute_reverse_add_bb,
 	 flow_dfs-compute_reverse_execute, flow_dfs_compute_reverse_finish);
-	Move here from flow.c
+	Move here from flow.cc
 	* cfgbuild.c: New file
 	(count_basic_blocks, find_label_refs, make_label_edge, make_eh_edge,
 	 make_edges, find_basic_blocks_1, find_basic_blocks,
-	 find_sub_basic_blocks): Move here from flow.c
+	 find_sub_basic_blocks): Move here from flow.cc
 	* cfgcleanup.c: New file.
 	(try_simplify_condjump, try_forward_edges, tail_recursion_label_p,
 	 merge_blocks_move_predecessor_nojumps,
 	 merge_blocks_move_successor_nojumps, merge_blocks,
 	 flow_find_cross_jump, outgoing_edges_match, try_crossjump_to_edge,
-	 try_crossjump_bb, try_optimize_cfg): Move here from flow.c
+	 try_crossjump_bb, try_optimize_cfg): Move here from flow.cc
 	(delete_unreachable_blocks, cleanup_cfg): Likewise; return true
 	if succeeded.
 	* cfgloop.c: New file
@@ -11693,7 +11693,7 @@ Mon Sep 10 14:21:26 CEST 2001  Jan Hubicka  <jh@suse.cz>
 	 flow_loop_tree_node_add, flow_loops_tree_build,
 	 flow_loop_level_compute, flow_loops_level_compute, flow_loop_scan,
 	 flow_loops_find, flow_loops_update, flow_loop_outside_edge_p):
-	Move here from flow.c
+	Move here from flow.cc
 	* flow.c: Remove everything moved elsewhere
 	* output.h (cleanup_cfg): Return bool.
 
@@ -18380,7 +18380,7 @@ Mon Jul  9 06:41:07 2001  Richard Kenner  <kenner@vlsi1.ultra.nyu.edu>
 	(absdcl_maybe_attribute, parm, firstparm, myparm): Unify attribute
 	lists that are passed to push_parm_decl.
 	* c-tree.h (start_function, start_decl): Update prototypes.
-	* config/sh/sh-protos.h, config/sh/sh.c
+	* config/sh/sh-protos.h, config/sh/sh.cc
 	(sh_pragma_insert_attributes): Only take a single attributes
 	parameter.
 	* config/sh/sh.h (PRAGMA_INSERT_ATTRIBUTES): Likewise.
@@ -22552,7 +22552,7 @@ Fri May 18 07:26:34 2001  Richard Kenner  <kenner@vlsi1.ultra.nyu.edu>
 
 2001-05-18  Per Bothner  <per@bothner.com>
 
-	Changes needed for java/jvspec.c
+	Changes needed for java/jvspec.cc
 	* gcc.h (n_infiles, outfiles):  Add declarations.
 	* gcc.c (n_infiles, outfiles):  Mske no longer static.
 
@@ -24790,7 +24790,7 @@ Tue Apr 17 21:41:11 2001  Jeffrey A Law  (law@cygnus.com)
 	config/sparc/linux-aout.h: Don't emit .version directive in
 	ASM_FILE_START.
 
-	* config/i386/dgux.c, config/m88k/m88k.c, config/sh/sh.c
+	* config/i386/dgux.c, config/m88k/m88k.c, config/sh/sh.cc
 	(output_file_start): Correct comment.
 
 	* config/i386/osfrose.h: Don't emit trailing .ident directive.
@@ -26237,7 +26237,7 @@ Fri Mar 30 00:21:41 CEST 2001  Jan Hubicka  <jh@suse.cz>
 	* except.c: Rewrite entirely for IA-64 ABI exception handling.
 	* except.h: Likewise.
 
-	* Makefile.in (LIB2ADDEH): Mention unwind-dw2*.c
+	* Makefile.in (LIB2ADDEH): Mention unwind-dw2*.cc
 	(LIB2ADDEHDEP): New.
 	(LIB2FUNCS_EH): Remove.
 	(LIB2ADD): Remove LIB2ADDEH.
@@ -30653,7 +30653,7 @@ Mon Jan 29 20:38:19 2001  Christopher Faylor <cgf@cygnus.com>
 
 	* tree.c, tree.h (build_parse_node): Remove; was identical to
 	build_nt.
-	* c-lang.c (start_cdtor), objc/objc-act.c
+	* c-lang.c (start_cdtor), objc/objc-act.cc
 	(build_module_descriptor): Use build_nt instead of
 	build_parse_node.
 

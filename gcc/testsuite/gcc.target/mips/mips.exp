@@ -462,7 +462,7 @@ proc mips_same_option_p { option1 option2 } {
 proc mips_preprocess { options code ignore_output } {
     global tool
 
-    set src dummy[pid].c
+    set src dummy[pid].cc
     set f [open $src "w"]
     puts $f $code
     close $f

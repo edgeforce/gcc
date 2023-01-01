@@ -1224,7 +1224,7 @@ do {									\
   /* Branch registers.  */						\
   "b0", "b1", "b2", "b3", "b4", "b5", "b6", "b7",			\
   /* Frame pointer.  Application registers.  */				\
-  "sfp", "ar.ccv", "ar.unat", "ar.pfs", "ar.lc", "ar.ec",	\
+  "sfp", "arv", "ar.unat", "ar.pfs", "ar.lc", "ar.ec",	\
 }
 
 /* If defined, a C initializer for an array of structures containing a name and
@@ -1335,7 +1335,7 @@ do {									\
 }
 
 /* If defined, C string expressions to be used for the `%R', `%L', `%U', and
-   `%I' options of `asm_fprintf' (see `final.cc').  */
+   `%I' options of `asm_fprintf' (see `final').  */
 
 #define REGISTER_PREFIX ""
 #define LOCAL_LABEL_PREFIX "."

@@ -263,7 +263,7 @@ proc transform-hex-constant {value} {
 
 proc make-c-test {testcase id operation result conditions op1 {op2 "NONE"}} {
     global directives
-    set filename ${id}.c
+    set filename ${id}.cc
     set outfd [open $filename w]
 
     puts $outfd [c-test-preamble $id]

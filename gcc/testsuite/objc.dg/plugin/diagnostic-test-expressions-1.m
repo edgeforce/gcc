@@ -1,7 +1,7 @@
 /* { dg-do compile } */
 /* { dg-options "-O -fdiagnostics-show-caret -Wno-objc-root-class" } */
 
-/* This file is similar to diagnostic-test-expressions-1.c
+/* This file is similar to diagnostic-test-expressions-1.cc
    (see the notes in that file); this file adds test
    coverage for various Objective C constructs. */
 

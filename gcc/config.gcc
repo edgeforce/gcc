@@ -2265,7 +2265,7 @@ ia64-hp-*vms*)
 	;;
 iq2000*-*-elf*)
         tm_file="elfos.h newlib-stdint.h iq2000/iq2000.h"
-        out_file=iq2000/iq2000.c
+        out_file=iq2000/iq2000.cc
         md_file=iq2000/iq2000.md
         ;;
 lm32-*-elf*)
@@ -3153,7 +3153,7 @@ s390x-*-linux*)
 	cxx_target_objs="${cxx_target_objs} s390-c.o"
 	md_file=s390/s390.md
 	extra_modes=s390/s390-modes.def
-	out_file=s390/s390.c
+	out_file=s390/s390.cc
 	tmake_file="${tmake_file} s390/t-linux64 s390/t-s390"
 	;;
 s390x-ibm-tpf*)
@@ -3163,7 +3163,7 @@ s390x-ibm-tpf*)
 	cxx_target_objs="${cxx_target_objs} s390-c.o"
 	md_file=s390/s390.md
 	extra_modes=s390/s390-modes.def
-	out_file=s390/s390.c
+	out_file=s390/s390.cc
 	thread_file='tpf'
 	extra_options="${extra_options} s390/tpf.opt"
 	tmake_file="${tmake_file} s390/t-s390"
@@ -3495,7 +3495,7 @@ xstormy16-*-elf)
 	tm_file="elfos.h newlib-stdint.h stormy16/stormy16.h"
 	tm_p_file=stormy16/stormy16-protos.h
 	md_file=stormy16/stormy16.md
-	out_file=stormy16/stormy16.c
+	out_file=stormy16/stormy16.cc
 	extra_options=stormy16/stormy16.opt
 	tmake_file="stormy16/t-stormy16"
 	;;

@@ -152,7 +152,7 @@ ASM_MISA_SPEC
 #define MIN_UNITS_PER_WORD 4
 #endif
 
-/* Allows SImode op in builtin overflow pattern, see internal-fn.cc.  */
+/* Allows SImode op in builtin overflow pattern, see internal-fn.  */
 #undef TARGET_MIN_ARITHMETIC_PRECISION
 #define TARGET_MIN_ARITHMETIC_PRECISION riscv_min_arithmetic_precision
 
@@ -1080,7 +1080,7 @@ extern poly_int64 riscv_v_adjust_nunits (enum machine_mode, int);
    offset (an unsigned 5-bit value scaled by 4).  */
 #define CSW_MAX_OFFSET (((4LL << C_S_BITS) - 1) & ~3)
 
-/* Called from RISCV_REORG, this is defined in riscv-sr.cc.  */
+/* Called from RISCV_REORG, this is defined in riscv-sr.  */
 
 extern void riscv_remove_unneeded_save_restore_calls (void);
 

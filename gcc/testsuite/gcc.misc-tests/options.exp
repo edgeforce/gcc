@@ -41,7 +41,7 @@ proc check_for_all_options {language gcc_options compiler_pattern as_pattern ld_
     set fd [open $filename.c w]
     puts $fd "int main (void) \{ return 0; \}"
     close $fd
-    remote_download host $filename.c
+    remote_download host $filename.cc
 
     set test "compiler driver $gcc_options option(s)"
     set gcc_options "\{additional_flags=$gcc_options -v\}"

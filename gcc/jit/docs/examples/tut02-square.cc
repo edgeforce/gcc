@@ -1,4 +1,4 @@
-/* Usage example for libgccjit.so's C++ API
+/* Usage example for libgccjit.so
    Copyright (C) 2014-2016 Free Software Foundation, Inc.
 
 This file is part of GCC.
@@ -17,48 +17,63 @@ You should have received a copy of the GNU General Public License
 along with GCC; see the file COPYING3.  If not see
 <http://www.gnu.org/licenses/>.  */
 
-#include <libgccjit++.h>
+#include <libgccjit.h>
 
 #include <stdlib.h>
 #include <stdio.h>
 
 void
-create_code (gccjit::context ctxt)
+create_code (gcc_jit_context *ctxt)
 {
-  /* Let's try to inject the equivalent of this C code:
+  /* Let's try to inject the equivalent of:
 
       int square (int i)
       {
         return i * i;
       }
   */
-  gccjit::type int_type = ctxt.get_type (GCC_JIT_TYPE_INT);
-  gccjit::param param_i = ctxt.new_param (int_type, "i");
-  std::vector<gccjit::param> params;
-  params.push_back (param_i);
-  gccjit::function func = ctxt.new_function (GCC_JIT_FUNCTION_EXPORTED,
-                                             int_type,
-                                             "square",
-                                             params, 0);
+  gcc_jit_type *int_type =
+    gcc_jit_context_get_type (ctxt, GCC_JIT_TYPE_INT);
+  gcc_jit_param *param_i =
+    gcc_jit_context_new_param (ctxt, NULL, int_type, "i");
+  gcc_jit_function *func =
+    gcc_jit_context_new_function (ctxt, NULL,
+                                  GCC_JIT_FUNCTION_EXPORTED,
+                                  int_type,
+                                  "square",
+                                  1, &param_i,
+                                  0);
 
-  gccjit::block block = func.new_block ();
+  gcc_jit_block *block = gcc_jit_function_new_block (func, NULL);
 
-  gccjit::rvalue expr =
-    ctxt.new_binary_op (GCC_JIT_BINARY_OP_MULT, int_type,
-                        param_i, param_i);
+  gcc_jit_rvalue *expr =
+    gcc_jit_context_new_binary_op (
+      ctxt, NULL,
+      GCC_JIT_BINARY_OP_MULT, int_type,
+      gcc_jit_param_as_rvalue (param_i),
+      gcc_jit_param_as_rvalue (param_i));
 
-  block.end_with_return (expr);
+   gcc_jit_block_end_with_return (block, NULL, expr);
 }
 
 int
 main (int argc, char **argv)
 {
+  gcc_jit_context *ctxt = NULL;
+  gcc_jit_result *result = NULL;
+
   /* Get a "context" object for working with the library.  */
-  gccjit::context ctxt = gccjit::context::acquire ();
+  ctxt = gcc_jit_context_acquire ();
+  if (!ctxt)
+    {
+      fprintf (stderr, "NULL ctxt");
+      goto error;
+    }
 
   /* Set some options on the context.
-     Turn this on to see the code being generated, in assembler form.  */
-  ctxt.set_bool_option (
+     Let's see the code being generated, in assembler form.  */
+  gcc_jit_context_set_bool_option (
+    ctxt,
     GCC_JIT_BOOL_OPTION_DUMP_GENERATED_CODE,
     0);
 
@@ -66,30 +81,33 @@ main (int argc, char **argv)
   create_code (ctxt);
 
   /* Compile the code.  */
-  gcc_jit_result *result = ctxt.compile ();
-
-  /* We're done with the context; we can release it: */
-  ctxt.release ();
-
+  result = gcc_jit_context_compile (ctxt);
   if (!result)
     {
       fprintf (stderr, "NULL result");
-      return 1;
+      goto error;
     }
+
+  /* We're done with the context; we can release it: */
+  gcc_jit_context_release (ctxt);
+  ctxt = NULL;
 
   /* Extract the generated code from "result".  */
   void *fn_ptr = gcc_jit_result_get_code (result, "square");
   if (!fn_ptr)
      {
        fprintf (stderr, "NULL fn_ptr");
-       gcc_jit_result_release (result);
-       return 1;
+       goto error;
      }
 
   typedef int (*fn_type) (int);
   fn_type square = (fn_type)fn_ptr;
   printf ("result: %d\n", square (5));
 
-  gcc_jit_result_release (result);
+ error:
+  if (ctxt)
+    gcc_jit_context_release (ctxt);
+  if (result)
+    gcc_jit_result_release (result);
   return 0;
 }

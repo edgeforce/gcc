@@ -6714,7 +6714,7 @@
 	in-place assignment is to be generated and it can be directly
 	done by the back-end, do not expand the aggregate.
 	* fe.h (Is_Others_Aggregate): Declare.
-	* gcc-interface/trans.c
+	* gcc-interface/trans.cc
 	(gnat_to_gnu) <N_Assignment_Statement>: Add support for an
 	aggregate with a single Others choice on the RHS by means of
 	__builtin_memset.  Tidy up.

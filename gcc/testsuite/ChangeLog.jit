@@ -13,7 +13,7 @@
 2014-10-17  David Malcolm  <dmalcolm@redhat.com>
 
 	* jit.dg/jit.exp (get_path_of_driver): New procedure.
-	(jit-dg-test): Don't unsetenv GCC_EXEC_PREFIX, since jit-playback.c
+	(jit-dg-test): Don't unsetenv GCC_EXEC_PREFIX, since jit-playback.cc
 	now adds -fno-use-linker-plugin to the driver cmdline sidestepping
 	the builddir/installdir libtto_plugin naming issue.
 	When setting up PATH so that the JIT library can invoke the driver
@@ -281,7 +281,7 @@
 	* jit.dg/test-linked-list.c: New selftest, exercising
 	gcc_jit_context_new_opaque_struct, gcc_jit_type_get_pointer, and
 	gcc_jit_context_null.
-	* jit.dg/test-combination.c: Add test-linked-list.c
+	* jit.dg/test-combination.c: Add test-linked-list.cc
 
 2014-02-14  David Malcolm  <dmalcolm@redhat.com>
 
@@ -460,7 +460,7 @@
 	coverage of gcc_jit_rvalue_access_field, but also exercising
 	division of doubles.
 
-	* jit.dg/test-combination.c: Add test-quadratic.c
+	* jit.dg/test-combination.c: Add test-quadratic.cc
 
 	* jit.dg/test-expressions.c: Add TODOs.
 
@@ -521,7 +521,7 @@
 2013-10-18  David Malcolm  <dmalcolm@redhat.com>
 
 	* jit.dg/test-expressions.c: New.
-	* jit.dg/test-combination.c: Add usage of test-expressions.c
+	* jit.dg/test-combination.c: Add usage of test-expressions.cc
 	* jit.dg/test-accessing-struct.c (code_making_callback): Update
 	for changes to field-access API.
 	* jit.dg/test-types.c (code_making_callback): Likewise.

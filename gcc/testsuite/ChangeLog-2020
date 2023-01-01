@@ -3265,9 +3265,9 @@
 	Ditto.
 	* gcc.target/aarch64/sve2/acle/asm/rsqrte_u32.c (rsqrte_u32_x_untied):
 	Ditto.
-	* gcc.target/aarch64/sve2/acle/asm/cvtlt_f32.c
+	* gcc.target/aarch64/sve2/acle/asm/cvtlt_f32.cc
 	(cvtlt_f32_f16_x_untied): Expect a MOV instruction.
-	* gcc.target/aarch64/sve2/acle/asm/cvtlt_f64.c
+	* gcc.target/aarch64/sve2/acle/asm/cvtlt_f64.cc
 	(cvtlt_f64_f32_x_untied): Likewise.
 
 2020-11-25  Jakub Jelinek  <jakub@redhat.com>
@@ -4120,9 +4120,9 @@
 
 2020-11-13  Andrew MacLeod  <amacleod@redhat.com>
 
-	* gcc.dg/tree-ssa/evrp20.c
-	* gcc.dg/tree-ssa/evrp21.c
-	* gcc.dg/tree-ssa/evrp22.c
+	* gcc.dg/tree-ssa/evrp20.cc
+	* gcc.dg/tree-ssa/evrp21.cc
+	* gcc.dg/tree-ssa/evrp22.cc
 
 2020-11-13  Martin Liska  <mliska@suse.cz>
 
@@ -5379,7 +5379,7 @@
 
 2020-11-03  Dennis Zhang  <dennis.zhang@arm.com>
 
-	* gcc.target/aarch64/advsimd-intrinsics/bfcvt-compile.c
+	* gcc.target/aarch64/advsimd-intrinsics/bfcvt-compile.cc
 	(test_vcvt_f32_bf16, test_vcvtq_low_f32_bf16): New tests.
 	(test_vcvtq_high_f32_bf16, test_vcvth_f32_bf16): Likewise.
 
@@ -8574,7 +8574,7 @@
 	* gcc.target/s390/load-and-test-fp-1.c: Change test to include all
 	possible combinations of dead/live registers and comparisons (equality,
 	relational).
-	* gcc.target/s390/load-and-test-fp-2.c: Same as load-and-test-fp-1.c
+	* gcc.target/s390/load-and-test-fp-2.c: Same as load-and-test-fp-1.cc
 	but for fast math.
 	* gcc.target/s390/load-and-test-fp.h: New test included by
 	load-and-test-fp-{1,2}.c.
@@ -10425,7 +10425,7 @@
 	* gcc.dg/analyzer/bzero-1.c: New test.
 	* gcc.dg/analyzer/casts-1.c: New test.
 	* gcc.dg/analyzer/casts-2.c: New test.
-	* gcc.dg/analyzer/compound-assignment-1.c
+	* gcc.dg/analyzer/compound-assignment-1.cc
 	(test_4): Remove xfail from leak false positive.
 	(called_by_test_5a): Add "allocated here" expected message.
 	(called_by_test_5b): Make expected leak message more precise.
@@ -10849,7 +10849,7 @@
 	* gcc.target/bpf/helper-xdp-adjust-meta.c: Likewise.
 	* gcc.target/bpf/helper-xdp-adjust-head.c: Likewise.
 	* gcc.target/bpf/helper-tcp-check-syncookie.c: Likewise.
-	* gcc.target/bpf/helper-sock-ops-cb-flags-set.c
+	* gcc.target/bpf/helper-sock-ops-cb-flags-set.cc
 	* gcc.target/bpf/helper-sysctl-set-new-value.c: Likewise.
 	* gcc.target/bpf/helper-sysctl-get-new-value.c: Likewise.
 	* gcc.target/bpf/helper-sysctl-get-name.c: Likewise.
@@ -18553,7 +18553,7 @@
 
 2020-03-30  David Malcolm  <dmalcolm@redhat.com>
 
-	* jit.dg/all-non-failing-tests.h: Add test-empty.c
+	* jit.dg/all-non-failing-tests.h: Add test-empty.cc
 
 2020-03-30  Jakub Jelinek  <jakub@redhat.com>
 
@@ -25175,7 +25175,7 @@
 
 	* gcc.dg/analyzer/analyzer-verbosity-2a.c: New test.
 	* gcc.dg/analyzer/analyzer-verbosity-3.c: New test, based on
-	analyzer-verbosity-2.c
+	analyzer-verbosity-2.cc
 	* gcc.dg/analyzer/analyzer-verbosity-3a.c: New test.
 	* gcc.dg/analyzer/edges-1.c: New test.
 	* gcc.dg/analyzer/edges-2.c: New test.
@@ -26208,27 +26208,27 @@
 	* gcc.target/aarch64/sve/acle/asm/ldnt1_bf16.c: Likewise.
 	* gcc.target/aarch64/sve/acle/asm/len_bf16.c: Likewise.
 	* gcc.target/aarch64/sve/acle/asm/reinterpret_bf16.c: Likewise.
-	* gcc.target/aarch64/sve/acle/asm/reinterpret_f16.c
+	* gcc.target/aarch64/sve/acle/asm/reinterpret_f16.cc
 	(reinterpret_f16_bf16_tied1, reinterpret_f16_bf16_untied): Likewise.
-	* gcc.target/aarch64/sve/acle/asm/reinterpret_f32.c
+	* gcc.target/aarch64/sve/acle/asm/reinterpret_f32.cc
 	(reinterpret_f32_bf16_tied1, reinterpret_f32_bf16_untied): Likewise.
-	* gcc.target/aarch64/sve/acle/asm/reinterpret_f64.c
+	* gcc.target/aarch64/sve/acle/asm/reinterpret_f64.cc
 	(reinterpret_f64_bf16_tied1, reinterpret_f64_bf16_untied): Likewise.
-	* gcc.target/aarch64/sve/acle/asm/reinterpret_s16.c
+	* gcc.target/aarch64/sve/acle/asm/reinterpret_s16.cc
 	(reinterpret_s16_bf16_tied1, reinterpret_s16_bf16_untied): Likewise.
-	* gcc.target/aarch64/sve/acle/asm/reinterpret_s32.c
+	* gcc.target/aarch64/sve/acle/asm/reinterpret_s32.cc
 	(reinterpret_s32_bf16_tied1, reinterpret_s32_bf16_untied): Likewise.
-	* gcc.target/aarch64/sve/acle/asm/reinterpret_s64.c
+	* gcc.target/aarch64/sve/acle/asm/reinterpret_s64.cc
 	(reinterpret_s64_bf16_tied1, reinterpret_s64_bf16_untied): Likewise.
-	* gcc.target/aarch64/sve/acle/asm/reinterpret_s8.c
+	* gcc.target/aarch64/sve/acle/asm/reinterpret_s8.cc
 	(reinterpret_s8_bf16_tied1, reinterpret_s8_bf16_untied): Likewise.
-	* gcc.target/aarch64/sve/acle/asm/reinterpret_u16.c
+	* gcc.target/aarch64/sve/acle/asm/reinterpret_u16.cc
 	(reinterpret_u16_bf16_tied1, reinterpret_u16_bf16_untied): Likewise.
-	* gcc.target/aarch64/sve/acle/asm/reinterpret_u32.c
+	* gcc.target/aarch64/sve/acle/asm/reinterpret_u32.cc
 	(reinterpret_u32_bf16_tied1, reinterpret_u32_bf16_untied): Likewise.
-	* gcc.target/aarch64/sve/acle/asm/reinterpret_u64.c
+	* gcc.target/aarch64/sve/acle/asm/reinterpret_u64.cc
 	(reinterpret_u64_bf16_tied1, reinterpret_u64_bf16_untied): Likewise.
-	* gcc.target/aarch64/sve/acle/asm/reinterpret_u8.c
+	* gcc.target/aarch64/sve/acle/asm/reinterpret_u8.cc
 	(reinterpret_u8_bf16_tied1, reinterpret_u8_bf16_untied): Likewise.
 	* gcc.target/aarch64/sve/acle/asm/rev_bf16.c: Likewise.
 	* gcc.target/aarch64/sve/acle/asm/sel_bf16.c: Likewise.
@@ -27600,21 +27600,21 @@
 	* gcc.target/aarch64/sve/acle/general-c/load_1.c (f1): Cast to
 	int32_t * rather than int *.
 	* gcc.target/aarch64/sve/acle/general-c/load_2.c (f1): Likewise.
-	* gcc.target/aarch64/sve/acle/general-c/load_gather_sv_1.c
+	* gcc.target/aarch64/sve/acle/general-c/load_gather_sv_1.cc
 	(f1): Likewise.
-	* gcc.target/aarch64/sve/acle/general-c/load_gather_sv_2.c
+	* gcc.target/aarch64/sve/acle/general-c/load_gather_sv_2.cc
 	(f1): Likewise.
-	* gcc.target/aarch64/sve/acle/general-c/load_gather_sv_restricted_1.c
+	* gcc.target/aarch64/sve/acle/general-c/load_gather_sv_restricted_1.cc
 	(f1): Likewise.
-	* gcc.target/aarch64/sve/acle/general-c/load_replicate_1.c
+	* gcc.target/aarch64/sve/acle/general-c/load_replicate_1.cc
 	(f1): Likewise.
 	* gcc.target/aarch64/sve/acle/general-c/store_1.c (f1): Likewise.
 	* gcc.target/aarch64/sve/acle/general-c/store_2.c (f1): Likewise.
-	* gcc.target/aarch64/sve/acle/general-c/store_scatter_index_1.c
+	* gcc.target/aarch64/sve/acle/general-c/store_scatter_index_1.cc
 	(f1): Likewise.
-	* gcc.target/aarch64/sve/acle/general-c/store_scatter_offset_2.c
+	* gcc.target/aarch64/sve/acle/general-c/store_scatter_offset_2.cc
 	(f1): Likewise.
-	* gcc.target/aarch64/sve/acle/general-c/store_scatter_offset_restricted_1.c
+	* gcc.target/aarch64/sve/acle/general-c/store_scatter_offset_restricted_1.cc
 	(f1): Likewise.
 
 2020-01-21  Szabolcs Nagy  <szabolcs.nagy@arm.com>

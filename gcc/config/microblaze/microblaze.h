@@ -21,7 +21,7 @@
 
 /* Standard GCC variables that we reference.  */
 
-/* MicroBlaze external variables defined in microblaze.cc.  */
+/* MicroBlaze external variables defined in microblaze.  */
 
 /* Which pipeline to schedule for.  */
 enum pipeline_type

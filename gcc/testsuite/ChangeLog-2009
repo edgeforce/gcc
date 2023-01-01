@@ -1419,7 +1419,7 @@
 	* g++.dg/plugin/pragma_plugin-test-1.C: new testcase for
 	PLUGIN_PRAGMAS.
 	* g++.dg/plugin/pragma_plugin.c: new test plugin for PLUGIN_PRAGMAS.
-	* g++.dg/plugin/plugin.exp (plugin_test_list): Add pragma_plugin.c
+	* g++.dg/plugin/plugin.exp (plugin_test_list): Add pragma_plugin.cc
 	and pragma_plugin-test-1.C.
 
 2009-11-06  Andrew Pinski  <andrew_pinski@playstation.sony.com>
@@ -4629,44 +4629,44 @@
 
 2009-08-25  Jan Hubicka  <jh@suse.cz>
 
-	* gcc.target/i386/sse5-shift1-vector.c
-	* gcc.target/i386/isa-12.c
-	* gcc.target/i386/isa-12.cgcc.target/i386/isa-12.c
-	* gcc.target/i386/sse5-pcmov2.c
-	* gcc.target/i386/isa-3.c
-	* gcc.target/i386/sse5-shift2-vector.c
-	* gcc.target/i386/isa-7.c
-	* gcc.target/i386/funcspec-2.c
-	* gcc.target/i386/sse5-haddX.c
-	* gcc.target/i386/sse5-hadduX.c
-	* gcc.target/i386/isa-9.c
-	* gcc.target/i386/sse5-maccXX.c
-	* gcc.target/i386/sse5-shift3-vector.c
-	* gcc.target/i386/sse5-msubXX.c
-	* gcc.target/i386/sse5-permpX.c
+	* gcc.target/i386/sse5-shift1-vector.cc
+	* gcc.target/i386/isa-12.cc
+	* gcc.target/i386/isa-12.cgcc.target/i386/isa-12.cc
+	* gcc.target/i386/sse5-pcmov2.cc
+	* gcc.target/i386/isa-3.cc
+	* gcc.target/i386/sse5-shift2-vector.cc
+	* gcc.target/i386/isa-7.cc
+	* gcc.target/i386/funcspec-2.cc
+	* gcc.target/i386/sse5-haddX.cc
+	* gcc.target/i386/sse5-hadduX.cc
+	* gcc.target/i386/isa-9.cc
+	* gcc.target/i386/sse5-maccXX.cc
+	* gcc.target/i386/sse5-shift3-vector.cc
+	* gcc.target/i386/sse5-msubXX.cc
+	* gcc.target/i386/sse5-permpX.cc
 	* gcc.target/i386/sse5-check.h
-	* gcc.target/i386/sse-12.c
-	* gcc.target/i386/sse-11.c
-	* gcc.target/i386/sse-10.c
-	* gcc.target/i386/sse-13.c
-	* gcc.target/i386/sse-14.c
-	* gcc.target/i386/sse-22.c
-	* gcc.target/i386/sse-2.c
-	* gcc.target/i386/sse-13.c
-	* gcc.target/i386/avx-2.c
-	* gcc.target/i386/sse5-rotate1-vector.c
-	* gcc.target/i386/isa-4.c
-	* gcc.target/i386/sse5-hsubX.c
-	* gcc.target/i386/sse5-pcmov.c
-	* gcc.target/i386/sse5-fma.c
-	* gcc.target/i386/isa-8.c
-	* gcc.target/i386/sse5-rotate2-vector.c
-	* gcc.target/i386/sse5-nmaccXX.c
-	* gcc.target/i386/sse5-imul64-vector.c
-	* gcc.target/i386/sse5-nmsubXX.c
-	* gcc.target/i386/sse5-rotate3-vector.c
-	* gcc.target/i386/sse5-fma-vector.c
-	* gcc.target/i386/sse5-imul32widen-vector.c
+	* gcc.target/i386/sse-12.cc
+	* gcc.target/i386/sse-11.cc
+	* gcc.target/i386/sse-10.cc
+	* gcc.target/i386/sse-13.cc
+	* gcc.target/i386/sse-14.cc
+	* gcc.target/i386/sse-22.cc
+	* gcc.target/i386/sse-2.cc
+	* gcc.target/i386/sse-13.cc
+	* gcc.target/i386/avx-2.cc
+	* gcc.target/i386/sse5-rotate1-vector.cc
+	* gcc.target/i386/isa-4.cc
+	* gcc.target/i386/sse5-hsubX.cc
+	* gcc.target/i386/sse5-pcmov.cc
+	* gcc.target/i386/sse5-fma.cc
+	* gcc.target/i386/isa-8.cc
+	* gcc.target/i386/sse5-rotate2-vector.cc
+	* gcc.target/i386/sse5-nmaccXX.cc
+	* gcc.target/i386/sse5-imul64-vector.cc
+	* gcc.target/i386/sse5-nmsubXX.cc
+	* gcc.target/i386/sse5-rotate3-vector.cc
+	* gcc.target/i386/sse5-fma-vector.cc
+	* gcc.target/i386/sse5-imul32widen-vector.cc
 	* gcc.target/i386/sse5-ima-vector.c: Remove SSE5 related testcases.
 
 	* gcc.target/i386/funcspec-8.c: Replace SSE5 by SSE4.
@@ -7174,8 +7174,8 @@
 2009-06-12  Aldy Hernandez  <aldyh@redhat.com>
 
 	* gcc.dg/old-style-prom-3.c: Add column info.
-	* gcc.dg/overflow-warn-1.c
-	* gcc.dg/gomp/pr27415.c
+	* gcc.dg/overflow-warn-1.cc
+	* gcc.dg/gomp/pr27415.cc
 	* gcc.dg/gomp/for-1.c: Same.
 	* gcc.dg/enum-compat-1.c: Same.
 	* gcc.dg/c99-tag-3.c: Same.
@@ -7225,7 +7225,7 @@
 2009-06-12  Andrew Pinski  <andrew_pinski@playstation.sony.com>
 
 	PR tree-opt/38865
-	* gcc.dg/tree-ssa/fre-vce-1.c
+	* gcc.dg/tree-ssa/fre-vce-1.cc
 
 2009-06-12  H.J. Lu  <hongjiu.lu@intel.com>
 
@@ -7314,7 +7314,7 @@
 2009-06-08  Jan Hubicka  <jh@suse.cz>
 
 	PR debug/39834
-	* gcc.dg/torture/pr39834.c
+	* gcc.dg/torture/pr39834.cc
 
 2009-06-08  Jan Hubicka  <jh@suse.cz>
 

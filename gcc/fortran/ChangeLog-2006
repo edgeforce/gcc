@@ -4223,7 +4223,7 @@
 	that character(*) value functions are obsolescent in F95.
 
 	PR fortran/25416
-	* trans-expr.c (gfc_conv_function_call): The above patch to resolve.c
+	* trans-expr.c (gfc_conv_function_call): The above patch to resolve.cc
 	prevents any assumed character length function call from getting here
 	except intrinsics such as SPREAD. In this case, ensure that no
 	segfault occurs from referencing non-existent charlen->length->

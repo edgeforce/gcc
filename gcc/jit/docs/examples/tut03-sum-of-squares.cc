@@ -1,4 +1,4 @@
-/* Usage example for libgccjit.so's C++ API
+/* Usage example for libgccjit.so
    Copyright (C) 2014-2016 Free Software Foundation, Inc.
 
 This file is part of GCC.
@@ -17,13 +17,13 @@ You should have received a copy of the GNU General Public License
 along with GCC; see the file COPYING3.  If not see
 <http://www.gnu.org/licenses/>.  */
 
-#include <libgccjit++.h>
+#include <libgccjit.h>
 
 #include <stdlib.h>
 #include <stdio.h>
 
 void
-create_code (gccjit::context ctxt)
+create_code (gcc_jit_context *ctxt)
 {
   /*
     Simple sum-of-squares, to test conditionals and looping
@@ -38,83 +38,117 @@ create_code (gccjit::context ctxt)
       }
       return sum;
    */
-  gccjit::type the_type = ctxt.get_int_type <int> ();
-  gccjit::type return_type = the_type;
+  gcc_jit_type *the_type =
+    gcc_jit_context_get_type (ctxt, GCC_JIT_TYPE_INT);
+  gcc_jit_type *return_type = the_type;
 
-  gccjit::param n = ctxt.new_param (the_type, "n");
-  std::vector<gccjit::param> params;
-  params.push_back (n);
-  gccjit::function func =
-    ctxt.new_function (GCC_JIT_FUNCTION_EXPORTED,
-                       return_type,
-                       "loop_test",
-                       params, 0);
+  gcc_jit_param *n =
+    gcc_jit_context_new_param (ctxt, NULL, the_type, "n");
+  gcc_jit_param *params[1] = {n};
+  gcc_jit_function *func =
+    gcc_jit_context_new_function (ctxt, NULL,
+				  GCC_JIT_FUNCTION_EXPORTED,
+				  return_type,
+				  "loop_test",
+				  1, params, 0);
 
   /* Build locals:  */
-  gccjit::lvalue i = func.new_local (the_type, "i");
-  gccjit::lvalue sum = func.new_local (the_type, "sum");
+  gcc_jit_lvalue *i =
+    gcc_jit_function_new_local (func, NULL, the_type, "i");
+  gcc_jit_lvalue *sum =
+    gcc_jit_function_new_local (func, NULL, the_type, "sum");
 
-  gccjit::block b_initial = func.new_block ("initial");
-  gccjit::block b_loop_cond = func.new_block ("loop_cond");
-  gccjit::block b_loop_body = func.new_block ("loop_body");
-  gccjit::block b_after_loop = func.new_block ("after_loop");
+  gcc_jit_block *b_initial =
+    gcc_jit_function_new_block (func, "initial");
+  gcc_jit_block *b_loop_cond =
+    gcc_jit_function_new_block (func, "loop_cond");
+  gcc_jit_block *b_loop_body =
+    gcc_jit_function_new_block (func, "loop_body");
+  gcc_jit_block *b_after_loop =
+    gcc_jit_function_new_block (func, "after_loop");
 
   /* sum = 0; */
-  b_initial.add_assignment (sum, ctxt.zero (the_type));
+  gcc_jit_block_add_assignment (
+    b_initial, NULL,
+    sum,
+    gcc_jit_context_zero (ctxt, the_type));
 
   /* i = 0; */
-  b_initial.add_assignment (i, ctxt.zero (the_type));
+  gcc_jit_block_add_assignment (
+    b_initial, NULL,
+    i,
+    gcc_jit_context_zero (ctxt, the_type));
 
-  b_initial.end_with_jump (b_loop_cond);
+  gcc_jit_block_end_with_jump (b_initial, NULL, b_loop_cond);
 
   /* if (i >= n) */
-  b_loop_cond.end_with_conditional (
-    i >= n,
+  gcc_jit_block_end_with_conditional (
+    b_loop_cond, NULL,
+    gcc_jit_context_new_comparison (
+       ctxt, NULL,
+       GCC_JIT_COMPARISON_GE,
+       gcc_jit_lvalue_as_rvalue (i),
+       gcc_jit_param_as_rvalue (n)),
     b_after_loop,
     b_loop_body);
 
   /* sum += i * i */
-  b_loop_body.add_assignment_op (sum,
-                                 GCC_JIT_BINARY_OP_PLUS,
-                                 i * i);
+  gcc_jit_block_add_assignment_op (
+    b_loop_body, NULL,
+    sum,
+    GCC_JIT_BINARY_OP_PLUS,
+    gcc_jit_context_new_binary_op (
+      ctxt, NULL,
+      GCC_JIT_BINARY_OP_MULT, the_type,
+      gcc_jit_lvalue_as_rvalue (i),
+      gcc_jit_lvalue_as_rvalue (i)));
 
   /* i++ */
-  b_loop_body.add_assignment_op (i,
-                                GCC_JIT_BINARY_OP_PLUS,
-                                ctxt.one (the_type));
+  gcc_jit_block_add_assignment_op (
+    b_loop_body, NULL,
+    i,
+    GCC_JIT_BINARY_OP_PLUS,
+    gcc_jit_context_one (ctxt, the_type));
 
-  b_loop_body.end_with_jump (b_loop_cond);
+  gcc_jit_block_end_with_jump (b_loop_body, NULL, b_loop_cond);
 
   /* return sum */
-  b_after_loop.end_with_return (sum);
+  gcc_jit_block_end_with_return (
+    b_after_loop,
+    NULL,
+    gcc_jit_lvalue_as_rvalue (sum));
 }
 
 int
 main (int argc, char **argv)
 {
-  gccjit::context ctxt;
+  gcc_jit_context *ctxt = NULL;
   gcc_jit_result *result = NULL;
 
   /* Get a "context" object for working with the library.  */
-  ctxt = gccjit::context::acquire ();
+  ctxt = gcc_jit_context_acquire ();
+  if (!ctxt)
+    {
+      fprintf (stderr, "NULL ctxt");
+      goto error;
+    }
 
   /* Set some options on the context.
-     Turn this on to see the code being generated, in assembler form.  */
-  ctxt.set_bool_option (GCC_JIT_BOOL_OPTION_DUMP_GENERATED_CODE,
-                        0);
+     Let's see the code being generated, in assembler form.  */
+  gcc_jit_context_set_bool_option (
+    ctxt,
+    GCC_JIT_BOOL_OPTION_DUMP_GENERATED_CODE,
+    0);
 
   /* Populate the context.  */
   create_code (ctxt);
 
   /* Compile the code.  */
-  result = ctxt.compile ();
-
-  ctxt.release ();
-
+  result = gcc_jit_context_compile (ctxt);
   if (!result)
     {
       fprintf (stderr, "NULL result");
-      return 1;
+      goto error;
     }
 
   /* Extract the generated code from "result".  */
@@ -124,14 +158,15 @@ main (int argc, char **argv)
   if (!loop_test)
     {
       fprintf (stderr, "NULL loop_test");
-      gcc_jit_result_release (result);
-      return 1;
+      goto error;
     }
 
   /* Run the generated code.  */
   int val = loop_test (10);
   printf("loop_test returned: %d\n", val);
 
+ error:
+  gcc_jit_context_release (ctxt);
   gcc_jit_result_release (result);
   return 0;
 }

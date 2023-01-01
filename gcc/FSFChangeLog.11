@@ -775,7 +775,7 @@ Tue Nov 18 18:38:41 1997  Paul Eggert  <eggert@twinsun.com>
 	* cexp.y (parse_c_expression):
 	Now takes new arg specifying whether to warn
 	about undefined preprocessor symbols.
-	(warn_undef): Now local and static; independent of warn_undef in cccp.c
+	(warn_undef): Now local and static; independent of warn_undef in cccp.cc
 	(yylex): `register' -> `register int', needed for C9X.
 
 	The following changes are only if TEST_EXP_READER is defined:
@@ -6910,7 +6910,7 @@ Wed Mar 19 16:59:34 1997  Paul Eggert  <eggert@twinsun.com>
 	* cccp.c (output_line_directive): Do not output negative line
 	numbers when analyzing directives like `#line 0'.
 
-	* cexp.y (parse_number, yylex), cccp.c (rescan), cpplib.c
+	* cexp.y (parse_number, yylex), cccp.c (rescan), cpplib.cc
 	(cpp_get_token): Unless -lang-c89 is specified, allow C9X-style
 	hexadecimal floating-point numbers as preprocessor numbers.
 	* cccp.c (c89): New decl.
@@ -13175,7 +13175,7 @@ Fri May 17 08:12:37 1996  Scott Christley <scottc@net-community.com>
  	* Makefile (OBJC_O): Add dependency for nil_method.c.
 
 	* objc/hash.c (hash_is_key_in_hash): New function.
-	* objc/hash.h: Include objc/objc.h here instead of in objc/hash.c
+	* objc/hash.h: Include objc/objc.h here instead of in objc/hash.cc
 	to get BOOL typedef.
 
 Fri May 17 08:01:48 1996  Doug Rupp  (rupp@gnat.com)
@@ -14403,7 +14403,7 @@ Thu Apr  4 12:17:08 1996  Richardg Kenner  (kenner@vlsi1.ultra.nyu.edu)
 
 	* objc/Makefile: Rename thread* to thr*.
 	* objc/thread.c: Rename thread-* to thr-*.
-	* objc/thr-decosf1.c: Renamed from thread-decosf1.c
+	* objc/thr-decosf1.c: Renamed from thread-decosf1.cc
 	* objc/thr-irix.c: Renamed from thread-irix.c.
 	* objc/thr-single.c: Renamed from thread-single.c.
 	* objc/thr-solarius.c: Renamed from thread-solaris.c.

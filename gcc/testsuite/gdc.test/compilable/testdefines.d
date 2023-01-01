@@ -1,4 +1,4 @@
-// EXTRA_FILES: imports/defines.c
+// EXTRA_FILES: imports/defines.cc
 import imports.defines;
 
 static assert(CC == 'c');
