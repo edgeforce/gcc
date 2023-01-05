@@ -1,7 +1,7 @@
 /* Automatic switching between software and hardware IEEE 128-bit
    floating-point emulation for PowerPC.
 
-   Copyright (C) 2016 Free Software Foundation, Inc.
+   Copyright (C) 2016-2022 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
    Contributed by Michael Meissner (meissner@linux.vnet.ibm.com)
    Code is based on the main soft-fp library written by:
@@ -45,239 +45,215 @@
 #error "This module must not be compiled with IEEE 128-bit hardware support"
 #endif
 
-#include <sys/auxv.h>
-
-/* Use the namespace clean version of getauxval.  However, not all versions of
-   sys/auxv.h declare it, so declare it here.  This code is intended to be
-   temporary until a suitable version of __builtin_cpu_supports is added that
-   allows us to tell quickly if the machine supports IEEE 128-bit hardware.  */
-extern unsigned long __getauxval (unsigned long);
-
-static int
-have_ieee_hw_p (void)
-{
-  static int ieee_hw_p = -1;
-
-  if (ieee_hw_p < 0)
-    {
-      char *p = (char *) __getauxval (AT_PLATFORM);
-
-      ieee_hw_p = 0;
-
-      /* Don't use atoi/strtol/strncmp/etc.  These may require the normal
-	 environment to be setup to set errno to 0, and the ifunc resolvers run
-	 before the whole glibc environment is initialized.  */
-      if (p && p[0] == 'p' && p[1] == 'o' && p[2] == 'w' && p[3] == 'e'
-	  && p[4] == 'r')
-	{
-	  long n = 0;
-	  char ch;
-
-	  p += 5;
-	  while ((ch = *p++) >= '0' && (ch <= '9'))
-	    n = (n * 10) + (ch - '0');
-
-	  if (n >= 9)
-	    ieee_hw_p = 1;
-	}
-    }
-
-  return ieee_hw_p;
-}
-
-#define SW_OR_HW(SW, HW) (have_ieee_hw_p () ? HW : SW)
+#define SW_OR_HW(SW, HW) (__builtin_cpu_supports ("ieee128") ? HW : SW)
+#ifdef FLOAT128_HW_INSNS_ISA3_1
+#define SW_OR_HW_ISA3_1(SW, HW) (__builtin_cpu_supports ("arch_3_1") ? HW : SW)
+#endif
 
 /* Resolvers.  */
-
-/* We do not provide ifunc resolvers for __fixkfti, __fixunskfti, __floattikf,
-   and __floatuntikf.  There is no ISA 3.0 instruction that converts between
-   128-bit integer types and 128-bit IEEE floating point, or vice versa.  So
-   use the emulator functions for these conversions.  */
-
-static void *__addkf3_resolve (void);
-static void *__subkf3_resolve (void);
-static void *__mulkf3_resolve (void);
-static void *__divkf3_resolve (void);
-static void *__negkf2_resolve (void);
-static void *__eqkf2_resolve (void);
-static void *__nekf2_resolve (void);
-static void *__gekf2_resolve (void);
-static void *__gtkf2_resolve (void);
-static void *__lekf2_resolve (void);
-static void *__ltkf2_resolve (void);
-static void *__unordkf2_resolve (void);
-static void *__extendsfkf2_resolve (void);
-static void *__extenddfkf2_resolve (void);
-static void *__trunckfsf2_resolve (void);
-static void *__trunckfdf2_resolve (void);
-static void *__fixkfsi_resolve (void);
-static void *__fixkfdi_resolve (void);
-static void *__fixunskfsi_resolve (void);
-static void *__fixunskfdi_resolve (void);
-static void *__floatsikf_resolve (void);
-static void *__floatdikf_resolve (void);
-static void *__floatunsikf_resolve (void);
-static void *__floatundikf_resolve (void);
-static void *__extendkftf2_resolve (void);
-static void *__trunctfkf2_resolve (void);
-
-static void *
+static __typeof__ (__addkf3_sw) *
 __addkf3_resolve (void)
 {
-  return (void *) SW_OR_HW (__addkf3_sw, __addkf3_hw);
+  return SW_OR_HW (__addkf3_sw, __addkf3_hw);
 }
 
-static void *
+static __typeof__ (__subkf3_sw) *
 __subkf3_resolve (void)
 {
-  return (void *) SW_OR_HW (__subkf3_sw, __subkf3_hw);
+  return SW_OR_HW (__subkf3_sw, __subkf3_hw);
 }
 
-static void *
+static __typeof__ (__mulkf3_sw) *
 __mulkf3_resolve (void)
 {
-  return (void *) SW_OR_HW (__mulkf3_sw, __mulkf3_hw);
+  return SW_OR_HW (__mulkf3_sw, __mulkf3_hw);
 }
 
-static void *
+static __typeof__ (__divkf3_sw) *
 __divkf3_resolve (void)
 {
-  return (void *) SW_OR_HW (__divkf3_sw, __divkf3_hw);
+  return SW_OR_HW (__divkf3_sw, __divkf3_hw);
 }
 
-static void *
+static __typeof__ (__negkf2_sw) *
 __negkf2_resolve (void)
 {
-  return (void *) SW_OR_HW (__negkf2_sw, __negkf2_hw);
+  return SW_OR_HW (__negkf2_sw, __negkf2_hw);
 }
 
-static void *
+static __typeof__ (__powikf2_sw) *
+__powikf2_resolve (void)
+{
+  return SW_OR_HW (__powikf2_sw, __powikf2_hw);
+}
+
+static __typeof__ (__floatsikf_sw) *
 __floatsikf_resolve (void)
 {
-  return (void *) SW_OR_HW (__floatsikf_sw, __floatsikf_hw);
+  return SW_OR_HW (__floatsikf_sw, __floatsikf_hw);
 }
 
-static void *
+static __typeof__ (__floatdikf_sw) *
 __floatdikf_resolve (void)
 {
-  return (void *) SW_OR_HW (__floatdikf_sw, __floatdikf_hw);
+  return SW_OR_HW (__floatdikf_sw, __floatdikf_hw);
 }
 
-static void *
+#ifdef FLOAT128_HW_INSNS_ISA3_1
+static __typeof__ (__floattikf_sw) *
+__floattikf_resolve (void)
+{
+  return SW_OR_HW_ISA3_1 (__floattikf_sw, __floattikf_hw);
+}
+
+static __typeof__ (__floatuntikf_sw) *
+__floatuntikf_resolve (void)
+{
+  return SW_OR_HW_ISA3_1 (__floatuntikf_sw, __floatuntikf_hw);
+}
+#endif
+
+static __typeof__ (__floatunsikf_sw) *
 __floatunsikf_resolve (void)
 {
-  return (void *) SW_OR_HW (__floatunsikf_sw, __floatunsikf_hw);
+  return SW_OR_HW (__floatunsikf_sw, __floatunsikf_hw);
 }
 
-static void *
+static __typeof__ (__floatundikf_sw) *
 __floatundikf_resolve (void)
 {
-  return (void *) SW_OR_HW (__floatundikf_sw, __floatundikf_hw);
+  return SW_OR_HW (__floatundikf_sw, __floatundikf_hw);
 }
 
-static void *
+#ifdef FLOAT128_HW_INSNS_ISA3_1
+static __typeof__ (__fixkfti_sw) *
+__fixkfti_resolve (void)
+{
+  return SW_OR_HW_ISA3_1 (__fixkfti_sw, __fixkfti_hw);
+}
+
+static __typeof__ (__fixunskfti_sw) *
+__fixunskfti_resolve (void)
+{
+  return SW_OR_HW_ISA3_1 (__fixunskfti_sw, __fixunskfti_hw);
+}
+#endif
+
+static __typeof__ (__fixkfsi_sw) *
 __fixkfsi_resolve (void)
 {
-  return (void *) SW_OR_HW (__fixkfsi_sw, __fixkfsi_hw);
+  return SW_OR_HW (__fixkfsi_sw, __fixkfsi_hw);
 }
 
-static void *
+static __typeof__ (__fixkfdi_sw) *
 __fixkfdi_resolve (void)
 {
-  return (void *) SW_OR_HW (__fixkfdi_sw, __fixkfdi_hw);
+  return SW_OR_HW (__fixkfdi_sw, __fixkfdi_hw);
 }
 
-static void *
+static __typeof__ (__fixunskfsi_sw) *
 __fixunskfsi_resolve (void)
 {
-  return (void *) SW_OR_HW (__fixunskfsi_sw, __fixunskfsi_hw);
+  return SW_OR_HW (__fixunskfsi_sw, __fixunskfsi_hw);
 }
 
-static void *
+static __typeof__ (__fixunskfdi_sw) *
 __fixunskfdi_resolve (void)
 {
-  return (void *) SW_OR_HW (__fixunskfdi_sw, __fixunskfdi_hw);
+  return SW_OR_HW (__fixunskfdi_sw, __fixunskfdi_hw);
 }
 
-static void *
+static __typeof__ (__extendsfkf2_sw) *
 __extendsfkf2_resolve (void)
 {
-  return (void *) SW_OR_HW (__extendsfkf2_sw, __extendsfkf2_hw);
+  return SW_OR_HW (__extendsfkf2_sw, __extendsfkf2_hw);
 }
 
-static void *
+static __typeof__ (__extenddfkf2_sw) *
 __extenddfkf2_resolve (void)
 {
-  return (void *) SW_OR_HW (__extenddfkf2_sw, __extenddfkf2_hw);
+  return SW_OR_HW (__extenddfkf2_sw, __extenddfkf2_hw);
 }
 
-static void *
+static __typeof__ (__trunckfsf2_sw) *
 __trunckfsf2_resolve (void)
 {
-  return (void *) SW_OR_HW (__trunckfsf2_sw, __trunckfsf2_hw);
+  return SW_OR_HW (__trunckfsf2_sw, __trunckfsf2_hw);
 }
 
-static void *
+static __typeof__ (__trunckfdf2_sw) *
 __trunckfdf2_resolve (void)
 {
   return (void *) SW_OR_HW (__trunckfdf2_sw, __trunckfdf2_hw);
 }
 
-static void *
+static __typeof__ (__extendkftf2_sw) *
 __extendkftf2_resolve (void)
 {
-  return (void *) SW_OR_HW (__extendkftf2_sw, __extendkftf2_hw);
+  return SW_OR_HW (__extendkftf2_sw, __extendkftf2_hw);
 }
 
-static void *
+static __typeof__ (__trunctfkf2_sw) *
 __trunctfkf2_resolve (void)
 {
-  return (void *) SW_OR_HW (__trunctfkf2_sw, __trunctfkf2_hw);
+  return SW_OR_HW (__trunctfkf2_sw, __trunctfkf2_hw);
 }
 
-static void *
+static __typeof__ (__mulkc3_sw) *
+__mulkc3_resolve (void)
+{
+  return SW_OR_HW (__mulkc3_sw, __mulkc3_hw);
+}
+
+static __typeof__ (__divkc3_sw) *
+__divkc3_resolve (void)
+{
+  return SW_OR_HW (__divkc3_sw, __divkc3_hw);
+}
+
+static __typeof__ (__eqkf2_sw) *
 __eqkf2_resolve (void)
 {
-  return (void *) SW_OR_HW (__eqkf2_sw, __eqkf2_hw);
+  return SW_OR_HW (__eqkf2_sw, __eqkf2_hw);
 }
 
-static void *
+static __typeof__ (__gekf2_sw) *
 __gekf2_resolve (void)
 {
-  return (void *) SW_OR_HW (__gekf2_sw, __gekf2_hw);
+  return SW_OR_HW (__gekf2_sw, __gekf2_hw);
 }
 
-static void *
+static __typeof__ (__lekf2_sw) *
 __lekf2_resolve (void)
 {
-  return (void *) SW_OR_HW (__lekf2_sw, __lekf2_hw);
+  return SW_OR_HW (__lekf2_sw, __lekf2_hw);
 }
 
-static void *
+static __typeof__ (__unordkf2_sw) *
 __unordkf2_resolve (void)
 {
-  return (void *) SW_OR_HW (__unordkf2_sw, __unordkf2_hw);
+  return SW_OR_HW (__unordkf2_sw, __unordkf2_hw);
 }
 
 /* Resolve __nekf2, __gtkf2, __ltkf2 like __eqkf2, __gekf2, and __lekf2, since
    the functions return the same values.  */
 
-static void *
+static __typeof__ (__eqkf2_sw) *
 __nekf2_resolve (void)
 {
-  return (void *) SW_OR_HW (__eqkf2_sw, __eqkf2_hw);
+  return SW_OR_HW (__eqkf2_sw, __eqkf2_hw);
 }
 
-static void *
+static __typeof__ (__eqkf2_sw) *
 __gtkf2_resolve (void)
 {
-  return (void *) SW_OR_HW (__gekf2_sw, __gekf2_hw);
+  return SW_OR_HW (__gekf2_sw, __gekf2_hw);
 }
 
-static void *
+static __typeof__ (__eqkf2_sw) *
 __ltkf2_resolve (void)
 {
-  return (void *) SW_OR_HW (__lekf2_sw, __lekf2_hw);
+  return SW_OR_HW (__lekf2_sw, __lekf2_hw);
 }
 
 
@@ -297,6 +273,9 @@ TFtype __divkf3 (TFtype, TFtype)
 
 TFtype __negkf2 (TFtype)
   __attribute__ ((__ifunc__ ("__negkf2_resolve")));
+
+TFtype __powikf2 (TFtype, SItype_ppc)
+  __attribute__ ((__ifunc__ ("__powikf2_resolve")));
 
 CMPtype __eqkf2 (TFtype, TFtype)
   __attribute__ ((__ifunc__ ("__eqkf2_resolve")));
@@ -349,6 +328,20 @@ TFtype __floatsikf (SItype_ppc)
 TFtype __floatdikf (DItype_ppc)
   __attribute__ ((__ifunc__ ("__floatdikf_resolve")));
 
+#ifdef FLOAT128_HW_INSNS_ISA3_1
+TFtype __floattikf (TItype_ppc)
+  __attribute__ ((__ifunc__ ("__floattikf_resolve")));
+
+TFtype __floatuntikf (UTItype_ppc)
+  __attribute__ ((__ifunc__ ("__floatuntikf_resolve")));
+
+TItype_ppc __fixkfti (TFtype)
+  __attribute__ ((__ifunc__ ("__fixkfti_resolve")));
+
+UTItype_ppc __fixunskfti (TFtype)
+  __attribute__ ((__ifunc__ ("__fixunskfti_resolve")));
+#endif
+
 TFtype __floatunsikf (USItype_ppc)
   __attribute__ ((__ifunc__ ("__floatunsikf_resolve")));
 
@@ -360,3 +353,9 @@ IBM128_TYPE __extendkftf2 (TFtype)
 
 TFtype __trunctfkf2 (IBM128_TYPE)
   __attribute__ ((__ifunc__ ("__trunctfkf2_resolve")));
+
+TCtype __mulkc3 (TFtype, TFtype, TFtype, TFtype)
+  __attribute__ ((__ifunc__ ("__mulkc3_resolve")));
+
+TCtype __divkc3 (TFtype, TFtype, TFtype, TFtype)
+  __attribute__ ((__ifunc__ ("__divkc3_resolve")));

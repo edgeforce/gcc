@@ -1,5 +1,5 @@
 /* crtend object for windows32 targets.
-   Copyright (C) 2007-2016 Free Software Foundation, Inc.
+   Copyright (C) 2007-2022 Free Software Foundation, Inc.
 
    Contributed by Danny Smith <dannysmith@users.sourceforge.net>
 
@@ -53,18 +53,13 @@ static EH_FRAME_SECTION_CONST int __FRAME_END__[]
   = { 0 };
 #endif
 
-#if TARGET_USE_JCR_SECTION
-/* Null terminate the .jcr section array.  */
-static void *__JCR_END__[1] 
-   __attribute__ ((used, section(__LIBGCC_JCR_SECTION_NAME__),
-		   aligned(sizeof(void *))))
-   = { 0 };
-#endif
-
 extern void __gcc_register_frame (void); 
 extern void __gcc_deregister_frame (void);
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wprio-ctor-dtor"
 static void register_frame_ctor (void) __attribute__ ((constructor (0)));
+#pragma GCC diagnostic pop
 
 static void
 register_frame_ctor (void)
@@ -73,7 +68,10 @@ register_frame_ctor (void)
 }
 
 #if !DEFAULT_USE_CXA_ATEXIT
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wprio-ctor-dtor"
 static void deregister_frame_dtor (void) __attribute__ ((destructor (0)));
+#pragma GCC diagnostic pop
 
 static void
 deregister_frame_dtor (void)

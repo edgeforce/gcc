@@ -1,5 +1,5 @@
 /* DWARF2 exception handling and frame unwind runtime interface routines.
-   Copyright (C) 1997-2016 Free Software Foundation, Inc.
+   Copyright (C) 1997-2022 Free Software Foundation, Inc.
 
    This file is part of GCC.
 
@@ -36,6 +36,7 @@
 #include "unwind-dw2-fde.h"
 #include "gthr.h"
 #include "unwind-dw2.h"
+#include <stddef.h>
 
 #ifdef HAVE_SYS_SDT_H
 #include <sys/sdt.h>
@@ -136,6 +137,9 @@ struct _Unwind_Context
 #define SIGNAL_FRAME_BIT ((~(_Unwind_Word) 0 >> 1) + 1)
   /* Context which has version/args_size/by_value fields.  */
 #define EXTENDED_CONTEXT_BIT ((~(_Unwind_Word) 0 >> 2) + 1)
+  /* Bit reserved on AArch64, return address has been signed with A or B
+     key.  */
+#define RA_SIGNED_BIT ((~(_Unwind_Word) 0 >> 3) + 1)
   _Unwind_Word flags;
   /* 0 for now, can be increased when further fields are added to
      struct _Unwind_Context.  */
@@ -214,26 +218,34 @@ _Unwind_IsExtendedContext (struct _Unwind_Context *context)
 	  || (context->flags & EXTENDED_CONTEXT_BIT));
 }
 
-/* Get the value of register INDEX as saved in CONTEXT.  */
+/* Get the value of register REGNO as saved in CONTEXT.  */
 
 inline _Unwind_Word
-_Unwind_GetGR (struct _Unwind_Context *context, int index)
+_Unwind_GetGR (struct _Unwind_Context *context, int regno)
 {
-  int size;
+  int size, index;
   _Unwind_Context_Reg_Val val;
 
 #ifdef DWARF_ZERO_REG
-  if (index == DWARF_ZERO_REG)
+  if (regno == DWARF_ZERO_REG)
     return 0;
 #endif
 
-  index = DWARF_REG_TO_UNWIND_COLUMN (index);
+  index = DWARF_REG_TO_UNWIND_COLUMN (regno);
   gcc_assert (index < (int) sizeof(dwarf_reg_size_table));
   size = dwarf_reg_size_table[index];
   val = context->reg[index];
 
   if (_Unwind_IsExtendedContext (context) && context->by_value[index])
     return _Unwind_Get_Unwind_Word (val);
+
+#ifdef DWARF_LAZY_REGISTER_VALUE
+  {
+    _Unwind_Word value;
+    if (DWARF_LAZY_REGISTER_VALUE (regno, &value))
+      return value;
+  }
+#endif
 
   /* This will segfault if the register hasn't been saved.  */
   if (size == sizeof(_Unwind_Ptr))
@@ -492,6 +504,11 @@ extract_cie_info (const struct dwarf_cie *cie, struct _Unwind_Context *context,
 	  fs->signal_frame = 1;
 	  aug += 1;
 	}
+      /* aarch64 B-key pointer authentication.  */
+      else if (aug[0] == 'B')
+	{
+	  aug += 1;
+      }
 
       /* Otherwise we have an unknown augmentation string.
 	 Bail unless we saw a 'z' prefix.  */
@@ -967,7 +984,7 @@ execute_cfa_program (const unsigned char *insn_ptr,
 	  reg = DWARF_REG_TO_UNWIND_COLUMN (reg);
 	  if (UNWIND_COLUMN_IN_RANGE (reg))
 	    {
-	      fs->regs.reg[reg].how = REG_SAVED_OFFSET;
+	      fs->regs.how[reg] = REG_SAVED_OFFSET;
 	      fs->regs.reg[reg].loc.offset = offset;
 	    }
 	}
@@ -976,7 +993,7 @@ execute_cfa_program (const unsigned char *insn_ptr,
 	  reg = insn & 0x3f;
 	  reg = DWARF_REG_TO_UNWIND_COLUMN (reg);
 	  if (UNWIND_COLUMN_IN_RANGE (reg))
-	    fs->regs.reg[reg].how = REG_UNSAVED;
+	    fs->regs.how[reg] = REG_UNSAVED;
 	}
       else switch (insn)
 	{
@@ -1010,7 +1027,7 @@ execute_cfa_program (const unsigned char *insn_ptr,
 	  reg = DWARF_REG_TO_UNWIND_COLUMN (reg);
 	  if (UNWIND_COLUMN_IN_RANGE (reg))
 	    {
-	      fs->regs.reg[reg].how = REG_SAVED_OFFSET;
+	      fs->regs.how[reg] = REG_SAVED_OFFSET;
 	      fs->regs.reg[reg].loc.offset = offset;
 	    }
 	  break;
@@ -1021,21 +1038,21 @@ execute_cfa_program (const unsigned char *insn_ptr,
 	     register was saved somewhere.  */
 	  reg = DWARF_REG_TO_UNWIND_COLUMN (reg);
 	  if (UNWIND_COLUMN_IN_RANGE (reg))
-	    fs->regs.reg[reg].how = REG_UNSAVED;
+	    fs->regs.how[reg] = REG_UNSAVED;
 	  break;
 
 	case DW_CFA_same_value:
 	  insn_ptr = read_uleb128 (insn_ptr, &reg);
 	  reg = DWARF_REG_TO_UNWIND_COLUMN (reg);
 	  if (UNWIND_COLUMN_IN_RANGE (reg))
-	    fs->regs.reg[reg].how = REG_UNSAVED;
+	    fs->regs.how[reg] = REG_UNSAVED;
 	  break;
 
 	case DW_CFA_undefined:
 	  insn_ptr = read_uleb128 (insn_ptr, &reg);
 	  reg = DWARF_REG_TO_UNWIND_COLUMN (reg);
 	  if (UNWIND_COLUMN_IN_RANGE (reg))
-	    fs->regs.reg[reg].how = REG_UNDEFINED;
+	    fs->regs.how[reg] = REG_UNDEFINED;
 	  break;
 
 	case DW_CFA_nop:
@@ -1049,7 +1066,7 @@ execute_cfa_program (const unsigned char *insn_ptr,
 	    reg = DWARF_REG_TO_UNWIND_COLUMN (reg);
 	    if (UNWIND_COLUMN_IN_RANGE (reg))
 	      {
-	        fs->regs.reg[reg].how = REG_SAVED_REG;
+		fs->regs.how[reg] = REG_SAVED_REG;
 	        fs->regs.reg[reg].loc.reg = (_Unwind_Word)reg2;
 	      }
 	  }
@@ -1112,7 +1129,7 @@ execute_cfa_program (const unsigned char *insn_ptr,
 	  reg = DWARF_REG_TO_UNWIND_COLUMN (reg);
 	  if (UNWIND_COLUMN_IN_RANGE (reg))
 	    {
-	      fs->regs.reg[reg].how = REG_SAVED_EXP;
+	      fs->regs.how[reg] = REG_SAVED_EXP;
 	      fs->regs.reg[reg].loc.exp = insn_ptr;
 	    }
 	  insn_ptr = read_uleb128 (insn_ptr, &utmp);
@@ -1127,7 +1144,7 @@ execute_cfa_program (const unsigned char *insn_ptr,
 	  reg = DWARF_REG_TO_UNWIND_COLUMN (reg);
 	  if (UNWIND_COLUMN_IN_RANGE (reg))
 	    {
-	      fs->regs.reg[reg].how = REG_SAVED_OFFSET;
+	      fs->regs.how[reg] = REG_SAVED_OFFSET;
 	      fs->regs.reg[reg].loc.offset = offset;
 	    }
 	  break;
@@ -1155,7 +1172,7 @@ execute_cfa_program (const unsigned char *insn_ptr,
 	  reg = DWARF_REG_TO_UNWIND_COLUMN (reg);
 	  if (UNWIND_COLUMN_IN_RANGE (reg))
 	    {
-	      fs->regs.reg[reg].how = REG_SAVED_VAL_OFFSET;
+	      fs->regs.how[reg] = REG_SAVED_VAL_OFFSET;
 	      fs->regs.reg[reg].loc.offset = offset;
 	    }
 	  break;
@@ -1167,7 +1184,7 @@ execute_cfa_program (const unsigned char *insn_ptr,
 	  reg = DWARF_REG_TO_UNWIND_COLUMN (reg);
 	  if (UNWIND_COLUMN_IN_RANGE (reg))
 	    {
-	      fs->regs.reg[reg].how = REG_SAVED_VAL_OFFSET;
+	      fs->regs.how[reg] = REG_SAVED_VAL_OFFSET;
 	      fs->regs.reg[reg].loc.offset = offset;
 	    }
 	  break;
@@ -1177,7 +1194,7 @@ execute_cfa_program (const unsigned char *insn_ptr,
 	  reg = DWARF_REG_TO_UNWIND_COLUMN (reg);
 	  if (UNWIND_COLUMN_IN_RANGE (reg))
 	    {
-	      fs->regs.reg[reg].how = REG_SAVED_VAL_EXP;
+	      fs->regs.how[reg] = REG_SAVED_VAL_EXP;
 	      fs->regs.reg[reg].loc.exp = insn_ptr;
 	    }
 	  insn_ptr = read_uleb128 (insn_ptr, &utmp);
@@ -1185,13 +1202,21 @@ execute_cfa_program (const unsigned char *insn_ptr,
 	  break;
 
 	case DW_CFA_GNU_window_save:
+#if defined (__aarch64__) && !defined (__ILP32__)
+	  /* This CFA is multiplexed with Sparc.  On AArch64 it's used to toggle
+	     return address signing status.  */
+	  reg = DWARF_REGNUM_AARCH64_RA_STATE;
+	  gcc_assert (fs->regs.how[reg] == REG_UNSAVED);
+	  fs->regs.reg[reg].loc.offset ^= 1;
+#else
 	  /* ??? Hardcoded for SPARC register window configuration.  */
 	  if (__LIBGCC_DWARF_FRAME_REGISTERS__ >= 32)
 	    for (reg = 16; reg < 32; ++reg)
 	      {
-		fs->regs.reg[reg].how = REG_SAVED_OFFSET;
+		fs->regs.how[reg] = REG_SAVED_OFFSET;
 		fs->regs.reg[reg].loc.offset = (reg - 16) * sizeof (void *);
 	      }
+#endif
 	  break;
 
 	case DW_CFA_GNU_args_size:
@@ -1208,7 +1233,7 @@ execute_cfa_program (const unsigned char *insn_ptr,
 	  reg = DWARF_REG_TO_UNWIND_COLUMN (reg);
 	  if (UNWIND_COLUMN_IN_RANGE (reg))
 	    {
-	      fs->regs.reg[reg].how = REG_SAVED_OFFSET;
+	      fs->regs.how[reg] = REG_SAVED_OFFSET;
 	      fs->regs.reg[reg].loc.offset = -offset;
 	    }
 	  break;
@@ -1231,7 +1256,8 @@ uw_frame_state_for (struct _Unwind_Context *context, _Unwind_FrameState *fs)
   const struct dwarf_cie *cie;
   const unsigned char *aug, *insn, *end;
 
-  memset (fs, 0, sizeof (*fs));
+  memset (&fs->regs.how[0], 0,
+	  sizeof (*fs) - offsetof (_Unwind_FrameState, regs.how[0]));
   context->args_size = 0;
   context->lsda = 0;
 
@@ -1331,7 +1357,7 @@ __frame_state_for (void *pc_target, struct frame_state *state_in)
 
   for (reg = 0; reg < PRE_GCC3_DWARF_FRAME_REGISTERS + 1; reg++)
     {
-      state_in->saved[reg] = fs.regs.reg[reg].how;
+      state_in->saved[reg] = fs.regs.how[reg];
       switch (state_in->saved[reg])
 	{
 	case REG_SAVED_REG:
@@ -1429,7 +1455,7 @@ uw_update_context_1 (struct _Unwind_Context *context, _Unwind_FrameState *fs)
 
   /* Compute the addresses of all registers saved in this frame.  */
   for (i = 0; i < __LIBGCC_DWARF_FRAME_REGISTERS__ + 1; ++i)
-    switch (fs->regs.reg[i].how)
+    switch (fs->regs.how[i])
       {
       case REG_UNSAVED:
       case REG_UNDEFINED:
@@ -1507,16 +1533,24 @@ uw_update_context (struct _Unwind_Context *context, _Unwind_FrameState *fs)
      rule is handled like same_value.  The only exception is
      DW_CFA_undefined on retaddr_column which is supposed to
      mark outermost frame in DWARF 3.  */
-  if (fs->regs.reg[DWARF_REG_TO_UNWIND_COLUMN (fs->retaddr_column)].how
+  if (fs->regs.how[DWARF_REG_TO_UNWIND_COLUMN (fs->retaddr_column)]
       == REG_UNDEFINED)
     /* uw_frame_state_for uses context->ra == 0 check to find outermost
        stack frame.  */
     context->ra = 0;
   else
-    /* Compute the return address now, since the return address column
-       can change from frame to frame.  */
-    context->ra = __builtin_extract_return_addr
-      (_Unwind_GetPtr (context, fs->retaddr_column));
+    {
+      /* Compute the return address now, since the return address column
+	 can change from frame to frame.  */
+      void *ret_addr;
+#ifdef MD_DEMANGLE_RETURN_ADDR
+      _Unwind_Word ra = _Unwind_GetGR (context, fs->retaddr_column);
+      ret_addr = MD_DEMANGLE_RETURN_ADDR (context, fs, ra);
+#else
+      ret_addr = _Unwind_GetPtr (context, fs->retaddr_column);
+#endif
+      context->ra = __builtin_extract_return_addr (ret_addr);
+    }
 }
 
 static void
@@ -1610,14 +1644,18 @@ _Unwind_DebugHook (void *cfa __attribute__ ((__unused__)),
 
 /* Install TARGET into CURRENT so that we can return to it.  This is a
    macro because __builtin_eh_return must be invoked in the context of
-   our caller.  */
+   our caller.  FRAMES is a number of frames to be unwind.
+   _Unwind_Frames_Extra is a macro to do additional work during unwinding
+   if needed, for example shadow stack pointer adjustment for Intel CET
+   technology.  */
 
-#define uw_install_context(CURRENT, TARGET)				\
+#define uw_install_context(CURRENT, TARGET, FRAMES)			\
   do									\
     {									\
       long offset = uw_install_context_1 ((CURRENT), (TARGET));		\
       void *handler = __builtin_frob_return_addr ((TARGET)->ra);	\
       _Unwind_DebugHook ((TARGET)->cfa, handler);			\
+      _Unwind_Frames_Extra (FRAMES);					\
       __builtin_eh_return (offset, handler);				\
     }									\
   while (0)
