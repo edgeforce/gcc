@@ -223,7 +223,7 @@
 	(start_preparsed_function): Define and document value of
 	DECL_INITIAL before and after routine.
 	(finish_function): Check DECL_INITIAL invariant.
-	* parser.cc
+	* parser.c
 	(cp_parser_function_definition_from_specifiers_and_declarator):
 	Skip duplicate function definitions.
 

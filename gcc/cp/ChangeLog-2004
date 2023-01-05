@@ -2052,7 +2052,7 @@
 
 	* cp-tree.def: Use tree_code_class enumeration constants
 	instead of code letters.
-	* call.c, class.c, cp-gimplify.c, cp-lang.c, cxx-pretty-print.cc
+	* call.c, class.c, cp-gimplify.c, cp-lang.c, cxx-pretty-print.c
 	* mangle.c, pt.c, semantics.c, tree.c, typeck.c:
 	Update for new tree-class enumeration constants.
 

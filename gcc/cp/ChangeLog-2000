@@ -564,8 +564,8 @@
 
 2000-11-07  Joseph S. Myers  <jsm28@cam.ac.uk>
 
-	* class.c (duplicate_tag_error, build_vtbl_initializer), decl.cc
-	(push_binding_level), error.c (cp_tree_printer), pt.cc
+	* class.c (duplicate_tag_error, build_vtbl_initializer), decl.c
+	(push_binding_level), error.c (cp_tree_printer), pt.c
 	(process_partial_specialization, tsubst_template_arg_vector),
 	search.c (lookup_member): Use memset () instead of bzero ().
 
@@ -592,8 +592,8 @@
 
 2000-11-02  Joseph S. Myers  <jsm28@cam.ac.uk>
 
-	* dump.c (dequeue_and_dump), lex.c (interface_strcmp), method.cc
-	(build_overload_value), repo.c (open_repo_file), xref.cc
+	* dump.c (dequeue_and_dump), lex.c (interface_strcmp), method.c
+	(build_overload_value), repo.c (open_repo_file), xref.c
 	(open_xref_file): Use strchr () and strrchr () instead of index ()
 	and rindex ().
 
@@ -3199,7 +3199,7 @@
 
 2000-06-06  Nathan Sidwell  <nathan@codesourcery.com>
 
-	* exception.cc: (__eh_alloc, __eh_free): Moved to libgcc2.cc
+	* exception.cc: (__eh_alloc, __eh_free): Moved to libgcc2.c
 
 2000-06-05  Jason Merrill  <jason@casey.soma.redhat.com>
 
@@ -4954,7 +4954,7 @@ Wed Apr  5 15:12:18 MET DST 2000  Jan Hubicka  <jh@suse.cz>
 	(dfs_accessible_p): Likewise.
 	(protected_accessible_p): Likewise.
 	(lookup_fnfields_1): Adjust documentation.
-	(dfs_mark_primary_bases): Move to class.cc
+	(dfs_mark_primary_bases): Move to class.c
 	(mark_primary_bases): Likewise.
 	(dfs_vbase_unmark): Remove.
 	(virtual_context): Use BINFO_FOR_VBASE.

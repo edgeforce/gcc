@@ -341,7 +341,7 @@ Sun Nov 27 00:16:21 1994  Jason Merrill  <jason@phydeaux.cygnus.com>
 
 Wed Nov 23 17:59:42 1994  Mike Stump  <mrs@cygnus.com>
 
-	* gxx.gperf, parse.y, lex.h, hash.h, lex.c (init_lex), delc.cc
+	* gxx.gperf, parse.y, lex.h, hash.h, lex.c (init_lex), delc.c
 	(duplicate_decls, grokdeclarator), cp-tree.h: Add support for
 	`explicit'.
 	* cvt.c (convert_to_reference, cp_convert, build_type_conversion_1,
@@ -3677,7 +3677,7 @@ Tue Apr  5 17:48:41 1994  Per Bothner  <bothner@kalessin.cygnus.com>
 
 	Support for implementing vtables with thunks.
 	* tree.def (THUNK_DECL):  New TREE_CODE.
-	* cp-tree.h (FNADDR_FROM_VTABLE_ENTRY), tree.cc
+	* cp-tree.h (FNADDR_FROM_VTABLE_ENTRY), tree.c
 	(fnaddr_from_vtable_entry):  Handle flag_vtable_thunks case.
 	* cp-tree.h (memptr_type):  New variable.
 	* class.c (build_vtable_entry):  Build thunk if necessary.
@@ -5389,9 +5389,9 @@ Tue Jan  4 16:45:51 1994  Kung Hsu  <kung@cirdan.cygnus.com>
 
 Mon Jan  3 22:22:32 1994  Gerald Baumgartner  <gb@cygnus.com>
 
-	* Makefile.in cp-call.c cp-class.c cp-cvt.c cp-decl.c cp-decl2.cc
+	* Makefile.in cp-call.c cp-class.c cp-cvt.c cp-decl.c cp-decl2.c
 	cp-error.c cp-init.c cp-lex.c cp-lex.h cp-method.c cp-parse.y
-	cp-spew.c cp-tree.c cp-tree.h cp-type2.c cp-typeck.c cp-xref.cc
+	cp-spew.c cp-tree.c cp-tree.h cp-type2.c cp-typeck.c cp-xref.c
 	gplus.gperf toplev.c: Incorporated C++ signature extension.
 	* cp-sig.c: New file, contains most of signature processing.
 	* cp-hash.h: Regenerated from gplus.gperf.

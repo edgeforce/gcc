@@ -928,7 +928,7 @@
 	(cxx_binding_clear): Move to name-lookup.c.
 	* name-lookup.c (cxx_scope_find_binding_for_name): Now static.
 	(binding_for_name): Likewise.
-	* decl2.c (is_ancestor): Move to name-lookup.cc
+	* decl2.c (is_ancestor): Move to name-lookup.c
 	(namespace_ancestor): Likewise.
 	(add_using_namespace): Likewise.
 	(ambiguous_decl): Likewise.
@@ -982,7 +982,7 @@
 	(binding_table_find_anon_type): Likewise.
 	(binding_table_reverse_maybe_remap): Likewise.
 	* Make-lang.in (cp/name-lookup.o): Depend on $(DIAGNOSTIC_H)
-	* decl.c (lookup_namespace_name): Move to name-lookup.cc
+	* decl.c (lookup_namespace_name): Move to name-lookup.c
 	(select_decl): Likewise.
 	(unqualified_namespace_lookup): Likewise.
 	(lookup_qualified_name): Likewise.
@@ -2818,7 +2818,7 @@
 
 2003-07-19  Kaveh R. Ghazi  <ghazi@caip.rutgers.edu>
 
-	* call.c class.c decl.c decl2.c g++spec.c lex.c parser.c pt.c rtti.cc
+	* call.c class.c decl.c decl2.c g++spec.c lex.c parser.c pt.c rtti.c
 	semantics.c typeck.c: Remove unnecessary casts.
 
 2003-07-18  Nathan Sidwell  <nathan@codesourcery.com>
@@ -4873,7 +4873,7 @@
 
 2003-04-01  Andrew Pinski  <pinskia@physics.uc.edu>
 
-	* config-lang.in (gtfiles): Add \$(srcdir)/cp/name-lookup.cc
+	* config-lang.in (gtfiles): Add \$(srcdir)/cp/name-lookup.c
 	after \$(srcdir)/cp/name-lookup.h.
 	* name-lookup.c: (cxx_binding_make): Use ggc_alloc_clearedinstead
 	of ggc_alloc.  Include gt-cp-name-lookup.h at the end of the file.
@@ -4933,7 +4933,7 @@
 	* name-lookup.c: New file.
 	* name-lookup.h: Likewise..
 	* decl.c (push_binding): Adjust use cxx_binding_make.
-	(free_bindings): Move to name-lookup.cc
+	(free_bindings): Move to name-lookup.c
 	(pop_binding): Use cxx_binding_free.
 	(binding_for_name): Tidy.
 	* cp-tree.h: Include "name-lookup.h"

@@ -2356,7 +2356,7 @@ Fri Sep 10 10:32:32 1999  Bernd Schmidt  <bernds@cygnus.co.uk>
 	(prep_stmt): New function.
 	(building_stmt_tree): Tweak for safety.
 	* pt.c (tsubst_expr): Use prep_stmt throughout.
-	(add_tree): Move it to semantics.cc
+	(add_tree): Move it to semantics.c
 	* semantics.c (add_tree): Move it here.
 	(finish_expr_stmt_real): New function.
 	(finish_expr_stmt): Use it.
