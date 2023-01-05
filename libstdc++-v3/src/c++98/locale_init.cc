@@ -1,4 +1,4 @@
-// Copyright (C) 1997-2016 Free Software Foundation, Inc.
+// Copyright (C) 1997-2022 Free Software Foundation, Inc.
 //
 // This file is part of the GNU ISO C++ Library.  This library is free
 // software; you can redistribute it and/or modify it under the
@@ -20,6 +20,10 @@
 // see the files COPYING3 and COPYING.RUNTIME respectively.  If not, see
 // <http://www.gnu.org/licenses/>.
 
+#if __cplusplus != 201103L
+# error This file must be compiled as C++11
+#endif
+
 #define _GLIBCXX_USE_CXX11_ABI 1
 #include <clocale>
 #include <cstring>
@@ -27,6 +31,7 @@
 #include <cctype>
 #include <cwctype>     // For towupper, etc.
 #include <locale>
+#include <ext/atomicity.h>
 #include <ext/concurrence.h>
 
 #if _GLIBCXX_USE_DUAL_ABI
@@ -55,10 +60,18 @@ _GLIBCXX_LOC_ID(_ZNSt8messagesIwE2idE);
 #endif
 
 
-namespace 
+namespace
 {
-  const int num_facets = _GLIBCXX_NUM_FACETS + _GLIBCXX_NUM_UNICODE_FACETS
-    + (_GLIBCXX_USE_DUAL_ABI ? _GLIBCXX_NUM_CXX11_FACETS : 0);
+  const int num_facets = (
+      _GLIBCXX_NUM_FACETS + _GLIBCXX_NUM_CXX11_FACETS
+#ifdef _GLIBCXX_LONG_DOUBLE_ALT128_COMPAT
+      + _GLIBCXX_NUM_LBDL_ALT128_FACETS
+#endif
+      )
+#ifdef _GLIBCXX_USE_WCHAR_T
+    * 2
+#endif
+    + _GLIBCXX_NUM_UNICODE_FACETS;
 
   __gnu_cxx::__mutex&
   get_locale_mutex()
@@ -125,7 +138,7 @@ namespace
   typedef char fake_money_get_c[sizeof(money_get<char>)]
   __attribute__ ((aligned(__alignof__(money_get<char>))));
   fake_money_get_c money_get_c;
-  
+
   typedef char fake_money_put_c[sizeof(money_put<char>)]
   __attribute__ ((aligned(__alignof__(money_put<char>))));
   fake_money_put_c money_put_c;
@@ -179,7 +192,7 @@ namespace
   typedef char fake_money_get_w[sizeof(money_get<wchar_t>)]
   __attribute__ ((aligned(__alignof__(money_get<wchar_t>))));
   fake_money_get_w money_get_w;
-  
+
   typedef char fake_money_put_w[sizeof(money_put<wchar_t>)]
   __attribute__ ((aligned(__alignof__(money_put<wchar_t>))));
   fake_money_put_w money_put_w;
@@ -201,7 +214,6 @@ namespace
   fake_messages_w messages_w;
 #endif
 
-#ifdef _GLIBCXX_USE_C99_STDINT_TR1
   typedef char fake_codecvt_c16[sizeof(codecvt<char16_t, char, mbstate_t>)]
   __attribute__ ((aligned(__alignof__(codecvt<char16_t, char, mbstate_t>))));
   fake_codecvt_c16 codecvt_c16;
@@ -209,6 +221,15 @@ namespace
   typedef char fake_codecvt_c32[sizeof(codecvt<char32_t, char, mbstate_t>)]
   __attribute__ ((aligned(__alignof__(codecvt<char32_t, char, mbstate_t>))));
   fake_codecvt_c32 codecvt_c32;
+
+#ifdef _GLIBCXX_USE_CHAR8_T
+  typedef char fake_codecvt_c16_c8[sizeof(codecvt<char16_t, char8_t, mbstate_t>)]
+  __attribute__ ((aligned(__alignof__(codecvt<char16_t, char8_t, mbstate_t>))));
+  fake_codecvt_c16_c8 codecvt_c16_c8;
+
+  typedef char fake_codecvt_c32_c8[sizeof(codecvt<char32_t, char8_t, mbstate_t>)]
+  __attribute__ ((aligned(__alignof__(codecvt<char32_t, char8_t, mbstate_t>))));
+  fake_codecvt_c32_c8 codecvt_c32_c8;
 #endif
 
   // Storage for "C" locale caches.
@@ -246,7 +267,7 @@ namespace std _GLIBCXX_VISIBILITY(default)
 _GLIBCXX_BEGIN_NAMESPACE_VERSION
 
   locale::locale() throw() : _M_impl(0)
-  { 
+  {
     _S_initialize();
 
     // Checked locking to optimize the common case where _S_global
@@ -259,9 +280,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
     //   fall back to lock protected access to both _S_global and
     //   its reference count.
     _M_impl = _S_global;
-    if (_M_impl == _S_classic)
-      _M_impl->_M_add_reference();
-    else
+    if (_M_impl != _S_classic)
       {
         __gnu_cxx::__scoped_lock sentry(get_locale_mutex());
         _S_global->_M_add_reference();
@@ -277,7 +296,8 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
     {
       __gnu_cxx::__scoped_lock sentry(get_locale_mutex());
       __old = _S_global;
-      __other._M_impl->_M_add_reference();
+      if (__other._M_impl != _S_classic)
+	__other._M_impl->_M_add_reference();
       _S_global = __other._M_impl;
       const string __other_name = __other.name();
       if (__other_name != "*")
@@ -286,7 +306,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 
     // Reference count sanity check: one reference removed for the
     // subsition of __other locale, one added by return-by-value. Net
-    // difference: zero. When the returned locale object's destrutor
+    // difference: zero. When the returned locale object's destructor
     // is called, then the reference count is decremented and possibly
     // destroyed.
     return locale(__old);
@@ -294,28 +314,35 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 
   const locale&
   locale::classic()
-  { 
+  {
     _S_initialize();
-    return *(new (&c_locale) locale(_S_classic));
+    return *(const locale*)c_locale;
   }
 
   void
   locale::_S_initialize_once() throw()
   {
+    // Need to check this because we could get called once from _S_initialize()
+    // when the program is single-threaded, and then again (via __gthread_once)
+    // when it's multi-threaded.
+    if (_S_classic)
+      return;
+
     // 2 references.
     // One reference for _S_classic, one for _S_global
     _S_classic = new (&c_locale_impl) _Impl(2);
-    _S_global = _S_classic; 	    
+    _S_global = _S_classic;
+    new (&c_locale) locale(_S_classic);
   }
 
-  void  
+  void
   locale::_S_initialize()
   {
 #ifdef __GTHREADS
-    if (__gthread_active_p())
+    if (!__gnu_cxx::__is_single_threaded())
       __gthread_once(&_S_once, _S_initialize_once);
 #endif
-    if (!_S_classic)
+    if (__builtin_expect(!_S_classic, 0))
       _S_initialize_once();
   }
 
@@ -323,15 +350,19 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
   const locale::id* const
   locale::_Impl::_S_id_ctype[] =
   {
-    &std::ctype<char>::id, 
+    &std::ctype<char>::id,
     &codecvt<char, char, mbstate_t>::id,
 #ifdef _GLIBCXX_USE_WCHAR_T
     &std::ctype<wchar_t>::id,
     &codecvt<wchar_t, char, mbstate_t>::id,
 #endif
-#ifdef _GLIBCXX_USE_C99_STDINT_TR1
+#if _GLIBCXX_NUM_UNICODE_FACETS != 0
     &codecvt<char16_t, char, mbstate_t>::id,
     &codecvt<char32_t, char, mbstate_t>::id,
+#ifdef _GLIBCXX_USE_CHAR8_T
+    &codecvt<char16_t, char8_t, mbstate_t>::id,
+    &codecvt<char32_t, char8_t, mbstate_t>::id,
+#endif
 #endif
     0
   };
@@ -339,9 +370,9 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
   const locale::id* const
   locale::_Impl::_S_id_numeric[] =
   {
-    &num_get<char>::id,  
-    &num_put<char>::id,  
-    &numpunct<char>::id, 
+    &num_get<char>::id,
+    &num_put<char>::id,
+    &numpunct<char>::id,
 #ifdef _GLIBCXX_USE_WCHAR_T
     &num_get<wchar_t>::id,
     &num_put<wchar_t>::id,
@@ -349,7 +380,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 #endif
     0
   };
-  
+
   const locale::id* const
   locale::_Impl::_S_id_collate[] =
   {
@@ -363,24 +394,24 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
   const locale::id* const
   locale::_Impl::_S_id_time[] =
   {
-    &__timepunct<char>::id, 
-    &time_get<char>::id, 
-    &time_put<char>::id, 
+    &__timepunct<char>::id,
+    &time_get<char>::id,
+    &time_put<char>::id,
 #ifdef _GLIBCXX_USE_WCHAR_T
-    &__timepunct<wchar_t>::id, 
+    &__timepunct<wchar_t>::id,
     &time_get<wchar_t>::id,
     &time_put<wchar_t>::id,
 #endif
     0
   };
-  
+
   const locale::id* const
   locale::_Impl::_S_id_monetary[] =
   {
-    &money_get<char>::id,        
-    &money_put<char>::id,        
-    &moneypunct<char, false>::id, 
-    &moneypunct<char, true >::id, 
+    &money_get<char>::id,
+    &money_put<char>::id,
+    &moneypunct<char, false>::id,
+    &moneypunct<char, true >::id,
 #ifdef _GLIBCXX_USE_WCHAR_T
     &money_get<wchar_t>::id,
     &money_put<wchar_t>::id,
@@ -393,7 +424,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
   const locale::id* const
   locale::_Impl::_S_id_messages[] =
   {
-    &std::messages<char>::id, 
+    &std::messages<char>::id,
 #ifdef _GLIBCXX_USE_WCHAR_T
     &std::messages<wchar_t>::id,
 #endif
@@ -457,9 +488,9 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 
   // Construct "C" _Impl.
   locale::_Impl::
-  _Impl(size_t __refs) throw() 
+  _Impl(size_t __refs) throw()
   : _M_refcount(__refs), _M_facets(0), _M_facets_size(num_facets),
-  _M_caches(0), _M_names(0)    
+  _M_caches(0), _M_names(0)
   {
     _M_facets = new (&facet_vec) const facet*[_M_facets_size]();
     _M_caches = new (&cache_vec) const facet*[_M_facets_size]();
@@ -503,7 +534,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 
     _M_init_facet(new (&time_get_c) time_get<char>(1));
     _M_init_facet(new (&time_put_c) time_put<char>(1));
-    _M_init_facet(new (&messages_c) std::messages<char>(1));	
+    _M_init_facet(new (&messages_c) std::messages<char>(1));
 
 #ifdef  _GLIBCXX_USE_WCHAR_T
     _M_init_facet(new (&ctype_w) std::ctype<wchar_t>(1));
@@ -536,9 +567,19 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
     _M_init_facet(new (&messages_w) std::messages<wchar_t>(1));
 #endif
 
-#ifdef _GLIBCXX_USE_C99_STDINT_TR1
+#if _GLIBCXX_NUM_UNICODE_FACETS != 0
     _M_init_facet(new (&codecvt_c16) codecvt<char16_t, char, mbstate_t>(1));
     _M_init_facet(new (&codecvt_c32) codecvt<char32_t, char, mbstate_t>(1));
+
+#ifdef _GLIBCXX_USE_CHAR8_T
+    _M_init_facet(new (&codecvt_c16_c8) codecvt<char16_t, char8_t, mbstate_t>(1));
+    _M_init_facet(new (&codecvt_c32_c8) codecvt<char32_t, char8_t, mbstate_t>(1));
+#endif
+
+#endif
+
+#ifdef _GLIBCXX_LONG_DOUBLE_ALT128_COMPAT
+    _M_init_extra_ldbl128(true);
 #endif
 
 #if _GLIBCXX_USE_DUAL_ABI
@@ -548,6 +589,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 # endif
     };
 
+    // This call must be after creating all facets, as it sets caches.
     _M_init_extra(extra);
 #endif
 

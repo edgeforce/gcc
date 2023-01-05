@@ -1,9 +1,8 @@
-// { dg-options "-std=gnu++11" }
-// { dg-do compile }
+// { dg-do compile { target c++11 } }
 
 // 2007-06-02  Paolo Carlini  <pcarlini@suse.de>
 //
-// Copyright (C) 2007-2016 Free Software Foundation, Inc.
+// Copyright (C) 2007-2022 Free Software Foundation, Inc.
 //
 // This file is part of the GNU ISO C++ Library.  This library is free
 // software; you can redistribute it and/or modify it under the
@@ -34,8 +33,11 @@ void test01()
   static_assert(test_category<is_reference, int&&>(true), "");
   static_assert(test_category<is_reference, ClassType&&>(true), "");
   static_assert(test_category<is_reference, int(&&)(int)>(true), "");
+  static_assert(test_category<is_reference, IncompleteClass&>(true), "");
+  static_assert(test_category<is_reference, const IncompleteClass&>(true), "");
 
   // Sanity check.
   static_assert(test_category<is_reference, ClassType>(false), "");
+  static_assert(test_category<is_reference, IncompleteClass>(false), "");
 }
 

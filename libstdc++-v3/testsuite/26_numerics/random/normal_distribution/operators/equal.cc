@@ -1,9 +1,9 @@
-// { dg-options "-std=gnu++11" }
+// { dg-do run { target c++11 } }
 // { dg-require-cstdint "" }
 //
 // 2010-03-16  Paolo Carlini  <paolo.carlini@oracle.com>
 //
-// Copyright (C) 2010-2016 Free Software Foundation, Inc.
+// Copyright (C) 2010-2022 Free Software Foundation, Inc.
 //
 // This file is part of the GNU ISO C++ Library.  This library is free
 // software; you can redistribute it and/or modify it under the
@@ -28,16 +28,34 @@
 void
 test01()
 {
-  bool test __attribute__((unused)) = true;
-
   std::normal_distribution<double> u(5.0, 2.0), v, w;
 
   VERIFY( v == w );
   VERIFY( !(u == v) );
 }
 
+void
+test02()
+{
+  std::normal_distribution<double> u(5.0, 2.0), v(u);
+  VERIFY( u == v );
+  u.reset();
+  VERIFY( u == v );
+
+  std::minstd_rand0 g1, g2;
+  (void) u(g1); // u._M_saved_available = true
+  VERIFY( !(u == v) );
+  (void) v(g2); // v._M_saved_available = true
+  VERIFY( u == v );
+  u.reset();    // u._M_saved_available = false
+  VERIFY( !(u == v) );
+  v.reset();    // v._M_saved_available = false
+  VERIFY( u == v );
+}
+
 int main()
 {
   test01();
+  test02();
   return 0;
 }

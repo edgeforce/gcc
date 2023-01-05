@@ -1,7 +1,6 @@
-// { dg-options "-std=gnu++14" }
-// { dg-do run }
+// { dg-do run { target c++14 } }
 
-// Copyright (C) 2015-2016 Free Software Foundation, Inc.
+// Copyright (C) 2015-2022 Free Software Foundation, Inc.
 //
 // This file is part of the GNU ISO C++ Library.  This library is free
 // software; you can redistribute it and/or modify it under the
@@ -24,8 +23,6 @@
 void
 test01()
 {
-  bool test [[gnu::unused]] = true;
-
   auto is_odd = [](const int i) { return i % 2 != 0; };
 
   std::unordered_set<int> us{ 10, 11, 12, 14, 15, 17, 18, 19 };
@@ -37,8 +34,6 @@ test01()
 void
 test02()
 {
-  bool test [[gnu::unused]] = true;
-
   auto is_odd = [](const int i) { return i % 2 != 0; };
 
   std::unordered_multiset<int> ums{ 20, 21, 22, 22, 23, 23, 24, 25 };
@@ -47,11 +42,24 @@ test02()
   VERIFY( ums == t );
 }
 
+void
+test_pr107850()
+{
+  // Predicate only callable as non-const.
+  struct Pred { bool operator()(const int&) { return false; } };
+  const Pred pred; // erase_if parameter is passed by value, so non-const.
+  std::unordered_set<int> s;
+  std::experimental::erase_if(s, pred);
+  std::unordered_multiset<int> ms;
+  std::experimental::erase_if(ms, pred);
+}
+
 int
 main()
 {
   test01();
   test02();
+  test_pr107850();
 
   return 0;
 }

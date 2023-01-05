@@ -1,6 +1,7 @@
-// { dg-options "-std=gnu++11" }
+// { dg-do run { target c++11 } }
+// { dg-require-effective-target hosted }
 
-// Copyright (C) 2008-2016 Free Software Foundation, Inc.
+// Copyright (C) 2008-2022 Free Software Foundation, Inc.
 //
 // This file is part of the GNU ISO C++ Library.  This library is free
 // software; you can redistribute it and/or modify it under the
@@ -27,7 +28,7 @@ struct A { };
 namespace std
 {
   template<>
-    struct less<A*> : binary_function<A*,A*,bool>
+    struct less<A*>
     {
       static int count;
       bool operator()(A* l, A* r) { ++count; return l < r; }
@@ -41,14 +42,16 @@ namespace std
 int
 test01()
 {
-  bool test __attribute__((unused)) = true;
-
   std::less<std::shared_ptr<A>> less;
   // test empty shared_ptrs compare equivalent
   std::shared_ptr<A> p1;
   std::shared_ptr<A> p2;
   VERIFY( !less(p1, p2) && !less(p2, p1) );
+#ifndef __cpp_lib_three_way_comparison
+// In C++20 std::less<std::shared_ptr<A>> uses the operator< synthesized
+// from operator<=>, which uses std::compare_three_way not std::less<A*>.
   VERIFY( std::less<A*>::count == 2 );
+#endif
   return 0;
 }
 
@@ -57,8 +60,6 @@ test01()
 int
 test02()
 {
-  bool test __attribute__((unused)) = true;
-
   std::less<std::shared_ptr<A>> less;
 
   std::shared_ptr<A> empty;
@@ -81,8 +82,6 @@ test02()
 int
 test03()
 {
-  bool test __attribute__((unused)) = true;
-
   std::less<std::shared_ptr<A>> less;
 
   A a;
@@ -92,7 +91,7 @@ test03()
 
   return 0;
 }
-int 
+int
 main()
 {
   test01();

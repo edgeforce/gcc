@@ -1,8 +1,9 @@
-// { dg-options "-std=c++11" }
+// { dg-do run { target c++11 } }
+// { dg-timeout-factor 2 }
 
 // 2009-06-05  Stephen M. Webb  <stephen.webb@bregmasoft.ca>
 //
-// Copyright (C) 2009-2016 Free Software Foundation, Inc.
+// Copyright (C) 2009-2022 Free Software Foundation, Inc.
 //
 // This file is part of the GNU ISO C++ Library.  This library is free
 // software; you can redistribute it and/or modify it under the
@@ -22,13 +23,10 @@
 // C++0X [28.8.3] class template basic_regex assign()
 
 #include <regex>
-#include <testsuite_hooks.h>
 
 // Tests assign operation from a C-style null-terminated-string.  
 void test01()
 {
-  bool test __attribute__((unused)) = true;
-
   std::basic_regex<char> re;
 
   const char* cs = "aab";
@@ -38,8 +36,6 @@ void test01()
 // basic_regex::operator=() resets flags. libstdc++/64680
 void test02()
 {
-  bool test __attribute__((unused)) = true;
-
   std::regex re("[[:alnum:]]", std::regex_constants::basic);
   re = "\\w+";
 }

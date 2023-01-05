@@ -1,7 +1,7 @@
 //
 // 2008-11-24  Edward M. Smith-Rowland <3dw4rd@verizon.net>
 //
-// Copyright (C) 2008-2016 Free Software Foundation, Inc.
+// Copyright (C) 2008-2022 Free Software Foundation, Inc.
 //
 // This file is part of the GNU ISO C++ Library.  This library is free
 // software; you can redistribute it and/or modify it under the
@@ -18,10 +18,10 @@
 // with this library; see the file COPYING3.  If not see
 // <http://www.gnu.org/licenses/>.
 
-// { dg-do compile }
-// { dg-options "-std=gnu++11" }
+// { dg-do compile { target c++11 } }
 // { dg-require-cstdint "" }
-// { dg-error "not a valid type" "" { target *-*-* } 31 }
+// { dg-error "not a valid type" "" { target { ! c++20 } } 31 }
+// { dg-error "from 'int' to 'double'" "" { target c++20 } 31 }
 
 // 26.4.3.1 class template linear_congruential_engine [rand.eng.lcong]
 // 26.4.2.2 Concept RandomNumberEngine [rand.concept.eng]

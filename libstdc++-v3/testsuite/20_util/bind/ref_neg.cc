@@ -1,4 +1,4 @@
-// Copyright (C) 2010-2016 Free Software Foundation, Inc.
+// Copyright (C) 2010-2022 Free Software Foundation, Inc.
 //
 // This file is part of the GNU ISO C++ Library.  This library is free
 // software; you can redistribute it and/or modify it under the
@@ -17,8 +17,8 @@
 
 // 20.8.9 Function template bind
 
-// { dg-do compile }
-// { dg-options "-std=gnu++11" }
+// { dg-options "-fno-show-column" }
+// { dg-do compile { target c++11 } }
 
 #include <functional>
 
@@ -48,7 +48,9 @@ void test02()
   std::bind(&Inc::f, Inc(), std::ref(dummy))(); // { dg-error  "no match" }
 }
 
-// { dg-excess-errors "reasons for deduction/substitution failures" }
+// Ignore the reasons for deduction/substitution failure in the headers.
+// Arrange for the match to work on installed trees as well as build trees.
+// { dg-prune-output "no type named 'type' in 'struct std::result_of" }
 
 int main()
 {

@@ -1,6 +1,7 @@
-// { dg-options "-std=gnu++11" }
+// { dg-do run { target c++11 } }
+// { dg-require-effective-target hosted }
 
-// Copyright (C) 2005-2016 Free Software Foundation, Inc.
+// Copyright (C) 2005-2022 Free Software Foundation, Inc.
 //
 // This file is part of the GNU ISO C++ Library.  This library is free
 // software; you can redistribute it and/or modify it under the
@@ -34,40 +35,35 @@ struct A
 void
 test01()
 {
-  bool test __attribute__((unused)) = true;
-
   A * const a = new A;
   const std::shared_ptr<A> p(a);
   VERIFY( p.get() == a );
+  static_assert( noexcept(p.get()), "non-throwing" );
 }
 
 // operator*
 void
 test02()
 {
-  bool test __attribute__((unused)) = true;
-
   A * const a = new A;
   const std::shared_ptr<A> p(a);
   VERIFY( &*p == a );
+  static_assert( noexcept(*p), "non-throwing" );
 }
 
 // operator->
 void
 test03()
 {
-  bool test __attribute__((unused)) = true;
-
   A * const a = new A;
   const std::shared_ptr<A> p(a);
   VERIFY( &p->i == &a->i );
+  static_assert( noexcept(p->i), "non-throwing" );
 }
 
 void
 test04()
 {
-  bool test __attribute__((unused)) = true;
-
 #if !(defined _GLIBCXX_DEBUG && defined _GLIBCXX_DEBUG_PEDANTIC)
   std::shared_ptr<int> p;
   auto np = p.operator->();
@@ -75,7 +71,7 @@ test04()
 #endif
 }
 
-int 
+int
 main()
 {
   test01();

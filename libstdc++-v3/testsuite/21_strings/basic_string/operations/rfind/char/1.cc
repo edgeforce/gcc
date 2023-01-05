@@ -1,6 +1,6 @@
 // 2000-06-22 -=dbv=-  (shamelessy copied from bkoz' find.cc)
 
-// Copyright (C) 2000-2016 Free Software Foundation, Inc.
+// Copyright (C) 2000-2022 Free Software Foundation, Inc.
 //
 // This file is part of the GNU ISO C++ Library.  This library is free
 // software; you can redistribute it and/or modify it under the
@@ -17,24 +17,23 @@
 // with this library; see the file COPYING3.  If not see
 // <http://www.gnu.org/licenses/>.
 
-#include <string>
+#include <testsuite_string.h>
 #include <testsuite_hooks.h>
 
 // 21.3.6.2 basic_string rfind
-bool test01(void)
+void test01(void)
 {
-  bool test __attribute__((unused)) = true;
-  typedef std::string::size_type csize_type;
-  typedef std::string::const_reference cref;
-  typedef std::string::reference ref;
-  csize_type npos = std::string::npos;
+  typedef __gnu_test::string::size_type csize_type;
+  typedef __gnu_test::string::const_reference cref;
+  typedef __gnu_test::string::reference ref;
+  csize_type npos = __gnu_test::string::npos;
   csize_type csz01, csz02;
 
   const char str_lit01[] = "mave";
-  const std::string str01("mavericks, santa cruz");
-  std::string str02(str_lit01);
-  std::string str03("s, s");
-  std::string str04;
+  const __gnu_test::string str01("mavericks, santa cruz");
+  __gnu_test::string str02(str_lit01);
+  __gnu_test::string str03("s, s");
+  __gnu_test::string str04;
 
   // size_type rfind(const string&, size_type pos = 0) const;
   csz01 = str01.rfind(str01);
@@ -82,7 +81,6 @@ bool test01(void)
   VERIFY( csz01 == csz02 );
   csz01 = str01.rfind('/');
   VERIFY( csz01 == npos );
-  return test;
 }
 
 int main()

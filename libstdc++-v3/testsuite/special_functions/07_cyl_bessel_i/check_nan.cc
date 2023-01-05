@@ -1,8 +1,10 @@
+// { dg-do run { target c++11 } }
 // { dg-require-c-std "" }
-// { dg-add-options ieee }
 // { dg-options "-D__STDCPP_WANT_MATH_SPEC_FUNCS__" }
+// { dg-add-options ieee }
+// { dg-prune-output ".*warning: tgammal has lower than advertised precision" }
 
-// Copyright (C) 2016 Free Software Foundation, Inc.
+// Copyright (C) 2016-2022 Free Software Foundation, Inc.
 //
 // This file is part of the GNU ISO C++ Library.  This library is free
 // software; you can redistribute it and/or modify it under the
@@ -41,7 +43,6 @@ test01()
   long double d = std::cyl_bessel_i(nul, xl);
   long double e = std::cyl_bessel_il(nul, xl);
 
-  bool test [[gnu::unused]] = true;
   VERIFY(std::isnan(a));
   VERIFY(std::isnan(b));
   VERIFY(std::isnan(c));
@@ -68,7 +69,6 @@ test02()
   long double d = std::cyl_bessel_i(nul, xl);
   long double e = std::cyl_bessel_il(nul, xl);
 
-  bool test [[gnu::unused]] = true;
   VERIFY(std::isnan(a));
   VERIFY(std::isnan(b));
   VERIFY(std::isnan(c));

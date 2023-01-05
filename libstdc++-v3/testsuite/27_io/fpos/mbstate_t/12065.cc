@@ -1,4 +1,4 @@
-// Copyright (C) 2003-2016 Free Software Foundation, Inc.
+// Copyright (C) 2003-2022 Free Software Foundation, Inc.
 //
 // This file is part of the GNU ISO C++ Library.  This library is free
 // software; you can redistribute it and/or modify it under the
@@ -15,6 +15,8 @@
 // with this library; see the file COPYING3.  If not see
 // <http://www.gnu.org/licenses/>.
 
+// { dg-require-effective-target rtti }
+
 // 27.4.3 fpos
 
 #include <typeinfo>
@@ -24,8 +26,6 @@
 // libstdc++/12065
 void test01()
 {
-  bool test __attribute__((unused)) = true;
-
   std::streampos p(0);
   const std::streampos q(0);
   std::streamoff o(0);

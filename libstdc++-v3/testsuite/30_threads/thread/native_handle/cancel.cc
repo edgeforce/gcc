@@ -1,11 +1,10 @@
-// { dg-do run { target *-*-freebsd* *-*-dragonfly* *-*-netbsd* *-*-linux* *-*-gnu* *-*-solaris* *-*-cygwin *-*-rtems* *-*-darwin* powerpc-ibm-aix* } }
-// { dg-options " -std=gnu++11 -pthread" { target *-*-freebsd* *-*-dragonfly* *-*-netbsd* *-*-linux* *-*-gnu* powerpc-ibm-aix* } }
-// { dg-options " -std=gnu++11 -pthreads" { target *-*-solaris* } }
-// { dg-options " -std=gnu++11 " { target *-*-cygwin *-*-rtems* *-*-darwin* } }
-// { dg-require-cstdint "" }
+// { dg-do run }
+// { dg-options "-pthread"  }
+// { dg-require-effective-target c++11 }
+// { dg-require-effective-target pthread }
 // { dg-require-gthreads "" }
 
-// Copyright (C) 2012-2016 Free Software Foundation, Inc.
+// Copyright (C) 2012-2022 Free Software Foundation, Inc.
 //
 // This file is part of the GNU ISO C++ Library.  This library is free
 // software; you can redistribute it and/or modify it under the
@@ -25,12 +24,17 @@
 #include <pthread.h>
 #include <thread>
 #include <atomic>
+#include <functional>
 
 void f(std::atomic<bool>& started)
 {
   started = true;
   while (true)
-    std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    {
+      std::this_thread::sleep_for(std::chrono::milliseconds(100));
+      // In case the target system doesn't make sleep a cancellation point...
+      pthread_testcancel();
+    }
 }
 
 int main()

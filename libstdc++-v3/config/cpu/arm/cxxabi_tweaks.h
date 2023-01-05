@@ -1,6 +1,6 @@
 // Control various target specific ABI tweaks.  ARM version.
 
-// Copyright (C) 2004-2016 Free Software Foundation, Inc.
+// Copyright (C) 2004-2022 Free Software Foundation, Inc.
 //
 // This file is part of the GNU ISO C++ Library.  This library is free
 // software; you can redistribute it and/or modify it under the
@@ -33,13 +33,13 @@
 #ifdef __cplusplus
 namespace __cxxabiv1
 {
-  extern "C" 
+  extern "C"
   {
 #endif
 
 #ifdef __ARM_EABI__
   // The ARM EABI uses the least significant bit of a 32-bit
-  // guard variable.  */
+  // guard variable.
 #define _GLIBCXX_GUARD_TEST(x) ((*(x) & 1) != 0)
 #define _GLIBCXX_GUARD_SET(x) *(x) = 1
 #define _GLIBCXX_GUARD_BIT 1
@@ -47,9 +47,14 @@ namespace __cxxabiv1
 #define _GLIBCXX_GUARD_WAITING_BIT __guard_test_bit (2, 1)
   typedef int __guard;
 
+#define _GLIBCXX_GUARD_TEST_AND_ACQUIRE(x) \
+  ((__atomic_load_n(x, __ATOMIC_ACQUIRE) & 1) != 0)
+#define _GLIBCXX_GUARD_SET_AND_RELEASE(x) \
+  __atomic_store_n(x, 1, __ATOMIC_RELEASE)
+
   // We also want the element size in array cookies.
 #define _GLIBCXX_ELTSIZE_IN_COOKIE 1
-  
+
   // __cxa_vec_ctor should return a pointer to the array.
   typedef void * __cxa_vec_ctor_return_type;
 #define _GLIBCXX_CXA_VEC_CTOR_RETURN(x) return x
@@ -79,4 +84,4 @@ namespace __cxxabiv1
 } // namespace __cxxabiv1
 #endif
 
-#endif 
+#endif

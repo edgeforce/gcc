@@ -1,9 +1,8 @@
-// { dg-do compile }
-// { dg-options "-std=gnu++11" }
+// { dg-do compile { target c++11 } }
 
 // 2011-06-01  Paolo Carlini  <paolo.carlini@oracle.com>
 //
-// Copyright (C) 2011-2016 Free Software Foundation, Inc.
+// Copyright (C) 2011-2022 Free Software Foundation, Inc.
 //
 // This file is part of the GNU ISO C++ Library.  This library is free
 // software; you can redistribute it and/or modify it under the
@@ -24,4 +23,8 @@
 
 typedef std::forward_list<int> fltype;
 
-static_assert(std::is_nothrow_move_constructible<fltype>::value, "Error");
+static_assert( std::is_nothrow_move_constructible<fltype>::value,
+	       "noexcept move constructor" );
+static_assert( std::is_nothrow_constructible<fltype,
+	       fltype, const typename fltype::allocator_type&>::value,
+	       "noexcept move constructor with allocator" );

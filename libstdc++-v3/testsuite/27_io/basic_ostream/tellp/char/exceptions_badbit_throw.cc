@@ -1,4 +1,4 @@
-// Copyright (C) 2003-2016 Free Software Foundation, Inc.
+// Copyright (C) 2003-2022 Free Software Foundation, Inc.
 //
 // This file is part of the GNU ISO C++ Library.  This library is free
 // software; you can redistribute it and/or modify it under the
@@ -26,24 +26,19 @@ using namespace std;
 
 void test01()
 {
-  bool test __attribute__((unused)) = true;
   __gnu_test::fail_streambuf bib;
   ostream stream(&bib);
-  stream.exceptions(ios_base::badbit);
 
   try
     {
       stream.tellp();
       VERIFY( false );
     }
-  catch (const __gnu_test::positioning_error&) 
+  catch (const __gnu_test::positioning_error&)
     {
-      // stream should set badbit and rethrow facet_error.
-      VERIFY( stream.bad() );
-      VERIFY( (stream.rdstate() & ios_base::failbit) == 0 );
-      VERIFY( !stream.eof() );
+      VERIFY( stream.good() );
     }
-  catch (...) 
+  catch (...)
     {
       VERIFY(false);
     }

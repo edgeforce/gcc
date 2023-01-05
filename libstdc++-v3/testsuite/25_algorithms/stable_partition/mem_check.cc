@@ -1,4 +1,4 @@
-// Copyright (C) 2009-2016 Free Software Foundation, Inc.
+// Copyright (C) 2009-2022 Free Software Foundation, Inc.
 //
 // This file is part of the GNU ISO C++ Library.  This library is free
 // software; you can redistribute it and/or modify it under the
@@ -14,6 +14,9 @@
 // You should have received a copy of the GNU General Public License along
 // with this library; see the file COPYING3.  If not see
 // <http://www.gnu.org/licenses/>.
+
+// std::stable_partition is not freestanding.
+// { dg-require-effective-target hosted }
 
 // 25.2.12 [lib.alg.partitions] Partitions.
 
@@ -39,8 +42,6 @@ bool even(const copy_tracker& ct)
 void
 test1(int throw_count)
 {
-  bool test __attribute__((unused)) = true;
-
   copy_tracker vals[30];
   for(int i = 0; i < 30; ++i)
     vals[i] = A[i];

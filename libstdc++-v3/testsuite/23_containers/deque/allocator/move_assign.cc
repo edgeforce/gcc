@@ -1,4 +1,4 @@
-// Copyright (C) 2014-2016 Free Software Foundation, Inc.
+// Copyright (C) 2014-2022 Free Software Foundation, Inc.
 //
 // This file is part of the GNU ISO C++ Library.  This library is free
 // software; you can redistribute it and/or modify it under the
@@ -15,7 +15,7 @@
 // with this library; see the file COPYING3.  If not see
 // <http://www.gnu.org/licenses/>.
 
-// { dg-options "-std=gnu++11" }
+// { dg-do run { target c++11 } }
 
 #include <deque>
 #include <testsuite_hooks.h>
@@ -27,7 +27,6 @@ using __gnu_test::propagating_allocator;
 
 void test01()
 {
-  bool test __attribute__((unused)) = true;
   typedef propagating_allocator<T, false> alloc_type;
   typedef std::deque<T, alloc_type> test_type;
   test_type v1(1, alloc_type(1));
@@ -39,7 +38,6 @@ void test01()
 
 void test02()
 {
-  bool test __attribute__((unused)) = true;
   typedef propagating_allocator<T, true> alloc_type;
   typedef std::deque<T, alloc_type> test_type;
   test_type v1(1, alloc_type(1));
@@ -47,13 +45,12 @@ void test02()
   test_type v2(1, alloc_type(2));
   v2 = std::move(v1);
   VERIFY( it == v2.begin() );
-  VERIFY(0 == v1.get_allocator().get_personality());
+  VERIFY(1 == v1.get_allocator().get_personality());
   VERIFY(1 == v2.get_allocator().get_personality());
 }
 
 void test03()
 {
-  bool test __attribute__((unused)) = true;
   typedef propagating_allocator<T, false> alloc_type;
   typedef std::deque<T, alloc_type> test_type;
   test_type v1(1, alloc_type(1));

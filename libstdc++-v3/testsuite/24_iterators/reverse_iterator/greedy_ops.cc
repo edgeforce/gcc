@@ -1,5 +1,7 @@
 // { dg-do compile }
-// Copyright (C) 2010-2016 Free Software Foundation, Inc.
+// { dg-options "-Wno-unused-result" }
+
+// Copyright (C) 2010-2022 Free Software Foundation, Inc.
 //
 // This file is part of the GNU ISO C++ Library.  This library is free
 // software; you can redistribute it and/or modify it under the
@@ -24,20 +26,16 @@ void test01()
   typedef std::reverse_iterator<greedy_ops::X*> iterator_type;
 
   iterator_type it;
-  
+
   it == it;
   it != it;
   it < it;
   it <= it;
   it > it;
   it >= it;
-  it - it;
+#if __cplusplus < 201103L
+  it - it; // See PR libstdc++/71771
+#endif
   1 + it;
   it + 1;
-}
-
-int main() 
-{ 
-  test01();
-  return 0;
 }

@@ -1,9 +1,8 @@
-// { dg-options "-std=gnu++11" }
-// { dg-do compile }
+// { dg-do compile { target c++11 } }
 //
 // 2014-10-09  Ville Voutilainen  <ville.voutilainen@gmail.com>
 //
-// Copyright (C) 2014-2016 Free Software Foundation, Inc.
+// Copyright (C) 2014-2022 Free Software Foundation, Inc.
 //
 // This file is part of the GNU ISO C++ Library.  This library is free
 // software; you can redistribute it and/or modify it under the
@@ -47,8 +46,10 @@ void test01()
 
   static_assert(test_property<is_trivially_copyable, 
 		int>(true), "");
+  // Changed in CWG 2094, which made volatile-qualified scalars trivially
+  // copyable.
   static_assert(test_property<is_trivially_copyable,
-		volatile int>(false), "");
+		volatile int>(true), "");
   static_assert(test_property<is_trivially_copyable, 
 		TType>(true), "");
   static_assert(test_property<is_trivially_copyable, 

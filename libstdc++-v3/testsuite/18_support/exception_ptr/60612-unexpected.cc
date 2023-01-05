@@ -1,7 +1,7 @@
-// { dg-options "-std=gnu++11" }
-// { dg-require-atomic-builtins "" }
+// { dg-options "-Wno-deprecated-declarations" }
+// { dg-do run { target { c++11_only || c++14_only } } }
 
-// Copyright (C) 2014-2016 Free Software Foundation, Inc.
+// Copyright (C) 2014-2022 Free Software Foundation, Inc.
 //
 // This file is part of the GNU ISO C++ Library.  This library is free
 // software; you can redistribute it and/or modify it under the

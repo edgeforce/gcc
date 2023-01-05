@@ -1,9 +1,10 @@
-// { dg-options "-std=gnu++11" }
+// { dg-do run { target c++11 } }
+// { dg-timeout-factor 2 }
 
 //
 // 2013-09-24  Tim Shen <timshen91@gmail.com>
 //
-// Copyright (C) 2013-2016 Free Software Foundation, Inc.
+// Copyright (C) 2013-2022 Free Software Foundation, Inc.
 //
 // This file is part of the GNU ISO C++ Library.  This library is free
 // software; you can redistribute it and/or modify it under the
@@ -31,8 +32,6 @@ using namespace std;
 void
 test01()
 {
-  bool test __attribute__((unused)) = true;
-
   VERIFY(regex_replace(string("This is a string"), regex("\\b\\w*\\b"), "|$0|")
 	 == "|This||| |is||| |a||| |string|||");
   VERIFY(regex_replace(string("This is a string"), regex("\\b\\w*\\b"), "|$0|",

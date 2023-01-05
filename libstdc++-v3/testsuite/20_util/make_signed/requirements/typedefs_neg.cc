@@ -1,9 +1,8 @@
-// { dg-do compile }
-// { dg-options "-std=gnu++11" }
+// { dg-do compile { target c++11 } }
 
 // 2007-05-03  Benjamin Kosnik  <bkoz@redhat.com>
 //
-// Copyright (C) 2007-2016 Free Software Foundation, Inc.
+// Copyright (C) 2007-2022 Free Software Foundation, Inc.
 //
 // This file is part of the GNU ISO C++ Library.  This library is free
 // software; you can redistribute it and/or modify it under the
@@ -21,31 +20,27 @@
 // <http://www.gnu.org/licenses/>.
 
 #include <type_traits>
-#include <testsuite_character.h>
 
-enum test_enum { first_selection };
+struct pod_class { };
 
 void test01()
 {
   using std::make_signed;
 
-  // Negative  tests.
-  typedef make_signed<bool>::type     	test1_type;
+  // Negative tests.
+  using T1 = make_signed<bool>::type; // { dg-error "incomplete" }
+  using T2 = make_signed<const bool>::type; // { dg-error "incomplete" }
+  using T3 = make_signed<volatile bool>::type; // { dg-error "incomplete" }
+  using T4 = make_signed<const volatile bool>::type; // { dg-error "incomplete" }
 
-  typedef make_signed<__gnu_test::pod_uint>::type     	test2_type;
+  using T5 = make_signed<pod_class>::type; // { dg-error "here" }
 
-  typedef make_signed<int[4]>::type     test3_type;
+  using T6 = make_signed<int[4]>::type; // { dg-error "here" }
 
-  typedef void (fn_type) ();
-  typedef make_signed<fn_type>::type  	test4_type;
+  using fn_type = void ();
+  using T7 = make_signed<fn_type>::type; // { dg-error "here" }
 
-  typedef make_signed<float>::type  	test5_type;
+  using T8 = make_signed<float>::type; // { dg-error "here" }
 }
 
-// { dg-error "does not name a type" "" { target *-*-* } 33 }
-// { dg-error "required from here" "" { target *-*-* } 35 }
-// { dg-error "required from here" "" { target *-*-* } 37 }
-// { dg-error "required from here" "" { target *-*-* } 40 }
-// { dg-error "required from here" "" { target *-*-* } 42 }
-
-// { dg-error "invalid use of incomplete type" "" { target *-*-* } 1935 }
+// { dg-error "invalid use of incomplete type" "" { target *-*-* } 0 }

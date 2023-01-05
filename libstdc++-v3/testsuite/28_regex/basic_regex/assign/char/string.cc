@@ -1,8 +1,9 @@
-// { dg-options "-std=gnu++11" }
+// { dg-do run { target c++11 } }
+// { dg-timeout-factor 2 }
 
 // 2007-03-12  Stephen M. Webb  <stephen.webb@bregmasoft.com>
 //
-// Copyright (C) 2010-2016 Free Software Foundation, Inc.
+// Copyright (C) 2010-2022 Free Software Foundation, Inc.
 //
 // This file is part of the GNU ISO C++ Library.  This library is free
 // software; you can redistribute it and/or modify it under the
@@ -28,7 +29,6 @@
 // Tests C++ string assignment of the basic_regex class.  
 void test01()
 {
-  bool test __attribute__((unused)) = true;
   typedef std::basic_regex<char> test_type;
 
   std::string s("a*b");
@@ -39,7 +39,6 @@ void test01()
 // libstdc++/64584
 void test02()
 {
-  bool test __attribute__((unused)) = true;
   std::regex re("", std::regex_constants::extended);
   auto flags = re.flags();
   try

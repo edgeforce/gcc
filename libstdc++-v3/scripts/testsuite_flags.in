@@ -56,7 +56,7 @@ case ${query} in
       echo ${CC}
       ;;
     --cxxflags)
-      CXXFLAGS_default="-D_GLIBCXX_ASSERT -fmessage-length=0 -fno-show-column"
+      CXXFLAGS_default="-fmessage-length=0 -fno-show-column"
       CXXFLAGS_config="@SECTION_FLAGS@ @EXTRA_CXX_FLAGS@"
       echo ${CXXFLAGS_default} ${CXXFLAGS_config} 
       ;;
@@ -77,8 +77,15 @@ case ${query} in
       echo ${PCHFLAGS}
       ;;
     --cxxldflags)
-      SECTIONLDFLAGS="@SECTION_LDFLAGS@ @LIBICONV@
-                      -L${BUILD_DIR}/src/filesystem/.libs"
+      FS_LDFLAGS=
+      BT_LDFLAGS=
+      if [ -d ${BUILD_DIR}/src/filesystem/.libs ]; then
+        FS_LDFLAGS=-L${BUILD_DIR}/src/filesystem/.libs
+      fi
+      if [ -d ${BUILD_DIR}/src/libbacktrace/.libs ]; then
+        BT_LDFLAGS=-L${BUILD_DIR}/src/libbacktrace/.libs
+      fi
+      SECTIONLDFLAGS="@SECTION_LDFLAGS@ @LIBICONV@ $FS_LDFLAGS $BT_LDFLAGS"
       echo ${SECTIONLDFLAGS}
       ;;
     *)

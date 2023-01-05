@@ -1,6 +1,6 @@
 // -*- C++ -*-
 
-// Copyright (C) 2005-2016 Free Software Foundation, Inc.
+// Copyright (C) 2005-2022 Free Software Foundation, Inc.
 //
 // This file is part of the GNU ISO C++ Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -35,7 +35,7 @@
 
 /**
  * @file detail/type_utils.hpp
- * Contains utilities for handnling types. All of these classes are based on
+ * Contains utilities for handling types. All of these classes are based on
  * Modern C++ by Andrei Alxandrescu.
  */
 
@@ -131,7 +131,7 @@ namespace __gnu_pbds
 	};
     };
 
-    // Use C++0x's static_assert if possible.
+    // Use C++11's static_assert if possible.
 #if __cplusplus >= 201103L
 #define PB_DS_STATIC_ASSERT(UNIQUE, E)  static_assert(E, #UNIQUE)
 #else
@@ -152,7 +152,8 @@ namespace __gnu_pbds
     };
 
 #define PB_DS_STATIC_ASSERT(UNIQUE, E)  \
-    typedef __gnu_pbds::detail::__static_assert_dumclass<sizeof(__gnu_pbds::detail::__static_assert<bool(E)>)> UNIQUE##__static_assert_type
+    typedef __gnu_pbds::detail::__static_assert_dumclass<sizeof(__gnu_pbds::detail::__static_assert<bool(E)>)> \
+      UNIQUE##__static_assert_type __attribute__((__unused__))
 
 #endif
 

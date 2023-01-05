@@ -1,6 +1,6 @@
 // random number generation -*- C++ -*-
 
-// Copyright (C) 2009-2016 Free Software Foundation, Inc.
+// Copyright (C) 2009-2022 Free Software Foundation, Inc.
 //
 // This file is part of the GNU ISO C++ Library.  This library is free
 // software; you can redistribute it and/or modify it under the
@@ -48,6 +48,8 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
    * @{
    */
 
+  // std::uniform_random_bit_generator is defined in <bits/uniform_int_dist.h>
+
   /**
    * @brief A function template for converting the output of a (integral)
    * uniform random number generator to a floatng point result in the range
@@ -58,24 +60,19 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
     _RealType
     generate_canonical(_UniformRandomNumberGenerator& __g);
 
-_GLIBCXX_END_NAMESPACE_VERSION
-
-  /*
-   * Implementation-space details.
-   */
+  /// @cond undocumented
+  // Implementation-space details.
   namespace __detail
   {
-  _GLIBCXX_BEGIN_NAMESPACE_VERSION
-
     template<typename _UIntType, size_t __w,
 	     bool = __w < static_cast<size_t>
 			  (std::numeric_limits<_UIntType>::digits)>
       struct _Shift
-      { static const _UIntType __value = 0; };
+      { static constexpr _UIntType __value = 0; };
 
     template<typename _UIntType, size_t __w>
       struct _Shift<_UIntType, __w, true>
-      { static const _UIntType __value = _UIntType(1) << __w; };
+      { static constexpr _UIntType __value = _UIntType(1) << __w; };
 
     template<int __s,
 	     int __which = ((__s <= __CHAR_BIT__ * sizeof (int))
@@ -91,20 +88,20 @@ _GLIBCXX_END_NAMESPACE_VERSION
 
     template<int __s>
       struct _Select_uint_least_t<__s, 4>
-      { typedef unsigned int type; };
+      { using type = unsigned int; };
 
     template<int __s>
       struct _Select_uint_least_t<__s, 3>
-      { typedef unsigned long type; };
+      { using type = unsigned long; };
 
     template<int __s>
       struct _Select_uint_least_t<__s, 2>
-      { typedef unsigned long long type; };
+      { using type = unsigned long long; };
 
-#ifdef _GLIBCXX_USE_INT128
+#if __SIZEOF_INT128__ > __SIZEOF_LONG_LONG__
     template<int __s>
       struct _Select_uint_least_t<__s, 1>
-      { typedef unsigned __int128 type; };
+      { __extension__ using type = unsigned __int128; };
 #endif
 
     // Assume a != 0, a < m, c < m, x < m.
@@ -114,11 +111,14 @@ _GLIBCXX_END_NAMESPACE_VERSION
              bool __schrage_ok = __m % __a < __m / __a>
       struct _Mod
       {
-	typedef typename _Select_uint_least_t<std::__lg(__a)
-					      + std::__lg(__m) + 2>::type _Tp2;
 	static _Tp
 	__calc(_Tp __x)
-	{ return static_cast<_Tp>((_Tp2(__a) * __x + __c) % __m); }
+	{
+	  using _Tp2
+	    = typename _Select_uint_least_t<std::__lg(__a)
+					    + std::__lg(__m) + 2>::type;
+	  return static_cast<_Tp>((_Tp2(__a) * __x + __c) % __m);
+	}
       };
 
     // Schrage.
@@ -148,7 +148,16 @@ _GLIBCXX_END_NAMESPACE_VERSION
     template<typename _Tp, _Tp __m, _Tp __a = 1, _Tp __c = 0>
       inline _Tp
       __mod(_Tp __x)
-      { return _Mod<_Tp, __m, __a, __c>::__calc(__x); }
+      {
+	if _GLIBCXX17_CONSTEXPR (__a == 0)
+	  return __c;
+	else
+	  {
+	    // _Mod must not be instantiated with a == 0
+	    constexpr _Tp __a1 = __a ? __a : 1;
+	    return _Mod<_Tp, __m, __a1, __c>::__calc(__x);
+	  }
+      }
 
     /*
      * An adaptor class for converting the output of any Generator into
@@ -158,7 +167,7 @@ _GLIBCXX_END_NAMESPACE_VERSION
       struct _Adaptor
       {
 	static_assert(std::is_floating_point<_DInputType>::value,
-		      "template argument not a floating point type");
+		      "template argument must be a floating point type");
 
       public:
 	_Adaptor(_Engine& __g)
@@ -189,10 +198,26 @@ _GLIBCXX_END_NAMESPACE_VERSION
 	_Engine& _M_g;
       };
 
-  _GLIBCXX_END_NAMESPACE_VERSION
-  } // namespace __detail
+    // Detect whether a template argument _Sseq is a valid seed sequence for
+    // a random number engine _Engine with result type _Res.
+    // Used to constrain _Engine::_Engine(_Sseq&) and _Engine::seed(_Sseq&)
+    // as required by [rand.eng.general].
 
-_GLIBCXX_BEGIN_NAMESPACE_VERSION
+    template<typename _Sseq>
+      using __seed_seq_generate_t = decltype(
+	  std::declval<_Sseq&>().generate(std::declval<uint_least32_t*>(),
+					  std::declval<uint_least32_t*>()));
+
+    template<typename _Sseq, typename _Engine, typename _Res,
+	     typename _GenerateCheck = __seed_seq_generate_t<_Sseq>>
+      using _If_seed_seq_for = _Require<
+        __not_<is_same<__remove_cvref_t<_Sseq>, _Engine>>,
+	is_unsigned<typename _Sseq::result_type>,
+	__not_<is_convertible<_Sseq, _Res>>
+      >;
+
+  } // namespace __detail
+  /// @endcond
 
   /**
    * @addtogroup random_generators Random Number Generators
@@ -235,10 +260,15 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
   template<typename _UIntType, _UIntType __a, _UIntType __c, _UIntType __m>
     class linear_congruential_engine
     {
-      static_assert(std::is_unsigned<_UIntType>::value, "template argument "
-		    "substituting _UIntType not an unsigned integral type");
+      static_assert(std::is_unsigned<_UIntType>::value,
+		    "result_type must be an unsigned integral type");
       static_assert(__m == 0u || (__a < __m && __c < __m),
 		    "template argument substituting __m out of bounds");
+
+      template<typename _Sseq>
+	using _If_seed_seq
+	  = __detail::_If_seed_seq_for<_Sseq, linear_congruential_engine,
+				       _UIntType>;
 
     public:
       /** The type of the generated random value. */
@@ -254,13 +284,20 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 
       /**
        * @brief Constructs a %linear_congruential_engine random number
+       *        generator engine with seed 1.
+       */
+      linear_congruential_engine() : linear_congruential_engine(default_seed)
+      { }
+
+      /**
+       * @brief Constructs a %linear_congruential_engine random number
        *        generator engine with seed @p __s.  The default seed value
        *        is 1.
        *
        * @param __s The initial seed value.
        */
       explicit
-      linear_congruential_engine(result_type __s = default_seed)
+      linear_congruential_engine(result_type __s)
       { seed(__s); }
 
       /**
@@ -269,9 +306,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
        *
        * @param __q the seed sequence.
        */
-      template<typename _Sseq, typename = typename
-	std::enable_if<!std::is_same<_Sseq, linear_congruential_engine>::value>
-	       ::type>
+      template<typename _Sseq, typename = _If_seed_seq<_Sseq>>
         explicit
         linear_congruential_engine(_Sseq& __q)
         { seed(__q); }
@@ -293,7 +328,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
        * @param __q the seed sequence.
        */
       template<typename _Sseq>
-        typename std::enable_if<std::is_class<_Sseq>::value>::type
+        _If_seed_seq<_Sseq>
         seed(_Sseq& __q);
 
       /**
@@ -388,6 +423,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
       _UIntType _M_x;
     };
 
+#if __cpp_impl_three_way_comparison < 201907L
   /**
    * @brief Compares two linear congruential random number generator
    * objects of the same type for inequality.
@@ -406,7 +442,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 	       const std::linear_congruential_engine<_UIntType, __a,
 	       __c, __m>& __rhs)
     { return !(__lhs == __rhs); }
-
+#endif
 
   /**
    * A generalized feedback shift register discrete random number generator.
@@ -443,8 +479,8 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 	   _UIntType __c, size_t __l, _UIntType __f>
     class mersenne_twister_engine
     {
-      static_assert(std::is_unsigned<_UIntType>::value, "template argument "
-		    "substituting _UIntType not an unsigned integral type");
+      static_assert(std::is_unsigned<_UIntType>::value,
+		    "result_type must be an unsigned integral type");
       static_assert(1u <= __m && __m <= __n,
 		    "template argument substituting __m out of bounds");
       static_assert(__r <= __w, "template argument substituting "
@@ -470,6 +506,11 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
       static_assert(__f <= (__detail::_Shift<_UIntType, __w>::__value - 1),
 		    "template argument substituting __f out of bound");
 
+      template<typename _Sseq>
+	using _If_seed_seq
+	  = __detail::_If_seed_seq_for<_Sseq, mersenne_twister_engine,
+				       _UIntType>;
+
     public:
       /** The type of the generated random value. */
       typedef _UIntType result_type;
@@ -490,9 +531,12 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
       static constexpr result_type initialization_multiplier = __f;
       static constexpr result_type default_seed = 5489u;
 
-      // constructors and member function
+      // constructors and member functions
+
+      mersenne_twister_engine() : mersenne_twister_engine(default_seed) { }
+
       explicit
-      mersenne_twister_engine(result_type __sd = default_seed)
+      mersenne_twister_engine(result_type __sd)
       { seed(__sd); }
 
       /**
@@ -501,9 +545,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
        *
        * @param __q the seed sequence.
        */
-      template<typename _Sseq, typename = typename
-        std::enable_if<!std::is_same<_Sseq, mersenne_twister_engine>::value>
-	       ::type>
+      template<typename _Sseq, typename = _If_seed_seq<_Sseq>>
         explicit
         mersenne_twister_engine(_Sseq& __q)
         { seed(__q); }
@@ -512,7 +554,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
       seed(result_type __sd = default_seed);
 
       template<typename _Sseq>
-	typename std::enable_if<std::is_class<_Sseq>::value>::type
+        _If_seed_seq<_Sseq>
         seed(_Sseq& __q);
 
       /**
@@ -520,7 +562,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
        */
       static constexpr result_type
       min()
-      { return 0; };
+      { return 0; }
 
       /**
        * @brief Gets the largest possible value in the output range.
@@ -615,6 +657,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
       size_t    _M_p;
     };
 
+#if __cpp_impl_three_way_comparison < 201907L
   /**
    * @brief Compares two % mersenne_twister_engine random number generator
    *        objects of the same type for inequality.
@@ -638,7 +681,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 	       const std::mersenne_twister_engine<_UIntType, __w, __n, __m,
 	       __r, __a, __u, __d, __s, __b, __t, __c, __l, __f>& __rhs)
     { return !(__lhs == __rhs); }
-
+#endif
 
   /**
    * @brief The Marsaglia-Zaman generator.
@@ -658,12 +701,17 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
   template<typename _UIntType, size_t __w, size_t __s, size_t __r>
     class subtract_with_carry_engine
     {
-      static_assert(std::is_unsigned<_UIntType>::value, "template argument "
-		    "substituting _UIntType not an unsigned integral type");
+      static_assert(std::is_unsigned<_UIntType>::value,
+		    "result_type must be an unsigned integral type");
       static_assert(0u < __s && __s < __r,
-		    "template argument substituting __s out of bounds");
+		    "0 < s < r");
       static_assert(0u < __w && __w <= std::numeric_limits<_UIntType>::digits,
 		    "template argument substituting __w out of bounds");
+
+      template<typename _Sseq>
+	using _If_seed_seq
+	  = __detail::_If_seed_seq_for<_Sseq, subtract_with_carry_engine,
+				       _UIntType>;
 
     public:
       /** The type of the generated random value. */
@@ -673,14 +721,17 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
       static constexpr size_t      word_size    = __w;
       static constexpr size_t      short_lag    = __s;
       static constexpr size_t      long_lag     = __r;
-      static constexpr result_type default_seed = 19780503u;
+      static constexpr uint_least32_t default_seed = 19780503u;
+
+      subtract_with_carry_engine() : subtract_with_carry_engine(0u)
+      { }
 
       /**
-       * @brief Constructs an explicitly seeded % subtract_with_carry_engine
+       * @brief Constructs an explicitly seeded %subtract_with_carry_engine
        *        random number generator.
        */
       explicit
-      subtract_with_carry_engine(result_type __sd = default_seed)
+      subtract_with_carry_engine(result_type __sd)
       { seed(__sd); }
 
       /**
@@ -689,9 +740,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
        *
        * @param __q the seed sequence.
        */
-      template<typename _Sseq, typename = typename
-        std::enable_if<!std::is_same<_Sseq, subtract_with_carry_engine>::value>
-	       ::type>
+      template<typename _Sseq, typename = _If_seed_seq<_Sseq>>
         explicit
         subtract_with_carry_engine(_Sseq& __q)
         { seed(__q); }
@@ -709,14 +758,14 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
        * set carry to 1, otherwise sets carry to 0.
        */
       void
-      seed(result_type __sd = default_seed);
+      seed(result_type __sd = 0u);
 
       /**
        * @brief Seeds the initial state @f$x_0@f$ of the
        * % subtract_with_carry_engine random number generator.
        */
       template<typename _Sseq>
-	typename std::enable_if<std::is_class<_Sseq>::value>::type
+	_If_seed_seq<_Sseq>
         seed(_Sseq& __q);
 
       /**
@@ -815,6 +864,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
       size_t     _M_p;			///< Current index of x(i - r).
     };
 
+#if __cpp_impl_three_way_comparison < 201907L
   /**
    * @brief Compares two % subtract_with_carry_engine random number
    *        generator objects of the same type for inequality.
@@ -834,7 +884,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 	       const std::subtract_with_carry_engine<_UIntType, __w,
 	       __s, __r>& __rhs)
     { return !(__lhs == __rhs); }
-
+#endif
 
   /**
    * Produces random numbers from some base engine by discarding blocks of
@@ -851,6 +901,11 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
     public:
       /** The type of the generated random value. */
       typedef typename _RandomNumberEngine::result_type result_type;
+
+      template<typename _Sseq>
+	using _If_seed_seq
+	  = __detail::_If_seed_seq_for<_Sseq, discard_block_engine,
+				       result_type>;
 
       // parameter values
       static constexpr size_t block_size = __p;
@@ -899,10 +954,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
        *
        * @param __q A seed sequence.
        */
-      template<typename _Sseq, typename = typename
-	std::enable_if<!std::is_same<_Sseq, discard_block_engine>::value
-		       && !std::is_same<_Sseq, _RandomNumberEngine>::value>
-	       ::type>
+      template<typename _Sseq, typename = _If_seed_seq<_Sseq>>
         explicit
         discard_block_engine(_Sseq& __q)
 	: _M_b(__q), _M_n(0)
@@ -936,7 +988,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
        * @param __q A seed generator function.
        */
       template<typename _Sseq>
-        void
+        _If_seed_seq<_Sseq>
         seed(_Sseq& __q)
         {
 	  _M_b.seed(__q);
@@ -1038,6 +1090,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
       size_t _M_n;
     };
 
+#if __cpp_impl_three_way_comparison < 201907L
   /**
    * @brief Compares two %discard_block_engine random number generator
    *        objects of the same type for inequality.
@@ -1056,19 +1109,24 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 	       const std::discard_block_engine<_RandomNumberEngine, __p,
 	       __r>& __rhs)
     { return !(__lhs == __rhs); }
-
+#endif
 
   /**
    * Produces random numbers by combining random numbers from some base
-   * engine to produce random numbers with a specifies number of bits @p __w.
+   * engine to produce random numbers with a specified number of bits @p __w.
    */
   template<typename _RandomNumberEngine, size_t __w, typename _UIntType>
     class independent_bits_engine
     {
-      static_assert(std::is_unsigned<_UIntType>::value, "template argument "
-		    "substituting _UIntType not an unsigned integral type");
+      static_assert(std::is_unsigned<_UIntType>::value,
+		    "result_type must be an unsigned integral type");
       static_assert(0u < __w && __w <= std::numeric_limits<_UIntType>::digits,
 		    "template argument substituting __w out of bounds");
+
+      template<typename _Sseq>
+	using _If_seed_seq
+	  = __detail::_If_seed_seq_for<_Sseq, independent_bits_engine,
+				       _UIntType>;
 
     public:
       /** The type of the generated random value. */
@@ -1117,10 +1175,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
        *
        * @param __q A seed sequence.
        */
-      template<typename _Sseq, typename = typename
-	std::enable_if<!std::is_same<_Sseq, independent_bits_engine>::value
-		       && !std::is_same<_Sseq, _RandomNumberEngine>::value>
-               ::type>
+      template<typename _Sseq, typename = _If_seed_seq<_Sseq>>
         explicit
         independent_bits_engine(_Sseq& __q)
         : _M_b(__q)
@@ -1148,7 +1203,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
        * @param __q A seed generator function.
        */
       template<typename _Sseq>
-        void
+        _If_seed_seq<_Sseq>
         seed(_Sseq& __q)
         { _M_b.seed(__q); }
 
@@ -1233,6 +1288,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
       _RandomNumberEngine _M_b;
     };
 
+#if __cpp_impl_three_way_comparison < 201907L
   /**
    * @brief Compares two %independent_bits_engine random number generator
    * objects of the same type for inequality.
@@ -1252,6 +1308,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 	       const std::independent_bits_engine<_RandomNumberEngine, __w,
 	       _UIntType>& __rhs)
     { return !(__lhs == __rhs); }
+#endif
 
   /**
    * @brief Inserts the current state of a %independent_bits_engine random
@@ -1276,9 +1333,11 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 
 
   /**
-   * @brief Produces random numbers by combining random numbers from some
-   * base engine to produce random numbers with a specifies number of bits
-   * @p __w.
+   * @brief Produces random numbers by reordering random numbers from some
+   * base engine.
+   *
+   * The values from the base engine are stored in a sequence of size @p __k
+   * and shuffled by an algorithm that depends on those values.
    */
   template<typename _RandomNumberEngine, size_t __k>
     class shuffle_order_engine
@@ -1289,6 +1348,11 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
     public:
       /** The type of the generated random value. */
       typedef typename _RandomNumberEngine::result_type result_type;
+
+      template<typename _Sseq>
+	using _If_seed_seq
+	  = __detail::_If_seed_seq_for<_Sseq, shuffle_order_engine,
+				       result_type>;
 
       static constexpr size_t table_size = __k;
 
@@ -1339,10 +1403,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
        *
        * @param __q A seed sequence.
        */
-      template<typename _Sseq, typename = typename
-	std::enable_if<!std::is_same<_Sseq, shuffle_order_engine>::value
-		       && !std::is_same<_Sseq, _RandomNumberEngine>::value>
-	       ::type>
+      template<typename _Sseq, typename = _If_seed_seq<_Sseq>>
         explicit
         shuffle_order_engine(_Sseq& __q)
         : _M_b(__q)
@@ -1376,7 +1437,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
        * @param __q A seed generator function.
        */
       template<typename _Sseq>
-        void
+        _If_seed_seq<_Sseq>
         seed(_Sseq& __q)
         {
 	  _M_b.seed(__q);
@@ -1486,6 +1547,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
       result_type _M_y;
     };
 
+#if __cpp_impl_three_way_comparison < 201907L
   /**
    * Compares two %shuffle_order_engine random number generator objects
    * of the same type for inequality.
@@ -1504,7 +1566,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 	       const std::shuffle_order_engine<_RandomNumberEngine,
 	       __k>& __rhs)
     { return !(__lhs == __rhs); }
-
+#endif
 
   /**
    * The classic Minimum Standard rand0 of Lewis, Goodman, and Miller.
@@ -1572,25 +1634,14 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 
     // constructors, destructors and member functions
 
-#ifdef _GLIBCXX_USE_RANDOM_TR1
+    random_device() { _M_init("default"); }
 
     explicit
-    random_device(const std::string& __token = "default")
-    {
-      _M_init(__token);
-    }
+    random_device(const std::string& __token) { _M_init(__token); }
 
+#if defined _GLIBCXX_USE_DEV_RANDOM
     ~random_device()
     { _M_fini(); }
-
-#else
-
-    explicit
-    random_device(const std::string& __token = "mt19937")
-    { _M_init_pretr1(__token); }
-
-  public:
-
 #endif
 
     static constexpr result_type
@@ -1603,17 +1654,17 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 
     double
     entropy() const noexcept
-    { return 0.0; }
+    {
+#ifdef _GLIBCXX_USE_DEV_RANDOM
+      return this->_M_getentropy();
+#else
+      return 0.0;
+#endif
+    }
 
     result_type
     operator()()
-    {
-#ifdef _GLIBCXX_USE_RANDOM_TR1
-      return this->_M_getval();
-#else
-      return this->_M_getval_pretr1();
-#endif
-    }
+    { return this->_M_getval(); }
 
     // No copy functions.
     random_device(const random_device&) = delete;
@@ -1627,15 +1678,23 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 
     result_type _M_getval();
     result_type _M_getval_pretr1();
+    double _M_getentropy() const noexcept;
 
-    union
+    void _M_init(const char*, size_t); // not exported from the shared library
+
+    __extension__ union
     {
-      void*      _M_file;
+      struct
+      {
+	void*      _M_file;
+	result_type (*_M_func)(void*);
+	int _M_fd;
+      };
       mt19937    _M_mt;
     };
   };
 
-  /* @} */ // group random_generators
+  /// @} group random_generators
 
   /**
    * @addtogroup random_distributions Random Number Distributions
@@ -1651,6 +1710,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 
   // std::uniform_int_distribution is defined in <bits/uniform_int_dist.h>
 
+#if __cpp_impl_three_way_comparison < 201907L
   /**
    * @brief Return true if two uniform integer distributions have
    *        different parameters.
@@ -1660,6 +1720,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
     operator!=(const std::uniform_int_distribution<_IntType>& __d1,
 	       const std::uniform_int_distribution<_IntType>& __d2)
     { return !(__d1 == __d2); }
+#endif
 
   /**
    * @brief Inserts a %uniform_int_distribution random number
@@ -1702,19 +1763,21 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
     class uniform_real_distribution
     {
       static_assert(std::is_floating_point<_RealType>::value,
-		    "template argument not a floating point type");
+		    "result_type must be a floating point type");
 
     public:
       /** The type of the range of the distribution. */
       typedef _RealType result_type;
+
       /** Parameter type. */
       struct param_type
       {
 	typedef uniform_real_distribution<_RealType> distribution_type;
 
+	param_type() : param_type(0) { }
+
 	explicit
-	param_type(_RealType __a = _RealType(0),
-		   _RealType __b = _RealType(1))
+	param_type(_RealType __a, _RealType __b = _RealType(1))
 	: _M_a(__a), _M_b(__b)
 	{
 	  __glibcxx_assert(_M_a <= _M_b);
@@ -1732,6 +1795,12 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 	operator==(const param_type& __p1, const param_type& __p2)
 	{ return __p1._M_a == __p2._M_a && __p1._M_b == __p2._M_b; }
 
+#if __cpp_impl_three_way_comparison < 201907L
+	friend bool
+	operator!=(const param_type& __p1, const param_type& __p2)
+	{ return !(__p1 == __p2); }
+#endif
+
       private:
 	_RealType _M_a;
 	_RealType _M_b;
@@ -1741,12 +1810,18 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
       /**
        * @brief Constructs a uniform_real_distribution object.
        *
+       * The lower bound is set to 0.0 and the upper bound to 1.0
+       */
+      uniform_real_distribution() : uniform_real_distribution(0.0) { }
+
+      /**
+       * @brief Constructs a uniform_real_distribution object.
+       *
        * @param __a [IN]  The lower bound of the distribution.
        * @param __b [IN]  The upper bound of the distribution.
        */
       explicit
-      uniform_real_distribution(_RealType __a = _RealType(0),
-				_RealType __b = _RealType(1))
+      uniform_real_distribution(_RealType __a, _RealType __b = _RealType(1))
       : _M_param(__a, __b)
       { }
 
@@ -1860,6 +1935,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
       param_type _M_param;
     };
 
+#if __cpp_impl_three_way_comparison < 201907L
   /**
    * @brief Return true if two uniform real distributions have
    *        different parameters.
@@ -1869,6 +1945,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
     operator!=(const std::uniform_real_distribution<_IntType>& __d1,
 	       const std::uniform_real_distribution<_IntType>& __d2)
     { return !(__d1 == __d2); }
+#endif
 
   /**
    * @brief Inserts a %uniform_real_distribution random number
@@ -1899,7 +1976,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
     operator>>(std::basic_istream<_CharT, _Traits>&,
 	       std::uniform_real_distribution<_RealType>&);
 
-  /* @} */ // group random_distributions_uniform
+  /// @} group random_distributions_uniform
 
   /**
    * @addtogroup random_distributions_normal Normal Distributions
@@ -1920,19 +1997,21 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
     class normal_distribution
     {
       static_assert(std::is_floating_point<_RealType>::value,
-		    "template argument not a floating point type");
+		    "result_type must be a floating point type");
 
     public:
       /** The type of the range of the distribution. */
       typedef _RealType result_type;
+
       /** Parameter type. */
       struct param_type
       {
 	typedef normal_distribution<_RealType> distribution_type;
 
+	param_type() : param_type(0.0) { }
+
 	explicit
-	param_type(_RealType __mean = _RealType(0),
-		   _RealType __stddev = _RealType(1))
+	param_type(_RealType __mean, _RealType __stddev = _RealType(1))
 	: _M_mean(__mean), _M_stddev(__stddev)
 	{
 	  __glibcxx_assert(_M_stddev > _RealType(0));
@@ -1951,25 +2030,33 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 	{ return (__p1._M_mean == __p2._M_mean
 		  && __p1._M_stddev == __p2._M_stddev); }
 
+#if __cpp_impl_three_way_comparison < 201907L
+	friend bool
+	operator!=(const param_type& __p1, const param_type& __p2)
+	{ return !(__p1 == __p2); }
+#endif
+
       private:
 	_RealType _M_mean;
 	_RealType _M_stddev;
       };
 
     public:
+      normal_distribution() : normal_distribution(0.0) { }
+
       /**
        * Constructs a normal distribution with parameters @f$mean@f$ and
        * standard deviation.
        */
       explicit
-      normal_distribution(result_type __mean = result_type(0),
+      normal_distribution(result_type __mean,
 			  result_type __stddev = result_type(1))
-      : _M_param(__mean, __stddev), _M_saved_available(false)
+      : _M_param(__mean, __stddev)
       { }
 
       explicit
       normal_distribution(const param_type& __p)
-      : _M_param(__p), _M_saved_available(false)
+      : _M_param(__p)
       { }
 
       /**
@@ -2106,10 +2193,11 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 			const param_type& __p);
 
       param_type  _M_param;
-      result_type _M_saved;
-      bool        _M_saved_available;
+      result_type _M_saved = 0;
+      bool        _M_saved_available = false;
     };
 
+#if __cpp_impl_three_way_comparison < 201907L
   /**
    * @brief Return true if two normal distributions are different.
    */
@@ -2118,7 +2206,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
     operator!=(const std::normal_distribution<_RealType>& __d1,
 	       const std::normal_distribution<_RealType>& __d2)
     { return !(__d1 == __d2); }
-
+#endif
 
   /**
    * @brief A lognormal_distribution random number distribution.
@@ -2133,19 +2221,21 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
     class lognormal_distribution
     {
       static_assert(std::is_floating_point<_RealType>::value,
-		    "template argument not a floating point type");
+		    "result_type must be a floating point type");
 
     public:
       /** The type of the range of the distribution. */
       typedef _RealType result_type;
+
       /** Parameter type. */
       struct param_type
       {
 	typedef lognormal_distribution<_RealType> distribution_type;
 
+	param_type() : param_type(0.0) { }
+
 	explicit
-	param_type(_RealType __m = _RealType(0),
-		   _RealType __s = _RealType(1))
+	param_type(_RealType __m, _RealType __s = _RealType(1))
 	: _M_m(__m), _M_s(__s)
 	{ }
 
@@ -2161,14 +2251,21 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 	operator==(const param_type& __p1, const param_type& __p2)
 	{ return __p1._M_m == __p2._M_m && __p1._M_s == __p2._M_s; }
 
+#if __cpp_impl_three_way_comparison < 201907L
+	friend bool
+	operator!=(const param_type& __p1, const param_type& __p2)
+	{ return !(__p1 == __p2); }
+#endif
+
       private:
 	_RealType _M_m;
 	_RealType _M_s;
       };
 
+      lognormal_distribution() : lognormal_distribution(0.0) { }
+
       explicit
-      lognormal_distribution(_RealType __m = _RealType(0),
-			     _RealType __s = _RealType(1))
+      lognormal_distribution(_RealType __m, _RealType __s = _RealType(1))
       : _M_param(__m, __s), _M_nd()
       { }
 
@@ -2314,6 +2411,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
       std::normal_distribution<result_type> _M_nd;
     };
 
+#if __cpp_impl_three_way_comparison < 201907L
   /**
    * @brief Return true if two lognormal distributions are different.
    */
@@ -2322,7 +2420,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
     operator!=(const std::lognormal_distribution<_RealType>& __d1,
 	       const std::lognormal_distribution<_RealType>& __d2)
     { return !(__d1 == __d2); }
-
+#endif
 
   /**
    * @brief A gamma continuous distribution for random numbers.
@@ -2337,20 +2435,22 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
     class gamma_distribution
     {
       static_assert(std::is_floating_point<_RealType>::value,
-		    "template argument not a floating point type");
+		    "result_type must be a floating point type");
 
     public:
       /** The type of the range of the distribution. */
       typedef _RealType result_type;
+
       /** Parameter type. */
       struct param_type
       {
 	typedef gamma_distribution<_RealType> distribution_type;
 	friend class gamma_distribution<_RealType>;
 
+	param_type() : param_type(1.0) { }
+
 	explicit
-	param_type(_RealType __alpha_val = _RealType(1),
-		   _RealType __beta_val = _RealType(1))
+	param_type(_RealType __alpha_val, _RealType __beta_val = _RealType(1))
 	: _M_alpha(__alpha_val), _M_beta(__beta_val)
 	{
 	  __glibcxx_assert(_M_alpha > _RealType(0));
@@ -2370,6 +2470,12 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 	{ return (__p1._M_alpha == __p2._M_alpha
 		  && __p1._M_beta == __p2._M_beta); }
 
+#if __cpp_impl_three_way_comparison < 201907L
+	friend bool
+	operator!=(const param_type& __p1, const param_type& __p2)
+	{ return !(__p1 == __p2); }
+#endif
+
       private:
 	void
 	_M_initialize();
@@ -2382,11 +2488,16 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 
     public:
       /**
+       * @brief Constructs a gamma distribution with parameters 1 and 1.
+       */
+      gamma_distribution() : gamma_distribution(1.0) { }
+
+      /**
        * @brief Constructs a gamma distribution with parameters
        * @f$\alpha@f$ and @f$\beta@f$.
        */
       explicit
-      gamma_distribution(_RealType __alpha_val = _RealType(1),
+      gamma_distribution(_RealType __alpha_val,
 			 _RealType __beta_val = _RealType(1))
       : _M_param(__alpha_val, __beta_val), _M_nd()
       { }
@@ -2534,6 +2645,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
       std::normal_distribution<result_type> _M_nd;
     };
 
+#if __cpp_impl_three_way_comparison < 201907L
   /**
    * @brief Return true if two gamma distributions are different.
    */
@@ -2542,7 +2654,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
      operator!=(const std::gamma_distribution<_RealType>& __d1,
 		const std::gamma_distribution<_RealType>& __d2)
     { return !(__d1 == __d2); }
-
+#endif
 
   /**
    * @brief A chi_squared_distribution random number distribution.
@@ -2554,18 +2666,21 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
     class chi_squared_distribution
     {
       static_assert(std::is_floating_point<_RealType>::value,
-		    "template argument not a floating point type");
+		    "result_type must be a floating point type");
 
     public:
       /** The type of the range of the distribution. */
       typedef _RealType result_type;
+
       /** Parameter type. */
       struct param_type
       {
 	typedef chi_squared_distribution<_RealType> distribution_type;
 
+	param_type() : param_type(1) { }
+
 	explicit
-	param_type(_RealType __n = _RealType(1))
+	param_type(_RealType __n)
 	: _M_n(__n)
 	{ }
 
@@ -2577,12 +2692,20 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 	operator==(const param_type& __p1, const param_type& __p2)
 	{ return __p1._M_n == __p2._M_n; }
 
+#if __cpp_impl_three_way_comparison < 201907L
+	friend bool
+	operator!=(const param_type& __p1, const param_type& __p2)
+	{ return !(__p1 == __p2); }
+#endif
+
       private:
 	_RealType _M_n;
       };
 
+      chi_squared_distribution() : chi_squared_distribution(1) { }
+
       explicit
-      chi_squared_distribution(_RealType __n = _RealType(1))
+      chi_squared_distribution(_RealType __n)
       : _M_param(__n), _M_gd(__n / 2)
       { }
 
@@ -2618,7 +2741,12 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
        */
       void
       param(const param_type& __param)
-      { _M_param = __param; }
+      {
+	_M_param = __param;
+	typedef typename std::gamma_distribution<result_type>::param_type
+	  param_type;
+	_M_gd.param(param_type{__param.n() / 2});
+      }
 
       /**
        * @brief Returns the greatest lower bound value of the distribution.
@@ -2744,6 +2872,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
       std::gamma_distribution<result_type> _M_gd;
     };
 
+#if __cpp_impl_three_way_comparison < 201907L
   /**
    * @brief Return true if two Chi-squared distributions are different.
    */
@@ -2752,7 +2881,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
     operator!=(const std::chi_squared_distribution<_RealType>& __d1,
 	       const std::chi_squared_distribution<_RealType>& __d2)
     { return !(__d1 == __d2); }
-
+#endif
 
   /**
    * @brief A cauchy_distribution random number distribution.
@@ -2764,19 +2893,21 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
     class cauchy_distribution
     {
       static_assert(std::is_floating_point<_RealType>::value,
-		    "template argument not a floating point type");
+		    "result_type must be a floating point type");
 
     public:
       /** The type of the range of the distribution. */
       typedef _RealType result_type;
+
       /** Parameter type. */
       struct param_type
       {
 	typedef cauchy_distribution<_RealType> distribution_type;
 
+	param_type() : param_type(0) { }
+
 	explicit
-	param_type(_RealType __a = _RealType(0),
-		   _RealType __b = _RealType(1))
+	param_type(_RealType __a, _RealType __b = _RealType(1))
 	: _M_a(__a), _M_b(__b)
 	{ }
 
@@ -2792,14 +2923,21 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 	operator==(const param_type& __p1, const param_type& __p2)
 	{ return __p1._M_a == __p2._M_a && __p1._M_b == __p2._M_b; }
 
+#if __cpp_impl_three_way_comparison < 201907L
+	friend bool
+	operator!=(const param_type& __p1, const param_type& __p2)
+	{ return !(__p1 == __p2); }
+#endif
+
       private:
 	_RealType _M_a;
 	_RealType _M_b;
       };
 
+      cauchy_distribution() : cauchy_distribution(0.0) { }
+
       explicit
-      cauchy_distribution(_RealType __a = _RealType(0),
-			  _RealType __b = _RealType(1))
+      cauchy_distribution(_RealType __a, _RealType __b = 1.0)
       : _M_param(__a, __b)
       { }
 
@@ -2910,6 +3048,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
       param_type _M_param;
     };
 
+#if __cpp_impl_three_way_comparison < 201907L
   /**
    * @brief Return true if two Cauchy distributions have
    *        different parameters.
@@ -2919,6 +3058,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
     operator!=(const std::cauchy_distribution<_RealType>& __d1,
 	       const std::cauchy_distribution<_RealType>& __d2)
     { return !(__d1 == __d2); }
+#endif
 
   /**
    * @brief Inserts a %cauchy_distribution random number distribution
@@ -2965,19 +3105,21 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
     class fisher_f_distribution
     {
       static_assert(std::is_floating_point<_RealType>::value,
-		    "template argument not a floating point type");
+		    "result_type must be a floating point type");
 
     public:
       /** The type of the range of the distribution. */
       typedef _RealType result_type;
+
       /** Parameter type. */
       struct param_type
       {
 	typedef fisher_f_distribution<_RealType> distribution_type;
 
+	param_type() : param_type(1) { }
+
 	explicit
-	param_type(_RealType __m = _RealType(1),
-		   _RealType __n = _RealType(1))
+	param_type(_RealType __m, _RealType __n = _RealType(1))
 	: _M_m(__m), _M_n(__n)
 	{ }
 
@@ -2993,13 +3135,21 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 	operator==(const param_type& __p1, const param_type& __p2)
 	{ return __p1._M_m == __p2._M_m && __p1._M_n == __p2._M_n; }
 
+#if __cpp_impl_three_way_comparison < 201907L
+	friend bool
+	operator!=(const param_type& __p1, const param_type& __p2)
+	{ return !(__p1 == __p2); }
+#endif
+
       private:
 	_RealType _M_m;
 	_RealType _M_n;
       };
 
+      fisher_f_distribution() : fisher_f_distribution(1.0) { }
+
       explicit
-      fisher_f_distribution(_RealType __m = _RealType(1),
+      fisher_f_distribution(_RealType __m,
 			    _RealType __n = _RealType(1))
       : _M_param(__m, __n), _M_gd_x(__m / 2), _M_gd_y(__n / 2)
       { }
@@ -3167,6 +3317,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
       std::gamma_distribution<result_type> _M_gd_x, _M_gd_y;
     };
 
+#if __cpp_impl_three_way_comparison < 201907L
   /**
    * @brief Return true if two Fisher f distributions are different.
    */
@@ -3175,6 +3326,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
     operator!=(const std::fisher_f_distribution<_RealType>& __d1,
 	       const std::fisher_f_distribution<_RealType>& __d2)
     { return !(__d1 == __d2); }
+#endif
 
   /**
    * @brief A student_t_distribution random number distribution.
@@ -3189,18 +3341,21 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
     class student_t_distribution
     {
       static_assert(std::is_floating_point<_RealType>::value,
-		    "template argument not a floating point type");
+		    "result_type must be a floating point type");
 
     public:
       /** The type of the range of the distribution. */
       typedef _RealType result_type;
+
       /** Parameter type. */
       struct param_type
       {
 	typedef student_t_distribution<_RealType> distribution_type;
 
+	param_type() : param_type(1) { }
+
 	explicit
-	param_type(_RealType __n = _RealType(1))
+	param_type(_RealType __n)
 	: _M_n(__n)
 	{ }
 
@@ -3212,12 +3367,20 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 	operator==(const param_type& __p1, const param_type& __p2)
 	{ return __p1._M_n == __p2._M_n; }
 
+#if __cpp_impl_three_way_comparison < 201907L
+	friend bool
+	operator!=(const param_type& __p1, const param_type& __p2)
+	{ return !(__p1 == __p2); }
+#endif
+
       private:
 	_RealType _M_n;
       };
 
+      student_t_distribution() : student_t_distribution(1.0) { }
+
       explicit
-      student_t_distribution(_RealType __n = _RealType(1))
+      student_t_distribution(_RealType __n)
       : _M_param(__n), _M_nd(), _M_gd(__n / 2, 2)
       { }
 
@@ -3380,6 +3543,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
       std::gamma_distribution<result_type> _M_gd;
     };
 
+#if __cpp_impl_three_way_comparison < 201907L
   /**
    * @brief Return true if two Student t distributions are different.
    */
@@ -3388,9 +3552,9 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
     operator!=(const std::student_t_distribution<_RealType>& __d1,
 	       const std::student_t_distribution<_RealType>& __d2)
     { return !(__d1 == __d2); }
+#endif
 
-
-  /* @} */ // group random_distributions_normal
+  /// @} group random_distributions_normal
 
   /**
    * @addtogroup random_distributions_bernoulli Bernoulli Distributions
@@ -3409,13 +3573,16 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
   public:
     /** The type of the range of the distribution. */
     typedef bool result_type;
+
     /** Parameter type. */
     struct param_type
     {
       typedef bernoulli_distribution distribution_type;
 
+      param_type() : param_type(0.5) { }
+
       explicit
-      param_type(double __p = 0.5)
+      param_type(double __p)
       : _M_p(__p)
       {
 	__glibcxx_assert((_M_p >= 0.0) && (_M_p <= 1.0));
@@ -3429,11 +3596,22 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
       operator==(const param_type& __p1, const param_type& __p2)
       { return __p1._M_p == __p2._M_p; }
 
+#if __cpp_impl_three_way_comparison < 201907L
+      friend bool
+      operator!=(const param_type& __p1, const param_type& __p2)
+      { return !(__p1 == __p2); }
+#endif
+
     private:
       double _M_p;
     };
 
   public:
+    /**
+     * @brief Constructs a Bernoulli distribution with likelihood 0.5.
+     */
+    bernoulli_distribution() : bernoulli_distribution(0.5) { }
+
     /**
      * @brief Constructs a Bernoulli distribution with likelihood @p p.
      *
@@ -3441,7 +3619,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
      *                   Must be in the interval @f$[0, 1]@f$.
      */
     explicit
-    bernoulli_distribution(double __p = 0.5)
+    bernoulli_distribution(double __p)
     : _M_param(__p)
     { }
 
@@ -3556,6 +3734,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
     param_type _M_param;
   };
 
+#if __cpp_impl_three_way_comparison < 201907L
   /**
    * @brief Return true if two Bernoulli distributions have
    *        different parameters.
@@ -3564,6 +3743,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
   operator!=(const std::bernoulli_distribution& __d1,
 	     const std::bernoulli_distribution& __d2)
   { return !(__d1 == __d2); }
+#endif
 
   /**
    * @brief Inserts a %bernoulli_distribution random number distribution
@@ -3590,13 +3770,13 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
    * @returns The input stream with @p __x extracted or in an error state.
    */
   template<typename _CharT, typename _Traits>
-    std::basic_istream<_CharT, _Traits>&
+    inline std::basic_istream<_CharT, _Traits>&
     operator>>(std::basic_istream<_CharT, _Traits>& __is,
 	       std::bernoulli_distribution& __x)
     {
       double __p;
-      __is >> __p;
-      __x.param(bernoulli_distribution::param_type(__p));
+      if (__is >> __p)
+	__x.param(bernoulli_distribution::param_type(__p));
       return __is;
     }
 
@@ -3612,19 +3792,22 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
     class binomial_distribution
     {
       static_assert(std::is_integral<_IntType>::value,
-		    "template argument not an integral type");
+		    "result_type must be an integral type");
 
     public:
       /** The type of the range of the distribution. */
       typedef _IntType result_type;
+
       /** Parameter type. */
       struct param_type
       {
 	typedef binomial_distribution<_IntType> distribution_type;
 	friend class binomial_distribution<_IntType>;
 
+	param_type() : param_type(1) { }
+
 	explicit
-	param_type(_IntType __t = _IntType(1), double __p = 0.5)
+	param_type(_IntType __t, double __p = 0.5)
 	: _M_t(__t), _M_p(__p)
 	{
 	  __glibcxx_assert((_M_t >= _IntType(0))
@@ -3645,6 +3828,12 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 	operator==(const param_type& __p1, const param_type& __p2)
 	{ return __p1._M_t == __p2._M_t && __p1._M_p == __p2._M_p; }
 
+#if __cpp_impl_three_way_comparison < 201907L
+	friend bool
+	operator!=(const param_type& __p1, const param_type& __p2)
+	{ return !(__p1 == __p2); }
+#endif
+
       private:
 	void
 	_M_initialize();
@@ -3660,10 +3849,12 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 	bool   _M_easy;
       };
 
-      // constructors and member function
+      // constructors and member functions
+
+      binomial_distribution() : binomial_distribution(1) { }
+
       explicit
-      binomial_distribution(_IntType __t = _IntType(1),
-			    double __p = 0.5)
+      binomial_distribution(_IntType __t, double __p = 0.5)
       : _M_param(__t, __p), _M_nd()
       { }
 
@@ -3822,6 +4013,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
       std::normal_distribution<double> _M_nd;
     };
 
+#if __cpp_impl_three_way_comparison < 201907L
   /**
    * @brief Return true if two binomial distributions are different.
    */
@@ -3830,7 +4022,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
     operator!=(const std::binomial_distribution<_IntType>& __d1,
 	       const std::binomial_distribution<_IntType>& __d2)
     { return !(__d1 == __d2); }
-
+#endif
 
   /**
    * @brief A discrete geometric random number distribution.
@@ -3843,19 +4035,22 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
     class geometric_distribution
     {
       static_assert(std::is_integral<_IntType>::value,
-		    "template argument not an integral type");
+		    "result_type must be an integral type");
 
     public:
       /** The type of the range of the distribution. */
       typedef _IntType  result_type;
+
       /** Parameter type. */
       struct param_type
       {
 	typedef geometric_distribution<_IntType> distribution_type;
 	friend class geometric_distribution<_IntType>;
 
+	param_type() : param_type(0.5) { }
+
 	explicit
-	param_type(double __p = 0.5)
+	param_type(double __p)
 	: _M_p(__p)
 	{
 	  __glibcxx_assert((_M_p > 0.0) && (_M_p < 1.0));
@@ -3870,6 +4065,12 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 	operator==(const param_type& __p1, const param_type& __p2)
 	{ return __p1._M_p == __p2._M_p; }
 
+#if __cpp_impl_three_way_comparison < 201907L
+	friend bool
+	operator!=(const param_type& __p1, const param_type& __p2)
+	{ return !(__p1 == __p2); }
+#endif
+
       private:
 	void
 	_M_initialize()
@@ -3880,9 +4081,12 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 	double _M_log_1_p;
       };
 
-      // constructors and member function
+      // constructors and member functions
+
+      geometric_distribution() : geometric_distribution(0.5) { }
+
       explicit
-      geometric_distribution(double __p = 0.5)
+      geometric_distribution(double __p)
       : _M_param(__p)
       { }
 
@@ -3990,6 +4194,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
       param_type _M_param;
     };
 
+#if __cpp_impl_three_way_comparison < 201907L
   /**
    * @brief Return true if two geometric distributions have
    *        different parameters.
@@ -3999,6 +4204,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
     operator!=(const std::geometric_distribution<_IntType>& __d1,
 	       const std::geometric_distribution<_IntType>& __d2)
     { return !(__d1 == __d2); }
+#endif
 
   /**
    * @brief Inserts a %geometric_distribution random number distribution
@@ -4043,18 +4249,21 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
     class negative_binomial_distribution
     {
       static_assert(std::is_integral<_IntType>::value,
-		    "template argument not an integral type");
+		    "result_type must be an integral type");
 
     public:
       /** The type of the range of the distribution. */
       typedef _IntType result_type;
+
       /** Parameter type. */
       struct param_type
       {
 	typedef negative_binomial_distribution<_IntType> distribution_type;
 
+	param_type() : param_type(1) { }
+
 	explicit
-	param_type(_IntType __k = 1, double __p = 0.5)
+	param_type(_IntType __k, double __p = 0.5)
 	: _M_k(__k), _M_p(__p)
 	{
 	  __glibcxx_assert((_M_k > 0) && (_M_p > 0.0) && (_M_p <= 1.0));
@@ -4072,13 +4281,21 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 	operator==(const param_type& __p1, const param_type& __p2)
 	{ return __p1._M_k == __p2._M_k && __p1._M_p == __p2._M_p; }
 
+#if __cpp_impl_three_way_comparison < 201907L
+	friend bool
+	operator!=(const param_type& __p1, const param_type& __p2)
+	{ return !(__p1 == __p2); }
+#endif
+
       private:
 	_IntType _M_k;
 	double _M_p;
       };
 
+      negative_binomial_distribution() : negative_binomial_distribution(1) { }
+
       explicit
-      negative_binomial_distribution(_IntType __k = 1, double __p = 0.5)
+      negative_binomial_distribution(_IntType __k, double __p = 0.5)
       : _M_param(__k, __p), _M_gd(__k, (1.0 - __p) / __p)
       { }
 
@@ -4236,6 +4453,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
       std::gamma_distribution<double> _M_gd;
     };
 
+#if __cpp_impl_three_way_comparison < 201907L
   /**
    * @brief Return true if two negative binomial distributions are different.
    */
@@ -4244,9 +4462,9 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
     operator!=(const std::negative_binomial_distribution<_IntType>& __d1,
 	       const std::negative_binomial_distribution<_IntType>& __d2)
     { return !(__d1 == __d2); }
+#endif
 
-
-  /* @} */ // group random_distributions_bernoulli
+  /// @} group random_distributions_bernoulli
 
   /**
    * @addtogroup random_distributions_poisson Poisson Distributions
@@ -4265,19 +4483,22 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
     class poisson_distribution
     {
       static_assert(std::is_integral<_IntType>::value,
-		    "template argument not an integral type");
+		    "result_type must be an integral type");
 
     public:
       /** The type of the range of the distribution. */
       typedef _IntType  result_type;
+
       /** Parameter type. */
       struct param_type
       {
 	typedef poisson_distribution<_IntType> distribution_type;
 	friend class poisson_distribution<_IntType>;
 
+	param_type() : param_type(1.0) { }
+
 	explicit
-	param_type(double __mean = 1.0)
+	param_type(double __mean)
 	: _M_mean(__mean)
 	{
 	  __glibcxx_assert(_M_mean > 0.0);
@@ -4292,6 +4513,12 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 	operator==(const param_type& __p1, const param_type& __p2)
 	{ return __p1._M_mean == __p2._M_mean; }
 
+#if __cpp_impl_three_way_comparison < 201907L
+	friend bool
+	operator!=(const param_type& __p1, const param_type& __p2)
+	{ return !(__p1 == __p2); }
+#endif
+
       private:
 	// Hosts either log(mean) or the threshold of the simple method.
 	void
@@ -4305,9 +4532,12 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 #endif
       };
 
-      // constructors and member function
+      // constructors and member functions
+
+      poisson_distribution() : poisson_distribution(1.0) { }
+
       explicit
-      poisson_distribution(double __mean = 1.0)
+      poisson_distribution(double __mean)
       : _M_param(__mean), _M_nd()
       { }
 
@@ -4452,6 +4682,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
       std::normal_distribution<double> _M_nd;
     };
 
+#if __cpp_impl_three_way_comparison < 201907L
   /**
    * @brief Return true if two Poisson distributions are different.
    */
@@ -4460,7 +4691,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
     operator!=(const std::poisson_distribution<_IntType>& __d1,
 	       const std::poisson_distribution<_IntType>& __d2)
     { return !(__d1 == __d2); }
-
+#endif
 
   /**
    * @brief An exponential continuous distribution for random numbers.
@@ -4481,18 +4712,21 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
     class exponential_distribution
     {
       static_assert(std::is_floating_point<_RealType>::value,
-		    "template argument not a floating point type");
+		    "result_type must be a floating point type");
 
     public:
       /** The type of the range of the distribution. */
       typedef _RealType result_type;
+
       /** Parameter type. */
       struct param_type
       {
 	typedef exponential_distribution<_RealType> distribution_type;
 
+	param_type() : param_type(1.0) { }
+
 	explicit
-	param_type(_RealType __lambda = _RealType(1))
+	param_type(_RealType __lambda)
 	: _M_lambda(__lambda)
 	{
 	  __glibcxx_assert(_M_lambda > _RealType(0));
@@ -4506,6 +4740,12 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 	operator==(const param_type& __p1, const param_type& __p2)
 	{ return __p1._M_lambda == __p2._M_lambda; }
 
+#if __cpp_impl_three_way_comparison < 201907L
+	friend bool
+	operator!=(const param_type& __p1, const param_type& __p2)
+	{ return !(__p1 == __p2); }
+#endif
+
       private:
 	_RealType _M_lambda;
       };
@@ -4513,10 +4753,16 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
     public:
       /**
        * @brief Constructs an exponential distribution with inverse scale
+       *        parameter 1.0
+       */
+      exponential_distribution() : exponential_distribution(1.0) { }
+
+      /**
+       * @brief Constructs an exponential distribution with inverse scale
        *        parameter @f$\lambda@f$.
        */
       explicit
-      exponential_distribution(const result_type& __lambda = result_type(1))
+      exponential_distribution(_RealType __lambda)
       : _M_param(__lambda)
       { }
 
@@ -4629,6 +4875,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
       param_type _M_param;
     };
 
+#if __cpp_impl_three_way_comparison < 201907L
   /**
    * @brief Return true if two exponential distributions have different
    *        parameters.
@@ -4638,6 +4885,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
     operator!=(const std::exponential_distribution<_RealType>& __d1,
 	       const std::exponential_distribution<_RealType>& __d2)
     { return !(__d1 == __d2); }
+#endif
 
   /**
    * @brief Inserts a %exponential_distribution random number distribution
@@ -4683,19 +4931,21 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
     class weibull_distribution
     {
       static_assert(std::is_floating_point<_RealType>::value,
-		    "template argument not a floating point type");
+		    "result_type must be a floating point type");
 
     public:
       /** The type of the range of the distribution. */
       typedef _RealType result_type;
+
       /** Parameter type. */
       struct param_type
       {
 	typedef weibull_distribution<_RealType> distribution_type;
 
+	param_type() : param_type(1.0) { }
+
 	explicit
-	param_type(_RealType __a = _RealType(1),
-		   _RealType __b = _RealType(1))
+	param_type(_RealType __a, _RealType __b = _RealType(1.0))
 	: _M_a(__a), _M_b(__b)
 	{ }
 
@@ -4711,14 +4961,21 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 	operator==(const param_type& __p1, const param_type& __p2)
 	{ return __p1._M_a == __p2._M_a && __p1._M_b == __p2._M_b; }
 
+#if __cpp_impl_three_way_comparison < 201907L
+	friend bool
+	operator!=(const param_type& __p1, const param_type& __p2)
+	{ return !(__p1 == __p2); }
+#endif
+
       private:
 	_RealType _M_a;
 	_RealType _M_b;
       };
 
+      weibull_distribution() : weibull_distribution(1.0) { }
+
       explicit
-      weibull_distribution(_RealType __a = _RealType(1),
-			   _RealType __b = _RealType(1))
+      weibull_distribution(_RealType __a, _RealType __b = _RealType(1))
       : _M_param(__a, __b)
       { }
 
@@ -4832,6 +5089,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
       param_type _M_param;
     };
 
+#if __cpp_impl_three_way_comparison < 201907L
    /**
     * @brief Return true if two Weibull distributions have different
     *        parameters.
@@ -4841,6 +5099,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
     operator!=(const std::weibull_distribution<_RealType>& __d1,
 	       const std::weibull_distribution<_RealType>& __d2)
     { return !(__d1 == __d2); }
+#endif
 
   /**
    * @brief Inserts a %weibull_distribution random number distribution
@@ -4886,19 +5145,21 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
     class extreme_value_distribution
     {
       static_assert(std::is_floating_point<_RealType>::value,
-		    "template argument not a floating point type");
+		    "result_type must be a floating point type");
 
     public:
       /** The type of the range of the distribution. */
       typedef _RealType result_type;
+
       /** Parameter type. */
       struct param_type
       {
 	typedef extreme_value_distribution<_RealType> distribution_type;
 
+	param_type() : param_type(0.0) { }
+
 	explicit
-	param_type(_RealType __a = _RealType(0),
-		   _RealType __b = _RealType(1))
+	param_type(_RealType __a, _RealType __b = _RealType(1.0))
 	: _M_a(__a), _M_b(__b)
 	{ }
 
@@ -4914,14 +5175,21 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 	operator==(const param_type& __p1, const param_type& __p2)
 	{ return __p1._M_a == __p2._M_a && __p1._M_b == __p2._M_b; }
 
+#if __cpp_impl_three_way_comparison < 201907L
+	friend bool
+	operator!=(const param_type& __p1, const param_type& __p2)
+	{ return !(__p1 == __p2); }
+#endif
+
       private:
 	_RealType _M_a;
 	_RealType _M_b;
       };
 
+      extreme_value_distribution() : extreme_value_distribution(0.0) { }
+
       explicit
-      extreme_value_distribution(_RealType __a = _RealType(0),
-				 _RealType __b = _RealType(1))
+      extreme_value_distribution(_RealType __a, _RealType __b = _RealType(1))
       : _M_param(__a, __b)
       { }
 
@@ -5035,6 +5303,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
       param_type _M_param;
     };
 
+#if __cpp_impl_three_way_comparison < 201907L
   /**
     * @brief Return true if two extreme value distributions have different
     *        parameters.
@@ -5044,6 +5313,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
     operator!=(const std::extreme_value_distribution<_RealType>& __d1,
 	       const std::extreme_value_distribution<_RealType>& __d2)
     { return !(__d1 == __d2); }
+#endif
 
   /**
    * @brief Inserts a %extreme_value_distribution random number distribution
@@ -5086,11 +5356,12 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
     class discrete_distribution
     {
       static_assert(std::is_integral<_IntType>::value,
-		    "template argument not an integral type");
+		    "result_type must be an integral type");
 
     public:
       /** The type of the range of the distribution. */
       typedef _IntType result_type;
+
       /** Parameter type. */
       struct param_type
       {
@@ -5126,6 +5397,12 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 	friend bool
 	operator==(const param_type& __p1, const param_type& __p2)
 	{ return __p1._M_prob == __p2._M_prob; }
+
+#if __cpp_impl_three_way_comparison < 201907L
+	friend bool
+	operator!=(const param_type& __p1, const param_type& __p2)
+	{ return !(__p1 == __p2); }
+#endif
 
       private:
 	void
@@ -5295,6 +5572,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
       param_type _M_param;
     };
 
+#if __cpp_impl_three_way_comparison < 201907L
   /**
     * @brief Return true if two discrete distributions have different
     *        parameters.
@@ -5304,7 +5582,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
     operator!=(const std::discrete_distribution<_IntType>& __d1,
 	       const std::discrete_distribution<_IntType>& __d2)
     { return !(__d1 == __d2); }
-
+#endif
 
   /**
    * @brief A piecewise_constant_distribution random number distribution.
@@ -5316,11 +5594,12 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
     class piecewise_constant_distribution
     {
       static_assert(std::is_floating_point<_RealType>::value,
-		    "template argument not a floating point type");
+		    "result_type must be a floating point type");
 
     public:
       /** The type of the range of the distribution. */
       typedef _RealType result_type;
+
       /** Parameter type. */
       struct param_type
       {
@@ -5368,6 +5647,12 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 	operator==(const param_type& __p1, const param_type& __p2)
 	{ return __p1._M_int == __p2._M_int && __p1._M_den == __p2._M_den; }
 
+#if __cpp_impl_three_way_comparison < 201907L
+	friend bool
+	operator!=(const param_type& __p1, const param_type& __p2)
+	{ return !(__p1 == __p2); }
+#endif
+
       private:
 	void
 	_M_initialize();
@@ -5377,7 +5662,6 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 	std::vector<double> _M_cp;
       };
 
-      explicit
       piecewise_constant_distribution()
       : _M_param()
       { }
@@ -5562,6 +5846,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
       param_type _M_param;
     };
 
+#if __cpp_impl_three_way_comparison < 201907L
   /**
     * @brief Return true if two piecewise constant distributions have 
     *        different parameters.
@@ -5571,7 +5856,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
     operator!=(const std::piecewise_constant_distribution<_RealType>& __d1,
 	       const std::piecewise_constant_distribution<_RealType>& __d2)
     { return !(__d1 == __d2); }
-
+#endif
 
   /**
    * @brief A piecewise_linear_distribution random number distribution.
@@ -5583,11 +5868,12 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
     class piecewise_linear_distribution
     {
       static_assert(std::is_floating_point<_RealType>::value,
-		    "template argument not a floating point type");
+		    "result_type must be a floating point type");
 
     public:
       /** The type of the range of the distribution. */
       typedef _RealType result_type;
+
       /** Parameter type. */
       struct param_type
       {
@@ -5633,8 +5919,13 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 
 	friend bool
 	operator==(const param_type& __p1, const param_type& __p2)
-	{ return (__p1._M_int == __p2._M_int
-		  && __p1._M_den == __p2._M_den); }
+	{ return __p1._M_int == __p2._M_int && __p1._M_den == __p2._M_den; }
+
+#if __cpp_impl_three_way_comparison < 201907L
+	friend bool
+	operator!=(const param_type& __p1, const param_type& __p2)
+	{ return !(__p1 == __p2); }
+#endif
 
       private:
 	void
@@ -5646,7 +5937,6 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 	std::vector<double> _M_m;
       };
 
-      explicit
       piecewise_linear_distribution()
       : _M_param()
       { }
@@ -5832,6 +6122,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
       param_type _M_param;
     };
 
+#if __cpp_impl_three_way_comparison < 201907L
   /**
     * @brief Return true if two piecewise linear distributions have
     *        different parameters.
@@ -5841,11 +6132,11 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
     operator!=(const std::piecewise_linear_distribution<_RealType>& __d1,
 	       const std::piecewise_linear_distribution<_RealType>& __d2)
     { return !(__d1 == __d2); }
+#endif
 
+  /// @} group random_distributions_poisson
 
-  /* @} */ // group random_distributions_poisson
-
-  /* @} */ // group random_distributions
+  /// @} *group random_distributions
 
   /**
    * @addtogroup random_utilities Random Number Utilities
@@ -5868,8 +6159,8 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
     : _M_v()
     { }
 
-    template<typename _IntType>
-      seed_seq(std::initializer_list<_IntType> il);
+    template<typename _IntType, typename = _Require<is_integral<_IntType>>>
+      seed_seq(std::initializer_list<_IntType> __il);
 
     template<typename _InputIterator>
       seed_seq(_InputIterator __begin, _InputIterator __end);
@@ -5883,9 +6174,9 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
     size_t size() const noexcept
     { return _M_v.size(); }
 
-    template<typename OutputIterator>
+    template<typename _OutputIterator>
       void
-      param(OutputIterator __dest) const
+      param(_OutputIterator __dest) const
       { std::copy(_M_v.begin(), _M_v.end(), __dest); }
 
     // no copy functions
@@ -5896,9 +6187,9 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
     std::vector<result_type> _M_v;
   };
 
-  /* @} */ // group random_utilities
+  /// @} group random_utilities
 
-  /* @} */ // group random
+  /// @} group random
 
 _GLIBCXX_END_NAMESPACE_VERSION
 } // namespace std

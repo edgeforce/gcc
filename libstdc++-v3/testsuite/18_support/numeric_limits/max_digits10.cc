@@ -1,9 +1,9 @@
-// { dg-options "-std=gnu++11" }
+// { dg-do run { target c++11 } }
 // { dg-add-options ieee }
 
 // 2010-02-25  Ed Smith-Rowland
 
-// Copyright (C) 2010-2016 Free Software Foundation, Inc.
+// Copyright (C) 2010-2022 Free Software Foundation, Inc.
 //
 // This file is part of the GNU ISO C++ Library.  This library is free
 // software; you can redistribute it and/or modify it under the
@@ -29,8 +29,6 @@
 void
 test01()
 {
-  bool test __attribute__((unused)) = true;
-
   VERIFY( std::numeric_limits<bool>::max_digits10 == 0 );
   VERIFY( std::numeric_limits<char>::max_digits10 == 0 );
   VERIFY( std::numeric_limits<signed char>::max_digits10 == 0 );
@@ -44,11 +42,14 @@ test01()
   VERIFY( std::numeric_limits<unsigned long>::max_digits10 == 0 );
   VERIFY( std::numeric_limits<long long>::max_digits10 == 0 );
   VERIFY( std::numeric_limits<unsigned long long>::max_digits10 == 0 );
+#ifdef _GLIBCXX_USE_CHAR8_T
+  VERIFY( std::numeric_limits<char8_t>::max_digits10 == 0 );
+#endif
   VERIFY( std::numeric_limits<char16_t>::max_digits10 == 0 );
   VERIFY( std::numeric_limits<char32_t>::max_digits10 == 0 );
 
   // GNU Extensions.
-#ifdef _GLIBCXX_USE_INT128
+#ifdef __SIZEOF_INT128__
   VERIFY( std::numeric_limits<__int128>::max_digits10 == 0 );
   VERIFY( std::numeric_limits<unsigned __int128>::max_digits10 == 0 );
 #endif

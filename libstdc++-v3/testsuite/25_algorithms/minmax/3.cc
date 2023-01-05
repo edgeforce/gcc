@@ -1,8 +1,8 @@
-// { dg-options "-std=gnu++11" }
+// { dg-do run { target c++11 } }
 
 // 2008-09-16  Chris Fairles  <chris.fairles@gmail.com>
 
-// Copyright (C) 2008-2016 Free Software Foundation, Inc.
+// Copyright (C) 2008-2022 Free Software Foundation, Inc.
 //
 // This file is part of the GNU ISO C++ Library.  This library is free
 // software; you can redistribute it and/or modify it under the
@@ -24,8 +24,11 @@
 #include <testsuite_hooks.h>
 
 struct compare_counter
-  : std::binary_function<int, int, bool>
 {
+  typedef int result_type;
+  typedef int first_argument_type;
+  typedef bool second_argument_type;
+
   static int count;
   
   bool operator()(int a, int b) const
@@ -39,8 +42,6 @@ int compare_counter::count = 0;
 
 void test01()
 {
-  bool test __attribute__((unused)) = true;
-
   std::minmax({1, 2, 3, 4, 5, 6, 7, 8}, compare_counter());
 
   // If N is the number of arguments in the minmax function call, 

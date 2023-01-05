@@ -1,4 +1,4 @@
-// Copyright (C) 2016 Free Software Foundation, Inc.
+// Copyright (C) 2016-2022 Free Software Foundation, Inc.
 //
 // This file is part of the GNU ISO C++ Library.  This library is free
 // software; you can redistribute it and/or modify it under the
@@ -15,7 +15,8 @@
 // with this library; see the file COPYING3.  If not see
 // <http://www.gnu.org/licenses/>.
 
-// { dg-options "-std=gnu++11 -lstdc++fs" }
+// { dg-options "-DUSE_FILESYSTEM_TS -lstdc++fs" }
+// { dg-do run { target c++11 } }
 // { dg-require-filesystem-ts "" }
 
 // 15.4 Copy [fs.op.copy_file]
@@ -28,7 +29,6 @@
 void
 test01()
 {
-  bool test __attribute__((unused)) = false;
   using std::experimental::filesystem::copy_options;
   std::error_code ec;
 
@@ -42,7 +42,7 @@ test01()
   VERIFY( !exists(to) );
 
   // test empty file
-  std::ofstream{from.native()};
+  std::ofstream{from.c_str()};
   VERIFY( exists(from) );
   VERIFY( file_size(from) == 0 );
 
@@ -58,7 +58,7 @@ test01()
   VERIFY( exists(to) );
   VERIFY( file_size(to) == 0 );
 
-  std::ofstream{from.native()} << "Hello, filesystem!";
+  std::ofstream{from.c_str()} << "Hello, filesystem!";
   VERIFY( file_size(from) != 0 );
   remove(to);
   VERIFY( !exists(to) );

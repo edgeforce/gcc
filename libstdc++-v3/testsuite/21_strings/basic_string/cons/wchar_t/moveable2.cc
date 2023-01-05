@@ -1,7 +1,8 @@
-// { dg-options "-std=gnu++11 -fno-inline" }
+// { dg-options "-fno-inline" }
+// { dg-do run { target c++11 } }
 // { dg-require-string-conversions "" }
 
-// Copyright (C) 2011-2016 Free Software Foundation, Inc.
+// Copyright (C) 2011-2022 Free Software Foundation, Inc.
 //
 // This file is part of the GNU ISO C++ Library.  This library is free
 // software; you can redistribute it and/or modify it under the
@@ -36,8 +37,6 @@ public:
 
 void test01()
 {
-  bool test __attribute__((unused)) = true;
-
   twstring a, b;
   a.push_back(L'1');
   b = std::move(a);
@@ -45,7 +44,9 @@ void test01()
 
   twstring c(std::move(b));
   VERIFY( c.size() == 1 && c[0] == L'1' );
-  VERIFY( b.size() == 0 );
+#if ! _GLIBCXX_FULLY_DYNAMIC_STRING
+  VERIFY( b.size() == 0 ); // not guaranteed by the standard
+#endif
 }
 
 int main()

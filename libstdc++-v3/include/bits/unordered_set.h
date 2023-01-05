@@ -1,6 +1,6 @@
 // unordered_set implementation -*- C++ -*-
 
-// Copyright (C) 2010-2016 Free Software Foundation, Inc.
+// Copyright (C) 2010-2022 Free Software Foundation, Inc.
 //
 // This file is part of the GNU ISO C++ Library.  This library is free
 // software; you can redistribute it and/or modify it under the
@@ -30,8 +30,14 @@
 #ifndef _UNORDERED_SET_H
 #define _UNORDERED_SET_H
 
+#include <bits/hashtable.h>
+#include <bits/allocator.h>
+#include <bits/functional_hash.h> // hash
+#include <bits/stl_function.h>    // equal_to
+
 namespace std _GLIBCXX_VISIBILITY(default)
 {
+_GLIBCXX_BEGIN_NAMESPACE_VERSION
 _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
 
   /// Base types for unordered_set.
@@ -65,6 +71,9 @@ _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
 					 __detail::_Default_ranged_hash,
 					 __detail::_Prime_rehash_policy, _Tr>;
 
+  template<class _Value, class _Hash, class _Pred, class _Alloc>
+    class unordered_multiset;
+
   /**
    *  @brief A standard container composed of unique keys (containing
    *  at most one of each key value) in which the elements' keys are
@@ -86,10 +95,10 @@ _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
    *  Base is _Hashtable, dispatched at compile time via template
    *  alias __uset_hashtable.
    */
-  template<class _Value,
-	   class _Hash = hash<_Value>,
-	   class _Pred = std::equal_to<_Value>,
-	   class _Alloc = std::allocator<_Value> >
+  template<typename _Value,
+	   typename _Hash = hash<_Value>,
+	   typename _Pred = equal_to<_Value>,
+	   typename _Alloc = allocator<_Value>>
     class unordered_set
     {
       typedef __uset_hashtable<_Value, _Hash, _Pred, _Alloc>  _Hashtable;
@@ -97,16 +106,16 @@ _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
 
     public:
       // typedefs:
-      //@{
+      ///@{
       /// Public typedefs.
       typedef typename _Hashtable::key_type	key_type;
       typedef typename _Hashtable::value_type	value_type;
       typedef typename _Hashtable::hasher	hasher;
       typedef typename _Hashtable::key_equal	key_equal;
       typedef typename _Hashtable::allocator_type allocator_type;
-      //@}
+      ///@}
 
-      //@{
+      ///@{
       ///  Iterator-related typedefs.
       typedef typename _Hashtable::pointer		pointer;
       typedef typename _Hashtable::const_pointer	const_pointer;
@@ -118,7 +127,12 @@ _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
       typedef typename _Hashtable::const_local_iterator	const_local_iterator;
       typedef typename _Hashtable::size_type		size_type;
       typedef typename _Hashtable::difference_type	difference_type;
-      //@}
+      ///@}
+
+#if __cplusplus > 201402L
+      using node_type = typename _Hashtable::node_type;
+      using insert_return_type = typename _Hashtable::insert_return_type;
+#endif
 
       // construct/destroy/copy
 
@@ -194,6 +208,7 @@ _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
        */
       unordered_set(unordered_set&& __uset,
 		    const allocator_type& __a)
+	noexcept( noexcept(_Hashtable(std::move(__uset._M_h), __a)) )
       : _M_h(std::move(__uset._M_h), __a)
       { }
 
@@ -268,7 +283,7 @@ _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
        *
        *  Note that the assignment completely changes the %unordered_set and
        *  that the resulting %unordered_set's size is the same as the number
-       *  of elements assigned.  Old data may be lost.
+       *  of elements assigned.
        */
       unordered_set&
       operator=(initializer_list<value_type> __l)
@@ -277,8 +292,7 @@ _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
 	return *this;
       }
 
-      ///  Returns the allocator object with which the %unordered_set was
-      ///  constructed.
+      ///  Returns the allocator object used by the %unordered_set.
       allocator_type
       get_allocator() const noexcept
       { return _M_h.get_allocator(); }
@@ -286,7 +300,7 @@ _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
       // size and capacity:
 
       ///  Returns true if the %unordered_set is empty.
-      bool
+      _GLIBCXX_NODISCARD bool
       empty() const noexcept
       { return _M_h.empty(); }
 
@@ -302,7 +316,7 @@ _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
 
       // iterators.
 
-      //@{
+      ///@{
       /**
        *  Returns a read-only (constant) iterator that points to the first
        *  element in the %unordered_set.
@@ -314,9 +328,9 @@ _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
       const_iterator
       begin() const noexcept
       { return _M_h.begin(); }
-      //@}
+      ///@}
 
-      //@{
+      ///@{
       /**
        *  Returns a read-only (constant) iterator that points one past the last
        *  element in the %unordered_set.
@@ -328,7 +342,7 @@ _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
       const_iterator
       end() const noexcept
       { return _M_h.end(); }
-      //@}
+      ///@}
 
       /**
        *  Returns a read-only (constant) iterator that points to the first
@@ -394,7 +408,7 @@ _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
 	emplace_hint(const_iterator __pos, _Args&&... __args)
 	{ return _M_h.emplace_hint(__pos, std::forward<_Args>(__args)...); }
 
-      //@{
+      ///@{
       /**
        *  @brief Attempts to insert an element into the %unordered_set.
        *  @param  __x  Element to be inserted.
@@ -415,9 +429,9 @@ _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
       std::pair<iterator, bool>
       insert(value_type&& __x)
       { return _M_h.insert(std::move(__x)); }
-      //@}
+      ///@}
 
-      //@{
+      ///@{
       /**
        *  @brief Attempts to insert an element into the %unordered_set.
        *  @param  __hint  An iterator that serves as a hint as to where the
@@ -444,7 +458,7 @@ _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
       iterator
       insert(const_iterator __hint, value_type&& __x)
       { return _M_h.insert(__hint, std::move(__x)); }
-      //@}
+      ///@}
 
       /**
        *  @brief A template function that attempts to insert a range of
@@ -471,7 +485,32 @@ _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
       insert(initializer_list<value_type> __l)
       { _M_h.insert(__l); }
 
-      //@{
+#if __cplusplus > 201402L
+      /// Extract a node.
+      node_type
+      extract(const_iterator __pos)
+      {
+	__glibcxx_assert(__pos != end());
+	return _M_h.extract(__pos);
+      }
+
+      /// Extract a node.
+      node_type
+      extract(const key_type& __key)
+      { return _M_h.extract(__key); }
+
+      /// Re-insert an extracted node.
+      insert_return_type
+      insert(node_type&& __nh)
+      { return _M_h._M_reinsert_node(std::move(__nh)); }
+
+      /// Re-insert an extracted node.
+      iterator
+      insert(const_iterator, node_type&& __nh)
+      { return _M_h._M_reinsert_node(std::move(__nh)).position; }
+#endif // C++17
+
+      ///@{
       /**
        *  @brief Erases an element from an %unordered_set.
        *  @param  __position  An iterator pointing to the element to be erased.
@@ -493,7 +532,7 @@ _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
       iterator
       erase(iterator __position)
       { return _M_h.erase(__position); }
-      //@}
+      ///@}
 
       /**
        *  @brief Erases elements according to the provided key.
@@ -553,6 +592,37 @@ _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
       noexcept( noexcept(_M_h.swap(__x._M_h)) )
       { _M_h.swap(__x._M_h); }
 
+#if __cplusplus > 201402L
+      template<typename, typename, typename>
+	friend class std::_Hash_merge_helper;
+
+      template<typename _H2, typename _P2>
+	void
+	merge(unordered_set<_Value, _H2, _P2, _Alloc>& __source)
+	{
+	  using _Merge_helper = _Hash_merge_helper<unordered_set, _H2, _P2>;
+	  _M_h._M_merge_unique(_Merge_helper::_S_get_table(__source));
+	}
+
+      template<typename _H2, typename _P2>
+	void
+	merge(unordered_set<_Value, _H2, _P2, _Alloc>&& __source)
+	{ merge(__source); }
+
+      template<typename _H2, typename _P2>
+	void
+	merge(unordered_multiset<_Value, _H2, _P2, _Alloc>& __source)
+	{
+	  using _Merge_helper = _Hash_merge_helper<unordered_set, _H2, _P2>;
+	  _M_h._M_merge_unique(_Merge_helper::_S_get_table(__source));
+	}
+
+      template<typename _H2, typename _P2>
+	void
+	merge(unordered_multiset<_Value, _H2, _P2, _Alloc>&& __source)
+	{ merge(__source); }
+#endif // C++17
+
       // observers.
 
       ///  Returns the hash functor object with which the %unordered_set was
@@ -569,7 +639,7 @@ _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
 
       // lookup.
 
-      //@{
+      ///@{
       /**
        *  @brief Tries to locate an element in an %unordered_set.
        *  @param  __x  Element to be located.
@@ -585,11 +655,28 @@ _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
       find(const key_type& __x)
       { return _M_h.find(__x); }
 
+#if __cplusplus > 201703L
+      template<typename _Kt>
+	auto
+	find(const _Kt& __k)
+	-> decltype(_M_h._M_find_tr(__k))
+	{ return _M_h._M_find_tr(__k); }
+#endif
+
       const_iterator
       find(const key_type& __x) const
       { return _M_h.find(__x); }
-      //@}
 
+#if __cplusplus > 201703L
+      template<typename _Kt>
+	auto
+	find(const _Kt& __k) const
+	-> decltype(_M_h._M_find_tr(__k))
+	{ return _M_h._M_find_tr(__k); }
+#endif
+      ///@}
+
+      ///@{
       /**
        *  @brief  Finds the number of elements.
        *  @param  __x  Element to located.
@@ -603,7 +690,35 @@ _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
       count(const key_type& __x) const
       { return _M_h.count(__x); }
 
-      //@{
+#if __cplusplus > 201703L
+      template<typename _Kt>
+	auto
+	count(const _Kt& __k) const
+	-> decltype(_M_h._M_count_tr(__k))
+	{ return _M_h._M_count_tr(__k); }
+#endif
+      ///@}
+
+#if __cplusplus > 201703L
+      ///@{
+      /**
+       *  @brief  Finds whether an element with the given key exists.
+       *  @param  __x  Key of elements to be located.
+       *  @return  True if there is any element with the specified key.
+       */
+      bool
+      contains(const key_type& __x) const
+      { return _M_h.find(__x) != _M_h.end(); }
+
+      template<typename _Kt>
+	auto
+	contains(const _Kt& __k) const
+	-> decltype(_M_h._M_find_tr(__k), void(), true)
+	{ return _M_h._M_find_tr(__k) != _M_h.end(); }
+      ///@}
+#endif
+
+      ///@{
       /**
        *  @brief Finds a subsequence matching given key.
        *  @param  __x  Key to be located.
@@ -616,10 +731,26 @@ _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
       equal_range(const key_type& __x)
       { return _M_h.equal_range(__x); }
 
+#if __cplusplus > 201703L
+      template<typename _Kt>
+	auto
+	equal_range(const _Kt& __k)
+	-> decltype(_M_h._M_equal_range_tr(__k))
+	{ return _M_h._M_equal_range_tr(__k); }
+#endif
+
       std::pair<const_iterator, const_iterator>
       equal_range(const key_type& __x) const
       { return _M_h.equal_range(__x); }
-      //@}
+
+#if __cplusplus > 201703L
+      template<typename _Kt>
+	auto
+	equal_range(const _Kt& __k) const
+	-> decltype(_M_h._M_equal_range_tr(__k))
+	{ return _M_h._M_equal_range_tr(__k); }
+#endif
+      ///@}
 
       // bucket interface.
 
@@ -651,7 +782,7 @@ _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
       bucket(const key_type& __key) const
       { return _M_h.bucket(__key); }
 
-      //@{
+      ///@{
       /**
        *  @brief  Returns a read-only (constant) iterator pointing to the first
        *         bucket element.
@@ -669,9 +800,9 @@ _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
       const_local_iterator
       cbegin(size_type __n) const
       { return _M_h.cbegin(__n); }
-      //@}
+      ///@}
 
-      //@{
+      ///@{
       /**
        *  @brief  Returns a read-only (constant) iterator pointing to one past
        *         the last bucket elements.
@@ -689,7 +820,7 @@ _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
       const_local_iterator
       cend(size_type __n) const
       { return _M_h.cend(__n); }
-      //@}
+      ///@}
 
       // hash policy.
 
@@ -741,6 +872,76 @@ _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
 		   const unordered_set<_Value1, _Hash1, _Pred1, _Alloc1>&);
     };
 
+#if __cpp_deduction_guides >= 201606
+
+  template<typename _InputIterator,
+	   typename _Hash =
+	     hash<typename iterator_traits<_InputIterator>::value_type>,
+	   typename _Pred =
+	     equal_to<typename iterator_traits<_InputIterator>::value_type>,
+	   typename _Allocator =
+	     allocator<typename iterator_traits<_InputIterator>::value_type>,
+	   typename = _RequireInputIter<_InputIterator>,
+	   typename = _RequireNotAllocatorOrIntegral<_Hash>,
+	   typename = _RequireNotAllocator<_Pred>,
+	   typename = _RequireAllocator<_Allocator>>
+    unordered_set(_InputIterator, _InputIterator,
+		  unordered_set<int>::size_type = {},
+		  _Hash = _Hash(), _Pred = _Pred(), _Allocator = _Allocator())
+    -> unordered_set<typename iterator_traits<_InputIterator>::value_type,
+		     _Hash, _Pred, _Allocator>;
+
+  template<typename _Tp, typename _Hash = hash<_Tp>,
+	   typename _Pred = equal_to<_Tp>,
+	   typename _Allocator = allocator<_Tp>,
+	   typename = _RequireNotAllocatorOrIntegral<_Hash>,
+	   typename = _RequireNotAllocator<_Pred>,
+	   typename = _RequireAllocator<_Allocator>>
+    unordered_set(initializer_list<_Tp>,
+		  unordered_set<int>::size_type = {},
+		  _Hash = _Hash(), _Pred = _Pred(), _Allocator = _Allocator())
+    -> unordered_set<_Tp, _Hash, _Pred, _Allocator>;
+
+  template<typename _InputIterator, typename _Allocator,
+	   typename = _RequireInputIter<_InputIterator>,
+	   typename = _RequireAllocator<_Allocator>>
+    unordered_set(_InputIterator, _InputIterator,
+		  unordered_set<int>::size_type, _Allocator)
+    -> unordered_set<typename iterator_traits<_InputIterator>::value_type,
+		     hash<
+		       typename iterator_traits<_InputIterator>::value_type>,
+		     equal_to<
+		       typename iterator_traits<_InputIterator>::value_type>,
+		     _Allocator>;
+
+  template<typename _InputIterator, typename _Hash, typename _Allocator,
+	   typename = _RequireInputIter<_InputIterator>,
+	   typename = _RequireNotAllocatorOrIntegral<_Hash>,
+	   typename = _RequireAllocator<_Allocator>>
+    unordered_set(_InputIterator, _InputIterator,
+		  unordered_set<int>::size_type,
+		  _Hash, _Allocator)
+    -> unordered_set<typename iterator_traits<_InputIterator>::value_type,
+		     _Hash,
+		     equal_to<
+		       typename iterator_traits<_InputIterator>::value_type>,
+		     _Allocator>;
+
+  template<typename _Tp, typename _Allocator,
+	   typename = _RequireAllocator<_Allocator>>
+    unordered_set(initializer_list<_Tp>,
+		  unordered_set<int>::size_type, _Allocator)
+    -> unordered_set<_Tp, hash<_Tp>, equal_to<_Tp>, _Allocator>;
+
+  template<typename _Tp, typename _Hash, typename _Allocator,
+	   typename = _RequireNotAllocatorOrIntegral<_Hash>,
+	   typename = _RequireAllocator<_Allocator>>
+    unordered_set(initializer_list<_Tp>,
+		  unordered_set<int>::size_type, _Hash, _Allocator)
+    -> unordered_set<_Tp, _Hash, equal_to<_Tp>, _Allocator>;
+
+#endif
+
   /**
    *  @brief A standard container composed of equivalent keys
    *  (possibly containing multiple of each key value) in which the
@@ -760,10 +961,10 @@ _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
    *  Base is _Hashtable, dispatched at compile time via template
    *  alias __umset_hashtable.
    */
-  template<class _Value,
-	   class _Hash = hash<_Value>,
-	   class _Pred = std::equal_to<_Value>,
-	   class _Alloc = std::allocator<_Value> >
+  template<typename _Value,
+	   typename _Hash = hash<_Value>,
+	   typename _Pred = equal_to<_Value>,
+	   typename _Alloc = allocator<_Value>>
     class unordered_multiset
     {
       typedef __umset_hashtable<_Value, _Hash, _Pred, _Alloc>  _Hashtable;
@@ -771,16 +972,16 @@ _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
 
     public:
       // typedefs:
-      //@{
+      ///@{
       /// Public typedefs.
       typedef typename _Hashtable::key_type	key_type;
       typedef typename _Hashtable::value_type	value_type;
       typedef typename _Hashtable::hasher	hasher;
       typedef typename _Hashtable::key_equal	key_equal;
       typedef typename _Hashtable::allocator_type allocator_type;
-      //@}
+      ///@}
 
-      //@{
+      ///@{
       ///  Iterator-related typedefs.
       typedef typename _Hashtable::pointer		pointer;
       typedef typename _Hashtable::const_pointer	const_pointer;
@@ -792,7 +993,11 @@ _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
       typedef typename _Hashtable::const_local_iterator	const_local_iterator;
       typedef typename _Hashtable::size_type		size_type;
       typedef typename _Hashtable::difference_type	difference_type;
-      //@}
+      ///@}
+
+#if __cplusplus > 201402L
+      using node_type = typename _Hashtable::node_type;
+#endif
 
       // construct/destroy/copy
 
@@ -895,6 +1100,7 @@ _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
        */
       unordered_multiset(unordered_multiset&& __umset,
 			 const allocator_type& __a)
+	noexcept( noexcept(_Hashtable(std::move(__umset._M_h), __a)) )
       : _M_h(std::move(__umset._M_h), __a)
       { }
 
@@ -942,7 +1148,7 @@ _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
        *
        *  Note that the assignment completely changes the %unordered_multiset
        *  and that the resulting %unordered_multiset's size is the same as the
-       *  number of elements assigned. Old data may be lost.
+       *  number of elements assigned.
        */
       unordered_multiset&
       operator=(initializer_list<value_type> __l)
@@ -951,8 +1157,7 @@ _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
 	return *this;
       }
 
-      ///  Returns the allocator object with which the %unordered_multiset was
-      ///  constructed.
+      ///  Returns the allocator object used by the %unordered_multiset.
       allocator_type
       get_allocator() const noexcept
       { return _M_h.get_allocator(); }
@@ -960,7 +1165,7 @@ _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
       // size and capacity:
 
       ///  Returns true if the %unordered_multiset is empty.
-      bool
+      _GLIBCXX_NODISCARD bool
       empty() const noexcept
       { return _M_h.empty(); }
 
@@ -976,7 +1181,7 @@ _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
 
       // iterators.
 
-      //@{
+      ///@{
       /**
        *  Returns a read-only (constant) iterator that points to the first
        *  element in the %unordered_multiset.
@@ -988,9 +1193,9 @@ _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
       const_iterator
       begin() const noexcept
       { return _M_h.begin(); }
-      //@}
+      ///@}
 
-      //@{
+      ///@{
       /**
        *  Returns a read-only (constant) iterator that points one past the last
        *  element in the %unordered_multiset.
@@ -1002,7 +1207,7 @@ _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
       const_iterator
       end() const noexcept
       { return _M_h.end(); }
-      //@}
+      ///@}
 
       /**
        *  Returns a read-only (constant) iterator that points to the first
@@ -1056,7 +1261,7 @@ _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
 	emplace_hint(const_iterator __pos, _Args&&... __args)
 	{ return _M_h.emplace_hint(__pos, std::forward<_Args>(__args)...); }
 
-      //@{
+      ///@{
       /**
        *  @brief Inserts an element into the %unordered_multiset.
        *  @param  __x  Element to be inserted.
@@ -1071,9 +1276,9 @@ _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
       iterator
       insert(value_type&& __x)
       { return _M_h.insert(std::move(__x)); }
-      //@}
+      ///@}
 
-      //@{
+      ///@{
       /**
        *  @brief Inserts an element into the %unordered_multiset.
        *  @param  __hint  An iterator that serves as a hint as to where the
@@ -1097,7 +1302,7 @@ _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
       iterator
       insert(const_iterator __hint, value_type&& __x)
       { return _M_h.insert(__hint, std::move(__x)); }
-      //@}
+      ///@}
 
       /**
        *  @brief A template function that inserts a range of elements.
@@ -1123,7 +1328,32 @@ _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
       insert(initializer_list<value_type> __l)
       { _M_h.insert(__l); }
 
-      //@{
+#if __cplusplus > 201402L
+      /// Extract a node.
+      node_type
+      extract(const_iterator __pos)
+      {
+	__glibcxx_assert(__pos != end());
+	return _M_h.extract(__pos);
+      }
+
+      /// Extract a node.
+      node_type
+      extract(const key_type& __key)
+      { return _M_h.extract(__key); }
+
+      /// Re-insert an extracted node.
+      iterator
+      insert(node_type&& __nh)
+      { return _M_h._M_reinsert_node_multi(cend(), std::move(__nh)); }
+
+      /// Re-insert an extracted node.
+      iterator
+      insert(const_iterator __hint, node_type&& __nh)
+      { return _M_h._M_reinsert_node_multi(__hint, std::move(__nh)); }
+#endif // C++17
+
+      ///@{
       /**
        *  @brief Erases an element from an %unordered_multiset.
        *  @param  __position  An iterator pointing to the element to be erased.
@@ -1146,7 +1376,7 @@ _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
       iterator
       erase(iterator __position)
       { return _M_h.erase(__position); }
-      //@}
+      ///@}
 
 
       /**
@@ -1210,6 +1440,39 @@ _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
       noexcept( noexcept(_M_h.swap(__x._M_h)) )
       { _M_h.swap(__x._M_h); }
 
+#if __cplusplus > 201402L
+      template<typename, typename, typename>
+	friend class std::_Hash_merge_helper;
+
+      template<typename _H2, typename _P2>
+	void
+	merge(unordered_multiset<_Value, _H2, _P2, _Alloc>& __source)
+	{
+	  using _Merge_helper
+	    = _Hash_merge_helper<unordered_multiset, _H2, _P2>;
+	  _M_h._M_merge_multi(_Merge_helper::_S_get_table(__source));
+	}
+
+      template<typename _H2, typename _P2>
+	void
+	merge(unordered_multiset<_Value, _H2, _P2, _Alloc>&& __source)
+	{ merge(__source); }
+
+      template<typename _H2, typename _P2>
+	void
+	merge(unordered_set<_Value, _H2, _P2, _Alloc>& __source)
+	{
+	  using _Merge_helper
+	    = _Hash_merge_helper<unordered_multiset, _H2, _P2>;
+	  _M_h._M_merge_multi(_Merge_helper::_S_get_table(__source));
+	}
+
+      template<typename _H2, typename _P2>
+	void
+	merge(unordered_set<_Value, _H2, _P2, _Alloc>&& __source)
+	{ merge(__source); }
+#endif // C++17
+
       // observers.
 
       ///  Returns the hash functor object with which the %unordered_multiset
@@ -1226,7 +1489,7 @@ _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
 
       // lookup.
 
-      //@{
+      ///@{
       /**
        *  @brief Tries to locate an element in an %unordered_multiset.
        *  @param  __x  Element to be located.
@@ -1242,11 +1505,28 @@ _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
       find(const key_type& __x)
       { return _M_h.find(__x); }
 
+#if __cplusplus > 201703L
+      template<typename _Kt>
+	auto
+	find(const _Kt& __x)
+	-> decltype(_M_h._M_find_tr(__x))
+	{ return _M_h._M_find_tr(__x); }
+#endif
+
       const_iterator
       find(const key_type& __x) const
       { return _M_h.find(__x); }
-      //@}
 
+#if __cplusplus > 201703L
+      template<typename _Kt>
+	auto
+	find(const _Kt& __x) const
+	-> decltype(_M_h._M_find_tr(__x))
+	{ return _M_h._M_find_tr(__x); }
+#endif
+      ///@}
+
+      ///@{
       /**
        *  @brief  Finds the number of elements.
        *  @param  __x  Element to located.
@@ -1256,7 +1536,34 @@ _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
       count(const key_type& __x) const
       { return _M_h.count(__x); }
 
-      //@{
+#if __cplusplus > 201703L
+      template<typename _Kt>
+	auto
+	count(const _Kt& __x) const -> decltype(_M_h._M_count_tr(__x))
+	{ return _M_h._M_count_tr(__x); }
+#endif
+      ///@}
+
+#if __cplusplus > 201703L
+      ///@{
+      /**
+       *  @brief  Finds whether an element with the given key exists.
+       *  @param  __x  Key of elements to be located.
+       *  @return  True if there is any element with the specified key.
+       */
+      bool
+      contains(const key_type& __x) const
+      { return _M_h.find(__x) != _M_h.end(); }
+
+      template<typename _Kt>
+	auto
+	contains(const _Kt& __x) const
+	-> decltype(_M_h._M_find_tr(__x), void(), true)
+	{ return _M_h._M_find_tr(__x) != _M_h.end(); }
+      ///@}
+#endif
+
+      ///@{
       /**
        *  @brief Finds a subsequence matching given key.
        *  @param  __x  Key to be located.
@@ -1267,10 +1574,26 @@ _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
       equal_range(const key_type& __x)
       { return _M_h.equal_range(__x); }
 
+#if __cplusplus > 201703L
+      template<typename _Kt>
+	auto
+	equal_range(const _Kt& __x)
+	-> decltype(_M_h._M_equal_range_tr(__x))
+	{ return _M_h._M_equal_range_tr(__x); }
+#endif
+
       std::pair<const_iterator, const_iterator>
       equal_range(const key_type& __x) const
       { return _M_h.equal_range(__x); }
-      //@}
+
+#if __cplusplus > 201703L
+      template<typename _Kt>
+	auto
+	equal_range(const _Kt& __x) const
+	-> decltype(_M_h._M_equal_range_tr(__x))
+	{ return _M_h._M_equal_range_tr(__x); }
+#endif
+      ///@}
 
       // bucket interface.
 
@@ -1302,7 +1625,7 @@ _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
       bucket(const key_type& __key) const
       { return _M_h.bucket(__key); }
 
-      //@{
+      ///@{
       /**
        *  @brief  Returns a read-only (constant) iterator pointing to the first
        *         bucket element.
@@ -1320,9 +1643,9 @@ _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
       const_local_iterator
       cbegin(size_type __n) const
       { return _M_h.cbegin(__n); }
-      //@}
+      ///@}
 
-      //@{
+      ///@{
       /**
        *  @brief  Returns a read-only (constant) iterator pointing to one past
        *         the last bucket elements.
@@ -1340,7 +1663,7 @@ _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
       const_local_iterator
       cend(size_type __n) const
       { return _M_h.cend(__n); }
-      //@}
+      ///@}
 
       // hash policy.
 
@@ -1392,6 +1715,81 @@ _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
 		 const unordered_multiset<_Value1, _Hash1, _Pred1, _Alloc1>&);
     };
 
+
+#if __cpp_deduction_guides >= 201606
+
+  template<typename _InputIterator,
+	   typename _Hash =
+	     hash<typename iterator_traits<_InputIterator>::value_type>,
+	   typename _Pred =
+	     equal_to<typename iterator_traits<_InputIterator>::value_type>,
+	   typename _Allocator =
+	     allocator<typename iterator_traits<_InputIterator>::value_type>,
+	   typename = _RequireInputIter<_InputIterator>,
+	   typename = _RequireNotAllocatorOrIntegral<_Hash>,
+	   typename = _RequireNotAllocator<_Pred>,
+	   typename = _RequireAllocator<_Allocator>>
+    unordered_multiset(_InputIterator, _InputIterator,
+		       unordered_multiset<int>::size_type = {},
+		       _Hash = _Hash(), _Pred = _Pred(),
+		       _Allocator = _Allocator())
+    -> unordered_multiset<typename iterator_traits<_InputIterator>::value_type,
+                          _Hash, _Pred, _Allocator>;
+
+  template<typename _Tp, typename _Hash = hash<_Tp>,
+	   typename _Pred = equal_to<_Tp>,
+	   typename _Allocator = allocator<_Tp>,
+	   typename = _RequireNotAllocatorOrIntegral<_Hash>,
+	   typename = _RequireNotAllocator<_Pred>,
+	   typename = _RequireAllocator<_Allocator>>
+    unordered_multiset(initializer_list<_Tp>,
+		       unordered_multiset<int>::size_type = {},
+		       _Hash = _Hash(), _Pred = _Pred(),
+		       _Allocator = _Allocator())
+    -> unordered_multiset<_Tp, _Hash, _Pred, _Allocator>;
+
+  template<typename _InputIterator, typename _Allocator,
+	   typename = _RequireInputIter<_InputIterator>,
+	   typename = _RequireAllocator<_Allocator>>
+    unordered_multiset(_InputIterator, _InputIterator,
+		       unordered_multiset<int>::size_type, _Allocator)
+    -> unordered_multiset<typename iterator_traits<_InputIterator>::value_type,
+			  hash<typename
+			       iterator_traits<_InputIterator>::value_type>,
+			  equal_to<typename
+				   iterator_traits<_InputIterator>::value_type>,
+			  _Allocator>;
+
+  template<typename _InputIterator, typename _Hash, typename _Allocator,
+	   typename = _RequireInputIter<_InputIterator>,
+	   typename = _RequireNotAllocatorOrIntegral<_Hash>,
+	   typename = _RequireAllocator<_Allocator>>
+    unordered_multiset(_InputIterator, _InputIterator,
+		       unordered_multiset<int>::size_type,
+		       _Hash, _Allocator)
+    -> unordered_multiset<typename
+			  iterator_traits<_InputIterator>::value_type,
+			  _Hash,
+			  equal_to<
+			    typename
+			    iterator_traits<_InputIterator>::value_type>,
+			  _Allocator>;
+
+  template<typename _Tp, typename _Allocator,
+	   typename = _RequireAllocator<_Allocator>>
+    unordered_multiset(initializer_list<_Tp>,
+		       unordered_multiset<int>::size_type, _Allocator)
+    -> unordered_multiset<_Tp, hash<_Tp>, equal_to<_Tp>, _Allocator>;
+
+  template<typename _Tp, typename _Hash, typename _Allocator,
+	   typename = _RequireNotAllocatorOrIntegral<_Hash>,
+	   typename = _RequireAllocator<_Allocator>>
+    unordered_multiset(initializer_list<_Tp>,
+		       unordered_multiset<int>::size_type, _Hash, _Allocator)
+    -> unordered_multiset<_Tp, _Hash, equal_to<_Tp>, _Allocator>;
+
+#endif
+
   template<class _Value, class _Hash, class _Pred, class _Alloc>
     inline void
     swap(unordered_set<_Value, _Hash, _Pred, _Alloc>& __x,
@@ -1412,11 +1810,13 @@ _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
 	       const unordered_set<_Value, _Hash, _Pred, _Alloc>& __y)
     { return __x._M_h._M_equal(__y._M_h); }
 
+#if __cpp_impl_three_way_comparison < 201907L
   template<class _Value, class _Hash, class _Pred, class _Alloc>
     inline bool
     operator!=(const unordered_set<_Value, _Hash, _Pred, _Alloc>& __x,
 	       const unordered_set<_Value, _Hash, _Pred, _Alloc>& __y)
     { return !(__x == __y); }
+#endif
 
   template<class _Value, class _Hash, class _Pred, class _Alloc>
     inline bool
@@ -1424,13 +1824,66 @@ _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
 	       const unordered_multiset<_Value, _Hash, _Pred, _Alloc>& __y)
     { return __x._M_h._M_equal(__y._M_h); }
 
+#if __cpp_impl_three_way_comparison < 201907L
   template<class _Value, class _Hash, class _Pred, class _Alloc>
     inline bool
     operator!=(const unordered_multiset<_Value, _Hash, _Pred, _Alloc>& __x,
 	       const unordered_multiset<_Value, _Hash, _Pred, _Alloc>& __y)
     { return !(__x == __y); }
+#endif
 
 _GLIBCXX_END_NAMESPACE_CONTAINER
+
+#if __cplusplus > 201402L
+  // Allow std::unordered_set access to internals of compatible sets.
+  template<typename _Val, typename _Hash1, typename _Eq1, typename _Alloc,
+	   typename _Hash2, typename _Eq2>
+    struct _Hash_merge_helper<
+      _GLIBCXX_STD_C::unordered_set<_Val, _Hash1, _Eq1, _Alloc>, _Hash2, _Eq2>
+    {
+    private:
+      template<typename... _Tp>
+	using unordered_set = _GLIBCXX_STD_C::unordered_set<_Tp...>;
+      template<typename... _Tp>
+	using unordered_multiset = _GLIBCXX_STD_C::unordered_multiset<_Tp...>;
+
+      friend unordered_set<_Val, _Hash1, _Eq1, _Alloc>;
+
+      static auto&
+      _S_get_table(unordered_set<_Val, _Hash2, _Eq2, _Alloc>& __set)
+      { return __set._M_h; }
+
+      static auto&
+      _S_get_table(unordered_multiset<_Val, _Hash2, _Eq2, _Alloc>& __set)
+      { return __set._M_h; }
+    };
+
+  // Allow std::unordered_multiset access to internals of compatible sets.
+  template<typename _Val, typename _Hash1, typename _Eq1, typename _Alloc,
+	   typename _Hash2, typename _Eq2>
+    struct _Hash_merge_helper<
+      _GLIBCXX_STD_C::unordered_multiset<_Val, _Hash1, _Eq1, _Alloc>,
+      _Hash2, _Eq2>
+    {
+    private:
+      template<typename... _Tp>
+	using unordered_set = _GLIBCXX_STD_C::unordered_set<_Tp...>;
+      template<typename... _Tp>
+	using unordered_multiset = _GLIBCXX_STD_C::unordered_multiset<_Tp...>;
+
+      friend unordered_multiset<_Val, _Hash1, _Eq1, _Alloc>;
+
+      static auto&
+      _S_get_table(unordered_set<_Val, _Hash2, _Eq2, _Alloc>& __set)
+      { return __set._M_h; }
+
+      static auto&
+      _S_get_table(unordered_multiset<_Val, _Hash2, _Eq2, _Alloc>& __set)
+      { return __set._M_h; }
+    };
+#endif // C++17
+
+_GLIBCXX_END_NAMESPACE_VERSION
 } // namespace std
 
 #endif /* _UNORDERED_SET_H */

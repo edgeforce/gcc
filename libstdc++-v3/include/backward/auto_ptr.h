@@ -1,6 +1,6 @@
 // auto_ptr implementation -*- C++ -*-
 
-// Copyright (C) 2007-2016 Free Software Foundation, Inc.
+// Copyright (C) 2007-2022 Free Software Foundation, Inc.
 //
 // This file is part of the GNU ISO C++ Library.  This library is free
 // software; you can redistribute it and/or modify it under the
@@ -51,8 +51,10 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
       
       explicit
       auto_ptr_ref(_Tp1* __p): _M_ptr(__p) { }
-    } _GLIBCXX_DEPRECATED;
+    } _GLIBCXX11_DEPRECATED;
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 
   /**
    *  @brief  A simple smart pointer providing strict ownership semantics.
@@ -82,6 +84,10 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
    *  _GLIBCXX_RESOLVE_LIB_DEFECTS
    *  127.  auto_ptr<> conversion issues
    *  These resolutions have all been incorporated.
+   *
+   * @headerfile memory
+   * @deprecated Deprecated in C++11, no longer in the standard since C++17.
+   * Use `unique_ptr` instead.
    */
   template<typename _Tp>
     class auto_ptr
@@ -249,13 +255,17 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
       /** 
        *  @brief  Automatic conversions
        *
-       *  These operations convert an %auto_ptr into and from an auto_ptr_ref
-       *  automatically as needed.  This allows constructs such as
+       *  These operations are supposed to convert an %auto_ptr into and from
+       *  an auto_ptr_ref automatically as needed.  This would allow
+       *  constructs such as
        *  @code
        *    auto_ptr<Derived>  func_returning_auto_ptr(.....);
        *    ...
        *    auto_ptr<Base> ptr = func_returning_auto_ptr(.....);
        *  @endcode
+       *
+       *  But it doesn't work, and won't be fixed. For further details see
+       *  http://cplusplus.github.io/LWG/lwg-closed.html#463
        */
       auto_ptr(auto_ptr_ref<element_type> __ref) throw()
       : _M_ptr(__ref._M_ptr) { }
@@ -278,7 +288,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
       template<typename _Tp1>
         operator auto_ptr<_Tp1>() throw()
         { return auto_ptr<_Tp1>(this->release()); }
-    } _GLIBCXX_DEPRECATED;
+    } _GLIBCXX11_DEPRECATED_SUGGEST("std::unique_ptr");
 
   // _GLIBCXX_RESOLVE_LIB_DEFECTS
   // 541. shared_ptr template assignment and void
@@ -287,9 +297,10 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
     {
     public:
       typedef void element_type;
-    } _GLIBCXX_DEPRECATED;
+    } _GLIBCXX11_DEPRECATED;
 
 #if __cplusplus >= 201103L
+#if _GLIBCXX_HOSTED
   template<_Lock_policy _Lp>
   template<typename _Tp>
     inline
@@ -298,7 +309,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
     { __r.release(); }
 
   template<typename _Tp, _Lock_policy _Lp>
-  template<typename _Tp1>
+  template<typename _Tp1, typename>
     inline
     __shared_ptr<_Tp, _Lp>::__shared_ptr(std::auto_ptr<_Tp1>&& __r)
     : _M_ptr(__r.get()), _M_refcount()
@@ -307,21 +318,24 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
       static_assert( sizeof(_Tp1) > 0, "incomplete type" );
       _Tp1* __tmp = __r.get();
       _M_refcount = __shared_count<_Lp>(std::move(__r));
-      __enable_shared_from_this_helper(_M_refcount, __tmp, __tmp);
+      _M_enable_shared_from_this_with(__tmp);
     }
 
   template<typename _Tp>
-  template<typename _Tp1>
+  template<typename _Tp1, typename>
     inline
     shared_ptr<_Tp>::shared_ptr(std::auto_ptr<_Tp1>&& __r)
     : __shared_ptr<_Tp>(std::move(__r)) { }
+#endif // HOSTED
 
   template<typename _Tp, typename _Dp>
   template<typename _Up, typename>
     inline
     unique_ptr<_Tp, _Dp>::unique_ptr(auto_ptr<_Up>&& __u) noexcept
     : _M_t(__u.release(), deleter_type()) { }
-#endif
+#endif // C++11
+
+#pragma GCC diagnostic pop
 
 _GLIBCXX_END_NAMESPACE_VERSION
 } // namespace

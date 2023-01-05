@@ -1,6 +1,6 @@
 // Stack implementation -*- C++ -*-
 
-// Copyright (C) 2001-2016 Free Software Foundation, Inc.
+// Copyright (C) 2001-2022 Free Software Foundation, Inc.
 //
 // This file is part of the GNU ISO C++ Library.  This library is free
 // software; you can redistribute it and/or modify it under the
@@ -86,7 +86,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
    *
    *  The second template parameter defines the type of the underlying
    *  sequence/container.  It defaults to std::deque, but it can be
-   *  any type that supports @c back, @c push_back, and @c pop_front,
+   *  any type that supports @c back, @c push_back, and @c pop_back,
    *  such as std::list, std::vector, or an appropriate user-defined
    *  type.
    *
@@ -98,34 +98,50 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
   template<typename _Tp, typename _Sequence = deque<_Tp> >
     class stack
     {
+#ifdef _GLIBCXX_CONCEPT_CHECKS
       // concept requirements
       typedef typename _Sequence::value_type _Sequence_value_type;
-#if __cplusplus < 201103L
+# if __cplusplus < 201103L
       __glibcxx_class_requires(_Tp, _SGIAssignableConcept)
       __glibcxx_class_requires(_Sequence, _BackInsertionSequenceConcept)
-#endif
+# endif
       __glibcxx_class_requires2(_Tp, _Sequence_value_type, _SameTypeConcept)
+#endif
 
       template<typename _Tp1, typename _Seq1>
-        friend bool
-        operator==(const stack<_Tp1, _Seq1>&, const stack<_Tp1, _Seq1>&);
+	friend bool
+	operator==(const stack<_Tp1, _Seq1>&, const stack<_Tp1, _Seq1>&);
 
       template<typename _Tp1, typename _Seq1>
-        friend bool
-        operator<(const stack<_Tp1, _Seq1>&, const stack<_Tp1, _Seq1>&);
+	friend bool
+	operator<(const stack<_Tp1, _Seq1>&, const stack<_Tp1, _Seq1>&);
+
+#if __cpp_lib_three_way_comparison
+      template<typename _Tp1, three_way_comparable _Seq1>
+	friend compare_three_way_result_t<_Seq1>
+	operator<=>(const stack<_Tp1, _Seq1>&, const stack<_Tp1, _Seq1>&);
+#endif
 
 #if __cplusplus >= 201103L
       template<typename _Alloc>
 	using _Uses = typename
 	  enable_if<uses_allocator<_Sequence, _Alloc>::value>::type;
-#endif
+
+#if __cplusplus >= 201703L
+      // _GLIBCXX_RESOLVE_LIB_DEFECTS
+      // 2566. Requirements on the first template parameter of container
+      // adaptors
+      static_assert(is_same<_Tp, typename _Sequence::value_type>::value,
+	  "value_type must be the same as the underlying container");
+#endif // C++17
+#endif // C++11
 
     public:
-      typedef typename _Sequence::value_type                value_type;
-      typedef typename _Sequence::reference                 reference;
-      typedef typename _Sequence::const_reference           const_reference;
-      typedef typename _Sequence::size_type                 size_type;
-      typedef          _Sequence                            container_type;
+      typedef typename _Sequence::value_type		value_type;
+      typedef typename _Sequence::reference		reference;
+      typedef typename _Sequence::const_reference	const_reference;
+      typedef typename _Sequence::size_type		size_type;
+      typedef	       _Sequence			container_type;
 
     protected:
       //  See queue::c for notes on this name.
@@ -141,13 +157,28 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
       stack(const _Sequence& __c = _Sequence())
       : c(__c) { }
 #else
+      template<typename _Seq = _Sequence, typename _Requires = typename
+	       enable_if<is_default_constructible<_Seq>::value>::type>
+	stack()
+	: c() { }
+
       explicit
       stack(const _Sequence& __c)
       : c(__c) { }
 
       explicit
-      stack(_Sequence&& __c = _Sequence())
+      stack(_Sequence&& __c)
       : c(std::move(__c)) { }
+
+#if __cplusplus > 202002L
+#define __cpp_lib_adaptor_iterator_pair_constructor 202106L
+
+      template<typename _InputIterator,
+	       typename = _RequireInputIter<_InputIterator>>
+	stack(_InputIterator __first, _InputIterator __last)
+	: c(__first, __last) { }
+#endif
+
 
       template<typename _Alloc, typename _Requires = _Uses<_Alloc>>
 	explicit
@@ -169,16 +200,25 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
       template<typename _Alloc, typename _Requires = _Uses<_Alloc>>
 	stack(stack&& __q, const _Alloc& __a)
 	: c(std::move(__q.c), __a) { }
+
+#if __cplusplus > 202002L
+      template<typename _InputIterator, typename _Alloc,
+	       typename = _RequireInputIter<_InputIterator>,
+	       typename = _Uses<_Alloc>>
+	stack(_InputIterator __first, _InputIterator __last, const _Alloc& __a)
+	: c(__first, __last, __a) { }
+#endif
 #endif
 
       /**
        *  Returns true if the %stack is empty.
        */
-      bool
+      _GLIBCXX_NODISCARD bool
       empty() const
       { return c.empty(); }
 
       /**  Returns the number of elements in the %stack.  */
+      _GLIBCXX_NODISCARD
       size_type
       size() const
       { return c.size(); }
@@ -187,6 +227,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
        *  Returns a read/write reference to the data at the first
        *  element of the %stack.
        */
+      _GLIBCXX_NODISCARD
       reference
       top()
       {
@@ -198,6 +239,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
        *  Returns a read-only (constant) reference to the data at the first
        *  element of the %stack.
        */
+      _GLIBCXX_NODISCARD
       const_reference
       top() const
       {
@@ -223,10 +265,17 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
       push(value_type&& __x)
       { c.push_back(std::move(__x)); }
 
+#if __cplusplus > 201402L
       template<typename... _Args>
-        void
-        emplace(_Args&&... __args)
+	decltype(auto)
+	emplace(_Args&&... __args)
+	{ return c.emplace_back(std::forward<_Args>(__args)...); }
+#else
+      template<typename... _Args>
+	void
+	emplace(_Args&&... __args)
 	{ c.emplace_back(std::forward<_Args>(__args)...); }
+#endif
 #endif
 
       /**
@@ -250,13 +299,44 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 #if __cplusplus >= 201103L
       void
       swap(stack& __s)
+#if __cplusplus > 201402L || !defined(__STRICT_ANSI__) // c++1z or gnu++11
+      noexcept(__is_nothrow_swappable<_Sequence>::value)
+#else
       noexcept(__is_nothrow_swappable<_Tp>::value)
+#endif
       {
 	using std::swap;
 	swap(c, __s.c);
       }
-#endif
+#endif // __cplusplus >= 201103L
     };
+
+#if __cpp_deduction_guides >= 201606
+  template<typename _Container,
+	   typename = _RequireNotAllocator<_Container>>
+    stack(_Container) -> stack<typename _Container::value_type, _Container>;
+
+  template<typename _Container, typename _Allocator,
+	   typename = _RequireNotAllocator<_Container>>
+    stack(_Container, _Allocator)
+    -> stack<typename _Container::value_type, _Container>;
+
+#ifdef __cpp_lib_adaptor_iterator_pair_constructor
+  template<typename _InputIterator,
+	   typename _ValT
+	     = typename iterator_traits<_InputIterator>::value_type,
+	   typename = _RequireInputIter<_InputIterator>>
+    stack(_InputIterator, _InputIterator) -> stack<_ValT>;
+
+  template<typename _InputIterator, typename _Allocator,
+	   typename _ValT
+	     = typename iterator_traits<_InputIterator>::value_type,
+	   typename = _RequireInputIter<_InputIterator>,
+	   typename = _RequireAllocator<_Allocator>>
+    stack(_InputIterator, _InputIterator, _Allocator)
+    -> stack<_ValT, deque<_ValT, _Allocator>>;
+#endif
+#endif
 
   /**
    *  @brief  Stack equality comparison.
@@ -271,6 +351,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
    *  equal.
   */
   template<typename _Tp, typename _Seq>
+    _GLIBCXX_NODISCARD
     inline bool
     operator==(const stack<_Tp, _Seq>& __x, const stack<_Tp, _Seq>& __y)
     { return __x.c == __y.c; }
@@ -289,37 +370,56 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
    *  determination.
   */
   template<typename _Tp, typename _Seq>
+    _GLIBCXX_NODISCARD
     inline bool
     operator<(const stack<_Tp, _Seq>& __x, const stack<_Tp, _Seq>& __y)
     { return __x.c < __y.c; }
 
   /// Based on operator==
   template<typename _Tp, typename _Seq>
+    _GLIBCXX_NODISCARD
     inline bool
     operator!=(const stack<_Tp, _Seq>& __x, const stack<_Tp, _Seq>& __y)
     { return !(__x == __y); }
 
   /// Based on operator<
   template<typename _Tp, typename _Seq>
+    _GLIBCXX_NODISCARD
     inline bool
     operator>(const stack<_Tp, _Seq>& __x, const stack<_Tp, _Seq>& __y)
     { return __y < __x; }
 
   /// Based on operator<
   template<typename _Tp, typename _Seq>
+    _GLIBCXX_NODISCARD
     inline bool
     operator<=(const stack<_Tp, _Seq>& __x, const stack<_Tp, _Seq>& __y)
     { return !(__y < __x); }
 
   /// Based on operator<
   template<typename _Tp, typename _Seq>
+    _GLIBCXX_NODISCARD
     inline bool
     operator>=(const stack<_Tp, _Seq>& __x, const stack<_Tp, _Seq>& __y)
     { return !(__x < __y); }
 
+#if __cpp_lib_three_way_comparison
+  template<typename _Tp, three_way_comparable _Seq>
+    [[nodiscard]]
+    inline compare_three_way_result_t<_Seq>
+    operator<=>(const stack<_Tp, _Seq>& __x, const stack<_Tp, _Seq>& __y)
+    { return __x.c <=> __y.c; }
+#endif
+
 #if __cplusplus >= 201103L
   template<typename _Tp, typename _Seq>
-    inline void
+    inline
+#if __cplusplus > 201402L || !defined(__STRICT_ANSI__) // c++1z or gnu++11
+    // Constrained free swap overload, see p0185r1
+    typename enable_if<__is_swappable<_Seq>::value>::type
+#else
+    void
+#endif
     swap(stack<_Tp, _Seq>& __x, stack<_Tp, _Seq>& __y)
     noexcept(noexcept(__x.swap(__y)))
     { __x.swap(__y); }
@@ -327,7 +427,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
   template<typename _Tp, typename _Seq, typename _Alloc>
     struct uses_allocator<stack<_Tp, _Seq>, _Alloc>
     : public uses_allocator<_Seq, _Alloc>::type { };
-#endif
+#endif // __cplusplus >= 201103L
 
 _GLIBCXX_END_NAMESPACE_VERSION
 } // namespace

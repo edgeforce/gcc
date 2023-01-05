@@ -1,9 +1,9 @@
-// { dg-options "-std=gnu++11" }
+// { dg-do run { target c++11 } }
 // { dg-require-cstdint "" }
 
 // 2009-09-14  Benjamin Kosnik  <benjamin@redhat.com>
 
-// Copyright (C) 2009-2016 Free Software Foundation, Inc.
+// Copyright (C) 2009-2022 Free Software Foundation, Inc.
 //
 // This file is part of the GNU ISO C++ Library.  This library is free
 // software; you can redistribute it and/or modify it under the
@@ -48,3 +48,7 @@ int main()
   value();
   return 0;
 }
+
+// The __versa_string destructor triggers a bogus -Wfree-nonheap-object
+// due to pr54202.
+// { dg-prune-output "\\\[-Wfree-nonheap-object" }

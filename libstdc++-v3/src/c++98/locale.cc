@@ -1,4 +1,4 @@
-// Copyright (C) 1997-2016 Free Software Foundation, Inc.
+// Copyright (C) 1997-2022 Free Software Foundation, Inc.
 //
 // This file is part of the GNU ISO C++ Library.  This library is free
 // software; you can redistribute it and/or modify it under the
@@ -69,7 +69,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 
   // These are no longer exported.
   locale::_Impl*                locale::_S_classic;
-  locale::_Impl* 		locale::_S_global; 
+  locale::_Impl* 		locale::_S_global;
 
 #ifdef __GTHREADS
   __gthread_once_t 		locale::_S_once = __GTHREAD_ONCE_INIT;
@@ -77,7 +77,10 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 
   locale::locale(const locale& __other) throw()
   : _M_impl(__other._M_impl)
-  { _M_impl->_M_add_reference(); }
+  {
+    if (_M_impl != _S_classic)
+      _M_impl->_M_add_reference();
+  }
 
   // This is used to initialize global and classic locales, and
   // assumes that the _Impl objects are constructed correctly.
@@ -86,7 +89,10 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
   { }
 
   locale::~locale() throw()
-  { _M_impl->_M_remove_reference(); }
+  {
+    if (_M_impl != _S_classic)
+      _M_impl->_M_remove_reference();
+  }
 
   bool
   locale::operator==(const locale& __rhs) const throw()
@@ -112,8 +118,10 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
   const locale&
   locale::operator=(const locale& __other) throw()
   {
-    __other._M_impl->_M_add_reference();
-    _M_impl->_M_remove_reference();
+    if (__other._M_impl != _S_classic)
+      __other._M_impl->_M_add_reference();
+    if (_M_impl != _S_classic)
+      _M_impl->_M_remove_reference();
     _M_impl = __other._M_impl;
     return *this;
   }
@@ -132,7 +140,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 	__ret.reserve(128);
 	__ret += _S_categories[0];
 	__ret += '=';
-	__ret += _M_impl->_M_names[0]; 
+	__ret += _M_impl->_M_names[0];
 	for (size_t __i = 1; __i < _S_categories_size; ++__i)
 	  {
 	    __ret += ';';
@@ -145,7 +153,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
   }
 
   locale::category
-  locale::_S_normalize_category(category __cat) 
+  locale::_S_normalize_category(category __cat)
   {
     int __ret = 0;
     if (__cat == none || ((__cat & all) && !(__cat & ~all)))
@@ -155,27 +163,27 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 	// NB: May be a C-style "LC_ALL" category; convert.
 	switch (__cat)
 	  {
-	  case LC_COLLATE:  
-	    __ret = collate; 
+	  case LC_COLLATE:
+	    __ret = collate;
 	    break;
-	  case LC_CTYPE:    
+	  case LC_CTYPE:
 	    __ret = ctype;
 	    break;
-	  case LC_MONETARY: 
+	  case LC_MONETARY:
 	    __ret = monetary;
 	    break;
-	  case LC_NUMERIC:  
+	  case LC_NUMERIC:
 	    __ret = numeric;
 	    break;
-	  case LC_TIME:     
-	    __ret = time; 
+	  case LC_TIME:
+	    __ret = time;
 	    break;
 #ifdef _GLIBCXX_HAVE_LC_MESSAGES
-	  case LC_MESSAGES: 
+	  case LC_MESSAGES:
 	    __ret = messages;
 	    break;
-#endif	
-	  case LC_ALL:      
+#endif
+	  case LC_ALL:
 	    __ret = all;
 	    break;
 	  default:
@@ -237,12 +245,12 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
     if (_M_caches)
       for (size_t __i = 0; __i < _M_facets_size; ++__i)
 	if (_M_caches[__i])
-	  _M_caches[__i]->_M_remove_reference(); 
+	  _M_caches[__i]->_M_remove_reference();
     delete [] _M_caches;
 
     if (_M_names)
       for (size_t __i = 0; __i < _S_categories_size; ++__i)
-	delete [] _M_names[__i];  
+	delete [] _M_names[__i];
     delete [] _M_names;
   }
 
@@ -266,7 +274,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 	  {
 	    _M_caches[__j] = __imp._M_caches[__j];
 	    if (_M_caches[__j])
-	      _M_caches[__j]->_M_add_reference(); 	
+	      _M_caches[__j]->_M_add_reference();
 	  }
 	_M_names = new char*[_S_categories_size];
 	for (size_t __k = 0; __k < _S_categories_size; ++__k)
@@ -290,22 +298,22 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 
   void
   locale::_Impl::
-  _M_replace_category(const _Impl* __imp, 
+  _M_replace_category(const _Impl* __imp,
 		      const locale::id* const* __idpp)
   {
     for (; *__idpp; ++__idpp)
       _M_replace_facet(__imp, *__idpp);
   }
-  
+
   void
   locale::_Impl::
   _M_replace_facet(const _Impl* __imp, const locale::id* __idp)
   {
     size_t __index = __idp->_M_id();
-    if ((__index > (__imp->_M_facets_size - 1)) 
+    if ((__index > (__imp->_M_facets_size - 1))
 	|| !__imp->_M_facets[__index])
       __throw_runtime_error(__N("locale::_Impl::_M_replace_facet"));
-    _M_install_facet(__idp, __imp->_M_facets[__index]); 
+    _M_install_facet(__idp, __imp->_M_facets[__index]);
   }
 
   void
@@ -324,7 +332,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 	    // New facet array.
 	    const facet** __oldf = _M_facets;
 	    const facet** __newf;
-	    __newf = new const facet*[__new_size]; 
+	    __newf = new const facet*[__new_size];
 	    for (size_t __i = 0; __i < _M_facets_size; ++__i)
 	      __newf[__i] = _M_facets[__i];
 	    for (size_t __l = _M_facets_size; __l < __new_size; ++__l)
@@ -466,6 +474,31 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
   // Definitions for static const data members of locale::id
   _Atomic_word locale::id::_S_refcount;  // init'd to 0 by linker
 
+  // XXX GLIBCXX_ABI Deprecated
+#ifdef _GLIBCXX_LONG_DOUBLE_COMPAT
+namespace {
+  inline locale::id*
+  find_ldbl_sync_facet(const locale::id* __idp)
+  {
+# define _GLIBCXX_SYNC_ID(facet, mangled) \
+    if (__idp == &::mangled)		  \
+      return &facet::id
+
+    _GLIBCXX_SYNC_ID (num_get<char>, _ZNSt7num_getIcSt19istreambuf_iteratorIcSt11char_traitsIcEEE2idE);
+    _GLIBCXX_SYNC_ID (num_put<char>, _ZNSt7num_putIcSt19ostreambuf_iteratorIcSt11char_traitsIcEEE2idE);
+    _GLIBCXX_SYNC_ID (money_get<char>, _ZNSt9money_getIcSt19istreambuf_iteratorIcSt11char_traitsIcEEE2idE);
+    _GLIBCXX_SYNC_ID (money_put<char>, _ZNSt9money_putIcSt19ostreambuf_iteratorIcSt11char_traitsIcEEE2idE);
+# ifdef _GLIBCXX_USE_WCHAR_T
+    _GLIBCXX_SYNC_ID (num_get<wchar_t>, _ZNSt7num_getIwSt19istreambuf_iteratorIwSt11char_traitsIwEEE2idE);
+    _GLIBCXX_SYNC_ID (num_put<wchar_t>, _ZNSt7num_putIwSt19ostreambuf_iteratorIwSt11char_traitsIwEEE2idE);
+    _GLIBCXX_SYNC_ID (money_get<wchar_t>, _ZNSt9money_getIwSt19istreambuf_iteratorIwSt11char_traitsIwEEE2idE);
+    _GLIBCXX_SYNC_ID (money_put<wchar_t>, _ZNSt9money_putIwSt19ostreambuf_iteratorIwSt11char_traitsIwEEE2idE);
+# endif
+    return 0;
+  }
+} // namespace
+#endif
+
   size_t
   locale::id::_M_id() const throw()
   {
@@ -473,26 +506,38 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
       {
 	// XXX GLIBCXX_ABI Deprecated
 #ifdef _GLIBCXX_LONG_DOUBLE_COMPAT
-	locale::id *f = 0;
-# define _GLIBCXX_SYNC_ID(facet, mangled) \
-	if (this == &::mangled)				\
-	  f = &facet::id
-	_GLIBCXX_SYNC_ID (num_get<char>, _ZNSt7num_getIcSt19istreambuf_iteratorIcSt11char_traitsIcEEE2idE);
-	_GLIBCXX_SYNC_ID (num_put<char>, _ZNSt7num_putIcSt19ostreambuf_iteratorIcSt11char_traitsIcEEE2idE);
-	_GLIBCXX_SYNC_ID (money_get<char>, _ZNSt9money_getIcSt19istreambuf_iteratorIcSt11char_traitsIcEEE2idE);
-	_GLIBCXX_SYNC_ID (money_put<char>, _ZNSt9money_putIcSt19ostreambuf_iteratorIcSt11char_traitsIcEEE2idE);
-# ifdef _GLIBCXX_USE_WCHAR_T
-	_GLIBCXX_SYNC_ID (num_get<wchar_t>, _ZNSt7num_getIwSt19istreambuf_iteratorIwSt11char_traitsIwEEE2idE);
-	_GLIBCXX_SYNC_ID (num_put<wchar_t>, _ZNSt7num_putIwSt19ostreambuf_iteratorIwSt11char_traitsIwEEE2idE);
-	_GLIBCXX_SYNC_ID (money_get<wchar_t>, _ZNSt9money_getIwSt19istreambuf_iteratorIwSt11char_traitsIwEEE2idE);
-	_GLIBCXX_SYNC_ID (money_put<wchar_t>, _ZNSt9money_putIwSt19ostreambuf_iteratorIwSt11char_traitsIwEEE2idE);
-# endif
-	if (f)
-	  _M_index = 1 + f->_M_id();
+	if (locale::id* f = find_ldbl_sync_facet(this))
+	{
+	  const size_t sync_id = f->_M_id();
+	  _M_index = 1 + sync_id;
+	  return sync_id;
+	}
+#endif
+
+#ifdef __GTHREADS
+	if (!__gnu_cxx::__is_single_threaded())
+	  {
+	    if (__atomic_always_lock_free(sizeof(_M_index), &_M_index))
+	      {
+		const _Atomic_word next
+		  = 1 + __gnu_cxx::__exchange_and_add(&_S_refcount, 1);
+		size_t expected = 0;
+		__atomic_compare_exchange_n(&_M_index, &expected, next,
+					    /* weak = */ false,
+					    /* success = */ __ATOMIC_ACQ_REL,
+					    /* failure = */ __ATOMIC_ACQUIRE);
+	      }
+	    else
+	      {
+		static __gnu_cxx::__mutex m;
+		__gnu_cxx::__scoped_lock l(m);
+		if (!_M_index)
+		  _M_index = ++_S_refcount;
+	      }
+	  }
 	else
 #endif
-	  _M_index = 1 + __gnu_cxx::__exchange_and_add_dispatch(&_S_refcount,
-								1);
+	_M_index = ++_S_refcount; // single-threaded case
       }
     return _M_index - 1;
   }

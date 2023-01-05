@@ -1,12 +1,9 @@
-// { dg-do run { target *-*-freebsd* *-*-dragonfly* *-*-netbsd* *-*-linux* *-*-gnu* *-*-solaris* *-*-cygwin *-*-rtems* *-*-darwin* powerpc-ibm-aix* } }
-// { dg-options " -std=gnu++11 -pthread" { target *-*-freebsd* *-*-dragonfly* *-*-netbsd* *-*-linux* *-*-gnu* powerpc-ibm-aix* } }
-// { dg-options " -std=gnu++11 -pthreads" { target *-*-solaris* } }
-// { dg-options " -std=gnu++11 " { target *-*-cygwin *-*-rtems* *-*-darwin* } }
-// { dg-require-cstdint "" }
+// { dg-do run }
+// { dg-additional-options "-pthread" { target pthread } }
+// { dg-require-effective-target c++11 }
 // { dg-require-gthreads "" }
-// { dg-require-atomic-builtins "" }
 
-// Copyright (C) 2011-2016 Free Software Foundation, Inc.
+// Copyright (C) 2011-2022 Free Software Foundation, Inc.
 //
 // This file is part of the GNU ISO C++ Library.  This library is free
 // software; you can redistribute it and/or modify it under the
@@ -31,8 +28,6 @@ int zero() { return 0; }
 
 void test01()
 {
-  bool test __attribute__((unused)) = true;
-
   std::packaged_task<int()> p1;
   VERIFY( !p1.valid() );
 

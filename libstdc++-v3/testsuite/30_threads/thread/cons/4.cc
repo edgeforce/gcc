@@ -1,11 +1,9 @@
-// { dg-do run { target *-*-freebsd* *-*-dragonfly* *-*-netbsd* *-*-linux* *-*-gnu* *-*-solaris* *-*-cygwin *-*-rtems* *-*-darwin* powerpc-ibm-aix* } }
-// { dg-options " -std=gnu++11 -pthread" { target *-*-freebsd* *-*-dragonfly* *-*-netbsd* *-*-linux* *-*-gnu* powerpc-ibm-aix* } }
-// { dg-options " -std=gnu++11 -pthreads" { target *-*-solaris* } }
-// { dg-options " -std=gnu++11 " { target *-*-cygwin *-*-rtems* *-*-darwin* } }
-// { dg-require-cstdint "" }
+// { dg-do run }
+// { dg-additional-options "-pthread" { target pthread } }
+// { dg-require-effective-target c++11 }
 // { dg-require-gthreads "" }
 
-// Copyright (C) 2008-2016 Free Software Foundation, Inc.
+// Copyright (C) 2008-2022 Free Software Foundation, Inc.
 //
 // This file is part of the GNU ISO C++ Library.  This library is free
 // software; you can redistribute it and/or modify it under the
@@ -23,12 +21,12 @@
 // <http://www.gnu.org/licenses/>.
 
 
-#include <functional> // std::unary_function, std::ref, std::cref
+#include <functional> // std::ref, std::cref
 #include <thread>
 #include <system_error>
 #include <testsuite_hooks.h>
 
-struct noncopyable : std::unary_function<std::thread::id&, void>
+struct noncopyable
 {
   noncopyable() = default;
   ~noncopyable() = default;
@@ -48,8 +46,6 @@ struct noncopyable : std::unary_function<std::thread::id&, void>
 // no errors
 void test03()
 {
-  bool test __attribute__((unused)) = true;
-
   try
     {
       std::thread::id t1_id1;

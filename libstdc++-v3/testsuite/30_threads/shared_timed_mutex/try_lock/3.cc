@@ -1,11 +1,9 @@
-// { dg-do run { target *-*-freebsd* *-*-dragonfly* *-*-netbsd* *-*-linux* *-*-solaris* *-*-cygwin *-*-rtems* *-*-darwin* powerpc-ibm-aix* } }
-// { dg-options " -std=gnu++14 -pthread" { target *-*-freebsd* *-*-dragonfly* *-*-netbsd* *-*-linux* powerpc-ibm-aix* } }
-// { dg-options " -std=gnu++14 -pthreads" { target *-*-solaris* } }
-// { dg-options " -std=gnu++14 " { target *-*-cygwin *-*-rtems* *-*-darwin* } }
-// { dg-require-cstdint "" }
+// { dg-do run }
+// { dg-additional-options "-pthread" { target pthread } }
+// { dg-require-effective-target c++14 }
 // { dg-require-gthreads "" }
 
-// Copyright (C) 2013-2016 Free Software Foundation, Inc.
+// Copyright (C) 2013-2022 Free Software Foundation, Inc.
 //
 // This file is part of the GNU ISO C++ Library.  This library is free
 // software; you can redistribute it and/or modify it under the
@@ -28,9 +26,9 @@
 #include <system_error>
 #include <testsuite_hooks.h>
 
-int main()
+template <typename clock_type>
+void test()
 {
-  bool test __attribute__((unused)) = true;
   typedef std::shared_timed_mutex mutex_type;
 
   try
@@ -44,15 +42,15 @@ int main()
           {
             using namespace std::chrono;
             auto timeout = 100ms;
-            auto start = system_clock::now();
+            auto start = clock_type::now();
             b = m.try_lock_for(timeout);
-            auto t = system_clock::now() - start;
+            auto t = clock_type::now() - start;
             VERIFY( !b );
             VERIFY( t >= timeout );
 
-            start = system_clock::now();
+            start = clock_type::now();
             b = m.try_lock_until(start + timeout);
-            t = system_clock::now() - start;
+            t = clock_type::now() - start;
             VERIFY( !b );
             VERIFY( t >= timeout );
           }
@@ -72,4 +70,10 @@ int main()
     {
       VERIFY( false );
     }
+}
+
+int main()
+{
+  test<std::chrono::system_clock>();
+  test<std::chrono::steady_clock>();
 }

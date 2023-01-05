@@ -1,6 +1,7 @@
-// { dg-options "-std=gnu++11" }
+// { dg-do run { target c++11 } }
+// { dg-require-effective-target rtti }
 //
-// Copyright (C) 2011-2016 Free Software Foundation, Inc.
+// Copyright (C) 2011-2022 Free Software Foundation, Inc.
 //
 // This file is part of the GNU ISO C++ Library.  This library is free
 // software; you can redistribute it and/or modify it under the
@@ -28,8 +29,6 @@ struct C : public B1, public B2 { };
 
 void test()
 {
-  bool test __attribute__((unused)) = true;
-
   // 1
   {
     typedef std::tr2::direct_bases<A>::type tl;
@@ -69,7 +68,7 @@ void test()
 
     // Sanity check.
     static_assert(tl::empty::value != std::true_type::value, "!empty");
-  
+
     typedef tl::first::type		tl1_first;
     typedef tl::rest::type		tl2;
     typedef tl2::first::type		tl2_first;

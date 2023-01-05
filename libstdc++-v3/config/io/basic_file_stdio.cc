@@ -1,6 +1,6 @@
 // Wrapper of C-language FILE struct -*- C++ -*-
 
-// Copyright (C) 2000-2016 Free Software Foundation, Inc.
+// Copyright (C) 2000-2022 Free Software Foundation, Inc.
 //
 // This file is part of the GNU ISO C++ Library.  This library is free
 // software; you can redistribute it and/or modify it under the
@@ -41,7 +41,7 @@
 
 // Pick up FIONREAD on Solaris 2
 #ifdef _GLIBCXX_HAVE_SYS_IOCTL_H
-#define BSD_COMP 
+#define BSD_COMP
 #include <sys/ioctl.h>
 #endif
 
@@ -65,45 +65,51 @@
 
 #include <limits> // For <off_t>::max() and min() and <streamsize>::max()
 
-namespace 
+namespace
 {
   // Map ios_base::openmode flags to a string for use in fopen().
   // Table of valid combinations as given in [lib.filebuf.members]/2.
   static const char*
   fopen_mode(std::ios_base::openmode mode)
   {
-    enum 
+    enum
       {
 	in     = std::ios_base::in,
 	out    = std::ios_base::out,
 	trunc  = std::ios_base::trunc,
 	app    = std::ios_base::app,
-	binary = std::ios_base::binary
+	binary = std::ios_base::binary,
+	noreplace = std::_S_noreplace
       };
 
     // _GLIBCXX_RESOLVE_LIB_DEFECTS
     // 596. 27.8.1.3 Table 112 omits "a+" and "a+b" modes.
-    switch (mode & (in|out|trunc|app|binary))
+    switch (mode & (in|out|trunc|app|binary|noreplace))
       {
-      case (   out                 ): return "w";
-      case (   out      |app       ): return "a";
-      case (             app       ): return "a";
-      case (   out|trunc           ): return "w";
-      case (in                     ): return "r";
-      case (in|out                 ): return "r+";
-      case (in|out|trunc           ): return "w+";
-      case (in|out      |app       ): return "a+";
-      case (in          |app       ): return "a+";
+      case (   out                           ): return "w";
+      case (   out                 |noreplace): return "wx";
+      case (   out|trunc                     ): return "w";
+      case (   out|trunc           |noreplace): return "wx";
+      case (   out      |app                 ): return "a";
+      case (             app                 ): return "a";
+      case (in                               ): return "r";
+      case (in|out                           ): return "r+";
+      case (in|out|trunc                     ): return "w+";
+      case (in|out|trunc           |noreplace): return "w+x";
+      case (in|out      |app                 ): return "a+";
+      case (in          |app                 ): return "a+";
 
-      case (   out          |binary): return "wb";
-      case (   out      |app|binary): return "ab";
-      case (             app|binary): return "ab";
-      case (   out|trunc    |binary): return "wb";
-      case (in              |binary): return "rb";
-      case (in|out          |binary): return "r+b";
-      case (in|out|trunc    |binary): return "w+b";
-      case (in|out      |app|binary): return "a+b";
-      case (in          |app|binary): return "a+b";
+      case (   out          |binary          ): return "wb";
+      case (   out          |binary|noreplace): return "wbx";
+      case (   out      |app|binary          ): return "ab";
+      case (             app|binary          ): return "ab";
+      case (   out|trunc    |binary          ): return "wb";
+      case (in              |binary          ): return "rb";
+      case (in|out          |binary          ): return "r+b";
+      case (in|out|trunc    |binary          ): return "w+b";
+      case (in|out|trunc    |binary|noreplace): return "w+bx";
+      case (in|out      |app|binary          ): return "a+b";
+      case (in          |app|binary          ): return "a+b";
 
       default: return 0; // invalid
       }
@@ -111,13 +117,21 @@ namespace
 
   // Wrapper handling partial write.
   static std::streamsize
+#ifdef _GLIBCXX_USE_STDIO_PURE
+  xwrite(FILE *__file, const char* __s, std::streamsize __n)
+#else
   xwrite(int __fd, const char* __s, std::streamsize __n)
+#endif
   {
     std::streamsize __nleft = __n;
 
     for (;;)
       {
+#ifdef _GLIBCXX_USE_STDIO_PURE
+	const std::streamsize __ret = fwrite(__file, 1, __nleft, __file);
+#else
 	const std::streamsize __ret = write(__fd, __s, __nleft);
+#endif
 	if (__ret == -1L && errno == EINTR)
 	  continue;
 	if (__ret == -1L)
@@ -133,7 +147,7 @@ namespace
     return __n - __nleft;
   }
 
-#ifdef _GLIBCXX_HAVE_WRITEV
+#if defined(_GLIBCXX_HAVE_WRITEV) && !defined(_GLIBCXX_USE_STDIO_PURE)
   // Wrapper handling partial writev.
   static std::streamsize
   xwritev(int __fd, const char* __s1, std::streamsize __n1,
@@ -167,7 +181,7 @@ namespace
 	    __nleft -= xwrite(__fd, __s2 + __off, __n2 - __off);
 	    break;
 	  }
-	
+
 	__s1 += __ret;
 	__n1_left -= __ret;
       }
@@ -188,18 +202,20 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 
   __basic_file<char>::~__basic_file()
   { this->close(); }
-      
+
   __basic_file<char>*
-  __basic_file<char>::sys_open(__c_file* __file, ios_base::openmode) 
+  __basic_file<char>::sys_open(__c_file* __file, ios_base::openmode)
   {
     __basic_file* __ret = NULL;
     if (!this->is_open() && __file)
       {
-	int __err;
-	errno = 0;	
+	int __err, __save_errno = errno;
+	// POSIX guarantees that fflush sets errno on error, but C doesn't.
+	errno = 0;
 	do
-	  __err = this->sync();
+	  __err = fflush(__file);
 	while (__err && errno == EINTR);
+	errno = __save_errno;
 	if (!__err)
 	  {
 	    _M_cfile = __file;
@@ -209,7 +225,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
       }
     return __ret;
   }
-  
+
   __basic_file<char>*
   __basic_file<char>::sys_open(int __fd, ios_base::openmode __mode) throw ()
   {
@@ -225,9 +241,9 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
       }
     return __ret;
   }
-  
-  __basic_file<char>* 
-  __basic_file<char>::open(const char* __name, ios_base::openmode __mode, 
+
+  __basic_file<char>*
+  __basic_file<char>::open(const char* __name, ios_base::openmode __mode,
 			   int /*__prot*/)
   {
     __basic_file* __ret = NULL;
@@ -246,71 +262,115 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
       }
     return __ret;
   }
-  
-  bool 
+
+#if _GLIBCXX_HAVE__WFOPEN && _GLIBCXX_USE_WCHAR_T
+  __basic_file<char>*
+  __basic_file<char>::open(const wchar_t* __name, ios_base::openmode __mode)
+  {
+    __basic_file* __ret = NULL;
+    const char* __c_mode = fopen_mode(__mode);
+    if (__c_mode && !this->is_open())
+      {
+	wchar_t __wc_mode[4] = { };
+	int __i = 0;
+	do
+	  {
+	    switch(__c_mode[__i]) {
+	    case 'a': __wc_mode[__i] = L'a'; break;
+	    case 'b': __wc_mode[__i] = L'b'; break;
+	    case 'r': __wc_mode[__i] = L'r'; break;
+	    case 'w': __wc_mode[__i] = L'w'; break;
+	    case '+': __wc_mode[__i] = L'+'; break;
+	    default: return __ret;
+	    }
+	  }
+	while (__c_mode[++__i]);
+
+	if ((_M_cfile = _wfopen(__name, __wc_mode)))
+	  {
+	    _M_cfile_created = true;
+	    __ret = this;
+	  }
+      }
+    return __ret;
+  }
+#endif
+
+  bool
   __basic_file<char>::is_open() const throw ()
   { return _M_cfile != 0; }
-  
-  int 
+
+#ifndef _GLIBCCXX_USE_STDIO_PURE
+  int
   __basic_file<char>::fd() throw ()
   { return fileno(_M_cfile); }
-  
+#endif
+
   __c_file*
   __basic_file<char>::file() throw ()
   { return _M_cfile; }
-  
-  __basic_file<char>* 
+
+  __basic_file<char>*
   __basic_file<char>::close()
-  { 
+  {
     __basic_file* __ret = static_cast<__basic_file*>(NULL);
     if (this->is_open())
       {
 	int __err = 0;
 	if (_M_cfile_created)
-	  {
-	    // In general, no need to zero errno in advance if checking
-	    // for error first. However, C89/C99 (at variance with IEEE
-	    // 1003.1, f.i.) do not mandate that fclose must set errno
-	    // upon error.
-	    errno = 0;
-	    do
-	      __err = fclose(_M_cfile);
-	    while (__err && errno == EINTR);
-	  }
+	  __err = fclose(_M_cfile);
 	_M_cfile = 0;
 	if (!__err)
 	  __ret = this;
       }
     return __ret;
   }
- 
-  streamsize 
+
+  streamsize
   __basic_file<char>::xsgetn(char* __s, streamsize __n)
   {
     streamsize __ret;
     do
+#ifdef _GLIBCXX_USE_STDIO_PURE
+      __ret = fread(__s, 1, __n, this->file());
+#else
       __ret = read(this->fd(), __s, __n);
+#endif
     while (__ret == -1L && errno == EINTR);
     return __ret;
   }
 
-  streamsize 
+  streamsize
   __basic_file<char>::xsputn(const char* __s, streamsize __n)
-  { return xwrite(this->fd(), __s, __n); }
+  {
+#ifdef _GLIBCXX_USE_STDIO_PURE
+    return xwrite(this->file(), __s, __n);
+#else
+    return xwrite(this->fd(), __s, __n);
+#endif
+  }
 
-  streamsize 
+  streamsize
   __basic_file<char>::xsputn_2(const char* __s1, streamsize __n1,
 			       const char* __s2, streamsize __n2)
   {
     streamsize __ret = 0;
-#ifdef _GLIBCXX_HAVE_WRITEV
+#if defined(_GLIBCXX_HAVE_WRITEV) && !defined(_GLIBCXX_USE_STDIO_PURE)
     __ret = xwritev(this->fd(), __s1, __n1, __s2, __n2);
 #else
     if (__n1)
+#ifdef _GLIBCXX_USE_STDIO_PURE
+      __ret = xwrite(this->file(), __s1, __n1);
+#else
       __ret = xwrite(this->fd(), __s1, __n1);
+#endif
 
     if (__ret == __n1)
+#ifdef _GLIBCXX_USE_STDIO_PURE
+      __ret += xwrite(this->file(), __s2, __n2);
+#else
       __ret += xwrite(this->fd(), __s2, __n2);
+#endif
 #endif
     return __ret;
   }
@@ -324,35 +384,39 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
     if (__off > numeric_limits<off_t>::max()
 	|| __off < numeric_limits<off_t>::min())
       return -1L;
+#ifdef _GLIBCXX_USE_STDIO_PURE
+    return fseek(this->file(), __off, __way);
+#else
     return lseek(this->fd(), __off, __way);
+#endif
 #endif
   }
 
-  int 
-  __basic_file<char>::sync() 
+  int
+  __basic_file<char>::sync()
   { return fflush(_M_cfile); }
 
   streamsize
   __basic_file<char>::showmanyc()
   {
-#ifndef _GLIBCXX_NO_IOCTL
+#if !defined(_GLIBCXX_NO_IOCTL) && !defined(_GLIBCXX_USE_STDIO_PURE)
 #ifdef FIONREAD
-    // Pipes and sockets.    
+    // Pipes and sockets.
     int __num = 0;
     int __r = ioctl(this->fd(), FIONREAD, &__num);
     if (!__r && __num >= 0)
-      return __num; 
+      return __num;
 #endif
 #endif
 
-#ifdef _GLIBCXX_HAVE_POLL
+#if defined(_GLIBCXX_HAVE_POLL) && !defined(_GLIBCXX_USE_STDIO_PURE)
     // Cheap test.
     struct pollfd __pfd[1];
     __pfd[0].fd = this->fd();
     __pfd[0].events = POLLIN;
     if (poll(__pfd, 1, 0) <= 0)
       return 0;
-#endif   
+#endif
 
 #if defined(_GLIBCXX_HAVE_S_ISREG) || defined(_GLIBCXX_HAVE_S_IFREG)
     // Regular files.
@@ -369,7 +433,11 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
     struct stat __buffer;
     const int __err = fstat(this->fd(), &__buffer);
     if (!__err && _GLIBCXX_ISREG(__buffer.st_mode))
+#ifdef _GLIBCXX_USE_STDIO_PURE
+      return __buffer.st_size - fseek(this->file(), 0, ios_base::cur);
+#else
       return __buffer.st_size - lseek(this->fd(), 0, ios_base::cur);
+#endif
 #endif
 #endif
     return 0;

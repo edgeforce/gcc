@@ -1,6 +1,7 @@
-// { dg-options "-std=gnu++11" }
+// { dg-do run { target c++11 } }
+// { dg-require-effective-target hosted }
 
-// Copyright (C) 2008-2016 Free Software Foundation, Inc.
+// Copyright (C) 2008-2022 Free Software Foundation, Inc.
 //
 // This file is part of the GNU ISO C++ Library.  This library is free
 // software; you can redistribute it and/or modify it under the
@@ -39,8 +40,6 @@ struct D {
 int
 test01()
 {
-  bool test __attribute__((unused)) = true;
-
   D d;
   std::unique_ptr<A, D&> p1(new A, d);
 
@@ -49,8 +48,12 @@ test01()
   typedef std::reference_wrapper<D> D2;
   D2* p3 = std::get_deleter<D2>(p2);
 
+#if __cpp_rtti
   VERIFY( p3 != 0 );
   VERIFY( &p3->get() == &d );
+#else
+  VERIFY( p3 == 0 ); // Always returns nullptr without RTTI.
+#endif
 
   return 0;
 }

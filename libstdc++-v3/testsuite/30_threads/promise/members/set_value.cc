@@ -1,12 +1,9 @@
-// { dg-do run { target *-*-freebsd* *-*-dragonfly* *-*-netbsd* *-*-linux* *-*-gnu* *-*-solaris* *-*-cygwin *-*-rtems* *-*-darwin* powerpc-ibm-aix* } }
-// { dg-options " -std=gnu++11 -pthread" { target *-*-freebsd* *-*-dragonfly* *-*-netbsd* *-*-linux* *-*-gnu* powerpc-ibm-aix* } }
-// { dg-options " -std=gnu++11 -pthreads" { target *-*-solaris* } }
-// { dg-options " -std=gnu++11 " { target *-*-cygwin *-*-rtems* *-*-darwin* } }
-// { dg-require-cstdint "" }
+// { dg-do run }
+// { dg-additional-options "-pthread" { target pthread } }
+// { dg-require-effective-target c++11 }
 // { dg-require-gthreads "" }
-// { dg-require-atomic-builtins "" }
 
-// Copyright (C) 2009-2016 Free Software Foundation, Inc.
+// Copyright (C) 2009-2022 Free Software Foundation, Inc.
 //
 // This file is part of the GNU ISO C++ Library.  This library is free
 // software; you can redistribute it and/or modify it under the
@@ -30,8 +27,6 @@
 
 void test01()
 {
-  bool test __attribute__((unused)) = true;
-
   std::promise<int> p1;
   std::future<int> f1 = p1.get_future();
 
@@ -46,7 +41,6 @@ void test01()
 
 void test02()
 {
-  bool test __attribute__((unused)) = true;
   using __gnu_test::rvalstruct;
 
   std::promise<rvalstruct> p1;
@@ -65,8 +59,6 @@ void test02()
 
 void test03()
 {
-  bool test __attribute__((unused)) = true;
-
   std::promise<int&> p1;
   std::future<int&> f1 = p1.get_future();
 
@@ -82,8 +74,6 @@ void test03()
 
 void test04()
 {
-  bool test __attribute__((unused)) = true;
-
   std::promise<void> p1;
   std::future<void> f1 = p1.get_future();
 

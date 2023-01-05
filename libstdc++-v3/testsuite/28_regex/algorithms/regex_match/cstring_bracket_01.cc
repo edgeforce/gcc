@@ -1,9 +1,10 @@
-// { dg-options "-std=gnu++11" }
+// { dg-do run { target c++11 } }
+// { dg-timeout-factor 2 }
 
 //
 // 2013-08-01  Tim Shen <timshen91@gmail.com>
 //
-// Copyright (C) 2013-2016 Free Software Foundation, Inc.
+// Copyright (C) 2013-2022 Free Software Foundation, Inc.
 //
 // This file is part of the GNU ISO C++ Library.  This library is free
 // software; you can redistribute it and/or modify it under the
@@ -33,8 +34,6 @@ using namespace std;
 void
 test01()
 {
-  bool test __attribute__((unused)) = true;
-
   {
     std::regex  re("pre/[za-x]", std::regex::extended);
     VERIFY( regex_match_debug("pre/z", re) );
@@ -70,8 +69,16 @@ test01()
 void
 test02()
 {
-  bool test __attribute__((unused)) = true;
+  VERIFY(regex_match("-", regex("[-]", regex_constants::ECMAScript)));
+  VERIFY(regex_match("-", regex("[--]", regex_constants::ECMAScript)));
+  VERIFY(regex_match("-", regex("[---]", regex_constants::ECMAScript)));
+  VERIFY(regex_match("-", regex("[----]", regex_constants::ECMAScript)));
+  VERIFY(regex_match("-", regex("[-----]", regex_constants::ECMAScript)));
 
+  VERIFY(regex_match("-", regex("[-]", regex_constants::extended)));
+  VERIFY(regex_match("-", regex("[--]", regex_constants::extended)));
+  VERIFY(regex_match("-", regex("[---]", regex_constants::extended)));
+  VERIFY(regex_match("-", regex("[----]", regex_constants::extended)));
   try
   {
     std::regex re("[-----]", std::regex::extended);
@@ -81,7 +88,6 @@ test02()
   {
     VERIFY(e.code() == std::regex_constants::error_range);
   }
-  std::regex re("[-----]", std::regex::ECMAScript);
 
   VERIFY(!regex_match("b", regex("[-ac]", regex_constants::extended)));
   VERIFY(!regex_match("b", regex("[ac-]", regex_constants::extended)));
@@ -96,15 +102,33 @@ test02()
   }
   catch (const std::regex_error& e)
   {
+    VERIFY(e.code() == std::regex_constants::error_range);
   }
+  try
+  {
+    regex("[@--]", regex_constants::extended);
+    VERIFY(false);
+  }
+  catch (const std::regex_error& e)
+  {
+    VERIFY(e.code() == std::regex_constants::error_range);
+  }
+  try
+  {
+    regex("[--%]", regex_constants::extended);
+    VERIFY(false);
+  }
+  catch (const std::regex_error& e)
+  {
+    VERIFY(e.code() == std::regex_constants::error_range);
+  }
+
   VERIFY(regex_match("].", regex("[][.hyphen.]-0]*", regex_constants::extended)));
 }
 
 void
 test03()
 {
-  bool test __attribute__((unused)) = true;
-
   try
   {
     std::regex re("[z-a]", std::regex::extended);
@@ -119,8 +143,6 @@ test03()
 void
 test04()
 {
-  bool test __attribute__((unused)) = true;
-
   std::regex re("[-0-9a-z]");
   VERIFY(regex_match_debug("-", re));
   VERIFY(regex_match_debug("1", re));
@@ -135,8 +157,6 @@ test04()
 void
 test05()
 {
-  bool test __attribute__((unused)) = true;
-
   regex lanana_namespace("^[a-z0-9]+$", regex::extended);
   regex lsb_namespace("^_?([a-z0-9_.]+-, regex::extended)+[a-z0-9]+$");
   regex debian_dpkg_conffile_cruft("dpkg-(old|dist|new|tmp, regex::extended)$");
@@ -154,8 +174,6 @@ test05()
 void
 test06()
 {
-  bool test __attribute__((unused)) = true;
-
   regex lanana_namespace("^[a-z0-9]+$");
   regex lsb_namespace("^_?([a-z0-9_.]+-)+[a-z0-9]+$");
   regex debian_dpkg_conffile_cruft("dpkg-(old|dist|new|tmp)$");
@@ -169,6 +187,36 @@ test06()
   VERIFY(regex_match("a-", debian_cron_namespace_ok));
 }
 
+// libstdc++/102447
+void
+test07()
+{
+  VERIFY(regex_match("-", std::regex("[\\w-]", std::regex::ECMAScript)));
+  VERIFY(regex_match("a", std::regex("[\\w-]", std::regex::ECMAScript)));
+  VERIFY(regex_match("-", std::regex("[a-]", std::regex::ECMAScript)));
+  VERIFY(regex_match("a", std::regex("[a-]", std::regex::ECMAScript)));
+
+  try
+  {
+    std::regex re("[\\w-a]", std::regex::ECMAScript);
+    VERIFY(false);
+  }
+  catch (const std::regex_error& e)
+  {
+    VERIFY(e.code() == std::regex_constants::error_range);
+  }
+
+  try
+  {
+    std::regex re("[\\w--]", std::regex::ECMAScript);
+    VERIFY(false);
+  }
+  catch (const std::regex_error& e)
+  {
+    VERIFY(e.code() == std::regex_constants::error_range);
+  }
+}
+
 int
 main()
 {
@@ -178,6 +226,7 @@ main()
   test04();
   test05();
   test06();
+  test07();
 
   return 0;
 }

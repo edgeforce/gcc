@@ -1,6 +1,6 @@
 // List implementation (out of line) -*- C++ -*-
 
-// Copyright (C) 2001-2016 Free Software Foundation, Inc.
+// Copyright (C) 2001-2022 Free Software Foundation, Inc.
 //
 // This file is part of the GNU ISO C++ Library.  This library is free
 // software; you can redistribute it and/or modify it under the
@@ -58,6 +58,7 @@
 
 namespace std _GLIBCXX_VISIBILITY(default)
 {
+_GLIBCXX_BEGIN_NAMESPACE_VERSION
 _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
 
   template<typename _Tp, typename _Alloc>
@@ -311,7 +312,7 @@ _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
         iterator __first1 = begin();
         iterator __last1 = end();
         for (; __first1 != __last1 && __first2 != __last2;
-	     ++__first1, ++__first2)
+	     ++__first1, (void)++__first2)
           *__first1 = *__first2;
         if (__first2 == __last2)
           erase(__first1, __last1);
@@ -319,14 +320,23 @@ _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
           insert(__last1, __first2, __last2);
       }
 
+#if __cplusplus > 201703L
+# define _GLIBCXX20_ONLY(__expr) __expr
+#else
+# define _GLIBCXX20_ONLY(__expr)
+#endif
+
   template<typename _Tp, typename _Alloc>
-    void
+    typename list<_Tp, _Alloc>::__remove_return_type
     list<_Tp, _Alloc>::
     remove(const value_type& __value)
     {
+#if !_GLIBCXX_USE_CXX11_ABI
+      size_type __removed __attribute__((__unused__)) = 0;
+#endif
+      list __to_destroy(get_allocator());
       iterator __first = begin();
       iterator __last = end();
-      iterator __extra = __last;
       while (__first != __last)
 	{
 	  iterator __next = __first;
@@ -336,35 +346,55 @@ _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
 	      // _GLIBCXX_RESOLVE_LIB_DEFECTS
 	      // 526. Is it undefined if a function in the standard changes
 	      // in parameters?
-	      if (std::__addressof(*__first) != std::__addressof(__value))
-		_M_erase(__first);
-	      else
-		__extra = __first;
+	      __to_destroy.splice(__to_destroy.begin(), *this, __first);
+#if !_GLIBCXX_USE_CXX11_ABI
+	      _GLIBCXX20_ONLY( __removed++ );
+#endif
 	    }
+
 	  __first = __next;
 	}
-      if (__extra != __last)
-	_M_erase(__extra);
+
+#if !_GLIBCXX_USE_CXX11_ABI
+	return _GLIBCXX20_ONLY( __removed );
+#else
+	return _GLIBCXX20_ONLY( __to_destroy.size() );
+#endif
     }
 
   template<typename _Tp, typename _Alloc>
-    void
+    typename list<_Tp, _Alloc>::__remove_return_type
     list<_Tp, _Alloc>::
     unique()
     {
       iterator __first = begin();
       iterator __last = end();
       if (__first == __last)
-	return;
+	return _GLIBCXX20_ONLY( 0 );
+#if !_GLIBCXX_USE_CXX11_ABI
+      size_type __removed __attribute__((__unused__)) = 0;
+#endif
+      list __to_destroy(get_allocator());
       iterator __next = __first;
       while (++__next != __last)
 	{
 	  if (*__first == *__next)
-	    _M_erase(__next);
+	    {
+	      __to_destroy.splice(__to_destroy.begin(), *this, __next);
+#if !_GLIBCXX_USE_CXX11_ABI
+	      _GLIBCXX20_ONLY( __removed++ );
+#endif
+	    }
 	  else
 	    __first = __next;
 	  __next = __first;
 	}
+
+#if !_GLIBCXX_USE_CXX11_ABI
+      return _GLIBCXX20_ONLY( __removed );
+#else
+      return _GLIBCXX20_ONLY( __to_destroy.size() );
+#endif
     }
 
   template<typename _Tp, typename _Alloc>
@@ -380,12 +410,15 @@ _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
       // 300. list::merge() specification incomplete
       if (this != std::__addressof(__x))
 	{
-	  _M_check_equal_allocators(__x); 
+	  _M_check_equal_allocators(__x);
 
 	  iterator __first1 = begin();
 	  iterator __last1 = end();
 	  iterator __first2 = __x.begin();
 	  iterator __last2 = __x.end();
+
+	  const _Finalize_merge __fin(*this, __x, __first2);
+
 	  while (__first1 != __last1 && __first2 != __last2)
 	    if (*__first2 < *__first1)
 	      {
@@ -396,10 +429,10 @@ _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
 	    else
 	      ++__first1;
 	  if (__first2 != __last2)
-	    _M_transfer(__last1, __first2, __last2);
-
-	  this->_M_inc_size(__x._M_get_size());
-	  __x._M_set_size(0);
+	    {
+	      _M_transfer(__last1, __first2, __last2);
+	      __first2 = __last2;
+	    }
 	}
     }
 
@@ -423,6 +456,9 @@ _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
 	    iterator __last1 = end();
 	    iterator __first2 = __x.begin();
 	    iterator __last2 = __x.end();
+
+	    const _Finalize_merge __fin(*this, __x, __first2);
+
 	    while (__first1 != __last1 && __first2 != __last2)
 	      if (__comp(*__first2, *__first1))
 		{
@@ -433,10 +469,10 @@ _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
 	      else
 		++__first1;
 	    if (__first2 != __last2)
-	      _M_transfer(__last1, __first2, __last2);
-
-	    this->_M_inc_size(__x._M_get_size());
-	    __x._M_set_size(0);
+	      {
+		_M_transfer(__last1, __first2, __last2);
+		__first2 = __last2;
+	      }
 	  }
       }
 
@@ -449,72 +485,127 @@ _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
       if (this->_M_impl._M_node._M_next != &this->_M_impl._M_node
 	  && this->_M_impl._M_node._M_next->_M_next != &this->_M_impl._M_node)
       {
-        list __carry;
-        list __tmp[64];
-        list * __fill = __tmp;
-        list * __counter;
+	using __detail::_Scratch_list;
+	// The algorithm used here is largely unchanged from the SGI STL
+	// and is described in The C++ Standard Template Library by Plauger,
+	// Stepanov, Lee, Musser.
+	// Each element of *this is spliced out and merged into one of the
+	// sorted lists in __tmp, then all the lists in __tmp are merged
+	// together and then swapped back into *this.
+	// Because all nodes end up back in *this we do not need to update
+	// this->size() while nodes are temporarily moved out.
+	_Scratch_list __carry;
+	_Scratch_list __tmp[64];
+	_Scratch_list* __fill = __tmp;
+	_Scratch_list* __counter;
 
-        do
+	_Scratch_list::_Ptr_cmp<iterator, void> __ptr_comp;
+
+	__try
 	  {
-	    __carry.splice(__carry.begin(), *this, begin());
-
-	    for(__counter = __tmp;
-		__counter != __fill && !__counter->empty();
-		++__counter)
+	    do
 	      {
-		__counter->merge(__carry);
-		__carry.swap(*__counter);
-	      }
-	    __carry.swap(*__counter);
-	    if (__counter == __fill)
-	      ++__fill;
-	  }
-	while ( !empty() );
+		__carry._M_take_one(begin()._M_node);
 
-        for (__counter = __tmp + 1; __counter != __fill; ++__counter)
-          __counter->merge(*(__counter - 1));
-        swap( *(__fill - 1) );
+		for(__counter = __tmp;
+		    __counter != __fill && !__counter->empty();
+		    ++__counter)
+		  {
+
+		    __counter->merge(__carry, __ptr_comp);
+		    __carry.swap(*__counter);
+		  }
+		__carry.swap(*__counter);
+		if (__counter == __fill)
+		  ++__fill;
+	      }
+	    while ( !empty() );
+
+	    for (__counter = __tmp + 1; __counter != __fill; ++__counter)
+	      __counter->merge(__counter[-1], __ptr_comp);
+	    __fill[-1].swap(this->_M_impl._M_node);
+	  }
+	__catch(...)
+	  {
+	    // Move all nodes back into *this.
+	    __carry._M_put_all(end()._M_node);
+	    for (int __i = 0; __i < sizeof(__tmp)/sizeof(__tmp[0]); ++__i)
+	      __tmp[__i]._M_put_all(end()._M_node);
+	    __throw_exception_again;
+	  }
       }
     }
 
   template<typename _Tp, typename _Alloc>
     template <typename _Predicate>
-      void
+      typename list<_Tp, _Alloc>::__remove_return_type
       list<_Tp, _Alloc>::
       remove_if(_Predicate __pred)
       {
-        iterator __first = begin();
-        iterator __last = end();
-        while (__first != __last)
+#if !_GLIBCXX_USE_CXX11_ABI
+	size_type __removed __attribute__((__unused__)) = 0;
+#endif
+	list __to_destroy(get_allocator());
+	iterator __first = begin();
+	iterator __last = end();
+	while (__first != __last)
 	  {
 	    iterator __next = __first;
 	    ++__next;
 	    if (__pred(*__first))
-	      _M_erase(__first);
+	      {
+		__to_destroy.splice(__to_destroy.begin(), *this, __first);
+#if !_GLIBCXX_USE_CXX11_ABI
+		_GLIBCXX20_ONLY( __removed++ );
+#endif
+	      }
 	    __first = __next;
 	  }
+
+#if !_GLIBCXX_USE_CXX11_ABI
+	return _GLIBCXX20_ONLY( __removed );
+#else
+	return _GLIBCXX20_ONLY( __to_destroy.size() );
+#endif
       }
 
   template<typename _Tp, typename _Alloc>
     template <typename _BinaryPredicate>
-      void
+      typename list<_Tp, _Alloc>::__remove_return_type
       list<_Tp, _Alloc>::
       unique(_BinaryPredicate __binary_pred)
       {
         iterator __first = begin();
         iterator __last = end();
         if (__first == __last)
-	  return;
+	  return _GLIBCXX20_ONLY(0);
+#if !_GLIBCXX_USE_CXX11_ABI
+        size_type __removed __attribute__((__unused__)) = 0;
+#endif
+	list __to_destroy(get_allocator());
         iterator __next = __first;
         while (++__next != __last)
 	  {
 	    if (__binary_pred(*__first, *__next))
-	      _M_erase(__next);
+	      {
+		__to_destroy.splice(__to_destroy.begin(), *this, __next);
+#if !_GLIBCXX_USE_CXX11_ABI
+		_GLIBCXX20_ONLY( __removed++ );
+#endif
+	      }
 	    else
 	      __first = __next;
 	    __next = __first;
 	  }
+
+#if !_GLIBCXX_USE_CXX11_ABI
+	return _GLIBCXX20_ONLY( __removed );
+#else
+	return _GLIBCXX20_ONLY( __to_destroy.size() );
+#endif
       }
+
+#undef _GLIBCXX20_ONLY
 
   template<typename _Tp, typename _Alloc>
     template <typename _StrictWeakOrdering>
@@ -525,36 +616,53 @@ _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
 	// Do nothing if the list has length 0 or 1.
 	if (this->_M_impl._M_node._M_next != &this->_M_impl._M_node
 	    && this->_M_impl._M_node._M_next->_M_next != &this->_M_impl._M_node)
-	  {
-	    list __carry;
-	    list __tmp[64];
-	    list * __fill = __tmp;
-	    list * __counter;
+	{
+	  using __detail::_Scratch_list;
+	  _Scratch_list __carry;
+	  _Scratch_list __tmp[64];
+	  _Scratch_list* __fill = __tmp;
+	  _Scratch_list* __counter;
 
-	    do
-	      {
-		__carry.splice(__carry.begin(), *this, begin());
+	_Scratch_list::_Ptr_cmp<iterator, _StrictWeakOrdering> __ptr_comp
+	  = { __comp };
 
-		for(__counter = __tmp;
-		    __counter != __fill && !__counter->empty();
-		    ++__counter)
-		  {
-		    __counter->merge(__carry, __comp);
-		    __carry.swap(*__counter);
-		  }
-		__carry.swap(*__counter);
-		if (__counter == __fill)
-		  ++__fill;
-	      }
-	    while ( !empty() );
+	  __try
+	    {
+	      do
+		{
+		  __carry._M_take_one(begin()._M_node);
 
-	    for (__counter = __tmp + 1; __counter != __fill; ++__counter)
-	      __counter->merge(*(__counter - 1), __comp);
-	    swap(*(__fill - 1));
-	  }
+		  for(__counter = __tmp;
+		      __counter != __fill && !__counter->empty();
+		      ++__counter)
+		    {
+
+		      __counter->merge(__carry, __ptr_comp);
+		      __carry.swap(*__counter);
+		    }
+		  __carry.swap(*__counter);
+		  if (__counter == __fill)
+		    ++__fill;
+		}
+	      while ( !empty() );
+
+	      for (__counter = __tmp + 1; __counter != __fill; ++__counter)
+		__counter->merge(__counter[-1], __ptr_comp);
+	      __fill[-1].swap(this->_M_impl._M_node);
+	    }
+	  __catch(...)
+	    {
+	      // Move all nodes back into *this.
+	      __carry._M_put_all(end()._M_node);
+	      for (int __i = 0; __i < sizeof(__tmp)/sizeof(__tmp[0]); ++__i)
+		__tmp[__i]._M_put_all(end()._M_node);
+	      __throw_exception_again;
+	    }
+	}
       }
 
 _GLIBCXX_END_NAMESPACE_CONTAINER
+_GLIBCXX_END_NAMESPACE_VERSION
 } // namespace std
 
 #endif /* _LIST_TCC */

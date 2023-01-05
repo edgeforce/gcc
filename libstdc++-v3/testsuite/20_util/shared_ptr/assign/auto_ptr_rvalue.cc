@@ -1,7 +1,9 @@
-// { dg-options "-std=gnu++11 -Wno-deprecated" }
-// { dg-do compile }
+// { dg-options "-Wno-deprecated" }
+// { dg-add-options using-deprecated }
+// { dg-do compile { target c++11 } }
+// { dg-require-effective-target hosted }
 
-// Copyright (C) 2008-2016 Free Software Foundation, Inc.
+// Copyright (C) 2008-2022 Free Software Foundation, Inc.
 //
 // This file is part of the GNU ISO C++ Library.  This library is free
 // software; you can redistribute it and/or modify it under the
@@ -21,7 +23,6 @@
 // 20.7.12.2 Template class shared_ptr [util.smartptr.shared]
 
 #include <memory>
-#include <testsuite_hooks.h>
 
 struct A { };
 std::auto_ptr<A> source() { return std::auto_ptr<A>(); }
@@ -29,30 +30,22 @@ std::auto_ptr<A> source() { return std::auto_ptr<A>(); }
 // 20.7.12.2.3 shared_ptr assignment [util.smartptr.shared.assign]
 
 // Assignment from rvalue auto_ptr
-int
+void
 test01()
 {
-  bool test __attribute__((unused)) = true;
-
   std::shared_ptr<A> a;
   a = source();
-
-  return 0;
 }
 
-int
+void
 test02()
 {
-  bool test __attribute__((unused)) = true;
-
   std::shared_ptr<A> a;
   std::auto_ptr<A> au;
   a = std::move(au);
-
-  return 0;
 }
 
-int 
+int
 main()
 {
   test01();

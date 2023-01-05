@@ -1,6 +1,6 @@
-// { dg-options "-std=gnu++11" }
+// { dg-do run { target c++11 } }
 
-// Copyright (C) 2009-2016 Free Software Foundation, Inc.
+// Copyright (C) 2009-2022 Free Software Foundation, Inc.
 //
 // This file is part of the GNU ISO C++ Library.  This library is free
 // software; you can redistribute it and/or modify it under the
@@ -16,6 +16,9 @@
 // You should have received a copy of the GNU General Public License along
 // with this library; see the file COPYING3.  If not see
 // <http://www.gnu.org/licenses/>.
+
+// std::stable_partition is not freestanding.
+// { dg-require-effective-target hosted }
 
 // 25.2.12 [lib.alg.partitions] Partitions.
 
@@ -51,8 +54,6 @@ struct Pred
 void
 test01()
 {
-  bool test __attribute__((unused)) = true;
-
   rvalstruct s1[N];
   std::copy(A, A + N, s1);
   Container con(s1, s1 + N);
@@ -65,8 +66,6 @@ test01()
 void
 test02()
 {
-  bool test __attribute__((unused)) = true;
-
   rvalstruct s1[N2];
   std::copy(A2, A2 + N2, s1);
   Container con(s1, s1 + N2);

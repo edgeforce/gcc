@@ -1,6 +1,6 @@
 // 2006-06-16  Paolo Carlini  <pcarlini@suse.de>
 
-// Copyright (C) 2006-2016 Free Software Foundation, Inc.
+// Copyright (C) 2006-2022 Free Software Foundation, Inc.
 //
 // This file is part of the GNU ISO C++ Library.  This library is free
 // software; you can redistribute it and/or modify it under the
@@ -27,7 +27,6 @@
 void test01()
 {
   using namespace std;
-  bool test __attribute__((unused)) = true;
 
   typedef string::const_iterator iter_type;
   typedef time_get<char, iter_type> time_get_type;
@@ -53,7 +52,7 @@ void test01()
   VERIFY( err == (failbit | eofbit) );
   VERIFY( tm0.tm_sec == 0 );
   VERIFY( tm0.tm_min == 0 );
-  VERIFY( tm0.tm_hour == 0 );
+  VERIFY( tm0.tm_hour == 1 );
 
   const string str1 = "12:00:00 ";
   iter_type end1 = tg.get_time(str1.begin(), str1.end(), iss, err, &tm1);

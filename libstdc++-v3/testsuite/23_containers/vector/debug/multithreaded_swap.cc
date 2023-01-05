@@ -1,11 +1,10 @@
-// { dg-do run { target *-*-freebsd* *-*-dragonfly* *-*-netbsd* *-*-linux* *-*-gnu* *-*-solaris* *-*-cygwin *-*-rtems* *-*-darwin* } }
-// { dg-options " -std=gnu++11 -pthread" { target *-*-freebsd* *-*-dragonfly* *-*-netbsd* *-*-linux* *-*-gnu* } }
-// { dg-options " -std=gnu++11 -pthreads" { target *-*-solaris* } }
-// { dg-options " -std=gnu++11 " { target *-*-cygwin *-*-rtems* *-*-darwin* } }
-// { dg-require-cstdint "" }
+// { dg-do run }
+// { dg-options "-pthread"  }
+// { dg-require-effective-target c++11 }
+// { dg-require-effective-target pthread }
 // { dg-require-gthreads "" }
 // { dg-require-debug-mode "" }
-// Copyright (C) 2010-2016 Free Software Foundation, Inc.
+// Copyright (C) 2010-2022 Free Software Foundation, Inc.
 //
 // This file is part of the GNU ISO C++ Library.  This library is free
 // software; you can redistribute it and/or modify it under the
@@ -27,6 +26,7 @@
 // mode as it requires acquiring 2 locks at the same time.
 
 #include <vector>
+#include <memory>
 #include <thread>
 #include <functional>
 #include <testsuite_hooks.h>
@@ -47,7 +47,6 @@ get_index(std::vector<int>& v)
 void test01()
 {
   using namespace std;
-  bool test __attribute__((unused)) = true;
   vector<int> v1, v2;
   vector<shared_ptr<vector<int> > > vs;
   vector<int> *pv3 = 0, *pv4 = 0;

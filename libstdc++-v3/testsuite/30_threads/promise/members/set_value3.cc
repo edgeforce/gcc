@@ -1,12 +1,9 @@
-// { dg-do run { target *-*-freebsd* *-*-dragonfly* *-*-netbsd* *-*-linux* *-*-gnu* *-*-solaris* *-*-cygwin *-*-rtems* *-*-darwin* powerpc-ibm-aix* } }
-// { dg-options " -std=gnu++11 -pthread" { target *-*-freebsd* *-*-dragonfly* *-*-netbsd* *-*-linux* *-*-gnu* powerpc-ibm-aix* } }
-// { dg-options " -std=gnu++11 -pthreads" { target *-*-solaris* } }
-// { dg-options " -std=gnu++11 " { target *-*-cygwin *-*-rtems* *-*-darwin* } }
-// { dg-require-cstdint "" }
+// { dg-do run }
+// { dg-additional-options "-pthread" { target pthread } }
+// { dg-require-effective-target c++11 }
 // { dg-require-gthreads "" }
-// { dg-require-atomic-builtins "" }
 
-// Copyright (C) 2009-2016 Free Software Foundation, Inc.
+// Copyright (C) 2009-2022 Free Software Foundation, Inc.
 //
 // This file is part of the GNU ISO C++ Library.  This library is free
 // software; you can redistribute it and/or modify it under the
@@ -45,20 +42,17 @@ auto delay = std::chrono::milliseconds(1);
 
 tester::tester(int)
 {
-  bool test __attribute__((unused)) = true;
   VERIFY (fglobal.wait_for(delay) == std::future_status::timeout);
 }
 
 tester::tester(const tester&)
 {
-  bool test __attribute__((unused)) = true;
   // if this copy happens while a mutex is locked next line could deadlock:
   VERIFY (fglobal.wait_for(delay) == std::future_status::timeout);
 }
 
 tester& tester::operator=(const tester&)
 {
-  bool test __attribute__((unused)) = true;
   // if this copy happens while a mutex is locked next line could deadlock:
   VERIFY (fglobal.wait_for(delay) == std::future_status::timeout);
   return *this;
@@ -66,8 +60,6 @@ tester& tester::operator=(const tester&)
 
 void test01()
 {
-  bool test __attribute__((unused)) = true;
-
   pglobal.set_value( tester(1) );
 
   VERIFY (fglobal.wait_for(delay) == std::future_status::ready);

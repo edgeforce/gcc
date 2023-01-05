@@ -2,7 +2,7 @@
 
 // 1999-08-23 bkoz
 
-// Copyright (C) 1999-2016 Free Software Foundation, Inc.
+// Copyright (C) 1999-2022 Free Software Foundation, Inc.
 //
 // This file is part of the GNU ISO C++ Library.  This library is free
 // software; you can redistribute it and/or modify it under the
@@ -48,9 +48,9 @@ DEFINE_EXTREMA(unsigned, 0U, UINT_MAX);
 DEFINE_EXTREMA(long, LONG_MIN, LONG_MAX);
 DEFINE_EXTREMA(unsigned long, 0UL, ULONG_MAX);
 
-#if _GLIBCXX_USE_WCHAR_T
+#if defined WCHAR_MIN && defined WCHAR_MAX
 DEFINE_EXTREMA(wchar_t, WCHAR_MIN, WCHAR_MAX);
-#endif //_GLIBCXX_USE_WCHAR_T
+#endif
 
 DEFINE_EXTREMA(float, FLT_MIN, FLT_MAX);
 DEFINE_EXTREMA(double, DBL_MIN, DBL_MAX);
@@ -61,7 +61,6 @@ DEFINE_EXTREMA(long double, LDBL_MIN, LDBL_MAX);
 template<typename T>
 void test_extrema()
 {
-  bool test __attribute__((unused)) = true;
   T limits_min = std::numeric_limits<T>::min();
   T limits_max = std::numeric_limits<T>::max();
   T extrema_min = extrema<T>::min;
@@ -75,7 +74,7 @@ int main()
   test_extrema<char>();
   test_extrema<signed char>();
   test_extrema<unsigned char>();
-  
+
   test_extrema<short>();
   test_extrema<unsigned short>();
 

@@ -1,6 +1,7 @@
-// { dg-options "-std=gnu++11" }
+// { dg-do run { target c++11 } }
+// { dg-require-effective-target hosted }
 
-// Copyright (C) 2008-2016 Free Software Foundation, Inc.
+// Copyright (C) 2008-2022 Free Software Foundation, Inc.
 //
 // This file is part of the GNU ISO C++ Library.  This library is free
 // software; you can redistribute it and/or modify it under the
@@ -37,8 +38,6 @@ struct B : A
 void
 test01()
 {
-  bool test __attribute__((unused)) = true;
-
   // test empty shared_ptrs compare equivalent
   std::shared_ptr<A> p1;
   std::shared_ptr<B> p2;
@@ -50,8 +49,6 @@ test01()
 void
 test02()
 {
-  bool test __attribute__((unused)) = true;
-
   std::shared_ptr<A> a0;
 
   std::shared_ptr<A> a1(new A);
@@ -71,14 +68,18 @@ test02()
   VERIFY( !a1.owner_before(w1) && !w1.owner_before(a1) );
   std::weak_ptr<A> w2(a2);
   VERIFY( !b1.owner_before(w2) && !w2.owner_before(b1) );
+
+  static_assert( noexcept(a1.owner_before(a0)), "" );
+  static_assert( noexcept(a1.owner_before(b1)), "" );
+  static_assert( noexcept(b1.owner_before(a1)), "" );
+  static_assert( noexcept(a1.owner_before(w1)), "" );
+  static_assert( noexcept(b1.owner_before(w1)), "" );
 }
 
 // Aliasing
 void
 test03()
 {
-  bool test __attribute__((unused)) = true;
-
   std::shared_ptr<A> p1(new A());
   std::shared_ptr<int> p2(p1, &p1->i);
   VERIFY( !p1.owner_before(p2) && !p2.owner_before(p1) );

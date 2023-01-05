@@ -1,7 +1,6 @@
-// { dg-do compile }
-// { dg-options "-std=gnu++11" }
+// { dg-do compile { target c++11 } }
 
-// Copyright (C) 2010-2016 Free Software Foundation, Inc.
+// Copyright (C) 2010-2022 Free Software Foundation, Inc.
 //
 // This file is part of the GNU ISO C++ Library.  This library is free
 // software; you can redistribute it and/or modify it under the
@@ -26,6 +25,6 @@ void
 test01()
 {
   std::unordered_multimap<int, double> umm{{1, 1.0}, {2, 2.0}, {3, 3.0}};
-  std::begin(umm);
-  std::end(umm);
+  (void) std::begin(umm);
+  (void) std::end(umm);
 }

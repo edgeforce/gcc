@@ -1,7 +1,6 @@
-// { dg-options "-std=gnu++14" }
-// { dg-do run }
+// { dg-do run { target c++14 } }
 
-// Copyright (C) 2015-2016 Free Software Foundation, Inc.
+// Copyright (C) 2015-2022 Free Software Foundation, Inc.
 //
 // This file is part of the GNU ISO C++ Library.  This library is free
 // software; you can redistribute it and/or modify it under the
@@ -19,6 +18,7 @@
 // <http://www.gnu.org/licenses/>.
 
 #include <experimental/unordered_map>
+#include <string>
 #include <testsuite_hooks.h>
 
 auto is_odd_pair = [](const std::pair<const int, std::string>& p)
@@ -29,8 +29,6 @@ auto is_odd_pair = [](const std::pair<const int, std::string>& p)
 void
 test01()
 {
-  bool test [[gnu::unused]] = true;
-
   std::unordered_map<int, std::string> um{ { 10, "A" }, { 11, "B" },
 					   { 12, "C" }, { 14, "D" },
 					   { 15, "E" }, { 17, "F" },
@@ -44,8 +42,6 @@ test01()
 void
 test02()
 {
-  bool test [[gnu::unused]] = true;
-
   std::unordered_multimap<int, std::string> umm{ { 20, "S" }, { 21, "T" },
 						 { 22, "U" }, { 22, "V" },
 						 { 23, "W" }, { 23, "X" },
@@ -56,11 +52,24 @@ test02()
   VERIFY( umm == t );
 }
 
+void
+test_pr107850()
+{
+  // Predicate only callable as non-const and only accepts non-const argument.
+  struct Pred { bool operator()(std::pair<const int, int>&) { return false; } };
+  const Pred pred; // erase_if parameter is passed by value, so non-const.
+  std::unordered_map<int, int> m;
+  std::experimental::erase_if(m, pred);
+  std::unordered_multimap<int, int> mm;
+  std::experimental::erase_if(mm, pred);
+}
+
 int
 main()
 {
   test01();
   test02();
+  test_pr107850();
 
   return 0;
 }

@@ -1,6 +1,4 @@
-// { dg-options "-std=gnu++11" }
-
-// Copyright (C) 2009-2016 Free Software Foundation, Inc.
+// Copyright (C) 2009-2022 Free Software Foundation, Inc.
 //
 // This file is part of the GNU ISO C++ Library.  This library is free
 // software; you can redistribute it and/or modify it under the
@@ -17,7 +15,8 @@
 // with this library; see the file COPYING3.  If not see
 // <http://www.gnu.org/licenses/>.
 
-// { dg-options "-std=gnu++11 -DITERATIONS=5" { target simulator } }
+// { dg-options "-DITERATIONS=5" { target simulator } }
+// { dg-do run { target c++11 } }
 
 // 25.3.6 Heap operations [lib.alg.heap.operations]
 
@@ -45,15 +44,13 @@ bool are_ordered(const rvalstruct& lhs, const rvalstruct& rhs)
 bool are_ordered_int(const int& lhs, const int& rhs)
 { return lhs < rhs; }
 
-void 
+void
 check_make(int* array, int length)
 {
-  bool test __attribute__((unused)) = true;
-
   rvalstruct makeheap[9];
   int        makeheap_ref[9];
   std::copy(array, array + length, makeheap);
-  std::copy(array, array + length, makeheap_ref);  
+  std::copy(array, array + length, makeheap_ref);
   container makecon(makeheap, makeheap + length);
   container_ref makecon_ref(makeheap_ref, makeheap_ref + length);
   std::make_heap(makecon.begin(), makecon.end(), are_ordered);
@@ -68,8 +65,6 @@ check_make(int* array, int length)
 void
 check_pop(int* array, int length)
 {
-  bool test __attribute__((unused)) = true;
-
   rvalstruct popheap[9];
   int        popheap_ref[9];
   std::copy(array, array + length, popheap);
@@ -80,7 +75,7 @@ check_pop(int* array, int length)
   std::pop_heap(popcon_ref.begin(), popcon_ref.end(), are_ordered_int);
   for (int z = 0; z < length; ++z)
     VERIFY( popheap[z] == popheap_ref[z] );
-  VERIFY( (std::__is_heap(popheap, popheap + length - 1), are_ordered) );
+  VERIFY( std::__is_heap(popheap, popheap + length - 1, are_ordered) );
   for (int z = 0; z < length; ++z)
     VERIFY( popheap[z].val <= popheap[length-1].val && popheap[z].valid );
 }
@@ -88,8 +83,6 @@ check_pop(int* array, int length)
 void
 check_sort(int* array, int length)
 {
-  bool test __attribute__((unused)) = true;
-
   rvalstruct sortheap[9];
   int        sortheap_ref[9];
   std::copy(array, array + length, sortheap);
@@ -108,12 +101,10 @@ check_sort(int* array, int length)
 void
 check_push(int* array, int pushval, int length)
 {
-  bool test __attribute__((unused)) = true;
-
   rvalstruct pushheap[10];
   int        pushheap_ref[10];
   std::copy(array, array + length, pushheap);
-  std::copy(array, array + length, pushheap_ref);  
+  std::copy(array, array + length, pushheap_ref);
   pushheap[length] = pushval;
   pushheap_ref[length] = pushval;
   container pushcon(pushheap, pushheap + length + 1);

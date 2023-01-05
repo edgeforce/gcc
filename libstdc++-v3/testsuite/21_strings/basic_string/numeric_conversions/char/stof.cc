@@ -1,9 +1,9 @@
-// { dg-options "-std=gnu++11" }
+// { dg-do run { target c++11 } }
 // { dg-require-string-conversions "" }
 
 // 2008-06-15  Paolo Carlini  <paolo.carlini@oracle.com>
 
-// Copyright (C) 2008-2016 Free Software Foundation, Inc.
+// Copyright (C) 2008-2022 Free Software Foundation, Inc.
 //
 // This file is part of the GNU ISO C++ Library.  This library is free
 // software; you can redistribute it and/or modify it under the
@@ -30,15 +30,15 @@
 void
 test01()
 {
-  bool test __attribute__((unused)) = false;
+  bool test = false;
   using namespace std;
 
   try
     {
       string one;
-      stof(one);      
+      stof(one);
     }
-  catch(std::invalid_argument)
+  catch(const std::invalid_argument&)
     {
       test = true;
     }
@@ -51,9 +51,9 @@ test01()
   try
     {
       string one("a");
-      stof(one);      
+      stof(one);
     }
-  catch(std::invalid_argument)
+  catch(const std::invalid_argument&)
     {
       test = true;
     }
@@ -67,7 +67,7 @@ test01()
   try
     {
       string one("2.0a");
-      f1 = stof(one, &idx1);      
+      f1 = stof(one, &idx1);
     }
   catch(...)
     {
@@ -84,7 +84,7 @@ test01()
       one.append(2 * numeric_limits<float>::max_exponent10, '9');
       f1 = stof(one);
     }
-  catch(std::out_of_range)
+  catch(const std::out_of_range&)
     {
       test = true;
     }
@@ -118,7 +118,7 @@ test01()
 	  string one(to_string(ld1));
 	  f1 = stof(one);
 	}
-      catch(std::out_of_range)
+      catch(const std::out_of_range&)
 	{
 	  test = true;
 	}

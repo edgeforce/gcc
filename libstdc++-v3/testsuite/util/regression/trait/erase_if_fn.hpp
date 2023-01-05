@@ -1,6 +1,6 @@
 // -*- C++ -*-
 
-// Copyright (C) 2005-2016 Free Software Foundation, Inc.
+// Copyright (C) 2005-2022 Free Software Foundation, Inc.
 //
 // This file is part of the GNU ISO C++ Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -47,13 +47,15 @@ namespace __gnu_pbds
     namespace detail
     {
       template<typename T>
-      struct regression_test_erase_if_fn 
-      : public std::unary_function<T, bool>
+      struct regression_test_erase_if_fn
       {
       private:
 	typedef const T&  const_reference;
 
       public:
+	typedef bool result_type;
+	typedef T argument_type;
+
 	bool
         operator()(const_reference r_t) const
 	{
@@ -63,8 +65,7 @@ namespace __gnu_pbds
       };
 
       template<typename Hd, class Tl>
-      struct regression_test_erase_if_fn<std::pair<Hd, Tl> > 
-      : public std::unary_function<std::pair<Hd, Tl>, bool>
+      struct regression_test_erase_if_fn<std::pair<Hd, Tl> >
       {
       private:
 	typedef const std::pair<Hd, Tl>&  const_reference;
@@ -72,6 +73,9 @@ namespace __gnu_pbds
 	typedef regression_test_erase_if_fn<Tl> tl_erase_if_fn;
 
       public:
+	typedef bool result_type;
+	typedef std::pair<Hd, Tl> argument_type;
+
 	bool
         operator()(const_reference r_t) const
 	{
@@ -82,4 +86,4 @@ namespace __gnu_pbds
   } // namespace test
 } // namespace __gnu_pbds
 
-#endif 
+#endif

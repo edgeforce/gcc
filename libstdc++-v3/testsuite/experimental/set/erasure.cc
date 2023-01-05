@@ -1,7 +1,6 @@
-// { dg-options "-std=gnu++14" }
-// { dg-do run }
+// { dg-do run { target c++14 } }
 
-// Copyright (C) 2015-2016 Free Software Foundation, Inc.
+// Copyright (C) 2015-2022 Free Software Foundation, Inc.
 //
 // This file is part of the GNU ISO C++ Library.  This library is free
 // software; you can redistribute it and/or modify it under the
@@ -26,8 +25,6 @@ auto is_odd = [](const int i) { return i % 2 != 0; };
 void
 test01()
 {
-  bool test [[gnu::unused]] = true;
-
   std::set<int> s{ 10, 11, 12, 14, 15, 17, 18, 19 };
   std::experimental::erase_if(s, is_odd);
   std::set<int> t{ 10, 12, 14, 18 };
@@ -37,12 +34,22 @@ test01()
 void
 test02()
 {
-  bool test [[gnu::unused]] = true;
-
   std::multiset<int> ms{ 20, 21, 22, 22, 23, 23, 24, 25 };
   std::experimental::erase_if(ms, is_odd);
   std::multiset<int> t{ 20, 22, 22, 24 };
   VERIFY( ms == t );
+}
+
+void
+test_pr107850()
+{
+  // Predicate only callable as non-const.
+  struct Pred { bool operator()(const int&) { return false; } };
+  const Pred pred; // erase_if parameter is passed by value, so non-const.
+  std::set<int> s;
+  std::experimental::erase_if(s, pred);
+  std::multiset<int> ms;
+  std::experimental::erase_if(ms, pred);
 }
 
 int
@@ -50,6 +57,7 @@ main()
 {
   test01();
   test02();
+  test_pr107850();
 
   return 0;
 }

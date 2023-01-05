@@ -1,6 +1,6 @@
 // Reference-counted versatile string base -*- C++ -*-
 
-// Copyright (C) 2005-2016 Free Software Foundation, Inc.
+// Copyright (C) 2005-2022 Free Software Foundation, Inc.
 //
 // This file is part of the GNU ISO C++ Library.  This library is free
 // software; you can redistribute it and/or modify it under the
@@ -30,7 +30,10 @@
 #ifndef _RC_STRING_BASE_H
 #define _RC_STRING_BASE_H 1
 
+#include <bits/requires_hosted.h> // GNU extensions are currently omitted
+
 #include <ext/atomicity.h>
+#include <ext/alloc_traits.h>
 #include <bits/stl_iterator_base_funcs.h>
 
 namespace __gnu_cxx _GLIBCXX_VISIBILITY(default)
@@ -120,7 +123,8 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 	  _CharT            _M_align;
 	};
 
-	typedef typename _Alloc::template rebind<_Rep>::other _Rep_alloc_type;
+	typedef typename __alloc_traits<_Alloc>::template rebind<_Rep>::other
+	  _Rep_alloc_type;
 
  	_CharT*
 	_M_refdata() throw()
@@ -229,7 +233,8 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 	_S_construct_aux(_InIterator __beg, _InIterator __end,
 			 const _Alloc& __a, std::__false_type)
 	{
-	  typedef typename iterator_traits<_InIterator>::iterator_category _Tag;
+	  typedef typename std::iterator_traits<_InIterator>::iterator_category
+	    _Tag;
 	  return _S_construct(__beg, __end, __a, _Tag());
 	}
 
@@ -354,7 +359,10 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 
       void
       _M_clear()
-      { _M_erase(size_type(0), _M_length()); }
+      {
+	_M_dispose();
+	_M_data(_S_empty_rep._M_refcopy());
+      }
 
       bool
       _M_compare(const __rc_string_base&) const
@@ -713,7 +721,6 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
       return false;
     }
 
-#ifdef _GLIBCXX_USE_WCHAR_T
   template<>
     inline bool
     __rc_string_base<wchar_t, std::char_traits<wchar_t>,
@@ -724,7 +731,6 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 	return true;
       return false;
     }
-#endif
 
 _GLIBCXX_END_NAMESPACE_VERSION
 } // namespace

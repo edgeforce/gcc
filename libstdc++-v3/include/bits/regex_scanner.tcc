@@ -1,6 +1,6 @@
 // class template regex -*- C++ -*-
 
-// Copyright (C) 2013-2016 Free Software Foundation, Inc.
+// Copyright (C) 2013-2022 Free Software Foundation, Inc.
 //
 // This file is part of the GNU ISO C++ Library.  This library is free
 // software; you can redistribute it and/or modify it under the
@@ -48,14 +48,13 @@
 
 namespace std _GLIBCXX_VISIBILITY(default)
 {
-namespace __detail
-{
 _GLIBCXX_BEGIN_NAMESPACE_VERSION
 
+namespace __detail
+{
   template<typename _CharT>
     _Scanner<_CharT>::
-    _Scanner(typename _Scanner::_IterT __begin,
-	     typename _Scanner::_IterT __end,
+    _Scanner(const _CharT* __begin, const _CharT* __end,
 	     _FlagT __flags, std::locale __loc)
     : _ScannerBase(__flags),
       _M_current(__begin), _M_end(__end),
@@ -84,7 +83,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 	_M_scan_in_brace();
       else
 	{
-	  __glibcxx_assert(false);
+	  __glibcxx_assert(!"unexpected state while processing regex");
 	}
     }
 
@@ -98,7 +97,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
     {
       auto __c = *_M_current++;
 
-      if (std::strchr(_M_spec_char, _M_ctype.narrow(__c, ' ')) == nullptr)
+      if (__builtin_strchr(_M_spec_char, _M_ctype.narrow(__c, ' ')) == nullptr)
 	{
 	  _M_token = _S_token_ord_char;
 	  _M_value.assign(1, __c);
@@ -109,7 +108,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 	  if (_M_current == _M_end)
 	    __throw_regex_error(
 	      regex_constants::error_escape,
-	      "Unexpected end of regex when escaping.");
+	      "Invalid escape at end of regular expression");
 
 	  if (!_M_is_basic()
 	      || (*_M_current != '('
@@ -126,9 +125,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 	  if (_M_is_ecma() && *_M_current == '?')
 	    {
 	      if (++_M_current == _M_end)
-		__throw_regex_error(
-		  regex_constants::error_paren,
-		  "Unexpected end of regex when in an open parenthesis.");
+		__throw_regex_error(regex_constants::error_paren);
 
 	      if (*_M_current == ':')
 		{
@@ -148,9 +145,9 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 		  _M_value.assign(1, 'n');
 		}
 	      else
-		__throw_regex_error(
-		  regex_constants::error_paren,
-		  "Invalid special open parenthesis.");
+		__throw_regex_error(regex_constants::error_paren,
+				    "Invalid '(?...)' zero-width assertion "
+				    "in regular expression");
 	    }
 	  else if (_M_flags & regex_constants::nosubs)
 	    _M_token = _S_token_subexpr_no_group_begin;
@@ -176,6 +173,13 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 	  _M_state = _S_state_in_brace;
 	  _M_token = _S_token_interval_begin;
 	}
+      else if (__builtin_expect(__c == _CharT(0), false))
+	{
+	  if (!_M_is_ecma())
+	    __throw_regex_error(regex_constants::_S_null);
+	  _M_token = _S_token_ord_char;
+	  _M_value.assign(1, __c);
+	}
       else if (__c != ']' && __c != '}')
 	{
 	  auto __it = _M_token_tbl;
@@ -186,7 +190,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 		_M_token = __it->second;
 		return;
 	      }
-	  __glibcxx_assert(false);
+	  __glibcxx_assert(!"unexpected special character in regex");
 	}
       else
 	{
@@ -204,17 +208,18 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
     _M_scan_in_bracket()
     {
       if (_M_current == _M_end)
-	__throw_regex_error(
-	  regex_constants::error_brack,
-	  "Unexpected end of regex when in bracket expression.");
+	__throw_regex_error(regex_constants::error_brack);
 
       auto __c = *_M_current++;
 
-      if (__c == '[')
+      if (__c == '-')
+	_M_token = _S_token_bracket_dash;
+      else if (__c == '[')
 	{
 	  if (_M_current == _M_end)
 	    __throw_regex_error(regex_constants::error_brack,
-				"Unexpected character class open bracket.");
+				"Incomplete '[[' character class in "
+				"regular expression");
 
 	  if (*_M_current == '.')
 	    {
@@ -239,7 +244,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 	}
       // In POSIX, when encountering "[]" or "[^]", the ']' is interpreted
       // literally. So "[]]" and "[^]]" are valid regexes. See the testcases
-      // `*/empty_range.cc`.
+      // `.../empty_range.cc`.
       else if (__c == ']' && (_M_is_ecma() || !_M_at_bracket_start))
 	{
 	  _M_token = _S_token_bracket_end;
@@ -264,9 +269,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
     _M_scan_in_brace()
     {
       if (_M_current == _M_end)
-	__throw_regex_error(
-	  regex_constants::error_brace,
-	  "Unexpected end of regex when in brace expression.");
+	__throw_regex_error(regex_constants::error_brace);
 
       auto __c = *_M_current++;
 
@@ -290,8 +293,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 	      ++_M_current;
 	    }
 	  else
-	    __throw_regex_error(regex_constants::error_badbrace,
-				"Unexpected character in brace expression.");
+	    __throw_regex_error(regex_constants::error_badbrace);
 	}
       else if (__c == '}')
 	{
@@ -299,8 +301,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 	  _M_token = _S_token_interval_end;
 	}
       else
-	__throw_regex_error(regex_constants::error_badbrace,
-			    "Unexpected character in brace expression.");
+	__throw_regex_error(regex_constants::error_badbrace);
     }
 
   template<typename _CharT>
@@ -309,8 +310,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
     _M_eat_escape_ecma()
     {
       if (_M_current == _M_end)
-	__throw_regex_error(regex_constants::error_escape,
-			    "Unexpected end of regex when escaping.");
+	__throw_regex_error(regex_constants::error_escape);
 
       auto __c = *_M_current++;
       auto __pos = _M_find_escape(_M_ctype.narrow(__c, '\0'));
@@ -344,22 +344,26 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
       else if (__c == 'c')
 	{
 	  if (_M_current == _M_end)
-	    __throw_regex_error(
-	      regex_constants::error_escape,
-	      "Unexpected end of regex when reading control code.");
+	    __throw_regex_error(regex_constants::error_escape,
+				"invalid '\\cX' control character in "
+				"regular expression");
 	  _M_token = _S_token_ord_char;
 	  _M_value.assign(1, *_M_current++);
 	}
       else if (__c == 'x' || __c == 'u')
 	{
-	  _M_value.erase();
-	  for (int __i = 0; __i < (__c == 'x' ? 2 : 4); __i++)
+	  _M_value.clear();
+	  const int __n = __c == 'x' ? 2 : 4;
+	  for (int __i = 0; __i < __n; __i++)
 	    {
 	      if (_M_current == _M_end
 		  || !_M_ctype.is(_CtypeT::xdigit, *_M_current))
-		__throw_regex_error(
-		  regex_constants::error_escape,
-		  "Unexpected end of regex when ascii character.");
+		__throw_regex_error(regex_constants::error_escape,
+				    __n == 2
+				    ? "Invalid '\\xNN' control character in "
+				      "regular expression"
+				    : "Invalid '\\uNNNN' control character in "
+				      "regular expression");
 	      _M_value += *_M_current++;
 	    }
 	  _M_token = _S_token_hex_num;
@@ -388,11 +392,10 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
     _M_eat_escape_posix()
     {
       if (_M_current == _M_end)
-	__throw_regex_error(regex_constants::error_escape,
-			    "Unexpected end of regex when escaping.");
+	__throw_regex_error(regex_constants::error_escape);
 
       auto __c = *_M_current;
-      auto __pos = std::strchr(_M_spec_char, _M_ctype.narrow(__c, '\0'));
+      auto __pos = __builtin_strchr(_M_spec_char, _M_ctype.narrow(__c, '\0'));
 
       if (__pos != nullptr && *__pos != '\0')
 	{
@@ -414,8 +417,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 	{
 #ifdef __STRICT_ANSI__
 	  // POSIX says it is undefined to escape ordinary characters
-	  __throw_regex_error(regex_constants::error_escape,
-			      "Unexpected escape character.");
+	  __throw_regex_error(regex_constants::error_escape);
 #else
 	  _M_token = _S_token_ord_char;
 	  _M_value.assign(1, __c);
@@ -455,8 +457,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 	  return;
 	}
       else
-	__throw_regex_error(regex_constants::error_escape,
-			    "Unexpected escape character.");
+	__throw_regex_error(regex_constants::error_escape);
     }
 
   // Eats a character class or throws an exception.
@@ -474,12 +475,8 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 	  || _M_current == _M_end // skip __ch
 	  || *_M_current++ != ']') // skip ']'
 	{
-	  if (__ch == ':')
-	    __throw_regex_error(regex_constants::error_ctype,
-				"Unexpected end of character class.");
-	  else
-	    __throw_regex_error(regex_constants::error_collate,
-				"Unexpected end of character class.");
+	  __throw_regex_error(__ch == ':' ? regex_constants::error_ctype
+					  : regex_constants::error_collate);
 	}
     }
 
@@ -582,6 +579,6 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
     }
 #endif
 
-_GLIBCXX_END_NAMESPACE_VERSION
 } // namespace __detail
+_GLIBCXX_END_NAMESPACE_VERSION
 } // namespace

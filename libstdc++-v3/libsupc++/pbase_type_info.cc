@@ -1,4 +1,4 @@
-// Copyright (C) 1994-2016 Free Software Foundation, Inc.
+// Copyright (C) 1994-2022 Free Software Foundation, Inc.
 //
 // This file is part of GCC.
 //
@@ -38,6 +38,33 @@ __do_catch (const type_info *thr_type,
     return true;      // same type
 
 #if __cpp_rtti
+  if (*thr_type == typeid (nullptr))
+    {
+      // A catch handler for any pointer type matches nullptr_t.
+      if (typeid (*this) == typeid(__pointer_type_info))
+        {
+          *thr_obj = nullptr;
+          return true;
+        }
+      else if (typeid (*this) == typeid(__pointer_to_member_type_info))
+        {
+          if (__pointee->__is_function_p ())
+            {
+              using pmf_type = void (__pbase_type_info::*)();
+              static const pmf_type pmf = nullptr;
+              *thr_obj = const_cast<pmf_type*>(&pmf);
+              return true;
+            }
+          else
+            {
+              using pm_type = int __pbase_type_info::*;
+              static const pm_type pm = nullptr;
+              *thr_obj = const_cast<pm_type*>(&pm);
+              return true;
+            }
+        }
+    }
+
   if (typeid (*this) != typeid (*thr_type))
     return false;     // not both same kind of pointers
 #endif
@@ -47,18 +74,24 @@ __do_catch (const type_info *thr_type,
     // Therefore there must at least be a qualification conversion involved
     // But for that to be valid, our outer pointers must be const qualified.
     return false;
-  
+
+#if !__cpp_rtti
+  if (!thr_type->__is_pointer_p ())
+    return false;
+#endif
+
   const __pbase_type_info *thrown_type =
     static_cast <const __pbase_type_info *> (thr_type);
 
   unsigned tflags = thrown_type->__flags;
 
-  bool throw_tx = (tflags & __transaction_safe_mask);
-  bool catch_tx = (__flags & __transaction_safe_mask);
-  if (throw_tx && !catch_tx)
-    /* Catch can perform a transaction-safety conversion.  */
-    tflags &= ~__transaction_safe_mask;
-  if (catch_tx && !throw_tx)
+  const unsigned fqual_mask = __transaction_safe_mask|__noexcept_mask;
+  unsigned throw_fqual = (tflags & fqual_mask);
+  unsigned catch_fqual = (__flags & fqual_mask);
+  if (throw_fqual & ~catch_fqual)
+    /* Catch can perform a function pointer conversion.  */
+    tflags &= catch_fqual;
+  if (catch_fqual & ~throw_fqual)
     /* But not the reverse.  */
     return false;
   

@@ -1,4 +1,4 @@
-// Copyright (C) 2004-2016 Free Software Foundation, Inc.
+// Copyright (C) 2004-2022 Free Software Foundation, Inc.
 //
 // This file is part of the GNU ISO C++ Library.  This library is free
 // software; you can redistribute it and/or modify it under the
@@ -23,6 +23,9 @@
 #include <map>
 #include <ext/mt_allocator.h>
 #include <bits/functexcept.h>
+#if __cpp_rtti
+# include <typeinfo>
+#endif
 
 namespace __gnu_test
 {
@@ -34,7 +37,7 @@ try_allocation()
 
   typedef __gnu_cxx::__mt_alloc<value_t> allocator_t;
 
-  typedef std::char_traits<value_t> traits_t; 
+  typedef std::char_traits<value_t> traits_t;
   typedef std::basic_string<value_t, traits_t, allocator_t> string_t;
 
   string_t s;
@@ -42,18 +45,20 @@ try_allocation()
 }
 
 // libstdc++/23591
-extern "C" void 
+extern "C" void
 try_throw_exception()
 {
+#if __cpp_exceptions
   try
     {
       std::__throw_bad_exception();
     }
   catch (const std::exception& e)
     { }
+#endif
 }
 
-extern "C" void 
+extern "C" void
 try_function_random_fail()
 {
   long seed = lrand48();
@@ -75,25 +80,26 @@ try_function_random_fail()
   std::__throw_bad_exception();
 }
 
-#if __cplusplus < 201103L
-// "must be compiled with C++98"
-  void 
+#if __cplusplus >= 201103L
+# error "must be compiled with C++98"
+#else
+  void
   erase_external(std::set<int>& s)
   { s.erase(s.begin()); }
 
-  void 
+  void
   erase_external(std::multiset<int>& s)
   { s.erase(s.begin()); }
-  
-  void 
+
+  void
   erase_external(std::map<int, int>& s)
   { s.erase(s.begin()); }
-  
-  void 
+
+  void
   erase_external(std::multimap<int, int>& s)
   { s.erase(s.begin()); }
 
-  void 
+  void
   erase_external_iterators(std::set<int>& s)
   {
     typedef typename std::set<int>::iterator iterator_type;
@@ -101,7 +107,7 @@ try_function_random_fail()
     s.erase(iter, ++iter);
   }
 
-  void 
+  void
   erase_external_iterators(std::multiset<int>& s)
   {
     typedef typename std::multiset<int>::iterator iterator_type;
@@ -109,7 +115,7 @@ try_function_random_fail()
     s.erase(iter, ++iter);
   }
 
-  void 
+  void
   erase_external_iterators(std::map<int, int>& s)
   {
     typedef typename std::map<int, int>::iterator iterator_type;
@@ -117,14 +123,23 @@ try_function_random_fail()
     s.erase(iter, ++iter);
   }
 
-  
-  void 
+
+  void
   erase_external_iterators(std::multimap<int, int>& s)
   {
     typedef typename std::multimap<int, int>::iterator iterator_type;
     iterator_type iter = s.begin();
     s.erase(iter, ++iter);
   }
+#endif
+
+#if __cpp_rtti
+// PR libstdc++/103240
+namespace
+{
+  struct S { };
+}
+const std::type_info& pr103240_private_S = typeid(S);
 #endif
 
 } // end namepace __gnu_test

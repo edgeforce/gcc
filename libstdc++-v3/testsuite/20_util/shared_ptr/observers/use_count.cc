@@ -1,6 +1,7 @@
-// { dg-options "-std=gnu++11" }
+// { dg-do run { target c++11 } }
+// { dg-require-effective-target hosted }
 
-// Copyright (C) 2005-2016 Free Software Foundation, Inc.
+// Copyright (C) 2005-2022 Free Software Foundation, Inc.
 //
 // This file is part of the GNU ISO C++ Library.  This library is free
 // software; you can redistribute it and/or modify it under the
@@ -31,8 +32,6 @@ struct B : A { };
 void
 test01()
 {
-  bool test __attribute__((unused)) = true;
-
   const std::shared_ptr<A> p1;
   VERIFY( p1.use_count() == 0 );
   const std::shared_ptr<A> p2(p1);
@@ -42,8 +41,6 @@ test01()
 void
 test02()
 {
-  bool test __attribute__((unused)) = true;
-
   std::shared_ptr<A> p1(new A);
   std::shared_ptr<A> p2(p1);
   p1.reset();
@@ -54,8 +51,6 @@ test02()
 void
 test03()
 {
-  bool test __attribute__((unused)) = true;
-
   std::shared_ptr<A> p1(new A);
   std::shared_ptr<A> p2(p1);
   p2.reset(new B);

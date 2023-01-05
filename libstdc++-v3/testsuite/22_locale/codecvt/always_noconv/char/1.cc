@@ -1,6 +1,6 @@
 // 2000-08-17 Benjamin Kosnik <bkoz@cygnus.com>
 
-// Copyright (C) 2000-2016 Free Software Foundation, Inc.
+// Copyright (C) 2000-2022 Free Software Foundation, Inc.
 //
 // This file is part of the GNU ISO C++ Library.  This library is free
 // software; you can redistribute it and/or modify it under the
@@ -31,15 +31,14 @@ void test01()
   typedef codecvt_base::result			result;
   typedef codecvt<char, char, mbstate_t> 	c_codecvt;
 
-  bool test __attribute__((unused)) = true;
   int 			size = 25;
   char* 		c_arr = new char[size];
   char*                 c_ref = new char[size];
 
   locale 		loc = locale::classic();
-  const c_codecvt* 	cvt = &use_facet<c_codecvt>(loc); 
+  const c_codecvt* 	cvt = &use_facet<c_codecvt>(loc);
 
-  // According to the resolution of DR19 (see also libstd++/9168), in
+  // According to the resolution of DR19 (see also libstdc++/9168), in
   // case of degenerate conversion ('noconv'), "there are no changes to
   // the values in [to, to_limit)."
   memset(c_ref, 'X', size);

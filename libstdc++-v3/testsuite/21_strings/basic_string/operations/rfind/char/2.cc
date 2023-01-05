@@ -1,6 +1,6 @@
 // from tstring.cc, from jason merrill, et. al.
 
-// Copyright (C) 2000-2016 Free Software Foundation, Inc.
+// Copyright (C) 2000-2022 Free Software Foundation, Inc.
 //
 // This file is part of the GNU ISO C++ Library.  This library is free
 // software; you can redistribute it and/or modify it under the
@@ -17,15 +17,14 @@
 // with this library; see the file COPYING3.  If not see
 // <http://www.gnu.org/licenses/>.
 
-#include <string>
+#include <testsuite_string.h>
 #include <testsuite_hooks.h>
 
 // 21.3.6.4 basic_string::find_last_of
-bool test02()
+void test02()
 {
-  bool test __attribute__((unused)) = true;
-  std::string z("ab");
-  std::string::size_type pos;
+  __gnu_test::string z("ab");
+  __gnu_test::string::size_type pos;
   pos = z.find_last_of("ab");
   VERIFY( pos == 1 );
   pos = z.find_last_of("Xa");
@@ -33,14 +32,13 @@ bool test02()
   pos = z.find_last_of("Xb");
   VERIFY( pos == 1 );
   pos = z.find_last_of("XYZ");
-  VERIFY( pos == std::string::npos );
+  VERIFY( pos == __gnu_test::string::npos );
   pos = z.find_last_of('a');
   VERIFY( pos == 0 );
   pos = z.find_last_of('b');
   VERIFY( pos == 1 );
   pos = z.find_last_of('X');
-  VERIFY( pos == std::string::npos );
-  return test;
+  VERIFY( pos == __gnu_test::string::npos );
 }
 
 int main()

@@ -1,6 +1,6 @@
 ## Makefile for the C++03 sources of the GNU C++ Standard library.
 ##
-## Copyright (C) 1997-2016 Free Software Foundation, Inc.
+## Copyright (C) 1997-2022 Free Software Foundation, Inc.
 ##
 ## This file is part of the libstdc++ version 3 distribution.
 ## Process this file with automake to produce Makefile.in.
@@ -23,7 +23,7 @@
 include $(top_srcdir)/fragment.am
 
 # Convenience library for C++98 runtime.
-noinst_LTLIBRARIES = libc++98convenience.la 
+noinst_LTLIBRARIES = libc++98convenience.la
 
 headers =
 
@@ -39,7 +39,6 @@ endif
 # particular host.
 host_sources = \
 	$(cow_string_host_sources) \
-	atomicity.cc \
 	codecvt_members.cc \
 	collate_members.cc \
 	messages_members.cc \
@@ -64,10 +63,6 @@ numeric_members.cc: ${glibcxx_srcdir}/$(CNUMERIC_CC)
 
 time_members.cc: ${glibcxx_srcdir}/$(CTIME_CC)
 	$(LN_S) ${glibcxx_srcdir}/$(CTIME_CC) . || true
-
-atomicity_file = ${glibcxx_srcdir}/$(ATOMICITY_SRCDIR)/atomicity.h
-atomicity.cc: ${atomicity_file}
-	$(LN_S) ${atomicity_file} ./atomicity.cc || true
 
 if ENABLE_DUAL_ABI
 collate_members_cow.cc: ${glibcxx_srcdir}/$(CCOLLATE_CC)
@@ -184,13 +179,13 @@ endif
 
 # XXX TODO move locale_init.cc and localename.cc to src/c++11
 locale_init.lo: locale_init.cc
-	$(LTCXXCOMPILE) -std=gnu++11 -c $<
+	$(LTCXXCOMPILE) -std=gnu++11 -fchar8_t -c $<
 locale_init.o: locale_init.cc
-	$(LTCXXCOMPILE) -std=gnu++11 -c $<
+	$(CXXCOMPILE) -std=gnu++11 -fchar8_t -c $<
 localename.lo: localename.cc
-	$(LTCXXCOMPILE) -std=gnu++11 -c $<
+	$(LTCXXCOMPILE) -std=gnu++11 -fchar8_t -c $<
 localename.o: localename.cc
-	$(LTCXXCOMPILE) -std=gnu++11 -c $<
+	$(CXXCOMPILE) -std=gnu++11 -fchar8_t -c $<
 
 # Use special rules for the deprecated source files so that they find
 # deprecated include files.
@@ -209,7 +204,7 @@ concept-inst.o: concept-inst.cc
 	$(CXXCOMPILE) -D_GLIBCXX_CONCEPT_CHECKS -fimplicit-templates -c $<
 
 # Use special rules for parallel mode compilation.
-PARALLEL_FLAGS = -D_GLIBCXX_PARALLEL 
+PARALLEL_FLAGS = -D_GLIBCXX_PARALLEL
 parallel_settings.lo: parallel_settings.cc
 	$(LTCXXCOMPILE) $(PARALLEL_FLAGS) -c $<
 parallel_settings.o: parallel_settings.cc
@@ -243,7 +238,7 @@ AM_MAKEFLAGS = \
 # correct solution is to add `--tag CXX' to LTCXXCOMPILE and maybe
 # CXXLINK, just after $(LIBTOOL), so that libtool doesn't have to
 # attempt to infer which configuration to use.
-# 
+#
 # The second tag argument, `--tag disable-shared` means that libtool
 # only compiles each source once, for static objects. In actuality,
 # glibcxx_lt_pic_flag and glibcxx_compiler_shared_flag are added to

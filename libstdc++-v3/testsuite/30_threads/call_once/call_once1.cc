@@ -1,11 +1,7 @@
-// { dg-do run { target *-*-freebsd* *-*-dragonfly* *-*-netbsd* *-*-linux* *-*-gnu* *-*-solaris* *-*-cygwin *-*-rtems* *-*-darwin* powerpc-ibm-aix* } }
-// { dg-options " -std=gnu++11 -pthread" { target *-*-freebsd* *-*-dragonfly* *-*-netbsd* *-*-linux* *-*-gnu* powerpc-ibm-aix* } }
-// { dg-options " -std=gnu++11 -pthreads" { target *-*-solaris* } }
-// { dg-options " -std=gnu++11 " { target *-*-cygwin *-*-rtems* *-*-darwin* } }
-// { dg-require-cstdint "" }
-// { dg-require-gthreads "" }
+// { dg-do run { target c++11 } }
+// { dg-additional-options "-pthread" { target pthread } }
 
-// Copyright (C) 2008-2016 Free Software Foundation, Inc.
+// Copyright (C) 2008-2022 Free Software Foundation, Inc.
 //
 // This file is part of the GNU ISO C++ Library.  This library is free
 // software; you can redistribute it and/or modify it under the
@@ -37,9 +33,7 @@ void add_to_value(int i)
 
 int main()
 {
-  bool test __attribute__((unused)) = true;
-
-  try 
+  try
     {
       std::call_once(value_flag, add_to_value, 2);
       std::call_once(value_flag, add_to_value, 2);

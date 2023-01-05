@@ -1,27 +1,28 @@
-// Copyright (C) 2015-2016 Free Software Foundation, Inc.
+// Copyright (C) 2015-2022 Free Software Foundation, Inc.
 //
 // This file is part of the GNU ISO C++ Library.  This library is free
 // software; you can redistribute it and/or modify it under the
 // terms of the GNU General Public License as published by the
 // Free Software Foundation; either version 3, or (at your option)
 // any later version.
- 
+
 // This library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
- 
+
 // You should have received a copy of the GNU General Public License along
 // with this library; see the file COPYING3.  If not see
 // <http://www.gnu.org/licenses/>.
 
-// { dg-options "-std=gnu++11" }
+// { dg-do run { target c++11 } }
+// COW strings don't support C++11 allocator propagation:
+// { dg-require-effective-target cxx11_abi }
 
 #include <string>
 #include <testsuite_hooks.h>
 #include <testsuite_allocator.h>
- 
-#if _GLIBCXX_USE_CXX11_ABI
+
 using C = char;
 const C c = 'a';
 using traits = std::char_traits<C>;
@@ -30,9 +31,11 @@ using __gnu_test::propagating_allocator;
 
 void test01()
 {
-  bool test __attribute__((unused)) = true;
   typedef propagating_allocator<C, false> alloc_type;
   typedef std::basic_string<C, traits, alloc_type> test_type;
+
+  static_assert(std::is_move_assignable<test_type>::value, "");
+  static_assert(!std::is_nothrow_move_assignable<test_type>::value, "");
 
   test_type v1(alloc_type(1));
   v1.assign(1, c);
@@ -69,7 +72,6 @@ void test01()
 
 void test02()
 {
-  bool test __attribute__((unused)) = true;
   typedef propagating_allocator<C, true> alloc_type;
   typedef std::basic_string<C, traits, alloc_type> test_type;
 
@@ -78,7 +80,7 @@ void test02()
   test_type v2(alloc_type(2));
   v2.assign(1, c);
   v2 = std::move(v1);
-  VERIFY(0 == v1.get_allocator().get_personality());
+  VERIFY(1 == v1.get_allocator().get_personality());
   VERIFY(1 == v2.get_allocator().get_personality());
 
   test_type v3(alloc_type(3));
@@ -86,7 +88,7 @@ void test02()
   test_type v4(alloc_type(4));
   v4.assign(100, c);
   v4 = std::move(v3);
-  VERIFY(0 == v3.get_allocator().get_personality());
+  VERIFY(3 == v3.get_allocator().get_personality());
   VERIFY(3 == v4.get_allocator().get_personality());
 
   test_type v5(alloc_type(5));
@@ -94,7 +96,7 @@ void test02()
   test_type v6(alloc_type(6));
   v6.assign(1, c);
   v6 = std::move(v5);
-  VERIFY(0 == v5.get_allocator().get_personality());
+  VERIFY(5 == v5.get_allocator().get_personality());
   VERIFY(5 == v6.get_allocator().get_personality());
 
   test_type v7(alloc_type(7));
@@ -102,13 +104,12 @@ void test02()
   test_type v8(alloc_type(8));
   v8.assign(100, c);
   v8 = std::move(v7);
-  VERIFY(0 == v7.get_allocator().get_personality());
+  VERIFY(7 == v7.get_allocator().get_personality());
   VERIFY(7 == v8.get_allocator().get_personality());
 }
 
 void test03()
 {
-  bool test __attribute__((unused)) = true;
   typedef propagating_allocator<C, false> alloc_type;
   typedef std::basic_string<C, traits, alloc_type> test_type;
 
@@ -152,9 +153,3 @@ int main()
   test03();
   return 0;
 }
-#else
-int main()
-{
-  // COW strings don't support C++11 allocators
-}
-#endif

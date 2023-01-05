@@ -1,6 +1,6 @@
 // 2006-06-04  Stephen M. Webb <stephen.webb@bregmasoft.com>
 //
-// Copyright (C) 2006-2016 Free Software Foundation, Inc.
+// Copyright (C) 2006-2022 Free Software Foundation, Inc.
 //
 // This file is part of the GNU ISO C++ Library.  This library is free
 // software; you can redistribute it and/or modify it under the
@@ -19,11 +19,12 @@
 
 // { dg-do compile }
 // { dg-options "-D_GLIBCXX_CONCEPT_CHECKS" }
-// { dg-error "not a valid type" "" { target *-*-* } 29 }
+// { dg-error "not a valid type" "" { target { ! c++20 } } 30 }
+// { dg-error "from 'int' to 'double'" "" { target c++20 } 30 }
 
 // 5.1.4.1 class template linear_congruential [tr.rand.eng.lcong]
 // 5.1.4.1 [4]
 
 #include <tr1/random>
- 
+
 std::tr1::linear_congruential<double, 48271, 0, 2147483647> x;

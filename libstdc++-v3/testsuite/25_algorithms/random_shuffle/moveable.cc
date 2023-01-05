@@ -1,6 +1,8 @@
-// { dg-options "-std=gnu++11" }
+// { dg-do run { target c++11 } }
+// { dg-add-options using-deprecated }
+// { dg-require-effective-target hosted }
 
-// Copyright (C) 2009-2016 Free Software Foundation, Inc.
+// Copyright (C) 2009-2022 Free Software Foundation, Inc.
 //
 // This file is part of the GNU ISO C++ Library.  This library is free
 // software; you can redistribute it and/or modify it under the
@@ -46,8 +48,6 @@ void fill_ascending()
 void
 test01()
 {
-  bool test __attribute__((unused)) = true;
-
   fill_ascending();
   rvalstruct rv[N];
   std::copy(A, A + N, rv);
@@ -68,8 +68,6 @@ int random_generator(int)
 void
 test02()
 {
-  bool test __attribute__((unused)) = true;
-
   rvalstruct rv[10] = {1,2,3,4,5,6,7,8,9,10};
   int result[10] = {10,1,2,3,4,5,6,7,8,9};
   Container con(rv, rv + 10);

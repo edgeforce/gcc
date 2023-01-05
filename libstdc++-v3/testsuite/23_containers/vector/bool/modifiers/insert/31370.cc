@@ -1,4 +1,4 @@
-// Copyright (C) 2007-2016 Free Software Foundation, Inc.
+// Copyright (C) 2007-2022 Free Software Foundation, Inc.
 //
 // This file is part of the GNU ISO C++ Library.  This library is free
 // software; you can redistribute it and/or modify it under the
@@ -17,20 +17,14 @@
 
 // 23.2.5 class vector<bool> [lib.vector.bool]
 
-// { dg-skip-if "" { powerpc64-*-freebsd* } { "*" } { "" } }
 // { dg-do run { xfail *-*-darwin8.[0-4].* } }
+// { dg-skip-if "" { powerpc64-*-freebsd* } }
 
 #include <vector>
 #include <stdexcept>
 #include <testsuite_hooks.h>
 
-#ifdef _GLIBCXX_DEBUG
-  using std::_GLIBCXX_STD_C::_S_word_bit;
-#elif defined(_GLIBCXX_PROFILE)
-  using std::_GLIBCXX_STD_C::_S_word_bit;
-#else
-  using std::_S_word_bit;
-#endif
+using std::_S_word_bit;
 
 inline void
 check_cap_ge_size(const std::vector<bool>& x)
@@ -49,7 +43,6 @@ check_cap_eq_maxsize(const std::vector<bool>& x)
 // libstdc++/31370
 void test01()
 {
-  bool test __attribute__((unused)) = true;
   int myexit = 0;
 
   try
@@ -62,14 +55,14 @@ void test01()
     { }
   catch(std::exception&)
     { ++myexit; }
-  
+
   // When doubling is too big, but smaller is sufficient, the resize
   // should do smaller and be happy.  It certainly shouldn't throw
   // other exceptions or crash.
   try
     {
       std::vector<bool> x;
-      x.resize(x.max_size() / 2 + 1, false); 
+      x.resize(x.max_size() / 2 + 1, false);
       for(int i = 0; i < _S_word_bit; ++i)
 	x.push_back(false);
       check_cap_ge_size(x);
@@ -78,11 +71,11 @@ void test01()
     { }
   catch(std::exception&)
     { ++myexit; }
-  
+
   try
     {
       std::vector<bool> x;
-      x.resize(x.max_size() / 2 + 1, false); 
+      x.resize(x.max_size() / 2 + 1, false);
       x.insert(x.end(), _S_word_bit, false);
       check_cap_ge_size(x);
     }
@@ -90,11 +83,11 @@ void test01()
     { }
   catch(std::exception&)
     { ++myexit; }
-  
+
   try
     {
       std::vector<bool> x;
-      x.resize(x.max_size() / 2 + 1, false); 
+      x.resize(x.max_size() / 2 + 1, false);
       std::vector<bool> y(_S_word_bit, false);
       x.insert(x.end(), y.begin(), y.end());
       check_cap_ge_size(x);
@@ -109,7 +102,7 @@ void test01()
   try
     {
       std::vector<bool> x;
-      x.resize(x.max_size() - _S_word_bit, false); 
+      x.resize(x.max_size() - _S_word_bit, false);
       for(int i = 0; i < _S_word_bit; ++i)
 	x.push_back(false);
       check_cap_ge_size(x);
@@ -118,11 +111,11 @@ void test01()
     { }
   catch(std::exception&)
     { ++myexit; }
-  
+
   try
     {
       std::vector<bool> x;
-      x.resize(x.max_size() - _S_word_bit, false); 
+      x.resize(x.max_size() - _S_word_bit, false);
       x.insert(x.end(), _S_word_bit, false);
       check_cap_ge_size(x);
     }
@@ -134,7 +127,7 @@ void test01()
   try
     {
       std::vector<bool> x;
-      x.resize(x.max_size() - _S_word_bit, false); 
+      x.resize(x.max_size() - _S_word_bit, false);
       std::vector<bool> y(_S_word_bit, false);
       x.insert(x.end(), y.begin(), y.end());
       check_cap_ge_size(x);
@@ -143,51 +136,51 @@ void test01()
     { }
   catch(std::exception&)
     { ++myexit; }
-  
+
   // Attempts to put in more than max_size() items should result in a
   // length error.
   try
     {
       std::vector<bool> x;
-      x.resize(x.max_size() - _S_word_bit, false); 
+      x.resize(x.max_size() - _S_word_bit, false);
       for(int i = 0; i < _S_word_bit + 1; ++i)
 	x.push_back(false);
       ++myexit;
     }
-  catch(std::bad_alloc)
+  catch(std::bad_alloc&)
     { }
-  catch(std::length_error)
+  catch(std::length_error&)
     { }
-  catch(std::exception)
-    { ++myexit; }
-  
-  try
-    {
-      std::vector<bool> x;
-      x.resize(x.max_size() - _S_word_bit, false); 
-      x.insert(x.end(), _S_word_bit + 1, false);
-      ++myexit;
-    }
-  catch(std::bad_alloc)
-    { }
-  catch(std::length_error)
-    { }
-  catch(std::exception)
+  catch(std::exception&)
     { ++myexit; }
 
   try
     {
       std::vector<bool> x;
-      x.resize(x.max_size() - _S_word_bit, false); 
+      x.resize(x.max_size() - _S_word_bit, false);
+      x.insert(x.end(), _S_word_bit + 1, false);
+      ++myexit;
+    }
+  catch(std::bad_alloc&)
+    { }
+  catch(std::length_error&)
+    { }
+  catch(std::exception&)
+    { ++myexit; }
+
+  try
+    {
+      std::vector<bool> x;
+      x.resize(x.max_size() - _S_word_bit, false);
       std::vector<bool> y(_S_word_bit + 1, false);
       x.insert(x.end(), y.begin(), y.end());
       ++myexit;
     }
-  catch(std::bad_alloc)
+  catch(std::bad_alloc&)
     { }
-  catch(std::length_error)
+  catch(std::length_error&)
     { }
-  catch(std::exception)
+  catch(std::exception&)
     { ++myexit; }
 
   VERIFY( !myexit );
